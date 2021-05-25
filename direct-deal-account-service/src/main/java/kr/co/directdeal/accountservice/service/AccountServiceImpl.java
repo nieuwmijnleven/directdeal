@@ -7,10 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.directdeal.accountservice.domain.account.Account;
 import kr.co.directdeal.accountservice.exception.AccountException;
 import kr.co.directdeal.accountservice.service.dto.AccountDTO;
+import kr.co.directdeal.accountservice.service.dto.PasswordDTO;
 import kr.co.directdeal.accountservice.service.mapper.Mapper;
 import kr.co.directdeal.accountservice.service.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -36,7 +39,7 @@ public class AccountServiceImpl implements AccountService {
 
 		String hashedPassword = passwordEncoder.encode(accountDTO.getPassword());
 		Account newAccount = mapper.toEntity(accountDTO);
-		newAccount.updatePassword(hashedPassword);
+		newAccount.changePassword(hashedPassword);
 		return mapper.toDTO(accountRepository.save(newAccount));
 	}
 	
@@ -89,4 +92,33 @@ public class AccountServiceImpl implements AccountService {
 				.messageArgs(new String[]{accountDTO.getId()})
 				.build());
 	}
+
+	@Override
+	@Transactional
+	public void changePassword(PasswordDTO passwordDTO) {
+		if (passwordDTO.isSamePasswords()) {
+			throw AccountException.builder()
+				.messageKey("account.exception.changepassword.samepasswords.message")
+				.build();
+		}
+
+		Account account = accountRepository
+							.findById(passwordDTO.getId())
+							.orElseThrow(() -> AccountException.builder()
+								.messageKey("account.exception.changepassword.accountnotfound.message")
+								.messageArgs(new String[]{passwordDTO.getId()})
+								.build());
+		
+		String encodedPassword = account.getPassword();
+		if (!passwordEncoder.matches(passwordDTO.getPassword(), encodedPassword)) {
+			throw AccountException.builder()
+					.messageKey("account.exception.changepassword.passwordmismatch.message")
+					.build();
+		}
+
+		String encodedNewPassword = passwordEncoder.encode(passwordDTO.getNewPassword());
+		//log.debug("encodedNewPassword => " + encodedNewPassword);
+		account.changePassword(encodedNewPassword);
+	}
+
 }

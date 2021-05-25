@@ -21,13 +21,13 @@ public class DirectDealAccountServiceApplication {
 	    var messageSource = new ReloadableResourceBundleMessageSource();
 	    messageSource.setBasename("classpath:/messages");
 	    messageSource.setDefaultEncoding("UTF-8");
-	    //messageSource.setCacheSeconds(3);
+	    messageSource.setCacheSeconds(10);
 	    return messageSource;
 	}
 	
 	@Bean
-    public LocalValidatorFactoryBean validator() {
-        var bean = new LocalValidatorFactoryBean();
+    public LocalValidatorFactoryBean getValidator() {
+        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
         bean.setValidationMessageSource(messageSource());
         return bean;
     }

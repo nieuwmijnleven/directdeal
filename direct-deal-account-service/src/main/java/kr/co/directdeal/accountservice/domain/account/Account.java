@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
@@ -17,12 +18,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
 @ToString
+@Table(name = "ACCOUNT")
+@Entity
 public class Account extends AbstractAuditingEntity {
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,7 +48,7 @@ public class Account extends AbstractAuditingEntity {
 		if (Objects.nonNull(dto.getName())) this.name = dto.getName();
 	}
 	
-	public void updatePassword(String newPassword) {
-		this.password = newPassword;
+	public void changePassword(String encodedNewPassword) {
+		this.password = encodedNewPassword;
 	}
 }

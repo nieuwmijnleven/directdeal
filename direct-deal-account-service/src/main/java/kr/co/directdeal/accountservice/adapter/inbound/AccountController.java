@@ -19,9 +19,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import kr.co.directdeal.accountservice.service.AccountService;
 import kr.co.directdeal.accountservice.service.dto.AccountDTO;
+import kr.co.directdeal.accountservice.service.dto.PasswordDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-//@Slf4j
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/account")
@@ -81,5 +83,12 @@ public class AccountController {
 	public ResponseEntity<?> deleteAccount(@PathVariable("id") String id) {
 		accountService.deleteAccount(AccountDTO.builder().id(id).build());
 		return ResponseEntity.noContent().build();
+	}
+
+	@PutMapping("/{id}/change-password")
+	public ResponseEntity<?> changePassword(@PathVariable("id") String id, @Valid @RequestBody PasswordDTO passwordDTO) {	
+		passwordDTO.setId(id);
+		accountService.changePassword(passwordDTO);
+		return ResponseEntity.ok().build();
 	}
 }
