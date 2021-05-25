@@ -1,0 +1,20 @@
+spring: 
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/prod_account_db?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: root
+    password: root_password
+    
+  jpa:
+    open-in-view: false
+    show-sql: true
+    database: mysql 
+    database-platform: org.hibernate.dialect.MYSQL5InnoDBDialect
+    
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  
+
+
