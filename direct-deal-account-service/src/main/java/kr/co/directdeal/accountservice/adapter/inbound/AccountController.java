@@ -21,9 +21,7 @@ import kr.co.directdeal.accountservice.service.AccountService;
 import kr.co.directdeal.accountservice.service.dto.AccountDTO;
 import kr.co.directdeal.accountservice.service.dto.PasswordDTO;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/account")

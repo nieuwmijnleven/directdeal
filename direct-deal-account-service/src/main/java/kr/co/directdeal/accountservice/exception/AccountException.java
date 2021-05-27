@@ -5,7 +5,9 @@ import lombok.Getter;
 
 @Getter
 public class AccountException extends RuntimeException {
+
     private String messageKey;
+    
     private Object[] messageArgs;
 
     @Builder

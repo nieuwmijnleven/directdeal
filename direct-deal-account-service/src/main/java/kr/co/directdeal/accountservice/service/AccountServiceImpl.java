@@ -1,19 +1,21 @@
 package kr.co.directdeal.accountservice.service;
 
+import java.util.Collections;
+import java.util.Objects;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.directdeal.accountservice.domain.account.Account;
+import kr.co.directdeal.accountservice.domain.account.Authority;
 import kr.co.directdeal.accountservice.exception.AccountException;
 import kr.co.directdeal.accountservice.service.dto.AccountDTO;
 import kr.co.directdeal.accountservice.service.dto.PasswordDTO;
 import kr.co.directdeal.accountservice.service.mapper.Mapper;
 import kr.co.directdeal.accountservice.service.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RequiredArgsConstructor
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -37,9 +39,16 @@ public class AccountServiceImpl implements AccountService {
 					.messageArgs(new String[]{accountDTO.getEmail()})
 					.build();
 
-		String hashedPassword = passwordEncoder.encode(accountDTO.getPassword());
-		Account newAccount = mapper.toEntity(accountDTO);
-		newAccount.changePassword(hashedPassword);
+		
+		Account newAccount = Account.builder()
+								.id(accountDTO.getId())
+								.email(accountDTO.getEmail())
+								.password(passwordEncoder.encode(accountDTO.getPassword()))
+								.name(accountDTO.getName())
+								.activated(true)
+								.authorities(Collections.singleton(new Authority("role_user")))
+								.build();		
+
 		return mapper.toDTO(accountRepository.save(newAccount));
 	}
 	
@@ -55,7 +64,7 @@ public class AccountServiceImpl implements AccountService {
 			
 		boolean validEmail = accountRepository
 								.findByEmail(accountDTO.getEmail())
-								.filter(accountByEmail -> accountById.getId() != accountByEmail.getId())
+								.filter(accountByEmail -> Objects.equals(accountById.getId(), accountByEmail.getId()))
 								.map(accountByEmail -> Boolean.FALSE)
 								.orElse(Boolean.TRUE);
 		if (!validEmail) 
@@ -69,6 +78,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
 	public AccountDTO getAccount(AccountDTO accountDTO) {
 		Account account = accountRepository
 							.findById(accountDTO.getId())
@@ -81,16 +91,16 @@ public class AccountServiceImpl implements AccountService {
 	}
 	
 	@Override
+	@Transactional
 	public void deleteAccount(AccountDTO accountDTO) {
-		accountRepository
-			.findById(accountDTO.getId())
-			.map(account -> {
-				accountRepository.delete(account);
-				return account;})
-			.orElseThrow(() -> AccountException.builder()
-				.messageKey("account.exception.delete.message")
-				.messageArgs(new String[]{accountDTO.getId()})
-				.build());
+		Account account = accountRepository
+							.findById(accountDTO.getId())
+							.orElseThrow(() -> AccountException.builder()
+								.messageKey("account.exception.delete.message")
+								.messageArgs(new String[]{accountDTO.getId()})
+								.build());
+
+		accountRepository.delete(account);
 	}
 
 	@Override
@@ -117,8 +127,6 @@ public class AccountServiceImpl implements AccountService {
 		}
 
 		String encodedNewPassword = passwordEncoder.encode(passwordDTO.getNewPassword());
-		//log.debug("encodedNewPassword => " + encodedNewPassword);
 		account.changePassword(encodedNewPassword);
 	}
-
 }

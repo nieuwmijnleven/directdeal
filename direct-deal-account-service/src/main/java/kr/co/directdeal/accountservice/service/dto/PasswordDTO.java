@@ -1,6 +1,5 @@
 package kr.co.directdeal.accountservice.service.dto;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.springframework.util.StringUtils;

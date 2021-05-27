@@ -30,7 +30,6 @@ public class AccountDTO {
 
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@Size(min = 6, max = 30, message = "{account.constraint.password.size.message}")
-	//@Size(min = 6, max = 30)
 	private String password;
 
 	@Size(min = 1, max = 30, message = "{account.constraint.name.size.message}")
@@ -45,4 +44,6 @@ public class AccountDTO {
 	private String lastModifiedBy;
 
     private Instant lastModifiedDate;
+
+	private boolean activated;
 }

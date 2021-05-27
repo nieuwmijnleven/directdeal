@@ -13,8 +13,9 @@ public class AccountMapper implements Mapper<Account, AccountDTO> {
 		return Account.builder()
 					.id(dto.getId())
 					.email(dto.getEmail())
-					.password(dto.getPassword())
+					//.password(dto.getPassword())
 					.name(dto.getName())
+					//.activated(dto.isActivated())
 					.build();
 	}
 
@@ -23,10 +24,11 @@ public class AccountMapper implements Mapper<Account, AccountDTO> {
 		return AccountDTO.builder()
 					.id(entity.getId())
 					.email(entity.getEmail())
-					//.password(entity.getPassword())
+					.password(entity.getPassword())
 					.name(entity.getName())
 					.createdDate(entity.getCreatedDate())
 					.lastModifiedDate(entity.getLastModifiedDate())
+					.activated(entity.isActivated())
 					.build();
 	}
 }

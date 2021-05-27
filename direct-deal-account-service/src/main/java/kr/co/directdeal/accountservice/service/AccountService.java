@@ -13,6 +13,6 @@ public interface AccountService {
 	
 	public void deleteAccount(AccountDTO accountDTO);
 
-	public void changePassword(PasswordDTO PasswordDTO);
+	public void changePassword(PasswordDTO passwordDTO);
 
 }
