@@ -73,13 +73,13 @@ public class AccountController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getAccount(@PathVariable("id") String id) {
-		var accountDTO = accountService.getAccount(AccountDTO.builder().id(id).build());
+		var accountDTO = accountService.getAccount(id);
 		return ResponseEntity.ok(accountDTO);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteAccount(@PathVariable("id") String id) {
-		accountService.deleteAccount(AccountDTO.builder().id(id).build());
+		accountService.deleteAccount(id);
 		return ResponseEntity.noContent().build();
 	}
 

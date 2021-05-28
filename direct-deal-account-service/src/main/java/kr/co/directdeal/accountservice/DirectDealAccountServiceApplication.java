@@ -31,11 +31,4 @@ public class DirectDealAccountServiceApplication {
         bean.setValidationMessageSource(messageSource());
         return bean;
     }
-
-	/*@Bean
-	public LocaleResolver localeResolver() {
-		AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
-		localeResolver.setDefaultLocale(Locale.US);
-		return localeResolver;
-	}*/
 }

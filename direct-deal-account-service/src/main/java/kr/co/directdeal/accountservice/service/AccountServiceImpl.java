@@ -64,7 +64,7 @@ public class AccountServiceImpl implements AccountService {
 			
 		boolean validEmail = accountRepository
 								.findByEmail(accountDTO.getEmail())
-								.filter(accountByEmail -> Objects.equals(accountById.getId(), accountByEmail.getId()))
+								.filter(accountByEmail -> !Objects.equals(accountById.getId(), accountByEmail.getId()))
 								.map(accountByEmail -> Boolean.FALSE)
 								.orElse(Boolean.TRUE);
 		if (!validEmail) 
@@ -79,12 +79,12 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public AccountDTO getAccount(AccountDTO accountDTO) {
+	public AccountDTO getAccount(String id) {
 		Account account = accountRepository
-							.findById(accountDTO.getId())
+							.findById(id)
 							.orElseThrow(() -> AccountException.builder()
 								.messageKey("account.exception.get.message")
-								.messageArgs(new String[]{accountDTO.getId()})
+								.messageArgs(new String[]{id})
 								.build());
 
 		return mapper.toDTO(account);
@@ -92,12 +92,12 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Override
 	@Transactional
-	public void deleteAccount(AccountDTO accountDTO) {
+	public void deleteAccount(String id) {
 		Account account = accountRepository
-							.findById(accountDTO.getId())
+							.findById(id)
 							.orElseThrow(() -> AccountException.builder()
 								.messageKey("account.exception.delete.message")
-								.messageArgs(new String[]{accountDTO.getId()})
+								.messageArgs(new String[]{id})
 								.build());
 
 		accountRepository.delete(account);

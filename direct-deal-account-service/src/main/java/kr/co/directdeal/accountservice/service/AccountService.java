@@ -9,9 +9,9 @@ public interface AccountService {
 	
 	public AccountDTO updateAccount(AccountDTO accountDTO);
 	
-	public AccountDTO getAccount(AccountDTO accountDTO);
+	public AccountDTO getAccount(String id);
 	
-	public void deleteAccount(AccountDTO accountDTO);
+	public void deleteAccount(String id);
 
 	public void changePassword(PasswordDTO passwordDTO);
 
