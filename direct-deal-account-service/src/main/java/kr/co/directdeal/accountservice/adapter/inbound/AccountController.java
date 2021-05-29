@@ -67,7 +67,7 @@ public class AccountController {
 						.fromCurrentRequest()
 						.build()
 						.toUri();
-
+		
 		return ResponseEntity.created(selfLink).build();
 	}
 	

@@ -1,5 +1,7 @@
 package kr.co.directdeal.accountservice.service;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -11,6 +13,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,16 +22,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import kr.co.directdeal.accountservice.domain.account.Account;
 import kr.co.directdeal.accountservice.exception.AccountException;
 import kr.co.directdeal.accountservice.service.dto.AccountDTO;
+import kr.co.directdeal.accountservice.service.dto.PasswordDTO;
 import kr.co.directdeal.accountservice.service.mapper.AccountMapper;
 import kr.co.directdeal.accountservice.service.mapper.Mapper;
 import kr.co.directdeal.accountservice.service.repository.AccountRepository;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-
-// @TestInstance(Lifecycle.PER_CLASS)
-// @ExtendWith(SpringExtension.class)
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class) 
 public class AccountServiceTest {
 
     @Mock
@@ -273,5 +272,87 @@ public class AccountServiceTest {
         assertThrows(AccountException.class, () -> {
             accountService.deleteAccount(accountId);
         });
+    }
+
+    @Test
+    public void ChangePassword_SamePasswords_ThrowAccountException() {
+        //given
+        PasswordDTO passwordDTO = PasswordDTO.builder()
+                                        .password("1q2w3e")
+                                        .newPassword("1q2w3e")
+                                        .build();
+        
+        //when and then
+        assertThrows(AccountException.class, () -> {
+            accountService.changePassword(passwordDTO);
+        });
+    }
+
+    @Test
+    public void ChangePassword_IncorrectId_ThrowAccountException() {
+        //given
+        String accountId = "1";
+        PasswordDTO passwordDTO = PasswordDTO.builder()
+                                        .id(accountId)
+                                        .password("1q2w3e")
+                                        .newPassword("123qwe")
+                                        .build();
+
+        given(accountRepository.findById(accountId))
+            .willReturn(Optional.empty());
+        
+        //when and then
+        assertThrows(AccountException.class, () -> {
+            accountService.changePassword(passwordDTO);
+        });
+    }
+
+    @Test
+    public void ChangePassword_IncorrectPassword_ThrowAccountException() {
+        //given
+        String accountId = "1";
+        PasswordDTO passwordDTO = PasswordDTO.builder()
+                                        .id(accountId)
+                                        .password("-1q2w3e")
+                                        .newPassword("123qwe")
+                                        .build();
+
+        Account accountById = Account.builder()
+                                .password("$2a$10$9arZnwNlbgpxMHdLv82ZXuOLID5ODJR0BhciQ1wxvds2ei1hzG8he")
+                                .build();
+
+        given(accountRepository.findById(accountId))
+            .willReturn(Optional.of(accountById));
+        
+        //when and then
+        assertThrows(AccountException.class, () -> {
+            accountService.changePassword(passwordDTO);
+        });
+    }
+
+    @Test
+    public void ChangePassword_NotSamePasswordAndCorrectIdAndCorrectPassword_Changed() {
+        //given
+        String accountId = "1";
+        PasswordDTO passwordDTO = PasswordDTO.builder()
+                                        .id(accountId)
+                                        .password("1q2w3e")
+                                        .newPassword("123qwe")
+                                        .build();
+
+        Account accountById = mock(Account.class);
+        given(accountById.getPassword())
+            .willReturn("$2a$10$9arZnwNlbgpxMHdLv82ZXuOLID5ODJR0BhciQ1wxvds2ei1hzG8he");
+
+        given(accountRepository.findById(accountId))
+            .willReturn(Optional.of(accountById));
+        
+        //when
+        accountService.changePassword(passwordDTO);
+
+        //then
+        ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);
+        verify(accountById).changePassword(argument.capture());
+        assertThat(passwordEncoder.matches(passwordDTO.getNewPassword(), argument.getValue()), equalTo(true));
     }
 }   

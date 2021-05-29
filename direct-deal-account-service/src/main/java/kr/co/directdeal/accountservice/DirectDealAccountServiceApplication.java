@@ -5,10 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-@EnableJpaRepositories(basePackages = "kr.co.directdeal.accountservice.service.repository")
 @SpringBootApplication
 public class DirectDealAccountServiceApplication {
 

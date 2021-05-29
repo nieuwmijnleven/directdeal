@@ -1,5 +1,6 @@
 package kr.co.directdeal.accountservice.service.dto;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.util.StringUtils;
@@ -16,11 +17,14 @@ import lombok.ToString;
 @Builder
 @ToString
 public class PasswordDTO {
+	@NotNull
     private String id;
 
+	@NotNull
 	@Size(min = 6, max = 30, message = "{account.constraint.password.size.message}")
 	private String password;
 
+	@NotNull
 	@Size(min = 6, max = 30, message = "{account.constraint.password.size.message}")
 	private String newPassword;
 
