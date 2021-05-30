@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: direct-deal-account-service
+  
+  profiles:
+    active:
+    - dev
+
+server:
+  port: 8070
