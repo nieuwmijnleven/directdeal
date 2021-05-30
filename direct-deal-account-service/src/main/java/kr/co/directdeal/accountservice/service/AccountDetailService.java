@@ -8,11 +8,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.directdeal.accountservice.domain.account.Account;
-import kr.co.directdeal.accountservice.exception.AccountException;
 import kr.co.directdeal.accountservice.service.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -23,15 +23,12 @@ public class AccountDetailService implements UserDetailsService {
    private final AccountRepository accountRepository;
 
    @Override
-   @Transactional
-   public UserDetails loadUserByUsername(final String email) {
+   @Transactional(readOnly = true)
+   public UserDetails loadUserByUsername(String email) {
       return accountRepository.findOneWithAuthoritiesByEmail(email)
                .filter(Account::isActivated)
                .map(this::createUser)
-               .orElseThrow(() -> AccountException.builder()
-                  .messageKey("accountdetailservice.exception.loaduserbyusername.accountnotfound.message")
-                  .messageArgs(new String[]{email})
-                  .build());
+               .orElseThrow(() -> new UsernameNotFoundException("could not find the user."));
    }
 
    private User createUser(Account account) {
