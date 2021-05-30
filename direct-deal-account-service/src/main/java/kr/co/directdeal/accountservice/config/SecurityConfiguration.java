@@ -1,6 +1,7 @@
 package kr.co.directdeal.accountservice.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -31,40 +32,37 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			// .disable()
 			
 			.csrf()
-			.disable()
+				.disable()
 			
 			.formLogin()
-			.disable()
+				.disable()
 			
-			// .headers()
-			// .frameOptions()
-			// .disable()
+			.headers()
+				.frameOptions()
+					.disable()
 
 			// .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-
+			.and()
 			.exceptionHandling()
-			.authenticationEntryPoint(jwtAuthenticationEntryPoint)
-			.accessDeniedHandler(jwtAccessDeniedHandler)
+				.authenticationEntryPoint(jwtAuthenticationEntryPoint)
+				.accessDeniedHandler(jwtAccessDeniedHandler)
 
 			// enable h2-console
-			.and()
-			.headers()
-			.frameOptions()
-			.sameOrigin()
+			// .and()
+			// .headers()
+			// 	.frameOptions()
+			// 	.sameOrigin()
 
 			// 세션을 사용하지 않기 때문에 STATELESS로 설정
 			.and()
 			.sessionManagement()
-			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
 			.and()
 			.authorizeRequests()
-			.antMatchers("/", "/auth/login").permitAll()
-			// .antMatchers("/api/hello").permitAll()
-			// .antMatchers("/api/authenticate").permitAll()
-			// .antMatchers("/api/signup").permitAll()
-
-			.anyRequest().authenticated()
+				.antMatchers("/").permitAll()
+				.antMatchers("/auth/login").permitAll()
+				.anyRequest().authenticated()
 
 			.and()
 			.apply(new JwtSecurityConfig(tokenProvider));
@@ -73,9 +71,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui",
-						"/swagger-resources/**", "/configuration/security",
-						"/swagger-ui.html", "/webjars/**","/swagger/**", "/h2/**");
+		web
+			.ignoring()
+			.antMatchers(HttpMethod.OPTIONS, "/**")
+			.antMatchers("/v2/api-docs")
+			.antMatchers("/configuration/ui")
+			.antMatchers("/webjars/**")
+			.antMatchers("/swagger/**")
+			.antMatchers("/swagger-resources/**")
+			.antMatchers("/swagger-ui.html")
+			.antMatchers("/h2-console/**")
+
+			.antMatchers(HttpMethod.POST, "/account");
 	}
 	
 	@Bean

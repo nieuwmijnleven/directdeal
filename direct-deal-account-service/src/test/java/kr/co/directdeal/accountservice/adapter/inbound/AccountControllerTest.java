@@ -1,10 +1,12 @@
 package kr.co.directdeal.accountservice.adapter.inbound;
 
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -18,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -28,6 +31,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import kr.co.directdeal.accountservice.audit.SecurityUtils;
 import kr.co.directdeal.accountservice.auth.jwt.JwtAccessDeniedHandler;
 import kr.co.directdeal.accountservice.auth.jwt.JwtAuthenticationEntryPoint;
 import kr.co.directdeal.accountservice.auth.jwt.TokenProvider;
@@ -36,7 +40,9 @@ import kr.co.directdeal.accountservice.exception.AccountException;
 import kr.co.directdeal.accountservice.service.AccountService;
 import kr.co.directdeal.accountservice.service.dto.AccountDTO;
 import kr.co.directdeal.accountservice.service.dto.PasswordDTO;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {AccountController.class}, 
     includeFilters = @Filter(type = FilterType.ASSIGNABLE_TYPE, 
@@ -54,15 +60,11 @@ public class AccountControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    @WithMockUser("USER")
+    @WithMockUser(username = "account@directdeal.co.kr")
     public void CreateAccount_UniqueEmail_Created() throws Exception {
         //given
-        AccountDTO resultDTO = AccountDTO.builder()
-                                    .id("1")
-                                    .build();
-
         given(accountService.createAccount(any(AccountDTO.class)))
-            .willReturn(resultDTO);
+            .willReturn(any(AccountDTO.class));
         
         AccountDTO accountDTO = AccountDTO.builder()
                                     .email("account@directdeal.co.kr")
@@ -77,25 +79,27 @@ public class AccountControllerTest {
                     .content(payload)
                     .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isCreated())
-                    .andExpect(header().string("Location", "http://localhost/account/1"));                   
+                    //.andDo(print())
+                    .andExpect(status().isCreated());                   
     }
     
     @Test
-    @WithMockUser("USER")
+    @WithMockUser(username = "account@directdeal.co.kr")
     public void CreateAccount_DuplicateEmail_ThrowAccountException() throws Exception {
         //given
+        String incorrectEmail = "incorrect@directdeal.co.kr"; 
+
         willThrow(AccountException.builder()
                     .messageKey("account.exception.insert.email.message")
-                    .messageArgs(new String[]{"account@directdeal.co.kr"})
+                    .messageArgs(new String[]{incorrectEmail})
                     .build())
             .given(accountService).createAccount(any(AccountDTO.class));
         
         AccountDTO accountDTO = AccountDTO.builder()
-                                    .email("account@directdeal.co.kr")
+                                    .email(incorrectEmail)
                                     .password("1q2w3e")
                                     .name("account")
+                                    .activated(true)
                                     .build();
 
         String payload = objectMapper.writeValueAsString(accountDTO);
@@ -108,49 +112,52 @@ public class AccountControllerTest {
                     .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.error", is("Account Error")))
-                    .andExpect(jsonPath("$.message", is("The email(account@directdeal.co.kr) is already used")));
+                    .andExpect(jsonPath("$.message", is("The email(incorrect@directdeal.co.kr) is already used")));
 
     }
 
     @Test
-    @WithMockUser("USER")
+    @WithMockUser(username = "account@directdeal.co.kr")
     public void UpdateAccount_CorrectAccountId_Updated() throws Exception {
         //given
-        given(accountService.updateAccount(any(AccountDTO.class)))
-            .willReturn(mock(AccountDTO.class));
+        String loginEmail = SecurityUtils.getCurrentUserLogin();
 
         AccountDTO accountDTO = AccountDTO.builder()
                                     .id("1")
-                                    .email("account@directdeal.co.kr")
+                                    .email(loginEmail)
                                     .password("1q2w3e")
                                     .name("account")
                                     .build();
+        
+        given(accountService.updateAccount(accountDTO))
+            .willReturn(mock(AccountDTO.class));
 
         String payload = objectMapper.writeValueAsString(accountDTO);
         
         //when and then
-        this.mvc.perform(put("/account/1")
+        this.mvc.perform(put("/account")
             .content(payload)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
             //.andDo(print())
-            .andExpect(status().isCreated())
-            .andExpect(header().string("Location", "http://localhost/account/1"));  
+            .andExpect(status().isCreated()); 
     }
 
     @Test
-    @WithMockUser("USER")
-    public void UpdateAccount_InCorrectAccountId_ThrowAccountException() throws Exception {
+    @WithMockUser(username = "account@directdeal.co.kr")
+    public void UpdateAccount_InCorrectAccountEmail_ThrowAccountException() throws Exception {
         //given
+        String incorrectEmail = "incorrect@directdeal.co.kr"; 
+
         willThrow(AccountException.builder()
                     .messageKey("account.exception.update.id.message")
-                    .messageArgs(new String[]{"1"})
+                    .messageArgs(new String[]{incorrectEmail})
                     .build())
             .given(accountService).updateAccount(any(AccountDTO.class));
 
         AccountDTO accountDTO = AccountDTO.builder()
                                     .id("1")
-                                    .email("account@directdeal.co.kr")
+                                    .email("incorrect@directdeal.co.kr")
                                     .password("1q2w3e")
                                     .name("account")
                                     .build();
@@ -158,33 +165,34 @@ public class AccountControllerTest {
         String payload = objectMapper.writeValueAsString(accountDTO);
         
         //when and then
-        this.mvc.perform(put("/account/1")
+        this.mvc.perform(put("/account")
             .content(payload)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.error", is("Account Error")))
-            .andExpect(jsonPath("$.message", is("Failed to update the account(1)")));
+            .andExpect(jsonPath("$.message", is("Failed to update the account(incorrect@directdeal.co.kr)")));
     }
 
     @Test
-    @WithMockUser("USER")
-    public void GetAccount_CorrectAccountId_ThrowAccountException() throws Exception {
+    @WithMockUser(username = "account@directdeal.co.kr")
+    public void GetAccount_CorrectAccountId_ReturnAccountDTO() throws Exception {
         //given
-        String accountId = "1";
+        String loginEmail = SecurityUtils.getCurrentUserLogin();
+
         AccountDTO resultDTO = AccountDTO.builder()
-                                    .id(accountId)
-                                    .email("account@directdeal.co.kr")
+                                    .id("1")
+                                    .email(loginEmail)
                                     .name("account")
                                     .activated(true)
                                     .build();
 
-        given(accountService.getAccount(accountId))
+        given(accountService.getAccount(loginEmail))
             .willReturn(resultDTO);
         
         //when and then
-        this.mvc.perform(get("/account/" + accountId)
+        this.mvc.perform(get("/account")
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
@@ -195,34 +203,35 @@ public class AccountControllerTest {
     }
     
     @Test
-    @WithMockUser("USER")
-    public void GetAccount_InCorrectAccountId_ReturnAccountDTO() throws Exception {
+    @WithMockUser(username = "account@directdeal.co.kr")
+    public void GetAccount_InCorrectAccountEmail_ThrowAccountException() throws Exception {
         //given
-        String accountId = "1";
+        String incorrectEmail = "incorrect@directdeal.co.kr"; 
+        String loginEmail = SecurityUtils.getCurrentUserLogin();
+
         willThrow(AccountException.builder()
                     .messageKey("account.exception.get.message")
-                    .messageArgs(new String[]{accountId})
+                    .messageArgs(new String[]{incorrectEmail})
                     .build())
-            .given(accountService).getAccount(accountId);
+            .given(accountService).getAccount(loginEmail);
         
         //when and then
-        this.mvc.perform(get("/account/" + accountId)
+        this.mvc.perform(get("/account")
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.error", is("Account Error")))
-            .andExpect(jsonPath("$.message", is("Failed to find the account(1)")));
+            .andExpect(jsonPath("$.message", is("Failed to find the account(incorrect@directdeal.co.kr)")));
     }
 
     @Test
-    @WithMockUser("USER")
-    public void DeleteAccount_CorrectAccountId_Deleted() throws Exception {
+    @WithMockUser(username = "account@directdeal.co.kr")
+    public void DeleteAccount_CorrectAccountEmail_Deleted() throws Exception {
         //given
-        String accountId = "1";
         
         //when and then
-        this.mvc.perform(delete("/account/" + accountId)
+        this.mvc.perform(delete("/account")
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
@@ -230,41 +239,40 @@ public class AccountControllerTest {
     }
 
     @Test
-    @WithMockUser("USER")
-    public void DeleteAccount_InCorrectAccountId_ThrowAccountException() throws Exception {
+    @WithMockUser(username = "account@directdeal.co.kr")
+    public void DeleteAccount_InCorrectAccountEmail_ThrowAccountException() throws Exception {
         //given
-        String accountId = "1";
+        String incorrectEmail = "incorrect@directdeal.co.kr"; 
+        String loginEmail = SecurityUtils.getCurrentUserLogin();
         willThrow(AccountException.builder()
                     .messageKey("account.exception.delete.message")
-                    .messageArgs(new String[]{accountId})
+                    .messageArgs(new String[]{incorrectEmail})
                     .build())
-            .given(accountService).deleteAccount(accountId);
+            .given(accountService).deleteAccount(loginEmail);
         
         //when and then
-        this.mvc.perform(delete("/account/" + accountId)
+        this.mvc.perform(delete("/account")
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.error", is("Account Error")))
-            .andExpect(jsonPath("$.message", is("Failed to delete the account(1)")));
+            .andExpect(jsonPath("$.message", is("Failed to delete the account(incorrect@directdeal.co.kr)")));
     }
 
     @Test
-    @WithMockUser("USER")
+    @WithMockUser(username = "account@directdeal.co.kr")
     public void ChangePassword_CorrectPasswordDTO_Changed() throws Exception {
         //given
-        String accountId = "1";
         PasswordDTO passwordDTO = PasswordDTO.builder()
-                                    .id(accountId)
                                     .password("1q2w3e")
                                     .newPassword("123qwe")
                                     .build();
 
         String payload = objectMapper.writeValueAsString(passwordDTO);
-        
+          
         //when and then
-        this.mvc.perform(put("/account/" + accountId + "/change-password")
+        this.mvc.perform(put("/account/change-password")
             .content(payload)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
@@ -273,26 +281,25 @@ public class AccountControllerTest {
     }
 
     @Test
-    @WithMockUser("USER")
+    @WithMockUser(username = "account@directdeal.co.kr")
     public void ChangePassword_IncorrectPasswordDTO_ThrowAccountException() throws Exception {
         //given
-        String accountId = "1";
-        willThrow(AccountException.builder()
-                    .messageKey("account.exception.changepassword.passwordmismatch.message")
-                    .messageArgs(new String[]{accountId})
-                    .build())
-            .given(accountService).changePassword(any(PasswordDTO.class));
-
+        String loginEmail = SecurityUtils.getCurrentUserLogin();
         PasswordDTO passwordDTO = PasswordDTO.builder()
-                                    .id(accountId)
                                     .password("1q2w3e")
                                     .newPassword("123qwe")
                                     .build();
 
+        willThrow(AccountException.builder()
+                    .messageKey("account.exception.changepassword.passwordmismatch.message")
+                    .messageArgs(new String[]{loginEmail})
+                    .build())
+            .given(accountService).changePassword(loginEmail, passwordDTO);
+
         String payload = objectMapper.writeValueAsString(passwordDTO);
         
         //when and then
-        this.mvc.perform(put("/account/" + accountId + "/change-password")
+        this.mvc.perform(put("/account/change-password")
             .content(payload)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))

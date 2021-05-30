@@ -68,7 +68,7 @@ public class Account extends AbstractAuditingEntity {
 	private Set<Authority> authorities;
 	
 	public void updateFrom(AccountDTO dto) {
-		if (Objects.nonNull(dto.getEmail())) this.email = dto.getEmail();
+		// if (Objects.nonNull(dto.getEmail())) this.email = dto.getEmail();
 		if (Objects.nonNull(dto.getName())) this.name = dto.getName();
 	}
 	

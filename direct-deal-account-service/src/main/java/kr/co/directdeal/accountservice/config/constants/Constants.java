@@ -1,4 +1,4 @@
-package kr.co.directdeal.accountservice.config;
+package kr.co.directdeal.accountservice.config.constants;
 
 import lombok.experimental.UtilityClass;
 

@@ -89,7 +89,23 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void UpdateAccount_CorrectIdAndUniqueEmail_Updated() {
+    public void UpdateAccount_IncorrectEmail_ThrowAccountException() {
+        //given
+        AccountDTO accountDTO = mock(AccountDTO.class);
+        given(accountDTO.getEmail())
+            .willReturn("account@directdeal.co.kr");
+
+        given(accountRepository.findByEmail(accountDTO.getEmail()))
+            .willReturn(Optional.empty());
+       
+        //when and then
+        assertThrows(AccountException.class, () -> {
+            accountService.updateAccount(accountDTO);
+        });
+    }
+
+    @Test
+    public void UpdateAccountById_CorrectIdAndUniqueEmail_Updated() {
         //given
         AccountDTO accountDTO = mock(AccountDTO.class);
         given(accountDTO.getId())
@@ -107,7 +123,7 @@ public class AccountServiceTest {
             .willReturn(Optional.empty());
 
         //when
-        accountService.updateAccount(accountDTO);
+        accountService.updateAccountById(accountDTO);
 
         //then
         verify(accountRepository).findById(accountDTO.getId());
@@ -116,7 +132,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void UpdateAccount_IncorrectId_ThrowAccountException() {
+    public void UpdateAccountById_IncorrectEmail_ThrowAccountException() {
         //given
         AccountDTO accountDTO = mock(AccountDTO.class);
         given(accountDTO.getId())
@@ -127,12 +143,12 @@ public class AccountServiceTest {
        
         //when and then
         assertThrows(AccountException.class, () -> {
-            accountService.updateAccount(accountDTO);
+            accountService.updateAccountById(accountDTO);
         });
     }
 
     @Test
-    public void UpdateAccount_SameInfo_Updated() {
+    public void UpdateAccountById_SameInfo_Updated() {
         //given
         AccountDTO accountDTO = mock(AccountDTO.class);
         given(accountDTO.getId())
@@ -156,7 +172,7 @@ public class AccountServiceTest {
             .willReturn(Optional.of(accountByEmail));
 
         //when
-        accountService.updateAccount(accountDTO);
+        accountService.updateAccountById(accountDTO);
 
         //then
         verify(accountRepository).findById(accountDTO.getId());
@@ -165,7 +181,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void UpdateAccount_NonUniqueEmail_Updated() {
+    public void UpdateAccountById_NonUniqueEmail_Updated() {
         //given
         AccountDTO accountDTO = mock(AccountDTO.class);
         given(accountDTO.getId())
@@ -190,71 +206,71 @@ public class AccountServiceTest {
 
         //when and then
         assertThrows(AccountException.class, () -> {
-            accountService.updateAccount(accountDTO);
+            accountService.updateAccountById(accountDTO);
         });
     }
 
     @Test
     public void GetAccount_CorrectId_ReturnAccountDTO() {
         //given
-        String accountId = "1";
+        String loginEmail = "account@directdeal.co.kr";
 
-        Account accountById = mock(Account.class);
-        given(accountById.getId())
-            .willReturn(accountId);
-        given(accountById.getEmail())
-            .willReturn("account@directdeal.co.kr");
-        given(accountById.getPassword())
+        Account accountByEmail = mock(Account.class);
+        given(accountByEmail.getId())
+            .willReturn("1");
+        given(accountByEmail.getEmail())
+            .willReturn(loginEmail);
+        given(accountByEmail.getPassword())
             .willReturn("$2a$10$9arZnwNlbgpxMHdLv82ZXuOLID5ODJR0BhciQ1wxvds2ei1hzG8he");
-        given(accountById.getName())
+        given(accountByEmail.getName())
             .willReturn("account");
-        given(accountById.isActivated())
+        given(accountByEmail.isActivated())
             .willReturn(true);
 
-        given(accountRepository.findById(accountId))
-            .willReturn(Optional.of(accountById));
+        given(accountRepository.findByEmail(loginEmail))
+            .willReturn(Optional.of(accountByEmail));
         
         //when
-        AccountDTO resultDTO = accountService.getAccount(accountId);
+        AccountDTO resultDTO = accountService.getAccount(loginEmail);
 
         //then
-        verify(accountById).getId();
-        verify(accountById).getEmail();
-        verify(accountById).getPassword();
-        verify(accountById).getName();
-        verify(accountById).isActivated();
+        verify(accountByEmail).getId();
+        verify(accountByEmail).getEmail();
+        verify(accountByEmail).getPassword();
+        verify(accountByEmail).getName();
+        verify(accountByEmail).isActivated();
 
-        assertThat(resultDTO.getId(), equalTo(accountById.getId()));
-        assertThat(resultDTO.getEmail(), equalTo(accountById.getEmail()));
-        assertThat(resultDTO.getPassword(), equalTo(accountById.getPassword()));
-        assertThat(resultDTO.getName(), equalTo(accountById.getName()));
-        assertThat(resultDTO.isActivated(), equalTo(accountById.isActivated()));
+        assertThat(resultDTO.getId(), equalTo(accountByEmail.getId()));
+        assertThat(resultDTO.getEmail(), equalTo(accountByEmail.getEmail()));
+        assertThat(resultDTO.getPassword(), equalTo(accountByEmail.getPassword()));
+        assertThat(resultDTO.getName(), equalTo(accountByEmail.getName()));
+        assertThat(resultDTO.isActivated(), equalTo(accountByEmail.isActivated()));
     }
 
     @Test
     public void GetAccount_IncorrectId_ThrowAccountException() {
         //given
-        String accountId = "1";
+        String loginEmail = "account@directdeal.co.kr";
 
-        given(accountRepository.findById(accountId))
+        given(accountRepository.findByEmail(loginEmail))
             .willReturn(Optional.empty());
         
         //when and then
         assertThrows(AccountException.class, () -> {
-            accountService.getAccount(accountId);
+            accountService.getAccount(loginEmail);
         });
     }
 
     @Test
     public void DeleteAccount_CorrectId_Deleted() {
         //given
-        String accountId = "1";
+        String loginEmail = "account@directdeal.co.kr";
 
-        given(accountRepository.findById(accountId))
+        given(accountRepository.findByEmail(loginEmail))
             .willReturn(Optional.of(mock(Account.class)));
         
         //when
-        accountService.deleteAccount(accountId);
+        accountService.deleteAccount(loginEmail);
 
         //then
         verify(accountRepository).delete(any(Account.class));
@@ -263,14 +279,14 @@ public class AccountServiceTest {
     @Test
     public void DeleteAccount_CorrectId_ThrowAccountException() {
         //given
-        String accountId = "1";
+        String loginEmail = "account@directdeal.co.kr";
 
-        given(accountRepository.findById(accountId))
+        given(accountRepository.findByEmail(loginEmail))
             .willReturn(Optional.empty());
         
         //when and then
         assertThrows(AccountException.class, () -> {
-            accountService.deleteAccount(accountId);
+            accountService.deleteAccount(loginEmail);
         });
     }
 
@@ -282,77 +298,76 @@ public class AccountServiceTest {
                                         .newPassword("1q2w3e")
                                         .build();
         
+        String loginEmail = "account@directdeal.co.kr";
+
         //when and then
         assertThrows(AccountException.class, () -> {
-            accountService.changePassword(passwordDTO);
+            accountService.changePassword(loginEmail, passwordDTO);
         });
     }
 
     @Test
-    public void ChangePassword_IncorrectId_ThrowAccountException() {
+    public void ChangePassword_IncorrectEmail_ThrowAccountException() {
         //given
-        String accountId = "1";
         PasswordDTO passwordDTO = PasswordDTO.builder()
-                                        .id(accountId)
                                         .password("1q2w3e")
                                         .newPassword("123qwe")
                                         .build();
 
-        given(accountRepository.findById(accountId))
+        String loginEmail = "account@directdeal.co.kr";
+        given(accountRepository.findByEmail(loginEmail))
             .willReturn(Optional.empty());
         
         //when and then
         assertThrows(AccountException.class, () -> {
-            accountService.changePassword(passwordDTO);
+            accountService.changePassword(loginEmail, passwordDTO);
         });
     }
 
     @Test
     public void ChangePassword_IncorrectPassword_ThrowAccountException() {
         //given
-        String accountId = "1";
         PasswordDTO passwordDTO = PasswordDTO.builder()
-                                        .id(accountId)
                                         .password("-1q2w3e")
                                         .newPassword("123qwe")
                                         .build();
 
-        Account accountById = Account.builder()
+        Account accountByEmail = Account.builder()
                                 .password("$2a$10$9arZnwNlbgpxMHdLv82ZXuOLID5ODJR0BhciQ1wxvds2ei1hzG8he")
                                 .build();
-
-        given(accountRepository.findById(accountId))
-            .willReturn(Optional.of(accountById));
+        
+        String loginEmail = "account@directdeal.co.kr";
+        given(accountRepository.findByEmail(loginEmail))
+            .willReturn(Optional.of(accountByEmail));
         
         //when and then
         assertThrows(AccountException.class, () -> {
-            accountService.changePassword(passwordDTO);
+            accountService.changePassword(loginEmail, passwordDTO);
         });
     }
 
     @Test
     public void ChangePassword_NotSamePasswordAndCorrectIdAndCorrectPassword_Changed() {
         //given
-        String accountId = "1";
         PasswordDTO passwordDTO = PasswordDTO.builder()
-                                        .id(accountId)
                                         .password("1q2w3e")
                                         .newPassword("123qwe")
                                         .build();
 
-        Account accountById = mock(Account.class);
-        given(accountById.getPassword())
+        Account accountByEmail = mock(Account.class);
+        given(accountByEmail.getPassword())
             .willReturn("$2a$10$9arZnwNlbgpxMHdLv82ZXuOLID5ODJR0BhciQ1wxvds2ei1hzG8he");
 
-        given(accountRepository.findById(accountId))
-            .willReturn(Optional.of(accountById));
+        String loginEmail = "account@directdeal.co.kr";
+        given(accountRepository.findByEmail(loginEmail))
+            .willReturn(Optional.of(accountByEmail));
         
         //when
-        accountService.changePassword(passwordDTO);
+        accountService.changePassword(loginEmail, passwordDTO);
 
         //then
         ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);
-        verify(accountById).changePassword(argument.capture());
+        verify(accountByEmail).changePassword(argument.capture());
         assertThat(passwordEncoder.matches(passwordDTO.getNewPassword(), argument.getValue()), equalTo(true));
     }
 }   

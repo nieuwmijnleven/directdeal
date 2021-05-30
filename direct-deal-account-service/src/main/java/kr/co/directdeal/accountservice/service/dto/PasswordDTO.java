@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -15,11 +16,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 @ToString
 public class PasswordDTO {
-	@NotNull
-    private String id;
-
+	
 	@NotNull
 	@Size(min = 6, max = 30, message = "{account.constraint.password.size.message}")
 	private String password;

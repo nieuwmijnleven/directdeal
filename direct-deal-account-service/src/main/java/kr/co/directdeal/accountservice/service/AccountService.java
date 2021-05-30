@@ -8,11 +8,13 @@ public interface AccountService {
 	public AccountDTO createAccount(AccountDTO accountDTO);
 	
 	public AccountDTO updateAccount(AccountDTO accountDTO);
-	
-	public AccountDTO getAccount(String id);
-	
-	public void deleteAccount(String id);
 
-	public void changePassword(PasswordDTO passwordDTO);
+	public AccountDTO updateAccountById(AccountDTO accountDTO);
+	
+	public AccountDTO getAccount(String email);
+	
+	public void deleteAccount(String email);
+
+	public void changePassword(String email, PasswordDTO passwordDTO);
 
 }

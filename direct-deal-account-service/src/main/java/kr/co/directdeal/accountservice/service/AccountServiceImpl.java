@@ -55,6 +55,18 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	@Transactional
 	public AccountDTO updateAccount(AccountDTO accountDTO) {	
+		Account accountByEmail = accountRepository
+								.findByEmail(accountDTO.getEmail())
+								.orElseThrow(() -> AccountException.builder()
+										.messageKey("account.exception.update.id.message")
+										.messageArgs(new String[]{accountDTO.getEmail()})
+										.build());
+		
+		accountByEmail.updateFrom(accountDTO);
+		return mapper.toDTO(accountByEmail);
+	}
+
+	public AccountDTO updateAccountById(AccountDTO accountDTO) {	
 		Account accountById = accountRepository
 								.findById(accountDTO.getId())
 								.orElseThrow(() -> AccountException.builder()
@@ -79,12 +91,12 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public AccountDTO getAccount(String id) {
+	public AccountDTO getAccount(String email) {
 		Account account = accountRepository
-							.findById(id)
+							.findByEmail(email)
 							.orElseThrow(() -> AccountException.builder()
 								.messageKey("account.exception.get.message")
-								.messageArgs(new String[]{id})
+								.messageArgs(new String[]{email})
 								.build());
 
 		return mapper.toDTO(account);
@@ -92,12 +104,12 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Override
 	@Transactional
-	public void deleteAccount(String id) {
+	public void deleteAccount(String email) {
 		Account account = accountRepository
-							.findById(id)
+							.findByEmail(email)
 							.orElseThrow(() -> AccountException.builder()
 								.messageKey("account.exception.delete.message")
-								.messageArgs(new String[]{id})
+								.messageArgs(new String[]{email})
 								.build());
 
 		accountRepository.delete(account);
@@ -105,7 +117,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	@Transactional
-	public void changePassword(PasswordDTO passwordDTO) {
+	public void changePassword(String email, PasswordDTO passwordDTO) {
 		if (passwordDTO.isSamePasswords()) {
 			throw AccountException.builder()
 				.messageKey("account.exception.changepassword.samepasswords.message")
@@ -113,10 +125,10 @@ public class AccountServiceImpl implements AccountService {
 		}
 
 		Account account = accountRepository
-							.findById(passwordDTO.getId())
+							.findByEmail(email)
 							.orElseThrow(() -> AccountException.builder()
 								.messageKey("account.exception.changepassword.accountnotfound.message")
-								.messageArgs(new String[]{passwordDTO.getId()})
+								.messageArgs(new String[]{email})
 								.build());
 		
 		String encodedPassword = account.getPassword();
