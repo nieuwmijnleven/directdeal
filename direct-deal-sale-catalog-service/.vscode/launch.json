@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SaleCatalogServiceApplication<direct-deal-sale-catalog-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "kr.co.directdeal.sale.catalogservice.SaleCatalogServiceApplication",
+            "projectName": "direct-deal-sale-catalog-service",
+            "args": ""
+        }
+    ]
+}
