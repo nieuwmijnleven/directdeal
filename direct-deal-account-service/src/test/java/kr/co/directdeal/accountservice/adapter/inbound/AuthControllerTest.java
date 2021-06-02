@@ -36,9 +36,7 @@ import kr.co.directdeal.accountservice.domain.account.Authority;
 import kr.co.directdeal.accountservice.service.AccountDetailService;
 import kr.co.directdeal.accountservice.service.dto.LoginDTO;
 import kr.co.directdeal.accountservice.service.repository.AccountRepository;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {AuthController.class},
     includeFilters = @Filter(type = FilterType.ASSIGNABLE_TYPE, 
@@ -54,6 +52,9 @@ public class AuthControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private JWTProperties jwtProperties;
     
     @Test
     public void Login_InvalidEmail_ThrowAccountException() throws Exception {
@@ -75,10 +76,45 @@ public class AuthControllerTest {
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isBadRequest())
-                    .andExpect(jsonPath("$.error", is("Authentication Error")))
+                    .andExpect(jsonPath("$.error", is("Authentication Failed")))
                     .andExpect(jsonPath("$.message", is("Bad credentials")));
 
         verify(accountRepository).findOneWithAuthoritiesByEmail(any(String.class));
+    }
+
+    @Test
+    public void Login_ValidEmailAndInvalidPassword_ReturnJWT() throws Exception {
+        //given
+        LoginDTO loginDTO = LoginDTO.builder()
+                                .email("account@directdeal.co.kr")
+                                .password("123qwe")
+                                .build();
+
+        Account accountByEmail = Account.builder()
+                                    .id("1")
+                                    .email("account@directdeal.co.kr")
+                                    .password("$2a$10$9arZnwNlbgpxMHdLv82ZXuOLID5ODJR0BhciQ1wxvds2ei1hzG8he")
+                                    .name("account")
+                                    .authorities(Collections.singleton(Authority.USER))
+                                    .activated(true)
+                                    .build();
+
+        given(accountRepository.findOneWithAuthoritiesByEmail(loginDTO.getEmail()))
+            .willReturn(Optional.of(accountByEmail));
+                                
+        String payload = objectMapper.writeValueAsString(loginDTO);
+
+        //when and then
+        this.mvc.perform(post("/auth/login")
+                    .content(payload)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(status().isBadRequest())
+                    .andExpect(jsonPath("$.error", is("Authentication Failed")))
+                    .andExpect(jsonPath("$.message", is("Bad credentials")));
+
+        verify(accountRepository).findOneWithAuthoritiesByEmail(loginDTO.getEmail());
     }
 
     @Test
@@ -94,7 +130,7 @@ public class AuthControllerTest {
                                     .email("account@directdeal.co.kr")
                                     .password("$2a$10$9arZnwNlbgpxMHdLv82ZXuOLID5ODJR0BhciQ1wxvds2ei1hzG8he")
                                     .name("account")
-                                    .authorities(Collections.singleton(new Authority("ROLE_USER")))
+                                    .authorities(Collections.singleton(Authority.USER))
                                     .activated(true)
                                     .build();
 
@@ -111,7 +147,10 @@ public class AuthControllerTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(header().string("Authorization", matchesPattern("^Bearer [a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?$")))
-                    .andExpect(jsonPath("$.token", matchesPattern("^[a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?$")));
+                    .andExpect(jsonPath("$.type", is("Bearer")))
+                    .andExpect(jsonPath("$.accessToken", matchesPattern("^[a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?$")))
+                    .andExpect(jsonPath("$.refreshToken", matchesPattern("^[a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?$")))
+                    .andExpect(jsonPath("$.expireTime", is((int)jwtProperties.getAccessTokenValidityInSeconds())));
 
         verify(accountRepository).findOneWithAuthoritiesByEmail(loginDTO.getEmail());
     }

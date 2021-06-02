@@ -43,13 +43,13 @@ public class TokenProvider implements InitializingBean {
       this.key = Keys.hmacShaKeyFor(keyBytes);
    }
 
-   public String createToken(Authentication authentication) {
+   private String doCreateToken(Authentication authentication, long expireTime) {
       String authorities = authentication.getAuthorities().stream()
          .map(GrantedAuthority::getAuthority)
          .collect(Collectors.joining(","));
 
       long now = (new Date()).getTime();
-      Date validity = new Date(now + jwtProperties.getTokenValidityInMilliseconds());
+      Date validity = new Date(now + expireTime);
 
       return Jwts.builder()
          .setSubject(authentication.getName())
@@ -57,6 +57,20 @@ public class TokenProvider implements InitializingBean {
          .signWith(key, SignatureAlgorithm.HS512)
          .setExpiration(validity)
          .compact();
+   }
+
+   public String createAccessToken(Authentication authentication) {
+      return doCreateToken(authentication, 
+               jwtProperties.getAccessTokenValidityInMilliseconds());
+   }
+
+   public String createRefreshToken(Authentication authentication) {
+      return doCreateToken(authentication, 
+               jwtProperties.getRefreshTokenValidityInMilliseconds());
+   }
+
+   public String createTokenWithExpireTime(Authentication authentication, long expireTimeInMillis) {
+      return doCreateToken(authentication, expireTimeInMillis);
    }
 
    public Authentication getAuthentication(String token) {

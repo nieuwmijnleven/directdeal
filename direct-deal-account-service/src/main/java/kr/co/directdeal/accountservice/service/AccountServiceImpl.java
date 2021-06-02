@@ -46,7 +46,7 @@ public class AccountServiceImpl implements AccountService {
 								.password(passwordEncoder.encode(accountDTO.getPassword()))
 								.name(accountDTO.getName())
 								.activated(true)
-								.authorities(Collections.singleton(new Authority("role_user")))
+								.authorities(Collections.singleton(Authority.USER))
 								.build();		
 
 		return mapper.toDTO(accountRepository.save(newAccount));

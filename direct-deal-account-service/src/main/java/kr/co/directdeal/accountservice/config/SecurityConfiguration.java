@@ -14,6 +14,7 @@ import kr.co.directdeal.accountservice.auth.jwt.JwtAccessDeniedHandler;
 import kr.co.directdeal.accountservice.auth.jwt.JwtAuthenticationEntryPoint;
 import kr.co.directdeal.accountservice.auth.jwt.JwtSecurityConfig;
 import kr.co.directdeal.accountservice.auth.jwt.TokenProvider;
+import kr.co.directdeal.accountservice.config.constants.AuthorityConstants;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -47,6 +48,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.authenticationEntryPoint(jwtAuthenticationEntryPoint)
 				.accessDeniedHandler(jwtAccessDeniedHandler)
 
+			// .and()
+			// .addFilterBefore(filter, beforeFilter)
 			// enable h2-console
 			// .and()
 			// .headers()
@@ -62,6 +65,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.antMatchers("/").permitAll()
 				.antMatchers("/auth/login").permitAll()
+				// .antMatchers(HttpMethod.GET, "/account").hasAnyRole(AuthorityConstants.USER).
 				.anyRequest().authenticated()
 
 			.and()

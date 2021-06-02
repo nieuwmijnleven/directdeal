@@ -5,12 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import kr.co.directdeal.accountservice.config.constants.AuthorityConstants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "authority")
@@ -21,6 +22,11 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 @ToString
 public class Authority {
+
+	public static final Authority ADMIN = new Authority(AuthorityConstants.ADMIN);
+
+	public static final Authority USER = new Authority(AuthorityConstants.USER);
+
 	@Id	
 	@Column(name = "authority_name")
 	private String authorityName;

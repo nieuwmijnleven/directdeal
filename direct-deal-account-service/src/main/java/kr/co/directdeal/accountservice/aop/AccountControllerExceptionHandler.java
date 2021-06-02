@@ -3,7 +3,9 @@ package kr.co.directdeal.accountservice.aop;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -13,7 +15,8 @@ import kr.co.directdeal.accountservice.exception.AccountException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@RestControllerAdvice(basePackages = {"kr.co.directdeal.accountservice.adapter.inbound"})
+@RestControllerAdvice
+//@RestControllerAdvice(basePackages = {"kr.co.directdeal.accountservice.adapter.inbound"})
 public class AccountControllerExceptionHandler {
 	
 	private final MessageSource messageSource;
@@ -24,10 +27,22 @@ public class AccountControllerExceptionHandler {
 		return new ErrorResponse("Server Error", ex.getMessage());
 	}
 
+	@ExceptionHandler({AuthenticationException.class})
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	public ErrorResponse handleException(AuthenticationException ex) {
+		return new ErrorResponse("Authentication Failed", ex.getMessage());
+	}
+
+	@ExceptionHandler({AccessDeniedException.class})
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	public ErrorResponse handleException(AccessDeniedException ex) {
+		return new ErrorResponse("Authentication Failed", ex.getMessage());
+	}
+
 	@ExceptionHandler({BadCredentialsException.class})
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorResponse handleException(BadCredentialsException ex) {
-		return new ErrorResponse("Authentication Error", ex.getMessage());
+		return new ErrorResponse("Authentication Failed", ex.getMessage());
 	}
 
 	@ExceptionHandler({AccountException.class})

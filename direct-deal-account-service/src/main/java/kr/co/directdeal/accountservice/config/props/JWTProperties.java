@@ -20,9 +20,15 @@ public class JWTProperties {
 
     private String secret;
 
-    private long tokenValidityInSeconds;    
+    private long accessTokenValidityInSeconds;    
 
-    public long getTokenValidityInMilliseconds() {
-        return this.tokenValidityInSeconds * 1000;
+    private long refreshTokenValidityInSeconds;    
+
+    public long getAccessTokenValidityInMilliseconds() {
+        return this.accessTokenValidityInSeconds * 1000;
+    }
+
+    public long getRefreshTokenValidityInMilliseconds() {
+        return this.refreshTokenValidityInSeconds * 1000;
     }
 }

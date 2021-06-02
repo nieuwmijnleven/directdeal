@@ -9,7 +9,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,13 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.co.directdeal.accountservice.auth.jwt.JwtFilter;
 import kr.co.directdeal.accountservice.auth.jwt.TokenProvider;
 import kr.co.directdeal.accountservice.config.props.JWTProperties;
-import kr.co.directdeal.accountservice.service.AccountDetailService;
 import kr.co.directdeal.accountservice.service.dto.LoginDTO;
 import kr.co.directdeal.accountservice.service.dto.TokenDTO;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/auth")
@@ -33,12 +29,11 @@ public class AuthController {
     private final TokenProvider tokenProvider;
     
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    
+
     private final JWTProperties jwtProperties;
 
     @PostMapping("/login")
-    public ResponseEntity<TokenDTO> login(@Valid @RequestBody LoginDTO loginDto) throws Exception {
-        log.debug("jwt properties = " + jwtProperties.toString());
+    public ResponseEntity<TokenDTO> login(@Valid @RequestBody LoginDTO loginDto) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
 
@@ -47,9 +42,19 @@ public class AuthController {
                                             .authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String jwt = tokenProvider.createToken(authentication);
+        String accessToken = tokenProvider.createAccessToken(authentication);
+        String refreshToken = tokenProvider.createRefreshToken(authentication);
+
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-        return new ResponseEntity<>(new TokenDTO(jwt), httpHeaders, HttpStatus.OK);
+        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + accessToken);
+
+        TokenDTO tokenDTO = TokenDTO.builder()
+                                .type("Bearer")
+                                .accessToken(accessToken)
+                                .refreshToken(refreshToken)
+                                .expireTime(jwtProperties.getAccessTokenValidityInSeconds())
+                                .build();
+
+        return new ResponseEntity<>(tokenDTO, httpHeaders, HttpStatus.OK);
     }
 }
