@@ -1,0 +1,45 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.0'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	// id 'org.jetbrains.kotlin.jvm' version '1.5.10'
+	// id 'org.jetbrains.kotlin.plugin.spring' version '1.5.10'
+    id 'kr.co.directdeal.java-library-conventions'
+}
+
+// compileKotlin.destinationDir = compileJava.destinationDir
+
+// sourceSets {
+// 	main.java.srcDirs = ['src/main/java']
+// 	main.kotlin.srcDirs = ['src/main/kotlin']
+// 	main.resources.srcDirs = ['src/main/resources']
+// }
+
+// compileKotlin {
+//     kotlinOptions {
+//         freeCompilerArgs = ["-Xjsr305=strict"]
+//         jvmTarget = "11"
+//     }
+// }
+
+// compileTestKotlin {
+//     kotlinOptions {
+//         freeCompilerArgs = ["-Xjsr305=strict"]
+//         jvmTarget = "11"
+//     }
+// }
+
+dependencies {
+	// implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
+	// implementation "org.jetbrains.kotlin:kotlin-reflect"
+	// implementation "org.jetbrains.kotlin:kotlin-stdlib"
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	
+	implementation 'org.axonframework:axon-spring-boot-starter:4.5'
+	implementation 'org.axonframework:axon-micrometer:4.5'
+	
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
