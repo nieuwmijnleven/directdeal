@@ -1,0 +1,20 @@
+GET http://localhost:8081/actuator/beans HTTP/1.1
+
+###
+
+POST http://localhost:8081/image
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="files"; filename="1.jpg"
+Content-Type: image/jpg; image/png; image/gif;
+
+< ./samples/1.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+GET http://localhost:8081/image/check-upload-status/d780b4fc-8d41-43bc-8ea0-bc0ff6f769af HTTP/1.1
+
+###
+

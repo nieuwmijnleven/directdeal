@@ -1,17 +1,20 @@
 package kr.co.directdeal.saleservice.service;
 
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import kr.co.directdeal.common.mapper.Mapper;
 import kr.co.directdeal.saleservice.async.AsyncImageSaveRunner;
+import kr.co.directdeal.saleservice.domain.ImageUploadStatus;
+import kr.co.directdeal.saleservice.dto.ImageUploadStatusDTO;
 import kr.co.directdeal.saleservice.dto.ItemImageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +28,10 @@ public class ImageService {
 
     private final AsyncImageSaveRunner asyncSaveImageRunner;
 
+    private final ImageUploadStatusRepository imageUploadStatusRepository;
+
+    private final Mapper<ImageUploadStatus, ImageUploadStatusDTO> mapper;
+
     public byte[] readImage(String filename) {
         try {
             return Files.readAllBytes(Paths.get(IMAGE_REPOSITORY_PATH, filename));
@@ -33,46 +40,36 @@ public class ImageService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public ImageUploadStatusDTO checkUploadStatus(String id) {
+        log.debug("id => " + id);
+        ImageUploadStatus imageUploadStatus = imageUploadStatusRepository.findById(id)
+                                                    .orElseThrow(IllegalStateException::new);
+        return mapper.toDTO(imageUploadStatus);
+    }
+
     public ItemImageDTO saveImages(List<MultipartFile> files) {
         if (files.size() == 0)
             throw new IllegalStateException("Threre is no item images to save.");
 
-        log.debug("files.size() => " + files.size());
-        log.debug("files[0].name => " + files.get(0).getOriginalFilename());
-
-        //normalize image names
+        //allocate normalized image names
         List<String> images = new ArrayList<>();
         for (MultipartFile file : files) {
             String originalFilename = file.getOriginalFilename();
             String ext = originalFilename.substring(originalFilename.lastIndexOf('.') + 1);
             String filename = UUID.randomUUID().toString() + "." + ext;
             images.add(filename);
-
-            // Path dest = Paths.get(ImageService.IMAGE_REPOSITORY_PATH, filename).toAbsolutePath();
-            // try {
-            //     file.transferTo(dest);
-            //     // Files.copy(file.getInputStream(), dest);
-            // } catch(Exception e) {
-            //     throw new RuntimeException(e);
-            // }
         }
 
         String checkId = UUID.randomUUID().toString();
         String checkURL = ServletUriComponentsBuilder
                             .fromCurrentRequest()
-                            .path("/check-upload-state")
+                            .path("/check-upload-status")
                             .path("/{id}")
                             .buildAndExpand(checkId)
                             .toUriString();
 
-        log.debug("checkId => " + checkId);
-        log.debug("checkURL => " + checkURL);
-
-        new Thread(new Runnable(){
-            public void run() {
-                asyncSaveImageRunner.execute(files, images, checkId);
-            }
-        }).start();
+        asyncSaveImageRunner.execute(files, images, checkId);
 
         return ItemImageDTO.builder()
                     .checkId(checkId)
