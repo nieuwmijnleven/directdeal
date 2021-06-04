@@ -1,4 +1,7 @@
-package kr.co.directdeal.saleservice.command;
+package kr.co.directdeal.saleservice.domain;
+
+import java.time.Instant;
+import java.util.List;
 
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -12,6 +15,7 @@ import kr.co.directdeal.common.sale.command.ItemSaleCompleteCommand;
 import kr.co.directdeal.common.sale.command.ItemSaleStartCommand;
 import kr.co.directdeal.common.sale.command.ItemSaleStopCommand;
 import kr.co.directdeal.common.sale.command.ItemUpdateCommand;
+import kr.co.directdeal.common.sale.constant.SaleItemStatus;
 import kr.co.directdeal.common.sale.event.ItemDeletedEvent;
 import kr.co.directdeal.common.sale.event.ItemRegisteredEvent;
 import kr.co.directdeal.common.sale.event.ItemSaleCompletedEvent;
@@ -23,27 +27,39 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-//@Aggregate
 @AllArgsConstructor
 @NoArgsConstructor
 @Aggregate
-public class Item {
+public class SaleItemAggregate {
     @AggregateIdentifier
     private String id;
-    // private String ownerId;
+
+    private String ownerId;
+    
     private String title;
+    
     private String category;
+    
     private long targetPrice;
+
+    private boolean discountable;
+    
     private String text;
-    private String imagePath;
-    private String status;
+    
+    private List<String> images;
+    
+    private SaleItemStatus status;
+        
     // private String createdBy;
-    // private Instant createdDate; 
+    
+    private Instant createdDate; 
+    
     // private String lastModifiedBy;
+    
     // private Instant lastModifiedByDate; 
 
     @CommandHandler
-    public Item(ItemRegisterCommand cmd) {
+    public SaleItemAggregate(ItemRegisterCommand cmd) {
         if (cmd.getTargetPrice() <= 0) {
             throw new IllegalArgumentException("target price <= 0");
         }
@@ -55,8 +71,9 @@ public class Item {
                                     .category(cmd.getCategory())
                                     .targetPrice(cmd.getTargetPrice())
                                     .text(cmd.getText())
-                                    .imagePath(cmd.getImagePath())
+                                    .images(cmd.getImages())
                                     .status(cmd.getStatus())
+                                    .createdDate(Instant.now())
                                     .build());
     }
 
@@ -74,7 +91,7 @@ public class Item {
                                     .category(cmd.getCategory())
                                     .targetPrice(cmd.getTargetPrice())
                                     .text(cmd.getText())
-                                    .imagePath(cmd.getImagePath())
+                                    .images(cmd.getImages())
                                     .build());
     }
 
@@ -90,7 +107,6 @@ public class Item {
     public void handle(ItemSaleStartCommand cmd) {
         AggregateLifecycle.apply(ItemSaleStartedEvent.builder()
                                     .id(cmd.getId())
-                                    .status(cmd.getStatus())
                                     .build());
     }
 
@@ -98,7 +114,6 @@ public class Item {
     public void handle(ItemSaleStopCommand cmd) {
         AggregateLifecycle.apply(ItemSaleStoppedEvent.builder()
                                     .id(cmd.getId())
-                                    .status(cmd.getStatus())
                                     .build());
     }
 
@@ -106,7 +121,6 @@ public class Item {
     public void handle(ItemSaleCompleteCommand cmd) {
         AggregateLifecycle.apply(ItemSaleCompletedEvent.builder()
                                     .id(cmd.getId())
-                                    .status(cmd.getStatus())
                                     .build());
     }
 
@@ -118,20 +132,19 @@ public class Item {
         this.category = event.getCategory();
         this.targetPrice = event.getTargetPrice();
         this.text = event.getText();
-        this.imagePath = event.getImagePath();
+        this.images = event.getImages();
         this.status = event.getStatus();
     }
 
     
     @EventSourcingHandler
     public void on(ItemUpdatedEvent event) {
-        log.debug("ItemUpdatedEvent => " + event.getId());
         this.id = event.getId();
         this.title = event.getTitle();
         this.category = event.getCategory();
         this.targetPrice = event.getTargetPrice();
         this.text = event.getText();
-        this.imagePath = event.getImagePath();
+        this.images = event.getImages();
         this.status = event.getStatus();
     }
     
@@ -140,27 +153,26 @@ public class Item {
     public void on(ItemDeletedEvent event) {
         log.debug("call {}.ItemDeletedEvent", this.getClass().getSimpleName());
         this.id = event.getId();
-        this.status = "DELETED";
+        this.status = SaleItemStatus.DELETED;
     }
 
     
     @EventSourcingHandler
     public void on(ItemSaleStartedEvent event) {
         this.id = event.getId();
-        this.status = "SALE";
+        this.status = SaleItemStatus.SALE;
     }
 
     
     @EventSourcingHandler
     public void on(ItemSaleStoppedEvent event) {
         this.id = event.getId();
-        this.status = "STOPPED";
+        this.status = SaleItemStatus.STOPPED;
     }
 
-    
     @EventSourcingHandler
     public void on(ItemSaleCompletedEvent event) {
         this.id = event.getId();
-        this.status = "COMPLETED";
+        this.status = SaleItemStatus.COMPLETED;
     }
 }
