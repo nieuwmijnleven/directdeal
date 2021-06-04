@@ -13,6 +13,5 @@ import lombok.EqualsAndHashCode;
 @Builder
 public class ItemSaleStartedEvent {
     @TargetAggregateIdentifier
-    private String id;    
-    private String status;   
+    private String id;      
 }

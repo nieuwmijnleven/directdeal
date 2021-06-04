@@ -12,5 +12,4 @@ import lombok.EqualsAndHashCode;
 public class ItemSaleStartCommand {
     @TargetAggregateIdentifier
     private String id;    
-    private String status;
 }

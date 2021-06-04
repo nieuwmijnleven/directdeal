@@ -14,5 +14,4 @@ import lombok.EqualsAndHashCode;
 public class ItemSaleStoppedEvent {
     @TargetAggregateIdentifier
     private String id;    
-    private String status;
 }
