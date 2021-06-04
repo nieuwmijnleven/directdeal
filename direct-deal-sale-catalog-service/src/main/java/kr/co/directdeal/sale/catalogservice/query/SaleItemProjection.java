@@ -1,11 +1,12 @@
 package kr.co.directdeal.sale.catalogservice.query;
 
-import org.axonframework.eventhandling.AllowReplay;
+import java.time.Instant;
+
 import org.axonframework.eventhandling.EventHandler;
-import org.axonframework.eventhandling.ResetHandler;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;
 
+import kr.co.directdeal.common.sale.constant.SaleItemStatus;
 import kr.co.directdeal.common.sale.event.ItemDeletedEvent;
 import kr.co.directdeal.common.sale.event.ItemRegisteredEvent;
 import kr.co.directdeal.common.sale.event.ItemSaleCompletedEvent;
@@ -21,30 +22,43 @@ import lombok.extern.slf4j.Slf4j;
 public class SaleItemProjection {
     
     private final SaleItemRepository saleItemRepository;
+    
+    private final SaleListItemRepository saleListItemRepository;
 
-    @AllowReplay
     @EventHandler
     public void on(ItemRegisteredEvent event) {
         log.debug("[{}] Triggered ItemRegisterEvent.", this.getClass().getSimpleName());
-
         SaleItem saleItem = SaleItem.builder()
                                 .id(event.getId())
                                 .title(event.getTitle())
                                 .category(event.getCategory())
                                 .targetPrice(event.getTargetPrice())
                                 .text(event.getText())
-                                .imagePath(event.getImagePath())
+                                .images(event.getImages())
                                 .status(event.getStatus())
+                                .createdDate(Instant.now())
                                 .build();
 
         saleItemRepository.save(saleItem);
+        log.debug("saleItem => " + saleItem.toString()); 
+
+        SaleListItem saleListItem = SaleListItem.builder()
+                                        .id(event.getId())
+                                        .title(event.getTitle())
+                                        .category(event.getCategory())
+                                        .targetPrice(event.getTargetPrice())
+                                        .mainImage(event.getImages().get(0))
+                                        .status(event.getStatus())
+                                        .createdDate(Instant.now())
+                                        .build();
+
+        saleListItemRepository.save(saleListItem);
+        log.debug("saleListItem => " + saleListItem.toString());
     }
 
-    @AllowReplay
     @EventHandler
     public void on(ItemUpdatedEvent event) {
         log.debug("[{}] Triggered ItemUpdatedEvent.", this.getClass().getSimpleName());
-
         SaleItem saleItem = saleItemRepository.findById(event.getId())
                                 .orElseThrow(IllegalStateException::new);
         
@@ -52,61 +66,76 @@ public class SaleItemProjection {
         saleItem.setCategory(event.getCategory());
         saleItem.setTargetPrice(event.getTargetPrice());
         saleItem.setText(event.getText());
-        saleItem.setImagePath(event.getImagePath());
+        saleItem.setImages(event.getImages());
+
+        SaleListItem saleListItem = saleListItemRepository.findById(event.getId())
+                                        .orElseThrow(IllegalStateException::new);
+        
+        saleListItem.setTitle(event.getTitle());
+        saleListItem.setCategory(event.getCategory());
+        saleListItem.setTargetPrice(event.getTargetPrice());
+        saleListItem.setMainImage(event.getImages().get(0));
     }
 
-    @AllowReplay
     @EventHandler
     public void on(ItemDeletedEvent event) {
         log.debug("[{}] Triggered ItemDeletedEvent.", this.getClass().getSimpleName());
-        
         SaleItem saleItem = saleItemRepository.findById(event.getId())
                                 .orElseThrow(IllegalStateException::new);
+        saleItem.setStatus(SaleItemStatus.DELETED);
 
-        saleItem.setStatus("DELETED");
+        SaleListItem saleListItem = saleListItemRepository.findById(event.getId())
+                                        .orElseThrow(IllegalStateException::new);
+        saleListItem.setStatus(SaleItemStatus.DELETED);
     }
 
-    @AllowReplay
     @EventHandler
     public void on(ItemSaleStartedEvent event) {
         log.debug("[{}] Triggered ItemSaleStartedEvent.", this.getClass().getSimpleName());
-        
         SaleItem saleItem = saleItemRepository.findById(event.getId())
                                 .orElseThrow(IllegalStateException::new);
+        saleItem.setStatus(SaleItemStatus.SALE);
 
-        saleItem.setStatus("SALE");
+        SaleListItem saleListItem = saleListItemRepository.findById(event.getId())
+                                        .orElseThrow(IllegalStateException::new);
+        saleListItem.setStatus(SaleItemStatus.SALE);
     }
 
-    @AllowReplay
     @EventHandler
     public void on(ItemSaleStoppedEvent event) {
         log.debug("[{}] Triggered ItemSaleStoppedEvent.", this.getClass().getSimpleName());
-        
         SaleItem saleItem = saleItemRepository.findById(event.getId())
                                 .orElseThrow(IllegalStateException::new);
+        saleItem.setStatus(SaleItemStatus.STOPPED);
 
-        saleItem.setStatus("STOPPED");
+        SaleListItem saleListItem = saleListItemRepository.findById(event.getId())
+                                        .orElseThrow(IllegalStateException::new);
+        saleListItem.setStatus(SaleItemStatus.STOPPED);
     }
 
-    @AllowReplay
     @EventHandler
     public void on(ItemSaleCompletedEvent event) {
         log.debug("[{}] Triggered ItemSaleCompletedEvent.", this.getClass().getSimpleName());
-        
         SaleItem saleItem = saleItemRepository.findById(event.getId())
                                 .orElseThrow(IllegalStateException::new);
+        saleItem.setStatus(SaleItemStatus.COMPLETED);
 
-        saleItem.setStatus("COMPLETED");
-    }
-
-    @ResetHandler
-    public void resetSaleItemRepository() {
-        saleItemRepository.deleteAll();
+        SaleListItem saleListItem = saleListItemRepository.findById(event.getId())
+                                        .orElseThrow(IllegalStateException::new);
+        saleListItem.setStatus(SaleItemStatus.COMPLETED);
     }
 
     @QueryHandler
     public SaleItem on(SaleItemQuery query) {
-        return saleItemRepository.findById(query.getId())
+        return saleItemRepository
+                    .findById(query.getId())
+                    .orElseThrow(IllegalStateException::new);
+    }
+
+    @QueryHandler
+    public SaleListItem on(SaleListQuery query) {
+        return saleListItemRepository
+                    .findById(query.getId())
                     .orElseThrow(IllegalStateException::new);
     }
 }

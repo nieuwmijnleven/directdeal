@@ -26,7 +26,7 @@ public class SaleItemQueryService {
                     .category(saleItem.getCategory())
                     .targetPrice(saleItem.getTargetPrice())
                     .text(saleItem.getText())
-                    .imagePath(saleItem.getImagePath())
+                    .images(saleItem.getImages())
                     .status(saleItem.getStatus())
                     .build();
     }

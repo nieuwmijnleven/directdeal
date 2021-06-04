@@ -1,11 +1,23 @@
 package kr.co.directdeal.sale.catalogservice.query;
 
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.annotation.CreatedDate;
+
+import kr.co.directdeal.common.sale.constant.SaleItemStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,19 +53,22 @@ public class SaleItem {
     @Column
     private String text;
 
-    @Column
-    private String imagePath;
+    // @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection
+    @CollectionTable(name = "SALE_ITEM_IMAGE", joinColumns = @JoinColumn(name = "SALE_ITEM_ID"))
+    @Column(name = "IMAGE_PATH")
+    private List<String> images = new ArrayList<>();
 
-    @Column
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private SaleItemStatus status;
 
     // @CreatedBy
     // @Column
     // private String createdBy;
 
-    // @CreatedDate
-    // @Column
-    // private Instant createdDate; 
+    @CreatedDate
+    @Column
+    private Instant createdDate; 
 
     // @LastModifiedBy
     // @Column

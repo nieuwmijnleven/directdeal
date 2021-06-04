@@ -1,7 +1,9 @@
 package kr.co.directdeal.sale.catalogservice.dto;
 
 import java.time.Instant;
+import java.util.List;
 
+import kr.co.directdeal.common.sale.constant.SaleItemStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,8 +21,8 @@ public class SaleItemDTO {
     private String category;
     private long targetPrice;
     private String text;
-    private String imagePath;
-    private String status;
+    private List<String> images;
+    private SaleItemStatus status;
     private String createdBy;
     private Instant createdDate; 
     private String lastModifiedBy;
