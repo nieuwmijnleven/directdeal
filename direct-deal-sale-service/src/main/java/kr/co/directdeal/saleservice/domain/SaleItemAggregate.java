@@ -75,6 +75,8 @@ public class SaleItemAggregate {
                                     .status(cmd.getStatus())
                                     .createdDate(Instant.now())
                                     .build());
+
+                                    
     }
 
     @CommandHandler

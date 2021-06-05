@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-// @AutoConfigureAfter(AxonAutoConfiguration.class)
 public class AxonConfig {
     // @Autowired
     // public EventProcessingConfigurer  streamableKafkaMessageSource(

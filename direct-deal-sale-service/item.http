@@ -18,7 +18,7 @@ GET http://localhost:8082/salelist?page=0&size=10&sort=createdDate,desc HTTP/1.1
 
 ###
 
-GET http://localhost:8081/image/4a340d78-4b4d-483a-95c9-ed93341c2f06.jpg HTTP/1.1
+GET http://localhost:8081/image/cb30bccd-8562-4809-a701-3e7c35e4c7d8.jpg HTTP/1.1
 
 ###
 
