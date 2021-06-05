@@ -2,13 +2,10 @@ package kr.co.directdeal.sale.catalogservice.query;
 
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SaleItemRepository extends JpaRepository<SaleItem, String> {
-    @EntityGraph(attributePaths = {"images"}, type = EntityGraphType.LOAD)
+public interface SaleItemRepository extends MongoRepository<SaleItem, String> {
     public Optional<SaleItem> findById(String id);
 }
