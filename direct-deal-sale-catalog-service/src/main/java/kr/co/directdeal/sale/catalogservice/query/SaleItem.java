@@ -1,13 +1,12 @@
 package kr.co.directdeal.sale.catalogservice.query;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import kr.co.directdeal.common.sale.constant.SaleItemStatus;
@@ -40,7 +39,7 @@ public class SaleItem {
 
     private String text;
 
-    private List<String> images = new ArrayList<>();
+    private List<String> images;
 
     private SaleItemStatus status;
 

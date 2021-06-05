@@ -3,7 +3,6 @@ package kr.co.directdeal.sale.catalogservice.query;
 import java.time.Instant;
 
 import org.axonframework.eventhandling.EventHandler;
-import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;
 
 import kr.co.directdeal.common.sale.constant.SaleItemStatus;
@@ -68,6 +67,9 @@ public class SaleItemProjection {
         saleItem.setText(event.getText());
         saleItem.setImages(event.getImages());
 
+        saleItemRepository.save(saleItem);
+        log.debug("saleItem => " + saleItem.toString()); 
+
         SaleListItem saleListItem = saleListItemRepository.findById(event.getId())
                                         .orElseThrow(IllegalStateException::new);
         
@@ -75,6 +77,9 @@ public class SaleItemProjection {
         saleListItem.setCategory(event.getCategory());
         saleListItem.setTargetPrice(event.getTargetPrice());
         saleListItem.setMainImage(event.getImages().get(0));
+
+        saleListItemRepository.save(saleListItem);
+        log.debug("saleListItem => " + saleListItem.toString());
     }
 
     @EventHandler
@@ -83,10 +88,12 @@ public class SaleItemProjection {
         SaleItem saleItem = saleItemRepository.findById(event.getId())
                                 .orElseThrow(IllegalStateException::new);
         saleItem.setStatus(SaleItemStatus.DELETED);
+        saleItemRepository.save(saleItem);
 
         SaleListItem saleListItem = saleListItemRepository.findById(event.getId())
                                         .orElseThrow(IllegalStateException::new);
         saleListItem.setStatus(SaleItemStatus.DELETED);
+        saleListItemRepository.save(saleListItem);
     }
 
     @EventHandler
@@ -95,10 +102,12 @@ public class SaleItemProjection {
         SaleItem saleItem = saleItemRepository.findById(event.getId())
                                 .orElseThrow(IllegalStateException::new);
         saleItem.setStatus(SaleItemStatus.SALE);
+        saleItemRepository.save(saleItem);
 
         SaleListItem saleListItem = saleListItemRepository.findById(event.getId())
                                         .orElseThrow(IllegalStateException::new);
         saleListItem.setStatus(SaleItemStatus.SALE);
+        saleListItemRepository.save(saleListItem);
     }
 
     @EventHandler
@@ -107,10 +116,12 @@ public class SaleItemProjection {
         SaleItem saleItem = saleItemRepository.findById(event.getId())
                                 .orElseThrow(IllegalStateException::new);
         saleItem.setStatus(SaleItemStatus.STOPPED);
+        saleItemRepository.save(saleItem);
 
         SaleListItem saleListItem = saleListItemRepository.findById(event.getId())
                                         .orElseThrow(IllegalStateException::new);
         saleListItem.setStatus(SaleItemStatus.STOPPED);
+        saleListItemRepository.save(saleListItem);
     }
 
     @EventHandler
@@ -119,23 +130,11 @@ public class SaleItemProjection {
         SaleItem saleItem = saleItemRepository.findById(event.getId())
                                 .orElseThrow(IllegalStateException::new);
         saleItem.setStatus(SaleItemStatus.COMPLETED);
+        saleItemRepository.save(saleItem);
 
         SaleListItem saleListItem = saleListItemRepository.findById(event.getId())
                                         .orElseThrow(IllegalStateException::new);
         saleListItem.setStatus(SaleItemStatus.COMPLETED);
-    }
-
-    @QueryHandler
-    public SaleItem on(SaleItemQuery query) {
-        return saleItemRepository
-                    .findById(query.getId())
-                    .orElseThrow(IllegalStateException::new);
-    }
-
-    @QueryHandler
-    public SaleListItem on(SaleListQuery query) {
-        return saleListItemRepository
-                    .findById(query.getId())
-                    .orElseThrow(IllegalStateException::new);
+        saleListItemRepository.save(saleListItem);
     }
 }

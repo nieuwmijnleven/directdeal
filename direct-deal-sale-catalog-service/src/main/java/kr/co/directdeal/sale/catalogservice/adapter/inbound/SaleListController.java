@@ -22,11 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 public class SaleListController {
 
     private final SaleListQueryService saleListQueryService;
-    
-    @GetMapping("/{id}")
-    public SaleListItemDTO get(@PathVariable("id") @NotBlank String id) {
-        return saleListQueryService.findSaleListItemById(id);
-    }
 
     @GetMapping
     public List<SaleListItemDTO> list(Pageable pageable) {

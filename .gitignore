@@ -1,5 +1,9 @@
 # Ignore Gradle project-specific cache directory
 .gradle
+.project
+.settings
+*.tar
+*.tar.gz
 
 # Ignore Gradle build output directory
 build
