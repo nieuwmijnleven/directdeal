@@ -17,11 +17,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-<<<<<<< HEAD
 // @AutoConfigureAfter(AxonAutoConfiguration.class)
-=======
-//@AutoConfigureBefore({AxonAutoConfiguration.class, AxonServerAutoConfiguration.class})
->>>>>>> 038316a... temporary commit
 public class AxonConfig {
     /*@Bean
     public SimpleCommandBus commandBus(TransactionManager txManager, AxonConfiguration axonConfiguration,
