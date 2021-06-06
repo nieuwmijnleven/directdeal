@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 @Configuration
-public class MongoConfig /*extends AbstractMongoConfiguration*/ {
+public class MongoConfig {
 
     @Value("${spring.data.mongodb.host}")  
     private String host;

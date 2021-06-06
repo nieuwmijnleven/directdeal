@@ -18,19 +18,4 @@ public class AxonConfig {
     //     // config.usingSubscribingEventProcessors();
     //     config.usingTrackingEventProcessors();
     // }
-
-    // @Bean
-    // public SimpleCommandBus commandBus(TransactionManager txManager, AxonConfiguration axonConfiguration,
-    //                                    DuplicateCommandHandlerResolver duplicateCommandHandlerResolver) {
-    //     SimpleCommandBus commandBus =
-    //             SimpleCommandBus.builder()
-    //                             .transactionManager(txManager)
-    //                             .duplicateCommandHandlerResolver(duplicateCommandHandlerResolver)
-    //                             .messageMonitor(axonConfiguration.messageMonitor(CommandBus.class, "commandBus"))
-    //                             .build();
-    //     commandBus.registerHandlerInterceptor(
-    //             new CorrelationDataInterceptor<>(axonConfiguration.correlationDataProviders())
-    //     );
-    //     return commandBus;
-    // }
 }
