@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@AutoConfigureAfter(AxonAutoConfiguration.class)
+// @AutoConfigureAfter(AxonAutoConfiguration.class)
 public class AxonConfig {
     // @Bean
     // public SimpleCommandBus commandBus(TransactionManager txManager, AxonConfiguration axonConfiguration,

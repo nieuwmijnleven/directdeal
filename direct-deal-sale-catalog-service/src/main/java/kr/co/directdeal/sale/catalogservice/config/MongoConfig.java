@@ -36,7 +36,7 @@ public class MongoConfig /*extends AbstractMongoConfiguration*/ {
 	}
 
     @Bean
-    public MongoTemplate mongoTemplate() throws Exception {
+    public MongoTemplate mongoTemplate() {
         return new MongoTemplate(mongoClients(), database);
     }
 }

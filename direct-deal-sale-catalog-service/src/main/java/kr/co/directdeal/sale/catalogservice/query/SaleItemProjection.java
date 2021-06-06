@@ -2,7 +2,9 @@ package kr.co.directdeal.sale.catalogservice.query;
 
 import java.time.Instant;
 
+import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
+import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;
 
 import kr.co.directdeal.common.sale.constant.SaleItemStatus;
@@ -18,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @Component
+@ProcessingGroup("saleItem")
 public class SaleItemProjection {
     
     private final SaleItemRepository saleItemRepository;
@@ -137,4 +140,9 @@ public class SaleItemProjection {
         saleListItem.setStatus(SaleItemStatus.COMPLETED);
         saleListItemRepository.save(saleListItem);
     }
+
+    // @QueryHandler
+    // public SaleItem test(SaleItemQuery query) {
+    //     return null;
+    // }
 }

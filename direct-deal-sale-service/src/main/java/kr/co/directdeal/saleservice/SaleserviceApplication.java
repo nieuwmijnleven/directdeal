@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartResolver;
 
 import kr.co.directdeal.saleservice.custom.CustomMultipartResolver;
 
+// @SpringBootApplication(exclude = {KafkaAutoConfiguration.class})
 @SpringBootApplication
 public class SaleserviceApplication {
 

@@ -1,18 +1,16 @@
 package kr.co.directdeal.saleservice.async;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
-import com.google.common.io.Files;
-
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -61,7 +59,7 @@ public class AsyncImageSaveRunner {
             String filename = images.get(i);
             Path dest = Paths.get(ImageService.IMAGE_REPOSITORY_PATH, filename).toAbsolutePath();
             try {
-                Files.move(uploadFile, dest.toFile());
+                Files.move(uploadFile.toPath(), dest);
                 log.info("move [{}] to [{}]", uploadFile, dest);
             } catch(Exception e) {
                 //set the status to FAILURE
