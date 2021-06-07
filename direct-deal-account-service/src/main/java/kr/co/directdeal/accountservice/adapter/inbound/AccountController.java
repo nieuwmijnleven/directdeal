@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.co.directdeal.accountservice.audit.SecurityUtils;
 import kr.co.directdeal.accountservice.service.AccountService;
 import kr.co.directdeal.accountservice.service.dto.AccountDTO;
 import kr.co.directdeal.accountservice.service.dto.PasswordDTO;
+import kr.co.directdeal.common.security.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

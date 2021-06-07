@@ -1,4 +1,4 @@
-package kr.co.directdeal.accountservice.auth.jwt;
+package kr.co.directdeal.common.security.auth.jwt;
 
 import java.io.IOException;
 

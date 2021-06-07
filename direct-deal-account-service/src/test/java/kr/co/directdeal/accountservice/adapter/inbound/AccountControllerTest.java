@@ -27,15 +27,15 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import kr.co.directdeal.accountservice.audit.SecurityUtils;
-import kr.co.directdeal.accountservice.auth.jwt.JwtAccessDeniedHandler;
-import kr.co.directdeal.accountservice.auth.jwt.JwtAuthenticationEntryPoint;
-import kr.co.directdeal.accountservice.auth.jwt.TokenProvider;
-import kr.co.directdeal.accountservice.config.props.JWTProperties;
 import kr.co.directdeal.accountservice.exception.AccountException;
 import kr.co.directdeal.accountservice.service.AccountService;
 import kr.co.directdeal.accountservice.service.dto.AccountDTO;
 import kr.co.directdeal.accountservice.service.dto.PasswordDTO;
+import kr.co.directdeal.common.security.auth.jwt.JwtAccessDeniedHandler;
+import kr.co.directdeal.common.security.auth.jwt.JwtAuthenticationEntryPoint;
+import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
+import kr.co.directdeal.common.security.config.props.JWTProperties;
+import kr.co.directdeal.common.security.util.SecurityUtils;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {AccountController.class}, 

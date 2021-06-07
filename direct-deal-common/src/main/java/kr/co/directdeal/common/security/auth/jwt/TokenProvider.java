@@ -1,4 +1,4 @@
-package kr.co.directdeal.accountservice.auth.jwt;
+package kr.co.directdeal.common.security.auth.jwt;
 
 import java.security.Key;
 import java.util.Arrays;
@@ -22,7 +22,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import kr.co.directdeal.accountservice.config.props.JWTProperties;
+import kr.co.directdeal.common.security.config.props.JWTProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

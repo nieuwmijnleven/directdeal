@@ -1,4 +1,4 @@
-package kr.co.directdeal.accountservice.config.props;
+package kr.co.directdeal.common.security.config.props;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

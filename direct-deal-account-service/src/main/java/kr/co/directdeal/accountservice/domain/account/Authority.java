@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import kr.co.directdeal.accountservice.config.constants.AuthorityConstants;
+import kr.co.directdeal.common.security.constants.AuthorityConstants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

@@ -1,6 +1,8 @@
 package kr.co.directdeal.accountservice.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -10,15 +12,16 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import kr.co.directdeal.accountservice.auth.jwt.JwtAccessDeniedHandler;
-import kr.co.directdeal.accountservice.auth.jwt.JwtAuthenticationEntryPoint;
-import kr.co.directdeal.accountservice.auth.jwt.JwtSecurityConfig;
-import kr.co.directdeal.accountservice.auth.jwt.TokenProvider;
-import kr.co.directdeal.accountservice.config.constants.AuthorityConstants;
+import kr.co.directdeal.common.security.auth.jwt.JwtAccessDeniedHandler;
+import kr.co.directdeal.common.security.auth.jwt.JwtAuthenticationEntryPoint;
+import kr.co.directdeal.common.security.auth.jwt.JwtSecurityConfig;
+import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
+@Configuration
+@ComponentScan(basePackages = {"kr.co.directdeal.common.security"})
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	private final TokenProvider tokenProvider;

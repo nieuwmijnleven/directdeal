@@ -1,4 +1,4 @@
-package kr.co.directdeal.accountservice.audit;
+package kr.co.directdeal.common.security.util;
 
 import java.util.Optional;
 
@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import kr.co.directdeal.accountservice.config.constants.Constants;
+import kr.co.directdeal.common.security.constants.Constants;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

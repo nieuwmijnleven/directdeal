@@ -1,4 +1,4 @@
-package kr.co.directdeal.accountservice.auth.jwt;
+package kr.co.directdeal.common.security.auth.jwt;
 
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

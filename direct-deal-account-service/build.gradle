@@ -1,31 +1,15 @@
 plugins {
 	id 'org.springframework.boot' version '2.5.0'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
+	id 'kr.co.directdeal.java-common-conventions'
 }
 
-group = 'kr.co.directdeal'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
-
-repositories {
-	mavenCentral()
-	maven { url 'https://repo.spring.io/snapshot' }
-	maven { url 'https://repo.spring.io/milestone' }
-}
-
-ext {
-	set('springCloudVersion', "2020.0.3-SNAPSHOT")
-}
-
-configurations {
-	developmentOnly
-	runtimeClasspath {
-		extendsFrom developmentOnly
-	}
-}
+// ext {
+// 	set('springCloudVersion', "2020.0.3-SNAPSHOT")
+// }
 
 dependencies {
+	implementation project(':direct-deal-common')
 	//implementation 'org.springframework.boot:spring-boot-starter-parent'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -53,16 +37,17 @@ dependencies {
 	
 	developmentOnly "org.springframework.boot:spring-boot-devtools"
 	
+	//testImplementation project(':direct-deal-common')
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-	}
-}
+// dependencyManagement {
+// 	imports {
+// 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+// 	}
+// }
 
-test {
-	useJUnitPlatform()
-}
+// test {
+// 	useJUnitPlatform()
+// }

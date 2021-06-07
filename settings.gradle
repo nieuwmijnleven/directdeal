@@ -10,5 +10,6 @@
 rootProject.name = 'direct-deal'
 
 include 'direct-deal-common'
+include 'direct-deal-account-service'
 include 'direct-deal-sale-service'
 include 'direct-deal-sale-catalog-service'
