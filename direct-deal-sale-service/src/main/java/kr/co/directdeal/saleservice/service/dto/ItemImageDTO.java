@@ -1,18 +1,20 @@
-package kr.co.directdeal.saleservice.query;
+package kr.co.directdeal.saleservice.service.dto;
+
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
-public class SaleItemQuery {
-    private String id;
+public class ItemImageDTO {
+    private String checkId;
+    private String checkURL;
+    private List<String> images;
 }

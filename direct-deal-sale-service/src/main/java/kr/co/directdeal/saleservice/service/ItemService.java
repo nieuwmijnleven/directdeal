@@ -10,7 +10,7 @@ import kr.co.directdeal.common.sale.command.ItemDeleteCommand;
 import kr.co.directdeal.common.sale.command.ItemRegisterCommand;
 import kr.co.directdeal.common.sale.command.ItemUpdateCommand;
 import kr.co.directdeal.common.sale.constant.SaleItemStatus;
-import kr.co.directdeal.saleservice.dto.ItemDTO;
+import kr.co.directdeal.saleservice.service.dto.ItemDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

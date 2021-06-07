@@ -12,7 +12,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import kr.co.directdeal.saleservice.dto.ItemDTO;
+import kr.co.directdeal.saleservice.service.dto.ItemDTO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

@@ -1,6 +1,6 @@
-package kr.co.directdeal.saleservice.dto;
+package kr.co.directdeal.saleservice.service.dto;
 
-import java.util.List;
+import java.time.Instant;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,8 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ItemImageDTO {
-    private String checkId;
-    private String checkURL;
-    private List<String> images;
+public class FavoriteItemDTO {
+    private String id;
+    private String userId;
+    private String itemId;
+    private Instant createdDate; 
 }

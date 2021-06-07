@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.micrometer.core.lang.NonNull;
-import kr.co.directdeal.saleservice.dto.ItemDTO;
 import kr.co.directdeal.saleservice.service.ItemService;
+import kr.co.directdeal.saleservice.service.dto.ItemDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

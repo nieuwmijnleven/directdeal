@@ -20,7 +20,6 @@ dependencies {
 		exclude group: "org.axonframework", module: 'axon-server-connector'
 	}
 	implementation 'org.axonframework:axon-micrometer:4.5'
-
 	implementation 'org.axonframework.extensions.kafka:axon-kafka-spring-boot-starter:4.0-RC3'
 	implementation 'org.apache.kafka:kafka-clients:2.8.0'
 

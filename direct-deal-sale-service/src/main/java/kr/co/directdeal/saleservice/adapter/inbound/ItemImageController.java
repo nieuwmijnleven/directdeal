@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.co.directdeal.saleservice.dto.ImageUploadStatusDTO;
-import kr.co.directdeal.saleservice.dto.ItemImageDTO;
 import kr.co.directdeal.saleservice.service.ImageService;
+import kr.co.directdeal.saleservice.service.dto.ImageUploadStatusDTO;
+import kr.co.directdeal.saleservice.service.dto.ItemImageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

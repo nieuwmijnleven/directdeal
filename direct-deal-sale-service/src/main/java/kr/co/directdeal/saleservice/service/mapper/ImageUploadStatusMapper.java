@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import kr.co.directdeal.common.mapper.Mapper;
 import kr.co.directdeal.saleservice.domain.ImageUploadStatus;
-import kr.co.directdeal.saleservice.dto.ImageUploadStatusDTO;
+import kr.co.directdeal.saleservice.service.dto.ImageUploadStatusDTO;
 
 @Component
 public class ImageUploadStatusMapper implements Mapper<ImageUploadStatus, ImageUploadStatusDTO> {

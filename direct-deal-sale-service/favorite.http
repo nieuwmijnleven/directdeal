@@ -1,0 +1,14 @@
+POST http://localhost:8081/favorite HTTP/1.1
+Content-Type: application/json
+
+{
+    "itemId":"80b1616d-c8a8-47f3-80bb-20926444974c"
+}
+
+###
+
+GET http://localhost:8081/favorite HTTP/1.1
+
+###
+
+DELETE http://localhost:8081/favorite/80b1616d-c8a8-47f3-80bb-20926444974c HTTP/1.1

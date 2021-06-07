@@ -14,8 +14,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import kr.co.directdeal.common.mapper.Mapper;
 import kr.co.directdeal.saleservice.async.AsyncImageSaveRunner;
 import kr.co.directdeal.saleservice.domain.ImageUploadStatus;
-import kr.co.directdeal.saleservice.dto.ImageUploadStatusDTO;
-import kr.co.directdeal.saleservice.dto.ItemImageDTO;
+import kr.co.directdeal.saleservice.service.dto.ImageUploadStatusDTO;
+import kr.co.directdeal.saleservice.service.dto.ItemImageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,7 +49,7 @@ public class ImageService {
     }
 
     public ItemImageDTO saveImages(List<MultipartFile> files) {
-        if (files.size() == 0)
+        if (files.isEmpty())
             throw new IllegalStateException("Threre is no item images to save.");
 
         //allocate normalized image names
