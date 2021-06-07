@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedDate;
 
-import kr.co.directdeal.common.sale.constant.SaleItemStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,7 +39,7 @@ public class ImageUploadStatus {
     @Column
     private Instant createdDate; 
 
-    public static enum Status {
+    public enum Status {
         PROCESSING,
         SUCCESS,
         FAILURE

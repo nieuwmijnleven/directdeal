@@ -86,7 +86,6 @@ public class SaleItemAggregate {
         }
 
         log.debug("call {}.ItemUpdateCommand", this.getClass().getSimpleName());
-
         AggregateLifecycle.apply(ItemUpdatedEvent.builder()
                                     .id(cmd.getId())
                                     .title(cmd.getTitle())

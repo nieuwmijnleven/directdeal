@@ -43,4 +43,16 @@ public class SaleListItem {
 
     // @LastModifiedDate
     // private Instant lastModifiedByDate; 
+
+    public static SaleListItem copyOf(SaleListItem another) {
+        return SaleListItem.builder()
+                    .id(another.getId())
+                    .title(another.getTitle())
+                    .category(another.getCategory())
+                    .targetPrice(another.getTargetPrice())
+                    .mainImage(another.getMainImage())
+                    .status(another.getStatus())
+                    .createdDate(another.getCreatedDate())
+                    .build();
+    }
 }

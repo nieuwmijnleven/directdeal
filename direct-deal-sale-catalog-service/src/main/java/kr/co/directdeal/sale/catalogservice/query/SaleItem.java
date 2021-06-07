@@ -26,7 +26,7 @@ import lombok.ToString;
 @ToString
 public class SaleItem {
     @NotNull
-    @Id
+    // @Id
     private String id;
 
     private String ownerId;
