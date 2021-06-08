@@ -18,7 +18,7 @@ public class SaleListItemDomainService {
         LocalDate startLocalDate = LocalDate.ofInstant(saleListItem.getCreatedDate(), ZoneOffset.UTC);
         LocalDate currentLocalDate = LocalDate.now(ZoneOffset.UTC);
         Period period = Period.between(startLocalDate, currentLocalDate);
-        return period.getDays() >= CAN_LIFT_UP_DATE;
+        return period.getDays() >= 0;
     }
 
     public void liftUp(SaleListItem saleListItem) {

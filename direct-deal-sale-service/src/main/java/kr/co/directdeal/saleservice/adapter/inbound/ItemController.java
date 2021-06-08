@@ -43,4 +43,22 @@ public class ItemController {
     public void delete(@PathVariable("id") @NonNull String id) {
         itemService.delete(id);
     }
+
+    @PutMapping("/{id}/sale")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void sale(@PathVariable("id") String id) {
+        itemService.sale(id);
+    }
+
+    @PutMapping("/{id}/pause")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void pause(@PathVariable("id") String id) {
+        itemService.pause(id);
+    }
+
+    @PutMapping("/{id}/complete")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void complete(@PathVariable("id") String id) {
+        itemService.complete(id);
+    }
 }

@@ -1,0 +1,106 @@
+POST http://localhost:8081/category HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"가전"
+}
+
+###
+
+GET http://localhost:8081/category HTTP/1.1
+
+###
+
+POST http://localhost:8081/category HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"식품"
+}
+
+###
+
+GET http://localhost:8081/category HTTP/1.1
+
+###
+
+POST http://localhost:8081/category HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"컴퓨터",
+    "parent": {"id":"1"}
+}
+
+###
+
+GET http://localhost:8081/category HTTP/1.1
+
+###
+
+POST http://localhost:8081/category HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"노트북",
+    "parent": {"id":"3"}
+}
+
+###
+
+GET http://localhost:8081/category HTTP/1.1
+
+###
+
+PUT http://localhost:8081/category HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":"4",
+    "name":"아이패드",
+    "parent": {"id":"3"}
+}
+
+###
+
+GET http://localhost:8081/category HTTP/1.1
+
+###
+
+PUT http://localhost:8081/category HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":"1",
+    "name":"Appliances"
+}
+
+###
+
+GET http://localhost:8081/category HTTP/1.1
+
+###
+
+DELETE http://localhost:8081/category/4 HTTP/1.1
+
+###
+
+GET http://localhost:8081/category HTTP/1.1
+
+###
+
+DELETE http://localhost:8081/category/1 HTTP/1.1
+
+###
+
+GET http://localhost:8081/category HTTP/1.1
+
+###
+
+DELETE http://localhost:8081/category/2 HTTP/1.1
+
+###
+
+GET http://localhost:8081/category HTTP/1.1
+
+###

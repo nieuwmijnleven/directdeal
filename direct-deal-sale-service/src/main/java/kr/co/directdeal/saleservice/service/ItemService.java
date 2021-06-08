@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import kr.co.directdeal.common.sale.command.ItemDeleteCommand;
 import kr.co.directdeal.common.sale.command.ItemRegisterCommand;
+import kr.co.directdeal.common.sale.command.ItemSaleCompleteCommand;
+import kr.co.directdeal.common.sale.command.ItemSaleStartCommand;
+import kr.co.directdeal.common.sale.command.ItemSaleStopCommand;
 import kr.co.directdeal.common.sale.command.ItemUpdateCommand;
 import kr.co.directdeal.common.sale.constant.SaleItemStatus;
 import kr.co.directdeal.saleservice.service.dto.ItemDTO;
@@ -51,6 +54,27 @@ public class ItemService {
     public void delete(@PathVariable("id") String id) {
         log.debug("calll {}.delete({})", this.getClass().getSimpleName(), id);
         commandGateway.send(ItemDeleteCommand.builder()
+                                .id(id)
+                                .build());
+    }
+
+    public void sale(String id) {
+        log.debug("calll {}.sale(), id = {}", this.getClass().getSimpleName(), id);
+        commandGateway.send(ItemSaleStartCommand.builder()
+                                .id(id)
+                                .build());
+    }
+
+    public void pause(String id) {
+        log.debug("calll {}.pause(), id = {}", this.getClass().getSimpleName(), id);
+        commandGateway.send(ItemSaleStopCommand.builder()
+                                .id(id)
+                                .build());
+    }
+
+    public void complete(String id) {
+        log.debug("calll {}.complete(), id = {}", this.getClass().getSimpleName(), id);
+        commandGateway.send(ItemSaleCompleteCommand.builder()
                                 .id(id)
                                 .build());
     }

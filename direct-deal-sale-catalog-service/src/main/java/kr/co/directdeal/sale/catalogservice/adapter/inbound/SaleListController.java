@@ -36,7 +36,7 @@ public class SaleListController {
         return saleListQueryService.list(pageable);
     }
 
-    @PutMapping("/lift-up/{id}")
+    @PutMapping("/{id}/lift-up")
     @ResponseStatus(HttpStatus.OK)
     public Map<String, String> liftUp(@PathVariable("id") @NotBlank String id) {
         boolean result = saleListCommandService.liftUp(id);
