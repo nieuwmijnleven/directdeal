@@ -1,0 +1,35 @@
+GET http://localhost:8083/transaction-history HTTP/1.1
+
+###
+
+PUT http://localhost:8083/transaction-history/setbuyer HTTP/1.1
+Content-Type : application/json
+
+{
+    "id":"1",
+    "buyerId":"buyer@directdeal.co.kr"
+}
+
+###
+
+PUT http://localhost:8083/transaction-history/setbuyer HTTP/1.1
+Content-Type : application/json
+
+{
+    "id":"2",
+    "buyerId":"buyer2@directdeal.co.kr"
+}
+
+###
+
+DELETE http://localhost:8083/buy-history/1 HTTP/1.1
+
+###
+
+GET http://localhost:8083/buy-history HTTP/1.1
+
+###
+
+DELETE http://localhost:8083/buy-history/2 HTTP/1.1
+
+###

@@ -23,12 +23,16 @@ import kr.co.directdeal.common.sale.event.ItemSaleStartedEvent;
 import kr.co.directdeal.common.sale.event.ItemSaleStoppedEvent;
 import kr.co.directdeal.common.sale.event.ItemUpdatedEvent;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@ToString
 @Aggregate
 public class SaleItemAggregate {
     @AggregateIdentifier
@@ -121,8 +125,14 @@ public class SaleItemAggregate {
     @CommandHandler
     public void handle(ItemSaleCompleteCommand cmd) {
         AggregateLifecycle.apply(ItemSaleCompletedEvent.builder()
-                                    .id(cmd.getId())
+                                    .id(this.getId())
+                                    .ownerId(this.getOwnerId())
+                                    .title(this.getTitle())
+                                    .category(this.getCategory())
+                                    .targetPrice(this.getTargetPrice())
                                     .build());
+
+        log.debug("ItemSaleCompletedEvent: {}", this);
     }
 
     

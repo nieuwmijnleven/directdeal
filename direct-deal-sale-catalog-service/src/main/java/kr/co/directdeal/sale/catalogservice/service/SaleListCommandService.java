@@ -3,6 +3,7 @@ package kr.co.directdeal.sale.catalogservice.service;
 import java.time.Instant;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.directdeal.sale.catalogservice.query.SaleListItem;
 import kr.co.directdeal.sale.catalogservice.query.SaleListItemRepository;
@@ -18,6 +19,7 @@ public class SaleListCommandService {
 
     private final SaleListItemDomainService saleListItemDomainService;
 
+    @Transactional
     public boolean liftUp(String id) {
         SaleListItem saleListItem = saleListItemRepository.findById(id)
                                         .orElseThrow(IllegalArgumentException::new);
@@ -25,10 +27,9 @@ public class SaleListCommandService {
         if (saleListItemDomainService.canLiftUp(saleListItem)) {
             log.debug("liftup saleListItem : {} => ", saleListItem);
             saleListItemDomainService.liftUp(saleListItem);
-            saleListItemRepository.save(saleListItem); 
+            // saleListItemRepository.save(saleListItem); 
             return true;
         }
         return false;
     }
-    
 }

@@ -14,4 +14,8 @@ import lombok.EqualsAndHashCode;
 public class ItemSaleCompleteCommand {
     @TargetAggregateIdentifier
     private String id;   
+    private String ownerId;
+    private String title;
+    private String category;
+    private long targetPrice; 
 }
