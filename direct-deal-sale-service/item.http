@@ -10,7 +10,7 @@ GET http://localhost:8081/item HTTP/1.1
 
 ###
 
-GET http://localhost:8082/saleitem/17daa1ab-9327-4d31-b93e-2daba0ce123b HTTP/1.1
+GET http://localhost:8082/saleitem/d4c02e9b-1497-48df-885e-6ba6426e73d2 HTTP/1.1
 
 ###
 
@@ -50,7 +50,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8082/saleitem/17daa1ab-9327-4d31-b93e-2daba0ce123b HTTP/1.1
+GET http://localhost:8082/saleitem/d4c02e9b-1497-48df-885e-6ba6426e73d2 HTTP/1.1
 
 ###
 
@@ -58,7 +58,7 @@ GET http://localhost:8082/salelist?page=0&size=10&sort=createdDate,desc HTTP/1.1
 
 ###
 
-PUT http://localhost:8082/salelist/17daa1ab-9327-4d31-b93e-2daba0ce123b/lift-up HTTP/1.1
+PUT http://localhost:8082/salelist/d4c02e9b-1497-48df-885e-6ba6426e73d2/lift-up HTTP/1.1
 
 ###
 
@@ -66,7 +66,7 @@ PUT http://localhost:8081/item HTTP/1.1
 Content-Type: application/json
 
 {
-    "id":"17daa1ab-9327-4d31-b93e-2daba0ce123b",
+    "id":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
     "title":"my second item", 
     "category":"notebook",
     "targetPrice":20000000000,
@@ -80,7 +80,7 @@ GET http://localhost:8082/salelist HTTP/1.1
 
 ###
 
-GET http://localhost:8082/saleitem/17daa1ab-9327-4d31-b93e-2daba0ce123b HTTP/1.1
+GET http://localhost:8082/saleitem/d4c02e9b-1497-48df-885e-6ba6426e73d2 HTTP/1.1
 
 ###
 
@@ -88,11 +88,11 @@ GET http://localhost:8082/salelist?page=0&size=10&sort=createdDate,desc HTTP/1.1
 
 ###
 
-DELETE http://localhost:8081/item/17daa1ab-9327-4d31-b93e-2daba0ce123b HTTP/1.1
+DELETE http://localhost:8081/item/d4c02e9b-1497-48df-885e-6ba6426e73d2 HTTP/1.1
 
 ###
 
-GET http://localhost:8082/saleitem/17daa1ab-9327-4d31-b93e-2daba0ce123b HTTP/1.1
+GET http://localhost:8082/saleitem/d4c02e9b-1497-48df-885e-6ba6426e73d2 HTTP/1.1
 
 ###
 
@@ -104,7 +104,7 @@ PUT http://localhost:8081/item HTTP/1.1
 Content-Type: application/json
 
 {
-    "id":"17daa1ab-9327-4d31-b93e-2daba0ce123b",
+    "id":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
     "title":"my third item", 
     "category":"MacBook Pro M1",
     "targetPrice":30000000000,
@@ -114,7 +114,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8082/saleitem/17daa1ab-9327-4d31-b93e-2daba0ce123b HTTP/1.1
+GET http://localhost:8082/saleitem/d4c02e9b-1497-48df-885e-6ba6426e73d2 HTTP/1.1
 
 ###
 
@@ -122,23 +122,11 @@ GET http://localhost:8082/salelist?page=0&size=10&sort=createdDate,desc HTTP/1.1
 
 ###
 
-PUT http://localhost:8081/item/17daa1ab-9327-4d31-b93e-2daba0ce123b/sale HTTP/1.1
+PUT http://localhost:8081/item/d4c02e9b-1497-48df-885e-6ba6426e73d2/sale HTTP/1.1
 
 ###
 
-GET http://localhost:8082/saleitem/17daa1ab-9327-4d31-b93e-2daba0ce123b HTTP/1.1
-
-###
-
-GET http://localhost:8082/salelist?page=0&size=10&sort=createdDate,desc HTTP/1.1
-
-###
-
-PUT http://localhost:8081/item/17daa1ab-9327-4d31-b93e-2daba0ce123b/pause HTTP/1.1
-
-###
-
-GET http://localhost:8082/saleitem/17daa1ab-9327-4d31-b93e-2daba0ce123b HTTP/1.1
+GET http://localhost:8082/saleitem/d4c02e9b-1497-48df-885e-6ba6426e73d2 HTTP/1.1
 
 ###
 
@@ -146,11 +134,23 @@ GET http://localhost:8082/salelist?page=0&size=10&sort=createdDate,desc HTTP/1.1
 
 ###
 
-PUT http://localhost:8081/item/17daa1ab-9327-4d31-b93e-2daba0ce123b/complete HTTP/1.1
+PUT http://localhost:8081/item/d4c02e9b-1497-48df-885e-6ba6426e73d2/pause HTTP/1.1
 
 ###
 
-GET http://localhost:8082/saleitem/17daa1ab-9327-4d31-b93e-2daba0ce123b HTTP/1.1
+GET http://localhost:8082/saleitem/d4c02e9b-1497-48df-885e-6ba6426e73d2 HTTP/1.1
+
+###
+
+GET http://localhost:8082/salelist?page=0&size=10&sort=createdDate,desc HTTP/1.1
+
+###
+
+PUT http://localhost:8081/item/d4c02e9b-1497-48df-885e-6ba6426e73d2/complete HTTP/1.1
+
+###
+
+GET http://localhost:8082/saleitem/d4c02e9b-1497-48df-885e-6ba6426e73d2 HTTP/1.1
 
 ###
 

@@ -21,6 +21,7 @@ public class BuyHistoryService {
 
     private final Mapper<BuyHistory, BuyHistoryDTO> mapper;
 
+    @Transactional(readOnly = true)
     public List<BuyHistoryDTO> list(String userId) {
         return buyHistoryRepository.findAllByBuyerId(userId).stream()
                     .map(mapper::toDTO)
