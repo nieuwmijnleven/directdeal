@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-TransactionhistoryserviceApplication<direct-deal-transaction-history-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "kr.co.directdeal.transactionhistoryservice.TransactionhistoryserviceApplication",
+            "projectName": "direct-deal-transaction-history-service",
+            "args": ""
+        }
+    ]
+}
