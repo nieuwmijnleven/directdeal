@@ -3,8 +3,8 @@ package kr.co.directdeal.sale.catalogservice.service.mapper;
 import org.springframework.stereotype.Component;
 
 import kr.co.directdeal.common.mapper.Mapper;
-import kr.co.directdeal.sale.catalogservice.dto.SaleItemDTO;
-import kr.co.directdeal.sale.catalogservice.query.SaleItem;
+import kr.co.directdeal.sale.catalogservice.domain.SaleItem;
+import kr.co.directdeal.sale.catalogservice.service.dto.SaleItemDTO;
 
 @Component
 public class SaleItemMapper implements Mapper<SaleItem, SaleItemDTO> {

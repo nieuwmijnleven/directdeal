@@ -30,7 +30,7 @@ public class Base64ImageService {
     }
 
     public void saveImage(ItemDTO itemDTO) {
-        if (itemDTO.getImages().size() == 0)
+        if (itemDTO.getImages().isEmpty())
             throw new IllegalStateException("Threre is no item images to save.");
 
         List<String> imagePaths = saveEncodedImages(itemDTO.getImages());
@@ -65,5 +65,4 @@ public class Base64ImageService {
             throw new RuntimeException("could not save a base64 image to " + imagePath);
         }
     }
-
 }

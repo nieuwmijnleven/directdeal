@@ -1,10 +1,9 @@
-package kr.co.directdeal.sale.catalogservice.query;
+package kr.co.directdeal.sale.catalogservice.adapter.inbound;
 
 import java.time.Instant;
 
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
-import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;
 
 import kr.co.directdeal.common.sale.constant.SaleItemStatus;
@@ -14,6 +13,10 @@ import kr.co.directdeal.common.sale.event.ItemSaleCompletedEvent;
 import kr.co.directdeal.common.sale.event.ItemSaleStartedEvent;
 import kr.co.directdeal.common.sale.event.ItemSaleStoppedEvent;
 import kr.co.directdeal.common.sale.event.ItemUpdatedEvent;
+import kr.co.directdeal.sale.catalogservice.domain.SaleItem;
+import kr.co.directdeal.sale.catalogservice.domain.SaleListItem;
+import kr.co.directdeal.sale.catalogservice.service.repository.SaleItemRepository;
+import kr.co.directdeal.sale.catalogservice.service.repository.SaleListItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Component
 @ProcessingGroup("saleItem")
-public class SaleItemProjection {
+public class SaleItemEventDispatcher {
     
     private final SaleItemRepository saleItemRepository;
     

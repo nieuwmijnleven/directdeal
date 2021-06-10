@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import kr.co.directdeal.saleservice.exception.ItemImageException;
 import kr.co.directdeal.saleservice.exception.SaleItemException;
 import lombok.RequiredArgsConstructor;
 
@@ -49,7 +50,14 @@ public class ControllerExceptionHandler {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorResponse handleException(SaleItemException ex) {
 		String message = messageSource.getMessage(ex.getMessageKey(), ex.getMessageArgs(), LocaleContextHolder.getLocale());
-		return new ErrorResponse("Service Error", message);
+		return new ErrorResponse("Sale Item Service Error", message);
+	}
+
+	@ExceptionHandler({ItemImageException.class})
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorResponse handleException(ItemImageException ex) {
+		String message = messageSource.getMessage(ex.getMessageKey(), ex.getMessageArgs(), LocaleContextHolder.getLocale());
+		return new ErrorResponse("Item Image Service Error", message);
 	}
 	
 	@ExceptionHandler({BindException.class})

@@ -1,4 +1,4 @@
-package kr.co.directdeal.sale.catalogservice.dto;
+package kr.co.directdeal.sale.catalogservice.service.dto;
 
 import java.time.Instant;
 

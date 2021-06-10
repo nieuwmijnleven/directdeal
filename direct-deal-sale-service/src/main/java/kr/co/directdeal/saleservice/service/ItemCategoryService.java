@@ -12,6 +12,7 @@ import kr.co.directdeal.common.mapper.Mapper;
 import kr.co.directdeal.saleservice.domain.ItemCategory;
 import kr.co.directdeal.saleservice.exception.ItemCategoryException;
 import kr.co.directdeal.saleservice.service.dto.ItemCategoryDTO;
+import kr.co.directdeal.saleservice.service.repository.ItemCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

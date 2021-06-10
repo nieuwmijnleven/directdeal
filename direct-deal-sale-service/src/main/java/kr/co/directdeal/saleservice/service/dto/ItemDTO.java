@@ -1,5 +1,6 @@
 package kr.co.directdeal.saleservice.service.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.directdeal.common.sale.constant.SaleItemStatus;
@@ -29,7 +30,7 @@ public class ItemDTO {
     
     private String text;
     
-    private List<String> images;
+    private List<String> images = new ArrayList<>();
     
     private SaleItemStatus status;
     

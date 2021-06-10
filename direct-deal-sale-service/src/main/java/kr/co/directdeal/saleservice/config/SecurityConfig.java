@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @Configuration
 @ComponentScan(basePackages = {"kr.co.directdeal.common.security"})
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final TokenProvider tokenProvider;
     // private final CorsFilter corsFilter;

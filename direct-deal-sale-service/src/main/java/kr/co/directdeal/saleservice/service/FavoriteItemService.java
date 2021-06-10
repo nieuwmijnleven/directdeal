@@ -10,6 +10,7 @@ import kr.co.directdeal.common.mapper.Mapper;
 import kr.co.directdeal.saleservice.domain.FavoriteItem;
 import kr.co.directdeal.saleservice.exception.SaleItemException;
 import kr.co.directdeal.saleservice.service.dto.FavoriteItemDTO;
+import kr.co.directdeal.saleservice.service.repository.FavoriteItemRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

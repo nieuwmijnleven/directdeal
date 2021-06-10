@@ -14,15 +14,17 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import kr.co.directdeal.common.mapper.Mapper;
 import kr.co.directdeal.saleservice.async.AsyncImageSaveRunner;
 import kr.co.directdeal.saleservice.domain.ImageUploadStatus;
+import kr.co.directdeal.saleservice.exception.ItemImageException;
 import kr.co.directdeal.saleservice.service.dto.ImageUploadStatusDTO;
 import kr.co.directdeal.saleservice.service.dto.ItemImageDTO;
+import kr.co.directdeal.saleservice.service.repository.ImageUploadStatusRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class ImageService {
+public class ItemImageService {
     
     public static final String IMAGE_REPOSITORY_PATH = "resources/images";
 
@@ -36,7 +38,10 @@ public class ImageService {
         try {
             return Files.readAllBytes(Paths.get(IMAGE_REPOSITORY_PATH, filename));
         } catch(Exception e) {
-            throw new RuntimeException("failed to read the image(" + filename + ").");
+            throw ItemImageException.builder()
+                        .messageKey("saleservice.exception.itemimageservice.readimage.fail.message")
+                        .messageArgs(new String[]{ filename })
+                        .build();
         }
     }
 
@@ -50,7 +55,10 @@ public class ImageService {
 
     public ItemImageDTO saveImages(List<MultipartFile> files) {
         if (files.isEmpty())
-            throw new IllegalStateException("Threre is no item images to save.");
+            throw ItemImageException.builder()
+                        .messageKey("saleservice.exception.itemimageservice.saveimage.fail.message")
+                        .messageArgs(new String[]{})
+                        .build();
 
         //allocate normalized image names
         List<String> images = new ArrayList<>();

@@ -1,4 +1,4 @@
-package kr.co.directdeal.sale.catalogservice.query;
+package kr.co.directdeal.sale.catalogservice.domain;
 
 import java.time.Instant;
 import java.util.List;

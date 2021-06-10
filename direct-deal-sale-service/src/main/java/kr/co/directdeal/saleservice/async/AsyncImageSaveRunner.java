@@ -15,8 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import kr.co.directdeal.saleservice.domain.ImageUploadStatus;
-import kr.co.directdeal.saleservice.service.ImageService;
-import kr.co.directdeal.saleservice.service.ImageUploadStatusRepository;
+import kr.co.directdeal.saleservice.service.ItemImageService;
+import kr.co.directdeal.saleservice.service.repository.ImageUploadStatusRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,7 +57,7 @@ public class AsyncImageSaveRunner {
             File uploadFile = diskFileItem.getStoreLocation();
 
             String filename = images.get(i);
-            Path dest = Paths.get(ImageService.IMAGE_REPOSITORY_PATH, filename).toAbsolutePath();
+            Path dest = Paths.get(ItemImageService.IMAGE_REPOSITORY_PATH, filename).toAbsolutePath();
             try {
                 Files.move(uploadFile.toPath(), dest);
                 log.info("move [{}] to [{}]", uploadFile, dest);

@@ -29,10 +29,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import kr.co.directdeal.saleservice.domain.FavoriteItem;
-import kr.co.directdeal.saleservice.service.FavoriteItemRepository;
 import kr.co.directdeal.saleservice.service.FavoriteItemService;
 import kr.co.directdeal.saleservice.service.dto.FavoriteItemDTO;
 import kr.co.directdeal.saleservice.service.mapper.FavoriteItemMapper;
+import kr.co.directdeal.saleservice.service.repository.FavoriteItemRepository;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {FavoriteItemController.class},

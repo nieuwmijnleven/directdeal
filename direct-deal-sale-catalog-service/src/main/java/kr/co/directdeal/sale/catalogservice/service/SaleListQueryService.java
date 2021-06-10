@@ -8,9 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import kr.co.directdeal.common.mapper.Mapper;
-import kr.co.directdeal.sale.catalogservice.dto.SaleListItemDTO;
-import kr.co.directdeal.sale.catalogservice.query.SaleListItem;
-import kr.co.directdeal.sale.catalogservice.query.SaleListItemRepository;
+import kr.co.directdeal.sale.catalogservice.domain.SaleListItem;
+import kr.co.directdeal.sale.catalogservice.service.dto.SaleListItemDTO;
+import kr.co.directdeal.sale.catalogservice.service.repository.SaleListItemRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

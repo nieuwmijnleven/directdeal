@@ -1,12 +1,10 @@
 package kr.co.directdeal.sale.catalogservice.service;
 
-import java.time.Instant;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.co.directdeal.sale.catalogservice.query.SaleListItem;
-import kr.co.directdeal.sale.catalogservice.query.SaleListItemRepository;
+import kr.co.directdeal.sale.catalogservice.domain.SaleListItem;
+import kr.co.directdeal.sale.catalogservice.service.repository.SaleListItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

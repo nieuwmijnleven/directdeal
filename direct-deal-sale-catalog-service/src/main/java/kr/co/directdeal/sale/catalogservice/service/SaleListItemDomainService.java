@@ -7,7 +7,7 @@ import java.time.ZoneOffset;
 
 import org.springframework.stereotype.Service;
 
-import kr.co.directdeal.sale.catalogservice.query.SaleListItem;
+import kr.co.directdeal.sale.catalogservice.domain.SaleListItem;
 
 @Service
 public class SaleListItemDomainService {

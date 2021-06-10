@@ -1,4 +1,4 @@
-package kr.co.directdeal.saleservice.service;
+package kr.co.directdeal.saleservice.service.repository;
 
 import java.util.List;
 import java.util.Optional;

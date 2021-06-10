@@ -1,5 +1,6 @@
 package kr.co.directdeal.saleservice.service.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -16,5 +17,5 @@ import lombok.NoArgsConstructor;
 public class ItemImageDTO {
     private String checkId;
     private String checkURL;
-    private List<String> images;
+    private List<String> images = new ArrayList<>();
 }
