@@ -2,6 +2,7 @@ package kr.co.directdeal.chattingservice.service.dto;
 
 import java.time.Instant;
 
+import kr.co.directdeal.chattingservice.domain.ChattingRoom;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +18,9 @@ import lombok.ToString;
 @ToString
 public class ChattingMessageDTO {
     private String id;
+    private String chattingRoomId;
     private String talkerId;
     private String text;
     private Instant createdDate;
+    private boolean sent;
 }

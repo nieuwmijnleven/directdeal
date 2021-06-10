@@ -13,9 +13,11 @@ public class ChattingMessageMapper implements Mapper<ChattingMessage, ChattingMe
     public ChattingMessage toEntity(ChattingMessageDTO dto) {
         return ChattingMessage.builder()
                     .id(dto.getId())
+                    .chattingRoomId(dto.getChattingRoomId())
                     .talkerId(dto.getTalkerId())
                     .text(dto.getText())
                     .createdDate(dto.getCreatedDate())
+                    .sent(dto.isSent())
                     .build();
     }
 
@@ -23,9 +25,11 @@ public class ChattingMessageMapper implements Mapper<ChattingMessage, ChattingMe
     public ChattingMessageDTO toDTO(ChattingMessage entity) {
         return ChattingMessageDTO.builder()
                     .id(entity.getId())
+                    .chattingRoomId(entity.getChattingRoomId())
                     .talkerId(entity.getTalkerId())
                     .text(entity.getText())
                     .createdDate(entity.getCreatedDate())
+                    .sent(entity.isSent())
                     .build();
     }
 }

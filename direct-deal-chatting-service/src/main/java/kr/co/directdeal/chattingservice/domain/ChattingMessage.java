@@ -39,6 +39,12 @@ public class ChattingMessage {
     // @ManyToOne(fetch = FetchType.LAZY)
     // @JoinColumn(name = "CHATTING_ROOM_ID", insertable = false, updatable = false)
     // private ChattingRoom chattingRoom;
+
+    // @ManyToOne
+    // @JoinColumn(name = "CHATTING_ROOM_ID", insertable = false, updatable = false)
+
+    @Column(name = "CHATTING_ROOM_ID", nullable = false)
+    private String chattingRoomId;
     
     @NotNull
     @Column(name = "CHATTING_MESSAGE_TALKER_ID", nullable = false)
@@ -53,4 +59,11 @@ public class ChattingMessage {
     @Column(name = "CHATTING_MESSAGE_CREATED_DATE", nullable = false)
     @CreatedDate
     private Instant createdDate;
+
+    @Column(name = "CHATTING_MESSAGE_SENT", nullable = false)
+    private boolean sent;
+
+    public boolean isNotSent() {
+        return !sent;
+    }
 }

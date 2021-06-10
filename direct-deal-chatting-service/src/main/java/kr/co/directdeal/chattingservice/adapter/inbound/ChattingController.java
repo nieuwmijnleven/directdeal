@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.directdeal.chattingservice.service.ChattingRoomService;
+import kr.co.directdeal.chattingservice.service.dto.ChattingMessageDTO;
 import kr.co.directdeal.chattingservice.service.dto.ChattingRoomDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +38,18 @@ public class ChattingController {
         return chattingRoomService.getChattingRoom(id);
     }
 
+    @GetMapping("/fetch-unread-messages")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ChattingMessageDTO> fetchUnreadMessages(@RequestBody ChattingMessageDTO dto) {
+        return chattingRoomService.fetchUnreadMessage(dto);
+    }
+
+    @GetMapping("/{chattingRoomId}/fetch-from/{skip:\\d+}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ChattingMessageDTO> fetchMessagesFrom(@PathVariable("chattingRoomId") String chattingRoomId, @PathVariable("skip") int skip) {
+        return chattingRoomService.fetchMessagesFrom(chattingRoomId, skip);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ChattingRoomDTO createChattingRoom(@RequestBody ChattingRoomDTO dto) {
@@ -45,8 +58,8 @@ public class ChattingController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void sendChattingMessage(@RequestBody ChattingRoomDTO dto) {
-        chattingRoomService.sendChattingMessage(dto);
+    public void sendMessage(@RequestBody ChattingMessageDTO dto) {
+        chattingRoomService.sendMessage(dto);
     }
 
     @GetMapping("/{itemId}/customer-list")
