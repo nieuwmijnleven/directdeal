@@ -30,17 +30,29 @@ public class ChattingRoomService {
 
     private final Mapper<ChattingMessage, ChattingMessageDTO> chattingMessageMapper;
 
-    @Transactional(readOnly = true)
+    @Transactional
     public ChattingRoomDTO getChattingRoom(ChattingRoomDTO dto) {
         ChattingRoom chattingRoom = findChattingRoom(dto);    
         checkValidTalker(chattingRoom);
+
+        chattingRoom.getMessages()
+            .stream()
+            .filter(ChattingMessage::isNotSent)
+            .forEach(message -> message.setSent(true));   
+
         return chattingRoomMapper.toDTO(chattingRoom);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public ChattingRoomDTO getChattingRoom(String id) {
         ChattingRoom chattingRoom = findChattingRoomById(id);     
-        checkValidTalker(chattingRoom);                       
+        checkValidTalker(chattingRoom);  
+        
+        chattingRoom.getMessages()
+            .stream()
+            .filter(ChattingMessage::isNotSent)
+            .forEach(message -> message.setSent(true));  
+            
         return chattingRoomMapper.toDTO(chattingRoom);
     }
 
@@ -59,13 +71,45 @@ public class ChattingRoomService {
     }
 
     @Transactional
-    public void sendChattingMessage(ChattingRoomDTO dto) {
-        ChattingRoom chattingRoom = findChattingRoomById(dto.getId());
+    public void sendMessage(ChattingMessageDTO dto) {
+        ChattingRoom chattingRoom = findChattingRoomById(dto.getChattingRoomId());
         checkValidTalker(chattingRoom);
 
-        ChattingMessageDTO chattingMessageDTO = dto.getNewMessage();
-        chattingMessageDTO.setCreatedDate(Instant.now());
-        chattingRoom.addMessage(chattingMessageMapper.toEntity(chattingMessageDTO));                                    
+        dto.setCreatedDate(Instant.now());
+        chattingRoom.addMessage(chattingMessageMapper.toEntity(dto));                                    
+    }
+
+    @Transactional
+    public List<ChattingMessageDTO> fetchUnreadMessage(ChattingMessageDTO dto) {
+        ChattingRoom chattingRoom = findChattingRoomById(dto.getChattingRoomId());
+        checkValidTalker(chattingRoom);
+
+        return chattingRoom.getMessages()
+                    .stream()
+                    .filter(ChattingMessage::isNotSent)
+                    .filter(message -> Objects.equals(message.getTalkerId(), dto.getTalkerId()))
+                    .map(message -> {
+                            message.setSent(true);
+                            return message;
+                        })
+                    .map(chattingMessageMapper::toDTO)
+                    .collect(Collectors.toList());                                   
+    }
+
+    @Transactional
+    public List<ChattingMessageDTO> fetchMessagesFrom(String chattingRoomId, int skip) {
+        ChattingRoom chattingRoom = findChattingRoomById(chattingRoomId);
+        checkValidTalker(chattingRoom);
+
+        return chattingRoom.getMessages()
+                    .stream()
+                    .skip(skip)
+                    .map(message -> {
+                            message.setSent(true);
+                            return message;
+                        })
+                    .map(chattingMessageMapper::toDTO)
+                    .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)

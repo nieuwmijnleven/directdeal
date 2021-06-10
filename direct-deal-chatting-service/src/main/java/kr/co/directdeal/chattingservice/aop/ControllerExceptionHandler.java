@@ -21,11 +21,11 @@ public class ControllerExceptionHandler {
 	
 	private final MessageSource messageSource;
 
-	@ExceptionHandler({Exception.class})
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public ErrorResponse handleException(Exception ex) {
-		return new ErrorResponse("Server Error", ex.getMessage());
-	}
+	// @ExceptionHandler({Exception.class})
+	// @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	// public ErrorResponse handleException(Exception ex) {
+	// 	return new ErrorResponse("Server Error", ex.getMessage());
+	// }
 
 	@ExceptionHandler({AuthenticationException.class})
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
