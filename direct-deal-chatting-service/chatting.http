@@ -1,5 +1,29 @@
+### Create an account
+POST http://localhost:8080/account HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"seller@directdeal.co.kr",
+    "name":"seller",
+    "password":"1q2w3e"
+}
+
+### login and get an access token
+
+POST http://localhost:8080/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"seller@directdeal.co.kr",
+    "password":"1q2w3e"
+}
+
+
+###
+
 POST http://localhost:8085/chatting HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzM0MDUxfQ.wP_A8Ap4Nh-3LhghhcHRlGLggOfcmdzCFfttcQLwYOY4Ye2RTbyvSzLMG6aD2p0QE4_I67R6E7g-KjxbgtBiiA
 
 {
     "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
@@ -12,6 +36,7 @@ Content-Type: application/json
 
 PUT http://localhost:8085/chatting HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzM0MDUxfQ.wP_A8Ap4Nh-3LhghhcHRlGLggOfcmdzCFfttcQLwYOY4Ye2RTbyvSzLMG6aD2p0QE4_I67R6E7g-KjxbgtBiiA
 
 {
     "id":"1",
@@ -25,6 +50,7 @@ Content-Type: application/json
 
 GET http://localhost:8085/chatting HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzM0MDUxfQ.wP_A8Ap4Nh-3LhghhcHRlGLggOfcmdzCFfttcQLwYOY4Ye2RTbyvSzLMG6aD2p0QE4_I67R6E7g-KjxbgtBiiA
 
 {
     "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
@@ -36,6 +62,7 @@ Content-Type: application/json
 
 PUT http://localhost:8085/chatting HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzM0MDUxfQ.wP_A8Ap4Nh-3LhghhcHRlGLggOfcmdzCFfttcQLwYOY4Ye2RTbyvSzLMG6aD2p0QE4_I67R6E7g-KjxbgtBiiA
 
 {
     "id":"1",
@@ -48,11 +75,13 @@ Content-Type: application/json
 ###
 
 GET http://localhost:8085/chatting/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzM0MDUxfQ.wP_A8Ap4Nh-3LhghhcHRlGLggOfcmdzCFfttcQLwYOY4Ye2RTbyvSzLMG6aD2p0QE4_I67R6E7g-KjxbgtBiiA
 
 ###
 
 POST http://localhost:8085/chatting HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzM0MDUxfQ.wP_A8Ap4Nh-3LhghhcHRlGLggOfcmdzCFfttcQLwYOY4Ye2RTbyvSzLMG6aD2p0QE4_I67R6E7g-KjxbgtBiiA
 
 {
     "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
@@ -64,6 +93,7 @@ Content-Type: application/json
 
 POST http://localhost:8085/chatting HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzM0MDUxfQ.wP_A8Ap4Nh-3LhghhcHRlGLggOfcmdzCFfttcQLwYOY4Ye2RTbyvSzLMG6aD2p0QE4_I67R6E7g-KjxbgtBiiA
 
 {
     "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
@@ -75,6 +105,7 @@ Content-Type: application/json
 
 POST http://localhost:8085/chatting HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzM0MDUxfQ.wP_A8Ap4Nh-3LhghhcHRlGLggOfcmdzCFfttcQLwYOY4Ye2RTbyvSzLMG6aD2p0QE4_I67R6E7g-KjxbgtBiiA
 
 {
     "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
@@ -86,6 +117,7 @@ Content-Type: application/json
 
 POST http://localhost:8085/chatting HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzM0MDUxfQ.wP_A8Ap4Nh-3LhghhcHRlGLggOfcmdzCFfttcQLwYOY4Ye2RTbyvSzLMG6aD2p0QE4_I67R6E7g-KjxbgtBiiA
 
 {
     "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
@@ -96,5 +128,5 @@ Content-Type: application/json
 ###
 
 GET http://localhost:8085/chatting/d4c02e9b-1497-48df-885e-6ba6426e73d2/customer-list HTTP/1.1
-
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzM0MDUxfQ.wP_A8Ap4Nh-3LhghhcHRlGLggOfcmdzCFfttcQLwYOY4Ye2RTbyvSzLMG6aD2p0QE4_I67R6E7g-KjxbgtBiiA
 

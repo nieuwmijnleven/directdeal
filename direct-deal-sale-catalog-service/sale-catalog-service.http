@@ -1,2 +1,26 @@
+### Create an account
+
+POST http://localhost:8080/account HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"seller@directdeal.co.kr",
+    "name":"seller",
+    "password":"1q2w3e"
+}
+
+### login and get an access token
+
+POST http://localhost:8080/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"seller@directdeal.co.kr",
+    "password":"1q2w3e"
+}
+
+###
+
 GET http://localhost:8082/actuator/beans HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzM1MjE5fQ.rSfxlduda7tcyM1lNN0vFxjgTFp8UnLNfUP_9Y-19s-CIjuYYGYpDKnMx_s9T975P8zmJ3dSuH8u9IMGBN-NZA
 

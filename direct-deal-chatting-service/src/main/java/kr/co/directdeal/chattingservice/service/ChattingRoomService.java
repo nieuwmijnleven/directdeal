@@ -14,8 +14,8 @@ import kr.co.directdeal.chattingservice.exception.ChattingException;
 import kr.co.directdeal.chattingservice.service.dto.ChattingMessageDTO;
 import kr.co.directdeal.chattingservice.service.dto.ChattingRoomDTO;
 import kr.co.directdeal.chattingservice.service.repository.ChattingRoomRepository;
-import kr.co.directdeal.chattingservice.temp.SecurityUtils;
 import kr.co.directdeal.common.mapper.Mapper;
+import kr.co.directdeal.common.security.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -71,6 +71,7 @@ public class ChattingRoomService {
     @Transactional(readOnly = true)
     public List<String> getCustomerIdList(String itemId) {
         String sellerId = SecurityUtils.getCurrentUserLogin();
+        log.debug("ChattingRoomService.getCustomerIdList(), sellerId => {}", sellerId);
         return chattingRoomRepository
                     .findBySellerIdAndItemId(sellerId, itemId)
                     .stream()
@@ -98,6 +99,7 @@ public class ChattingRoomService {
 
     private void checkValidTalker(ChattingRoom chattingRoom) {
         String userId = SecurityUtils.getCurrentUserLogin();
+        log.debug("ChattingRoomService.checkValidTalker(), userId => {}", userId);
         if (!Objects.equals(userId, chattingRoom.getSellerId()) 
             && !Objects.equals(userId, chattingRoom.getCustomerId()))
             throw ChattingException.builder()

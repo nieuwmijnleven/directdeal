@@ -3,6 +3,9 @@ package kr.co.directdeal.transactionhistoryservice.aop;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -25,23 +28,23 @@ public class ControllerExceptionHandler {
 		return new ErrorResponse("Server Error", ex.getMessage());
 	}
 
-	// @ExceptionHandler({AuthenticationException.class})
-	// @ResponseStatus(HttpStatus.UNAUTHORIZED)
-	// public ErrorResponse handleException(AuthenticationException ex) {
-	// 	return new ErrorResponse("Authentication Failed", ex.getMessage());
-	// }
+	@ExceptionHandler({AuthenticationException.class})
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	public ErrorResponse handleException(AuthenticationException ex) {
+		return new ErrorResponse("Authentication Failed", ex.getMessage());
+	}
 
-	// @ExceptionHandler({AccessDeniedException.class})
-	// @ResponseStatus(HttpStatus.FORBIDDEN)
-	// public ErrorResponse handleException(AccessDeniedException ex) {
-	// 	return new ErrorResponse("Authentication Failed", ex.getMessage());
-	// }
+	@ExceptionHandler({AccessDeniedException.class})
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	public ErrorResponse handleException(AccessDeniedException ex) {
+		return new ErrorResponse("Authentication Failed", ex.getMessage());
+	}
 
-	// @ExceptionHandler({BadCredentialsException.class})
-	// @ResponseStatus(HttpStatus.BAD_REQUEST)
-	// public ErrorResponse handleException(BadCredentialsException ex) {
-	// 	return new ErrorResponse("Authentication Failed", ex.getMessage());
-	// }
+	@ExceptionHandler({BadCredentialsException.class})
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorResponse handleException(BadCredentialsException ex) {
+		return new ErrorResponse("Authentication Failed", ex.getMessage());
+	}
 
 	@ExceptionHandler({TransactionHistoryException.class})
 	@ResponseStatus(HttpStatus.BAD_REQUEST)

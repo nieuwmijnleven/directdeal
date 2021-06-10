@@ -1,4 +1,4 @@
-package kr.co.directdeal.saleservice.aop;
+package kr.co.directdeal.sale.catalogservice.aop;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import kr.co.directdeal.saleservice.exception.SaleItemException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -45,12 +44,12 @@ public class ControllerExceptionHandler {
 		return new ErrorResponse("Authentication Failed", ex.getMessage());
 	}
 
-	@ExceptionHandler({SaleItemException.class})
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ErrorResponse handleException(SaleItemException ex) {
-		String message = messageSource.getMessage(ex.getMessageKey(), ex.getMessageArgs(), LocaleContextHolder.getLocale());
-		return new ErrorResponse("Service Error", message);
-	}
+	// @ExceptionHandler({SaleItemException.class})
+	// @ResponseStatus(HttpStatus.BAD_REQUEST)
+	// public ErrorResponse handleException(SaleItemException ex) {
+	// 	String message = messageSource.getMessage(ex.getMessageKey(), ex.getMessageArgs(), LocaleContextHolder.getLocale());
+	// 	return new ErrorResponse("Service Error", message);
+	// }
 	
 	@ExceptionHandler({BindException.class})
 	@ResponseStatus(HttpStatus.BAD_REQUEST)

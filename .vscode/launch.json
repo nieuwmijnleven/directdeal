@@ -9,6 +9,16 @@
             "mainClass": "kr.co.directdeal.transactionhistoryservice.TransactionhistoryserviceApplication",
             "projectName": "direct-deal-transaction-history-service",
             "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-DirectDealAccountServiceApplication<direct-deal-account-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "kr.co.directdeal.accountservice.DirectDealAccountServiceApplication",
+            "projectName": "direct-deal-account-service",
+            "args": ""
         }
     ]
 }
