@@ -1,5 +1,6 @@
 package kr.co.directdeal.saleservice.service.dto;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +37,9 @@ public class ItemDTO {
     
     // private String createdBy;
     
-    // private Instant createdDate; 
+    private Instant createdDate; 
     
     // private String lastModifiedBy;
     
-    // private Instant lastModifiedByDate;
+    private Instant lastModifiedByDate;
 }

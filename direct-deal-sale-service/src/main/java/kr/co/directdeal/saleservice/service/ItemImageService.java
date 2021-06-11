@@ -45,14 +45,6 @@ public class ItemImageService {
         }
     }
 
-    @Transactional(readOnly = true)
-    public ImageUploadStatusDTO checkUploadStatus(String id) {
-        log.debug("id => " + id);
-        ImageUploadStatus imageUploadStatus = imageUploadStatusRepository.findById(id)
-                                                    .orElseThrow(IllegalStateException::new);
-        return mapper.toDTO(imageUploadStatus);
-    }
-
     public ItemImageDTO saveImages(List<MultipartFile> files) {
         if (files.isEmpty())
             throw ItemImageException.builder()
@@ -84,5 +76,16 @@ public class ItemImageService {
                     .checkURL(checkURL)
                     .images(images)
                     .build();
+    }
+
+    @Transactional(readOnly = true)
+    public ImageUploadStatusDTO checkUploadStatus(String id) {
+        return imageUploadStatusRepository
+                    .findById(id)
+                    .map(mapper::toDTO)
+                    .orElseThrow(() -> ItemImageException.builder()
+                                            .messageKey("saleservice.exception.itemimageservice.checkuploadstatus.notfound.message")
+                                            .messageArgs(new String[]{ id })
+                                            .build());
     }
 }

@@ -1,5 +1,6 @@
 package kr.co.directdeal.saleservice.service;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -29,12 +30,15 @@ public class ItemService {
         
         commandGateway.send(ItemRegisterCommand.builder()
                                 .id(UUID.randomUUID().toString())
+                                // .ownerId(itemDTO.getOwnerId())
                                 .title(itemDTO.getTitle())
                                 .category(itemDTO.getCategory())
                                 .targetPrice(itemDTO.getTargetPrice())
+                                .discountable(itemDTO.isDiscountable())
                                 .text(itemDTO.getText())
                                 .images(itemDTO.getImages())
                                 .status(SaleItemStatus.SALE)
+                                .createdDate(Instant.now())
                                 .build());
     }
 
@@ -42,12 +46,15 @@ public class ItemService {
         log.debug("calll {}.update(), id = {}", this.getClass().getSimpleName(), itemDTO.getId());
         commandGateway.send(ItemUpdateCommand.builder()
                                 .id(itemDTO.getId())
+                                //.ownerId(itemDTO.getOwnerId())
                                 .title(itemDTO.getTitle())
                                 .category(itemDTO.getCategory())
                                 .targetPrice(itemDTO.getTargetPrice())
+                                .discountable(itemDTO.isDiscountable())
                                 .text(itemDTO.getText())
                                 .images(itemDTO.getImages())
                                 .status(itemDTO.getStatus())
+                                .lastModifiedDate(Instant.now())
                                 .build());
     }
 

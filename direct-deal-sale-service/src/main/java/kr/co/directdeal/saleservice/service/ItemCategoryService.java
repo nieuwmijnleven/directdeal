@@ -27,7 +27,7 @@ public class ItemCategoryService {
 
     @Transactional(readOnly = true)
     public List<ItemCategoryDTO> list() {
-        return itemCategoryRepository.findByParentIsNull().stream()
+        return itemCategoryRepository.findAllByParentIsNull().stream()
                     .map(mapper::toDTO)
                     .collect(Collectors.toList());
     }

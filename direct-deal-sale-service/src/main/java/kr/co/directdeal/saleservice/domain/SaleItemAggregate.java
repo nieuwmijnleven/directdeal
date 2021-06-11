@@ -2,6 +2,7 @@ package kr.co.directdeal.saleservice.domain;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -22,6 +23,8 @@ import kr.co.directdeal.common.sale.event.ItemSaleCompletedEvent;
 import kr.co.directdeal.common.sale.event.ItemSaleStartedEvent;
 import kr.co.directdeal.common.sale.event.ItemSaleStoppedEvent;
 import kr.co.directdeal.common.sale.event.ItemUpdatedEvent;
+import kr.co.directdeal.common.security.util.SecurityUtils;
+import kr.co.directdeal.saleservice.exception.SaleItemException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -60,7 +63,7 @@ public class SaleItemAggregate {
     
     // private String lastModifiedBy;
     
-    // private Instant lastModifiedByDate; 
+    private Instant lastModifiedDate; 
 
     @CommandHandler
     public SaleItemAggregate(ItemRegisterCommand cmd) {
@@ -71,16 +74,16 @@ public class SaleItemAggregate {
         log.debug("id => " + cmd.getId());
         AggregateLifecycle.apply(ItemRegisteredEvent.builder()
                                     .id(cmd.getId())
+                                    .ownerId(cmd.getOwnerId())
                                     .title(cmd.getTitle())
                                     .category(cmd.getCategory())
                                     .targetPrice(cmd.getTargetPrice())
+                                    .discountable(cmd.isDiscountable())
                                     .text(cmd.getText())
                                     .images(cmd.getImages())
                                     .status(cmd.getStatus())
                                     .createdDate(Instant.now())
-                                    .build());
-
-                                    
+                                    .build());      
     }
 
     @CommandHandler
@@ -89,14 +92,24 @@ public class SaleItemAggregate {
             throw new IllegalArgumentException("target price <= 0");
         }
 
+        String userId = SecurityUtils.getCurrentUserLogin();
+        if (!Objects.equals(userId, this.getOwnerId()))
+            throw SaleItemException.builder()
+                        .messageKey("saleservice.exception.saleitemaggregate.itemupdatecommand.notthesame.onwerid.message")
+                        .messageArgs(new String[]{userId, this.getOwnerId()})
+                        .build();
+
         log.debug("call {}.ItemUpdateCommand", this.getClass().getSimpleName());
         AggregateLifecycle.apply(ItemUpdatedEvent.builder()
                                     .id(cmd.getId())
+                                    // .ownerId(cmd.getOwnerId())
                                     .title(cmd.getTitle())
                                     .category(cmd.getCategory())
                                     .targetPrice(cmd.getTargetPrice())
+                                    .discountable(cmd.isDiscountable())
                                     .text(cmd.getText())
                                     .images(cmd.getImages())
+                                    .lastModifiedDate(cmd.getLastModifiedDate())
                                     .build());
     }
 
@@ -140,25 +153,28 @@ public class SaleItemAggregate {
     public void on(ItemRegisteredEvent event) {
         this.id = event.getId();
         this.title = event.getTitle();
+        this.ownerId = event.getOwnerId();
         this.category = event.getCategory();
         this.targetPrice = event.getTargetPrice();
+        this.discountable = event.isDiscountable();
         this.text = event.getText();
         this.images = event.getImages();
         this.status = event.getStatus();
+        this.createdDate = event.getCreatedDate();
     }
 
-    
     @EventSourcingHandler
     public void on(ItemUpdatedEvent event) {
         this.id = event.getId();
         this.title = event.getTitle();
         this.category = event.getCategory();
         this.targetPrice = event.getTargetPrice();
+        this.discountable = event.isDiscountable();
         this.text = event.getText();
         this.images = event.getImages();
         this.status = event.getStatus();
+        this.lastModifiedDate= event.getLastModifiedDate();
     }
-    
     
     @EventSourcingHandler
     public void on(ItemDeletedEvent event) {
@@ -166,7 +182,6 @@ public class SaleItemAggregate {
         this.id = event.getId();
         this.status = SaleItemStatus.DELETED;
     }
-
     
     @EventSourcingHandler
     public void on(ItemSaleStartedEvent event) {

@@ -74,6 +74,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
     "title":"my first item", 
     "category":"gems",
     "targetPrice":10000000000,
+    "discountable":"true",
     "text":"my first item is gems and you can buy it now.",
     "images": ["/local/repository/11.png","/local/repository/12.png"]
 }
@@ -106,6 +107,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
     "title":"my second item", 
     "category":"notebook",
     "targetPrice":20000000000,
+    "discountable":"true",
     "text":"my second item is gems and you can buy it now.",
     "images": ["/local/repository/11.png","/local/repository/12.png"]
 }

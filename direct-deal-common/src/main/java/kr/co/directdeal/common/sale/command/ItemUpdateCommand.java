@@ -1,5 +1,6 @@
 package kr.co.directdeal.common.sale.command;
 
+import java.time.Instant;
 import java.util.List;
 
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
@@ -41,5 +42,5 @@ public class ItemUpdateCommand {
     
     // private String lastModifiedBy;
     
-    // private Instant lastModifiedByDate;
+    private Instant lastModifiedDate;
 }

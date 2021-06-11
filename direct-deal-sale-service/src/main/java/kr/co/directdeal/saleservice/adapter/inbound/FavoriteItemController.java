@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.co.directdeal.saleservice.domain.FavoriteItem;
+import kr.co.directdeal.common.security.util.SecurityUtils;
 import kr.co.directdeal.saleservice.service.FavoriteItemService;
 import kr.co.directdeal.saleservice.service.dto.FavoriteItemDTO;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +28,8 @@ public class FavoriteItemController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<FavoriteItem> list() {
-        //SecurityUtils
-        String userId = "account@directdeal.co.kr";
+    public List<FavoriteItemDTO> list() {
+        String userId = SecurityUtils.getCurrentUserLogin();
         return favoriteItemService.list(FavoriteItemDTO.builder()
                                             .userId(userId)
                                             .build());
@@ -39,8 +38,7 @@ public class FavoriteItemController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void save(@RequestBody FavoriteItemDTO dto) {
-        //SecurityUtils
-        String userId = "account@directdeal.co.kr";
+        String userId = SecurityUtils.getCurrentUserLogin();
         dto.setUserId(userId);
         log.debug("save => " + dto);
         favoriteItemService.save(dto);
@@ -49,8 +47,7 @@ public class FavoriteItemController {
     @DeleteMapping("/{itemId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("itemId") String itemId) {
-        //SecurityUtils
-        String userId = "account@directdeal.co.kr";
+        String userId = SecurityUtils.getCurrentUserLogin();
         favoriteItemService.delete(FavoriteItemDTO.builder()
                                         .userId(userId)
                                         .itemId(itemId)

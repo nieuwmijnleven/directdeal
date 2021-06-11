@@ -9,5 +9,5 @@ import kr.co.directdeal.saleservice.domain.ItemCategory;
 
 @Repository
 public interface ItemCategoryRepository extends JpaRepository<ItemCategory, String> {
-    List<ItemCategory> findByParentIsNull();
+    List<ItemCategory> findAllByParentIsNull();
 }

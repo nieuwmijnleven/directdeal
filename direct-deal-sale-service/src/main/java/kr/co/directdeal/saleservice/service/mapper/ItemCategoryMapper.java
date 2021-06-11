@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 import kr.co.directdeal.common.mapper.Mapper;
 import kr.co.directdeal.saleservice.domain.ItemCategory;
 import kr.co.directdeal.saleservice.service.dto.ItemCategoryDTO;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class ItemCategoryMapper implements Mapper<ItemCategory, ItemCategoryDTO> {
 
