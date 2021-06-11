@@ -6,11 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
 
 import java.time.Instant;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,9 +34,7 @@ import kr.co.directdeal.chattingservice.service.mapper.ChattingRoomMapper;
 import kr.co.directdeal.chattingservice.service.repository.ChattingRepository;
 import kr.co.directdeal.common.mapper.Mapper;
 import kr.co.directdeal.common.security.util.SecurityUtils;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @ExtendWith(MockitoExtension.class)
 public class ChattingServiceTest {
     
@@ -167,7 +167,6 @@ public class ChattingServiceTest {
                     .existsByItemIdAndSellerIdAndCustomerId(dto.getItemId(), dto.getSellerId(), dto.getCustomerId()))
             .willReturn(false);
 
-        //when and then
         try (MockedStatic<SecurityUtils> mocked = mockStatic(SecurityUtils.class)) {
             mocked.when(SecurityUtils::getCurrentUserLogin)
                 .thenReturn("invalid-talker@directdeal.co.kr");
@@ -221,120 +220,269 @@ public class ChattingServiceTest {
         }
     }
 
+    @Test
+    public void SendMessage_InvalidChattingRoomId_ThrowChattingException() throws Exception {
+        //given
+        String srcJSON = "{\"chattingRoomId\":\"1\", \"talkerId\":\"customer@directdeal.co.kr\", \"text\":\"문의 드립니다.\"}"; 
+        ChattingMessageDTO dto = objectMapper.readValue(srcJSON, ChattingMessageDTO.class);
 
-    /*@Transactional
-    @Transactional
-    public ChattingRoomDTO createChattingRoom(ChattingRoomDTO dto) {
-        //check if the chatting room has already created
-        checkAlreadyCreated(dto);
+        given(chattingRepository.findById(dto.getChattingRoomId()))
+            .willReturn(Optional.empty());
 
-        //check if valid talkers
-        ChattingRoom newChattingRoom = chattingRoomMapper.toEntity(dto);
-        checkValidTalker(newChattingRoom);  
- 
-        newChattingRoom.setCreatedDate(Instant.now());
-        newChattingRoom = chattingRepository.save(newChattingRoom);
-        return chattingRoomMapper.toDTO(newChattingRoom);
+        //when and then
+        assertThrows(ChattingException.class, () -> {
+            chattingService.sendMessage(dto);
+        });
     }
 
-    @Transactional
-    public void sendMessage(ChattingMessageDTO dto) {
-        ChattingRoom chattingRoom = findChattingRoomById(dto.getChattingRoomId());
-        checkValidTalker(chattingRoom);
+    @Test
+    public void SendMessage_InvalidTalker_ThrowChattingException() throws Exception {
+        //given
+        String srcJSON = "{\"chattingRoomId\":\"1\", \"talkerId\":\"customer@directdeal.co.kr\", \"text\":\"문의 드립니다.\"}"; 
+        ChattingMessageDTO dto = objectMapper.readValue(srcJSON, ChattingMessageDTO.class);
 
-        dto.setCreatedDate(Instant.now());
-        chattingRoom.addMessage(chattingMessageMapper.toEntity(dto));                                    
+        given(chattingRepository.findById(dto.getChattingRoomId()))
+            .willReturn(Optional.of(mock(ChattingRoom.class)));
+
+        try (MockedStatic<SecurityUtils> mocked = mockStatic(SecurityUtils.class)) {
+            mocked.when(SecurityUtils::getCurrentUserLogin)
+                .thenReturn("invalid-talker@directdeal.co.kr");
+
+            //when and then
+            assertThrows(ChattingException.class, () -> {
+                chattingService.sendMessage(dto);
+            });
+        }
     }
 
-    @Transactional
-    public List<ChattingMessageDTO> fetchUnreadMessage(ChattingMessageDTO dto) {
-        ChattingRoom chattingRoom = findChattingRoomById(dto.getChattingRoomId());
-        checkValidTalker(chattingRoom);
+    @Test
+    public void SendMessage_ValidChattingRoomIdAndTalker_Success() throws Exception {
+        //given
+        String srcJSON = "{\"chattingRoomId\":\"1\", \"talkerId\":\"customer@directdeal.co.kr\", \"text\":\"문의 드립니다.\"}"; 
+        ChattingMessageDTO dto = objectMapper.readValue(srcJSON, ChattingMessageDTO.class);
 
-        return chattingRoom.getMessages()
-                    .stream()
-                    .filter(ChattingMessage::isNotSent)
-                    .filter(message -> Objects.equals(message.getTalkerId(), dto.getTalkerId()))
-                    .map(message -> {
-                            message.setSent(true);
-                            return message;
-                        })
-                    .map(chattingMessageMapper::toDTO)
-                    .collect(Collectors.toList());                                   
+        ChattingRoom chattingRoom = mock(ChattingRoom.class);
+        given(chattingRoom.getSellerId())
+            .willReturn("seller@directdeal.co.kr");
+        // given(chattingRoom.getCustomerId())
+        //     .willReturn("customer@directdeal.co.kr");
+
+        given(chattingRepository.findById(dto.getChattingRoomId()))
+            .willReturn(Optional.of(chattingRoom));
+
+        try (MockedStatic<SecurityUtils> mocked = mockStatic(SecurityUtils.class)) {
+            mocked.when(SecurityUtils::getCurrentUserLogin)
+                .thenReturn("seller@directdeal.co.kr");
+
+            //when
+            chattingService.sendMessage(dto);
+
+            //then
+            verify(chattingRoom).addMessage(chattingMessageMapper.toEntity(dto));
+        }
     }
 
-    @Transactional
-    public List<ChattingMessageDTO> fetchMessagesFrom(String chattingRoomId, int skip) {
-        ChattingRoom chattingRoom = findChattingRoomById(chattingRoomId);
-        checkValidTalker(chattingRoom);
+    @Test
+    public void FetchUnreadMessage_InvalidChattingRoomId_ThrowChattingException() throws Exception {
+        //given
+        String srcJSON = "{\"chattingRoomId\":\"1\", \"talkerId\":\"customer@directdeal.co.kr\"}"; 
+        ChattingMessageDTO dto = objectMapper.readValue(srcJSON, ChattingMessageDTO.class);
 
-        return chattingRoom.getMessages()
-                    .stream()
-                    .skip(skip)
-                    .map(message -> {
-                            message.setSent(true);
-                            return message;
-                        })
-                    .map(chattingMessageMapper::toDTO)
-                    .collect(Collectors.toList());
+        given(chattingRepository.findById(dto.getChattingRoomId()))
+            .willReturn(Optional.empty());
+
+        //when and then
+        assertThrows(ChattingException.class, () -> {
+            chattingService.fetchUnreadMessage(dto);
+        });
     }
 
-    @Transactional(readOnly = true)
-    public List<String> getCustomerIdList(String itemId) {
-        String sellerId = SecurityUtils.getCurrentUserLogin();
-        log.debug("ChattingRoomService.getCustomerIdList(), sellerId => {}", sellerId);
-        return chattingRoomRepository
-                    .findBySellerIdAndItemId(sellerId, itemId)
-                    .stream()
-                    .map(ChattingRoom::getCustomerId)
-                    .collect(Collectors.toList());                             
+    @Test
+    public void FetchUnreadMessage_InvalidTalker_ThrowChattingException() throws Exception {
+        //given
+        String srcJSON = "{\"chattingRoomId\":\"1\", \"talkerId\":\"customer@directdeal.co.kr\"}"; 
+        ChattingMessageDTO dto = objectMapper.readValue(srcJSON, ChattingMessageDTO.class);
+
+        given(chattingRepository.findById(dto.getChattingRoomId()))
+            .willReturn(Optional.of(mock(ChattingRoom.class)));
+
+        try (MockedStatic<SecurityUtils> mocked = mockStatic(SecurityUtils.class)) {
+            mocked.when(SecurityUtils::getCurrentUserLogin)
+                .thenReturn("invalid-talker@directdeal.co.kr");
+
+            //when and then
+            assertThrows(ChattingException.class, () -> {
+                chattingService.fetchUnreadMessage(dto);
+            });
+        }
     }
 
-    private ChattingRoom findChattingRoom(ChattingRoomDTO dto) {
-        return chattingRoomRepository
-                    .findByItemIdAndSellerIdAndCustomerId(dto.getItemId(), dto.getSellerId(), dto.getCustomerId())
-                    .orElseThrow(() -> ChattingException.builder()
-                                            .messageKey("chattingroomservice.exception.findchattingroom.chattingroom.notfound.message")
-                                            .messageArgs(new String[]{ dto.getItemId(), dto.getSellerId(), dto.getCustomerId() })
-                                            .build());
+    @Test
+    public void FetchUnreadMessage_ValidChattingRoomIdAndTalker_ReturnUnreadMessages() throws Exception {
+        //given
+        String srcJSON = "{\"chattingRoomId\":\"1\", \"talkerId\":\"customer@directdeal.co.kr\"}"; 
+        ChattingMessageDTO dto = objectMapper.readValue(srcJSON, ChattingMessageDTO.class);
+
+        ChattingRoom chattingRoom = mock(ChattingRoom.class);
+        given(chattingRoom.getSellerId())
+            .willReturn("seller@directdeal.co.kr");
+        // given(chattingRoom.getCustomerId())
+        //     .willReturn("customer@directdeal.co.kr");
+        given(chattingRoom.getMessages())
+            .willReturn(Collections.singletonList(ChattingMessage.builder()
+                                                    .talkerId("customer@directdeal.co.kr")
+                                                    .text("문의 드립니다.")
+                                                    .sent(false)
+                                                    .build()));
+
+        given(chattingRepository.findById(dto.getChattingRoomId()))
+            .willReturn(Optional.of(chattingRoom));
+
+        try (MockedStatic<SecurityUtils> mocked = mockStatic(SecurityUtils.class)) {
+            mocked.when(SecurityUtils::getCurrentUserLogin)
+                .thenReturn("seller@directdeal.co.kr");
+
+            //when
+            List<ChattingMessageDTO> resultList = chattingService.fetchUnreadMessage(dto);
+
+            //then
+            assertThat(resultList.isEmpty(), equalTo(false));
+            assertThat(resultList.get(0).getTalkerId(), equalTo("customer@directdeal.co.kr"));
+            assertThat(resultList.get(0).getText(), equalTo("문의 드립니다."));
+            assertThat(resultList.get(0).isSent(), equalTo(true));
+        }
     }
 
-    private ChattingRoom findChattingRoomById(String id) {
-        return chattingRoomRepository
-                    .findById(id)
-                    .orElseThrow(() -> ChattingException.builder()
-                                            .messageKey("chattingroomservice.exception.sendchattingmessage.chattingroom.notfound.message")
-                                            .messageArgs(new String[]{id})
-                                            .build());
+    @Test
+    public void FetchUnreadMessage_ValidChattingRoomIdAndTalker_ReturnEmptyMessages() throws Exception {
+        //given
+        String srcJSON = "{\"chattingRoomId\":\"1\", \"talkerId\":\"customer@directdeal.co.kr\"}"; 
+        ChattingMessageDTO dto = objectMapper.readValue(srcJSON, ChattingMessageDTO.class);
+
+        ChattingRoom chattingRoom = mock(ChattingRoom.class);
+        given(chattingRoom.getSellerId())
+            .willReturn("seller@directdeal.co.kr");
+        // given(chattingRoom.getCustomerId())
+        //     .willReturn("customer@directdeal.co.kr");
+        given(chattingRoom.getMessages())
+            .willReturn(Collections.emptyList());
+
+        given(chattingRepository.findById(dto.getChattingRoomId()))
+            .willReturn(Optional.of(chattingRoom));
+
+        try (MockedStatic<SecurityUtils> mocked = mockStatic(SecurityUtils.class)) {
+            mocked.when(SecurityUtils::getCurrentUserLogin)
+                .thenReturn("seller@directdeal.co.kr");
+
+            //when
+            List<ChattingMessageDTO> resultList = chattingService.fetchUnreadMessage(dto);
+
+            //then
+            assertThat(resultList.isEmpty(), equalTo(true));
+        }
     }
 
-    private void checkValidTalker(ChattingRoom chattingRoom) {
-        String userId = SecurityUtils.getCurrentUserLogin();
-        log.debug("ChattingRoomService.checkValidTalker(), userId => {}", userId);
-        if (!Objects.equals(userId, chattingRoom.getSellerId()) 
-            && !Objects.equals(userId, chattingRoom.getCustomerId()))
-            throw ChattingException.builder()
-                    .messageKey("chattingroomservice.exception.findchattingroom.chattingroom.invalidchattinguser.message")
-                    .messageArgs(new String[]{})
-                    .build();
+    @Test
+    public void FetchMessageFrom_InvalidChattingRoomId_ThrowChattingException() throws Exception {
+        //given
+        String chattingRoomId = "1";
+        int skip = 1;
+
+        given(chattingRepository.findById(chattingRoomId))
+            .willReturn(Optional.empty());
+
+        //when and then
+        assertThrows(ChattingException.class, () -> {
+            chattingService.fetchMessagesFrom(chattingRoomId, skip);
+        });
     }
 
-    private void changeMessageSentStatus(ChattingRoom chattingRoom) {
-        chattingRoom.getMessages()
-            .stream()
-            .filter(ChattingMessage::isNotSent)
-            .forEach(message -> message.setSent(true));  
+    @Test
+    public void FetchMessageFrom_InvalidTalker_ThrowChattingException() throws Exception {
+        //given
+        String chattingRoomId = "1";
+        int skip = 1;
+
+        given(chattingRepository.findById(chattingRoomId))
+            .willReturn(Optional.of(mock(ChattingRoom.class)));
+
+        try (MockedStatic<SecurityUtils> mocked = mockStatic(SecurityUtils.class)) {
+            mocked.when(SecurityUtils::getCurrentUserLogin)
+                .thenReturn("invalid-talker@directdeal.co.kr");
+
+            //when and then
+            assertThrows(ChattingException.class, () -> {
+                chattingService.fetchMessagesFrom(chattingRoomId, skip);
+            });
+        }
     }
 
-    private void checkAlreadyCreated(ChattingRoomDTO dto) {
-        boolean hasAlreadyCreated = 
-            chattingRoomRepository
-                .existsByItemIdAndSellerIdAndCustomerId(dto.getItemId(), dto.getSellerId(), dto.getCustomerId());
+    @Test
+    public void FetchMessageFrom_ValidChattingRoomIdAndTalker_ReturnUnreadMessages() throws Exception {
+        //given
+        String chattingRoomId = "1";
+        int skip = 0;
 
-        if (hasAlreadyCreated)
-            throw ChattingException.builder()
-                    .messageKey("chattingroomservice.exception.createchattingroom.chattingroom.hasalreadycreated.message")
-                    .messageArgs(new String[]{})
-                    .build();
-    }*/
+        ChattingRoom chattingRoom = mock(ChattingRoom.class);
+        given(chattingRoom.getSellerId())
+            .willReturn("seller@directdeal.co.kr");
+        // given(chattingRoom.getCustomerId())
+        //     .willReturn("customer@directdeal.co.kr");
+        given(chattingRoom.getMessages())
+            .willReturn(Collections.singletonList(ChattingMessage.builder()
+                                                    .talkerId("customer@directdeal.co.kr")
+                                                    .text("문의 드립니다.")
+                                                    .sent(false)
+                                                    .build()));
+
+        given(chattingRepository.findById(chattingRoomId))
+            .willReturn(Optional.of(chattingRoom));
+
+        try (MockedStatic<SecurityUtils> mocked = mockStatic(SecurityUtils.class)) {
+            mocked.when(SecurityUtils::getCurrentUserLogin)
+                .thenReturn("seller@directdeal.co.kr");
+
+            //when
+            List<ChattingMessageDTO> resultList = chattingService.fetchMessagesFrom(chattingRoomId, skip);
+
+            //then
+            assertThat(resultList.isEmpty(), equalTo(false));
+            assertThat(resultList.get(0).getTalkerId(), equalTo("customer@directdeal.co.kr"));
+            assertThat(resultList.get(0).getText(), equalTo("문의 드립니다."));
+            assertThat(resultList.get(0).isSent(), equalTo(true));
+        }
+    }
+
+    @Test
+    public void FetchMessageFrom_ValidChattingRoomIdAndTalker_ReturnEmptyMessage() throws Exception {
+        //given
+        String chattingRoomId = "1";
+        int skip = 1;
+
+        ChattingRoom chattingRoom = mock(ChattingRoom.class);
+        given(chattingRoom.getSellerId())
+            .willReturn("seller@directdeal.co.kr");
+        // given(chattingRoom.getCustomerId())
+        //     .willReturn("customer@directdeal.co.kr");
+        given(chattingRoom.getMessages())
+            .willReturn(Collections.singletonList(ChattingMessage.builder()
+                                                    .talkerId("customer@directdeal.co.kr")
+                                                    .text("문의 드립니다.")
+                                                    .sent(false)
+                                                    .build()));
+
+        given(chattingRepository.findById(chattingRoomId))
+            .willReturn(Optional.of(chattingRoom));
+
+        try (MockedStatic<SecurityUtils> mocked = mockStatic(SecurityUtils.class)) {
+            mocked.when(SecurityUtils::getCurrentUserLogin)
+                .thenReturn("seller@directdeal.co.kr");
+
+            //when
+            List<ChattingMessageDTO> resultList = chattingService.fetchMessagesFrom(chattingRoomId, skip);
+
+            //then
+            assertThat(resultList.isEmpty(), equalTo(true));
+        }
+    }
 }

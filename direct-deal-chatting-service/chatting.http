@@ -32,7 +32,6 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
     "customerId":"customer@directdeal.co.kr"
 }
 
-
 ###
 
 PUT http://localhost:8085/chatting HTTP/1.1
