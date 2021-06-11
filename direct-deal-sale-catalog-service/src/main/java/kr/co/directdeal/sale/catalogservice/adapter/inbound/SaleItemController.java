@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.co.directdeal.sale.catalogservice.service.SaleItemQueryService;
+import kr.co.directdeal.sale.catalogservice.service.SaleItemService;
 import kr.co.directdeal.sale.catalogservice.service.dto.SaleItemDTO;
 import lombok.RequiredArgsConstructor;
 
@@ -16,10 +16,10 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/saleitem")
 public class SaleItemController {
 
-    private final SaleItemQueryService saleItemQueryService;
+    private final SaleItemService saleItemService;
     
     @GetMapping("/{id}")
-    public SaleItemDTO get(@PathVariable("id") @NotBlank String id) {
-        return saleItemQueryService.findSaleItemById(id);
+    public SaleItemDTO getSaleItem(@PathVariable("id") @NotBlank String id) {
+        return saleItemService.findSaleItemById(id);
     }
 }

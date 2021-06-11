@@ -1,5 +1,6 @@
 package kr.co.directdeal.common.sale.event;
 
+import java.time.Instant;
 import java.util.List;
 
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
@@ -36,9 +37,9 @@ public class ItemUpdatedEvent {
     
     // private String createdBy;
     
-    // private Instant createdDate; 
+    private Instant createdDate; 
     
     // private String lastModifiedBy;
     
-    // private Instant lastModifiedByDate;
+    private Instant lastModifiedDate;
 }

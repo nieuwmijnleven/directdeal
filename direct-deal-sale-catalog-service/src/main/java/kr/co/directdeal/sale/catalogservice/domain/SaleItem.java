@@ -6,7 +6,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import kr.co.directdeal.common.sale.constant.SaleItemStatus;
@@ -37,6 +37,8 @@ public class SaleItem {
 
     private long targetPrice;
 
+    private boolean discountable;
+
     private String text;
 
     private List<String> images;
@@ -52,6 +54,6 @@ public class SaleItem {
     // @LastModifiedBy
     // private String lastModifiedBy;
 
-    // @LastModifiedDate
-    // private Instant lastModifiedByDate; 
+    @LastModifiedDate
+    private Instant lastModifiedDate; 
 }

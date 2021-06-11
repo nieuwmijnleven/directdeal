@@ -23,8 +23,8 @@ public class SaleItemDTO {
     private String text;
     private List<String> images;
     private SaleItemStatus status;
-    private String createdBy;
+    // private String createdBy;
     private Instant createdDate; 
-    private String lastModifiedBy;
-    private Instant lastModifiedByDate;
+    // private String lastModifiedBy;
+    private Instant lastModifiedDate;
 }

@@ -3,15 +3,15 @@ package kr.co.directdeal.sale.catalogservice.service.mapper;
 import org.springframework.stereotype.Component;
 
 import kr.co.directdeal.common.mapper.Mapper;
-import kr.co.directdeal.sale.catalogservice.domain.SaleListItem;
-import kr.co.directdeal.sale.catalogservice.service.dto.SaleListItemDTO;
+import kr.co.directdeal.sale.catalogservice.domain.SaleList;
+import kr.co.directdeal.sale.catalogservice.service.dto.SaleListDTO;
 
 @Component
-public class SaleListItemMapper implements Mapper<SaleListItem, SaleListItemDTO> {
+public class SaleListMapper implements Mapper<SaleList, SaleListDTO> {
 
 	@Override
-	public SaleListItem toEntity(SaleListItemDTO dto) {
-		return SaleListItem.builder()
+	public SaleList toEntity(SaleListDTO dto) {
+		return SaleList.builder()
 					.id(dto.getId())
 					.title(dto.getTitle())
 					.category(dto.getCategory())
@@ -23,8 +23,8 @@ public class SaleListItemMapper implements Mapper<SaleListItem, SaleListItemDTO>
 	}
 
 	@Override
-	public SaleListItemDTO toDTO(SaleListItem entity) {
-		return SaleListItemDTO.builder()
+	public SaleListDTO toDTO(SaleList entity) {
+		return SaleListDTO.builder()
 					.id(entity.getId())
 					.title(entity.getTitle())
 					.category(entity.getCategory())

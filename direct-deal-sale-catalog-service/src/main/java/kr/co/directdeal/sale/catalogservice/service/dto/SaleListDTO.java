@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SaleListItemDTO {
+public class SaleListDTO {
     private String id;
     private String title;
     private String category;

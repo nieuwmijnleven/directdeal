@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import kr.co.directdeal.common.sale.constant.SaleItemStatus;
@@ -16,14 +17,14 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Document("SALE_LIST_ITEMS")
+@Document("SALE_LIST")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
 @ToString
-public class SaleListItem {
+public class SaleList {
     @NotNull
     @Id
     private String id;
@@ -34,6 +35,8 @@ public class SaleListItem {
 
     private long targetPrice;
 
+    private boolean discountable;
+
     private String mainImage;
 
     private SaleItemStatus status;
@@ -41,11 +44,11 @@ public class SaleListItem {
     @CreatedDate
     private Instant createdDate; 
 
-    // @LastModifiedDate
-    // private Instant lastModifiedByDate; 
+    @LastModifiedDate
+    private Instant lastModifiedDate; 
 
-    public static SaleListItem copyOf(SaleListItem another) {
-        return SaleListItem.builder()
+    public static SaleList copyOf(SaleList another) {
+        return SaleList.builder()
                     .id(another.getId())
                     .title(another.getTitle())
                     .category(another.getCategory())
