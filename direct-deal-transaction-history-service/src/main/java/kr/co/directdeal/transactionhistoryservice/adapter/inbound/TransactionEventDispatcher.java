@@ -31,8 +31,8 @@ public class TransactionEventDispatcher {
         TransactionHistoryDTO transactionHistoryDTO = 
             TransactionHistoryDTO.builder()
                 .itemId(event.getId())
-                //.ownerId(event.getOwnerId())
-                .sellerId("seller@directdeal.co.kr")
+                .sellerId(event.getOwnerId())
+                //.sellerId("seller@directdeal.co.kr")
                 .title(event.getTitle())
                 .category(event.getCategory())
                 .targetPrice(event.getTargetPrice())
