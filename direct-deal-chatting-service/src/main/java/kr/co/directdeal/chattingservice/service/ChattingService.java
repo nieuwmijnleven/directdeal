@@ -13,7 +13,7 @@ import kr.co.directdeal.chattingservice.domain.ChattingRoom;
 import kr.co.directdeal.chattingservice.exception.ChattingException;
 import kr.co.directdeal.chattingservice.service.dto.ChattingMessageDTO;
 import kr.co.directdeal.chattingservice.service.dto.ChattingRoomDTO;
-import kr.co.directdeal.chattingservice.service.repository.ChattingRoomRepository;
+import kr.co.directdeal.chattingservice.service.repository.ChattingRepository;
 import kr.co.directdeal.common.mapper.Mapper;
 import kr.co.directdeal.common.security.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ChattingRoomService {
+public class ChattingService {
     
-    private final ChattingRoomRepository chattingRoomRepository;
+    private final ChattingRepository chattingRepository;
 
     private final Mapper<ChattingRoom, ChattingRoomDTO> chattingRoomMapper;
 
@@ -56,7 +56,7 @@ public class ChattingRoomService {
         checkValidTalker(newChattingRoom);  
  
         newChattingRoom.setCreatedDate(Instant.now());
-        newChattingRoom = chattingRoomRepository.save(newChattingRoom);
+        newChattingRoom = chattingRepository.save(newChattingRoom);
         return chattingRoomMapper.toDTO(newChattingRoom);
     }
 
@@ -106,7 +106,7 @@ public class ChattingRoomService {
     public List<String> getCustomerIdList(String itemId) {
         String sellerId = SecurityUtils.getCurrentUserLogin();
         log.debug("ChattingRoomService.getCustomerIdList(), sellerId => {}", sellerId);
-        return chattingRoomRepository
+        return chattingRepository
                     .findBySellerIdAndItemId(sellerId, itemId)
                     .stream()
                     .map(ChattingRoom::getCustomerId)
@@ -114,7 +114,7 @@ public class ChattingRoomService {
     }
 
     private ChattingRoom findChattingRoom(ChattingRoomDTO dto) {
-        return chattingRoomRepository
+        return chattingRepository
                     .findByItemIdAndSellerIdAndCustomerId(dto.getItemId(), dto.getSellerId(), dto.getCustomerId())
                     .orElseThrow(() -> ChattingException.builder()
                                             .messageKey("chattingroomservice.exception.findchattingroom.chattingroom.notfound.message")
@@ -123,7 +123,7 @@ public class ChattingRoomService {
     }
 
     private ChattingRoom findChattingRoomById(String id) {
-        return chattingRoomRepository
+        return chattingRepository
                     .findById(id)
                     .orElseThrow(() -> ChattingException.builder()
                                             .messageKey("chattingroomservice.exception.sendchattingmessage.chattingroom.notfound.message")
@@ -151,7 +151,7 @@ public class ChattingRoomService {
 
     private void checkAlreadyCreated(ChattingRoomDTO dto) {
         boolean hasAlreadyCreated = 
-            chattingRoomRepository
+            chattingRepository
                 .existsByItemIdAndSellerIdAndCustomerId(dto.getItemId(), dto.getSellerId(), dto.getCustomerId());
 
         if (hasAlreadyCreated)

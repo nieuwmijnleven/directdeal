@@ -2,7 +2,6 @@ package kr.co.directdeal.chattingservice.service.dto;
 
 import java.time.Instant;
 
-import kr.co.directdeal.chattingservice.domain.ChattingRoom;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

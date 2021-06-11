@@ -4,7 +4,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import kr.co.directdeal.chattingservice.domain.ChattingMessage;
 import kr.co.directdeal.chattingservice.domain.ChattingRoom;
+import kr.co.directdeal.chattingservice.service.dto.ChattingMessageDTO;
 import kr.co.directdeal.chattingservice.service.dto.ChattingRoomDTO;
 import kr.co.directdeal.common.mapper.Mapper;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Component
 public class ChattingRoomMapper implements Mapper<ChattingRoom, ChattingRoomDTO> {
 
-    private final ChattingMessageMapper chattingMessageMapper;
+    private final Mapper<ChattingMessage, ChattingMessageDTO> chattingMessageMapper;
 
     @Override
     public ChattingRoom toEntity(ChattingRoomDTO dto) {
