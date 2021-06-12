@@ -28,7 +28,7 @@ public class ItemImageController {
     private final ItemImageService itemImageService;
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public ItemImageDTO saveImages(@RequestParam("files") List<MultipartFile> files) {
         return itemImageService.saveImages(files);
     }

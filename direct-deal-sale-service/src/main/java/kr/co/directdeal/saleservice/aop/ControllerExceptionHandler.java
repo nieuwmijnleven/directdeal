@@ -10,7 +10,10 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
+import kr.co.directdeal.saleservice.exception.FavoriteItemException;
+import kr.co.directdeal.saleservice.exception.ItemCategoryException;
 import kr.co.directdeal.saleservice.exception.ItemImageException;
 import kr.co.directdeal.saleservice.exception.SaleItemException;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class ControllerExceptionHandler {
 	
 	private final MessageSource messageSource;
-
+	
 	@ExceptionHandler({Exception.class})
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public ErrorResponse handleException(Exception ex) {
@@ -46,6 +49,12 @@ public class ControllerExceptionHandler {
 		return new ErrorResponse("Authentication Failed", ex.getMessage());
 	}
 
+	@ExceptionHandler({MissingServletRequestPartException.class})
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorResponse handleException(MissingServletRequestPartException ex) {
+		return new ErrorResponse("File Upload Error", ex.getMessage());
+	}
+
 	@ExceptionHandler({SaleItemException.class})
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorResponse handleException(SaleItemException ex) {
@@ -58,6 +67,20 @@ public class ControllerExceptionHandler {
 	public ErrorResponse handleException(ItemImageException ex) {
 		String message = messageSource.getMessage(ex.getMessageKey(), ex.getMessageArgs(), LocaleContextHolder.getLocale());
 		return new ErrorResponse("Item Image Service Error", message);
+	}
+
+	@ExceptionHandler({FavoriteItemException.class})
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorResponse handleException(FavoriteItemException ex) {
+		String message = messageSource.getMessage(ex.getMessageKey(), ex.getMessageArgs(), LocaleContextHolder.getLocale());
+		return new ErrorResponse("Favorite Item Service Error", message);
+	}
+
+	@ExceptionHandler({ItemCategoryException.class})
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorResponse handleException(ItemCategoryException ex) {
+		String message = messageSource.getMessage(ex.getMessageKey(), ex.getMessageArgs(), LocaleContextHolder.getLocale());
+		return new ErrorResponse("Item Category Service Error", message);
 	}
 	
 	@ExceptionHandler({BindException.class})

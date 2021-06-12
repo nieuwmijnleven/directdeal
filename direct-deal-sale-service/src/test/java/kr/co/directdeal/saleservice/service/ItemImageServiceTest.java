@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,17 +73,16 @@ public class ItemImageServiceTest {
         }
     }
 
-    @Test
-    public void saveImages_EmptyMultipartFileList_ThrowItemImageException() {
-        //given
-        List<MultipartFile> files = Collections.emptyList();
+    // @Test
+    // public void saveImages_EmptyMultipartFileList_ThrowItemImageException() {
+    //     //given
+    //     List<MultipartFile> files = Collections.emptyList();
 
-        //when and then
-        assertThrows(ItemImageException.class, () -> {
-            itemImageService.saveImages(files);
-
-        });
-    }
+    //     //when and then
+    //     assertThrows(ItemImageException.class, () -> {
+    //         itemImageService.saveImages(files);
+    //     });
+    // }
 
     @Test
     public void saveImages_ValidMultipartFileList_Success() {

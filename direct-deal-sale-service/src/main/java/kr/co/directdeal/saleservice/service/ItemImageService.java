@@ -46,11 +46,11 @@ public class ItemImageService {
     }
 
     public ItemImageDTO saveImages(List<MultipartFile> files) {
-        if (files.isEmpty())
-            throw ItemImageException.builder()
-                        .messageKey("saleservice.exception.itemimageservice.saveimage.fail.message")
-                        .messageArgs(new String[]{})
-                        .build();
+        // if (files.isEmpty())
+        //     throw ItemImageException.builder()
+        //                 .messageKey("saleservice.exception.itemimageservice.saveimage.fail.message")
+        //                 .messageArgs(new String[]{})
+        //                 .build();
 
         //allocate normalized image names
         List<String> images = new ArrayList<>();

@@ -65,18 +65,18 @@ public class BuyHistoryServiceTest {
     @Test
     public void Delete_InvalidBuyId_ThrowbuyHistoryException() {
         //given
-        BuyHistoryDTO buyHistoryDTO = 
+        BuyHistoryDTO dto = 
             BuyHistoryDTO.builder()
                 .id("1")
                 .buyerId("buyer@directdeal.co.kr")
                 .build();
 
-        given(buyHistoryRepository.findById(buyHistoryDTO.getId()))
+        given(buyHistoryRepository.findByIdAndBuyerId(dto.getId(), dto.getBuyerId()))
             .willReturn(Optional.empty());
 
         //when and then
         assertThrows(BuyHistoryException.class, () -> {
-            buyHistoryService.delete(buyHistoryDTO);
+            buyHistoryService.delete(dto);
         });
     }
     

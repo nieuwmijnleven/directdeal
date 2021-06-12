@@ -25,9 +25,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import kr.co.directdeal.common.security.auth.jwt.JwtAccessDeniedHandler;
+import kr.co.directdeal.common.security.auth.jwt.JwtAuthenticationEntryPoint;
+import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
+import kr.co.directdeal.common.security.config.props.JWTProperties;
 import kr.co.directdeal.saleservice.domain.FavoriteItem;
 import kr.co.directdeal.saleservice.service.FavoriteItemService;
 import kr.co.directdeal.saleservice.service.dto.FavoriteItemDTO;
@@ -37,18 +42,13 @@ import kr.co.directdeal.saleservice.service.repository.FavoriteItemRepository;
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {FavoriteItemController.class},
     includeFilters = @Filter(type = FilterType.ASSIGNABLE_TYPE, 
-        classes = {FavoriteItemService.class, FavoriteItemMapper.class}))
-// @WebMvcTest(controllers = {FavoriteItemController.class},
-//     includeFilters = @Filter(type = FilterType.ASSIGNABLE_TYPE, 
-//         classes = {TokenProvider.class, JWTProperties.class,
-//                     JwtAuthenticationEntryPoint.class, JwtAccessDeniedHandler.class}))
+        classes = {TokenProvider.class, JWTProperties.class,
+                    JwtAuthenticationEntryPoint.class, JwtAccessDeniedHandler.class,
+                    FavoriteItemService.class, FavoriteItemMapper.class}))
 public class FavoriteItemControllerTest {
     
     @Autowired
     private MockMvc mvc;
-
-    // @MockBean
-    // private FavoriteItemService favoriteItemService;
 
     @MockBean
     private FavoriteItemRepository favoriteItemRepository;
@@ -57,19 +57,14 @@ public class FavoriteItemControllerTest {
     private ObjectMapper objectMapper;
     
     @Test
-    //@WithMockUser(username = "account@directdeal.co.kr")
+    @WithMockUser(username = "seller@directdeal.co.kr")
     public void Save_UserIdAndItemId_Success() throws Exception {
         //given
-        String payload = objectMapper
-                            .writeValueAsString(FavoriteItemDTO.builder()
-                                                    .itemId("80b1616d-c8a8-47f3-80bb-20926444974c")
-                                                    .build());
-
-        // FavoriteItemDTO favoriteItemDTO = 
-        //     FavoriteItemDTO.builder()
-        //         .userId("account@directdeal.co.kr")
-        //         .itemId("80b1616d-c8a8-47f3-80bb-20926444974c")
-        //         .build();
+        String payload = 
+            objectMapper
+                .writeValueAsString(FavoriteItemDTO.builder()
+                                        .itemId("80b1616d-c8a8-47f3-80bb-20926444974c")
+                                        .build());
 
         //when and then
         this.mvc.perform(post("/favorite")
@@ -83,12 +78,12 @@ public class FavoriteItemControllerTest {
     }
 
     @Test
-    //@WithMockUser(username = "account@directdeal.co.kr")
+    @WithMockUser(username = "seller@directdeal.co.kr")
     public void List_UserId_Success() throws Exception {
         //given
         FavoriteItemDTO favoriteItemDTO = 
             FavoriteItemDTO.builder()
-                .userId("account@directdeal.co.kr")
+                .userId("seller@directdeal.co.kr")
                 .build();
 
         given(favoriteItemRepository.findAllByUserId(favoriteItemDTO.getUserId()))
@@ -103,19 +98,19 @@ public class FavoriteItemControllerTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$[0].id", is("1")))
-                    .andExpect(jsonPath("$[0].userId", is("account@directdeal.co.kr")))
+                    .andExpect(jsonPath("$[0].userId", is("seller@directdeal.co.kr")))
                     .andExpect(jsonPath("$[0].itemId", is("80b1616d-c8a8-47f3-80bb-20926444974c")));
 
         verify(favoriteItemRepository).findAllByUserId(favoriteItemDTO.getUserId());
     }
 
     @Test
-    //@WithMockUser(username = "account@directdeal.co.kr")
+    @WithMockUser(username = "seller@directdeal.co.kr")
     public void Delete_UserIdAndItemId_Success() throws Exception {
         //given
         FavoriteItemDTO favoriteItemDTO = 
             FavoriteItemDTO.builder()
-                .userId("account@directdeal.co.kr")
+                .userId("seller@directdeal.co.kr")
                 .itemId("80b1616d-c8a8-47f3-80bb-20926444974c")
                 .build();
 
@@ -137,12 +132,12 @@ public class FavoriteItemControllerTest {
     }
 
     @Test
-    //@WithMockUser(username = "account@directdeal.co.kr")
+    @WithMockUser(username = "seller@directdeal.co.kr")
     public void Delete_UserIdAndInvalidItemId_ThrowSaleItemException() throws Exception {
         //given
         FavoriteItemDTO favoriteItemDTO = 
             FavoriteItemDTO.builder()
-                .userId("account@directdeal.co.kr")
+                .userId("seller@directdeal.co.kr")
                 .itemId("80b1616d-c8a8-47f3-80bb-20926444974c")
                 .build();
 
@@ -153,7 +148,7 @@ public class FavoriteItemControllerTest {
         this.mvc.perform(delete("/favorite/" + favoriteItemDTO.getItemId()))
                     .andDo(print())
                     .andExpect(status().isBadRequest())
-                    .andExpect(jsonPath("$.error", is("Service Error")))
-                    .andExpect(jsonPath("$.message", is("user(account@directdeal.co.kr) does not have the item(80b1616d-c8a8-47f3-80bb-20926444974c)")));
+                    .andExpect(jsonPath("$.error", is("Favorite Item Service Error")))
+                    .andExpect(jsonPath("$.message", is("User(seller@directdeal.co.kr) does not have the item(80b1616d-c8a8-47f3-80bb-20926444974c)")));
     }
 }
