@@ -20,6 +20,7 @@ public class SaleItemDTO {
     private String title;
     private String category;
     private long targetPrice;
+    private boolean discountable;
     private String text;
     private List<String> images;
     private SaleItemStatus status;

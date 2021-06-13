@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import kr.co.directdeal.sale.catalogservice.exception.SaleItemException;
+import kr.co.directdeal.sale.catalogservice.exception.SaleListException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -44,12 +46,19 @@ public class ControllerExceptionHandler {
 		return new ErrorResponse("Authentication Failed", ex.getMessage());
 	}
 
-	// @ExceptionHandler({SaleItemException.class})
-	// @ResponseStatus(HttpStatus.BAD_REQUEST)
-	// public ErrorResponse handleException(SaleItemException ex) {
-	// 	String message = messageSource.getMessage(ex.getMessageKey(), ex.getMessageArgs(), LocaleContextHolder.getLocale());
-	// 	return new ErrorResponse("Service Error", message);
-	// }
+	@ExceptionHandler({SaleItemException.class})
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorResponse handleException(SaleItemException ex) {
+		String message = messageSource.getMessage(ex.getMessageKey(), ex.getMessageArgs(), LocaleContextHolder.getLocale());
+		return new ErrorResponse("Sale Item Service Error", message);
+	}
+
+	@ExceptionHandler({SaleListException.class})
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorResponse handleException(SaleListException ex) {
+		String message = messageSource.getMessage(ex.getMessageKey(), ex.getMessageArgs(), LocaleContextHolder.getLocale());
+		return new ErrorResponse("Sale List Service Error", message);
+	}
 	
 	@ExceptionHandler({BindException.class})
 	@ResponseStatus(HttpStatus.BAD_REQUEST)

@@ -16,10 +16,12 @@ public class SaleItemMapper implements Mapper<SaleItem, SaleItemDTO> {
 					.title(dto.getTitle())
 					.category(dto.getCategory())
 					.targetPrice(dto.getTargetPrice())
+					.discountable(dto.isDiscountable())
 					.text(dto.getText())
 					.images(dto.getImages())
 					.status(dto.getStatus())
 					.createdDate(dto.getCreatedDate())
+					.lastModifiedDate(dto.getLastModifiedDate())
 					.build();
 	}
 
@@ -30,10 +32,12 @@ public class SaleItemMapper implements Mapper<SaleItem, SaleItemDTO> {
 					.title(entity.getTitle())
 					.category(entity.getCategory())
 					.targetPrice(entity.getTargetPrice())
+					.discountable(entity.isDiscountable())
 					.text(entity.getText())
 					.images(entity.getImages())
 					.status(entity.getStatus())
 					.createdDate(entity.getCreatedDate())
+					.lastModifiedDate(entity.getLastModifiedDate())
 					.build();
 	}
 }
