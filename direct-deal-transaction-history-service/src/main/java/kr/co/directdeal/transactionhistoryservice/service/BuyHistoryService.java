@@ -44,7 +44,6 @@ public class BuyHistoryService {
         buyHistoryRepository.save(newBuyHistory);
     }
 
-    //@PreAuthority(admin)
     @Transactional
     public void delete(BuyHistoryDTO dto) {
         BuyHistory buyHistory = 
