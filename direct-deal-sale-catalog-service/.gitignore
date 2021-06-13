@@ -6,11 +6,6 @@ build/
 !**/src/test/**/build/
 resources/images/**
 samples/**
-<<<<<<< HEAD
-=======
-bin
-.settings
->>>>>>> ea2d62c... commit resource files
 
 ### STS ###
 .apt_generated
