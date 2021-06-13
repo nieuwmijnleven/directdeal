@@ -45,13 +45,6 @@ public class ControllerExceptionHandler {
 		return new ErrorResponse("Authentication Failed", ex.getMessage());
 	}
 
-	// @ExceptionHandler({TransactionHistoryException.class})
-	// @ResponseStatus(HttpStatus.BAD_REQUEST)
-	// public ErrorResponse handleException(TransactionHistoryException ex) {
-	// 	String message = messageSource.getMessage(ex.getMessageKey(), ex.getMessageArgs(), LocaleContextHolder.getLocale());
-	// 	return new ErrorResponse("Transaction History Service Error", message);
-	// }
-
 	@ExceptionHandler({ChattingException.class})
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorResponse handleException(ChattingException ex) {
