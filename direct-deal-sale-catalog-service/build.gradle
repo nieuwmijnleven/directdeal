@@ -16,7 +16,6 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.5.0'
 	implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.0.0'
-	// testImplementation group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo', version: '3.0.0'
 
 	implementation ('org.axonframework:axon-spring-boot-starter:4.5') {
 		exclude group: "org.axonframework", module: 'axon-server-connector'
@@ -24,6 +23,12 @@ dependencies {
 	implementation 'org.axonframework:axon-micrometer:4.5'
 	implementation 'org.axonframework.extensions.kafka:axon-kafka-spring-boot-starter:4.0-RC3'
 	implementation 'org.apache.kafka:kafka-clients:2.8.0'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.11.4'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.11.4'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.4'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.11.4'
 
 	// developmentOnly 'org.springframework.boot:spring-boot-devtools'
 

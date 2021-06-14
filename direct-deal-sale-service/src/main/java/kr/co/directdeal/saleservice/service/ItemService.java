@@ -14,6 +14,7 @@ import kr.co.directdeal.common.sale.command.ItemSaleStartCommand;
 import kr.co.directdeal.common.sale.command.ItemSaleStopCommand;
 import kr.co.directdeal.common.sale.command.ItemUpdateCommand;
 import kr.co.directdeal.common.sale.constant.SaleItemStatus;
+import kr.co.directdeal.common.security.util.SecurityUtils;
 import kr.co.directdeal.saleservice.service.dto.ItemDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,7 @@ public class ItemService {
         
         commandGateway.send(ItemRegisterCommand.builder()
                                 .id(UUID.randomUUID().toString())
-                                // .ownerId(itemDTO.getOwnerId())
+                                .ownerId(SecurityUtils.getCurrentUserLogin())
                                 .title(itemDTO.getTitle())
                                 .category(itemDTO.getCategory())
                                 .targetPrice(itemDTO.getTargetPrice())
@@ -46,7 +47,7 @@ public class ItemService {
         log.debug("calll {}.update(), id = {}", this.getClass().getSimpleName(), itemDTO.getId());
         commandGateway.send(ItemUpdateCommand.builder()
                                 .id(itemDTO.getId())
-                                //.ownerId(itemDTO.getOwnerId())
+                                .ownerId(SecurityUtils.getCurrentUserLogin())
                                 .title(itemDTO.getTitle())
                                 .category(itemDTO.getCategory())
                                 .targetPrice(itemDTO.getTargetPrice())

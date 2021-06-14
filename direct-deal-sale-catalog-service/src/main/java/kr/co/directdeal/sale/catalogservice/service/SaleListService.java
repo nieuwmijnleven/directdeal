@@ -48,7 +48,7 @@ public class SaleListService {
         if (saleListDomainService.canLiftUp(saleList)) {
             log.debug("liftup saleList : {} => ", saleList);
             saleListDomainService.liftUp(saleList);
-            // saleListRepository.save(saleList); 
+            saleListRepository.save(saleList); 
             return true;
         }
         return false;

@@ -2,11 +2,11 @@ package kr.co.directdeal.sale.catalogservice.adapter.inbound;
 
 import java.time.Instant;
 
-import javax.transaction.Transactional;
-
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.directdeal.common.sale.constant.SaleItemStatus;
 import kr.co.directdeal.common.sale.event.ItemDeletedEvent;
@@ -68,6 +68,7 @@ public class SaleItemEventDispatcher {
         log.debug("saleList => " + saleList.toString());
     }
 
+    @CacheEvict(cacheNames = "SaleItemCache", key = "#event.id")
     @Transactional
     @EventHandler
     public void on(ItemUpdatedEvent event) {
@@ -81,8 +82,8 @@ public class SaleItemEventDispatcher {
         saleItem.setImages(event.getImages());
         saleItem.setLastModifiedDate(event.getLastModifiedDate());
 
-        // saleItemRepository.save(saleItem);
-        // log.debug("saleItem => " + saleItem.toString()); 
+        saleItemRepository.save(saleItem);
+        log.debug("saleItem => " + saleItem.toString()); 
 
         SaleList saleList = findSaleListById(event.getId());
         saleList.setTitle(event.getTitle());
@@ -91,60 +92,64 @@ public class SaleItemEventDispatcher {
         saleList.setDiscountable(event.isDiscountable());
         saleList.setMainImage(event.getImages().get(0));
 
-        // saleListRepository.save(saleList);
-        // log.debug("saleList => " + saleList.toString());
+        saleListRepository.save(saleList);
+        log.debug("saleList => " + saleList.toString());
     }
 
+    @CacheEvict(cacheNames = "SaleItemCache", key = "#event.id")
     @Transactional
     @EventHandler
     public void on(ItemDeletedEvent event) {
         log.debug("[{}] Triggered ItemDeletedEvent.", this.getClass().getSimpleName());
         SaleItem saleItem = findSaleItemById(event.getId());
         saleItem.setStatus(SaleItemStatus.DELETED);
-        // saleItemRepository.save(saleItem);
+        saleItemRepository.save(saleItem);
 
         SaleList saleList = findSaleListById(event.getId());
         saleList.setStatus(SaleItemStatus.DELETED);
-        // saleListRepository.save(saleList);
+        saleListRepository.save(saleList);
     }
 
+    @CacheEvict(cacheNames = "SaleItemCache", key = "#event.id")
     @Transactional
     @EventHandler
     public void on(ItemSaleStartedEvent event) {
         log.debug("[{}] Triggered ItemSaleStartedEvent.", this.getClass().getSimpleName());
         SaleItem saleItem = findSaleItemById(event.getId());
         saleItem.setStatus(SaleItemStatus.SALE);
-        // saleItemRepository.save(saleItem);
+        saleItemRepository.save(saleItem);
 
         SaleList saleList = findSaleListById(event.getId());
         saleList.setStatus(SaleItemStatus.SALE);
-        // saleListRepository.save(saleList);
+        saleListRepository.save(saleList);
     }
 
+    @CacheEvict(cacheNames = "SaleItemCache", key = "#event.id")
     @Transactional
     @EventHandler
     public void on(ItemSaleStoppedEvent event) {
         log.debug("[{}] Triggered ItemSaleStoppedEvent.", this.getClass().getSimpleName());
         SaleItem saleItem = findSaleItemById(event.getId());
         saleItem.setStatus(SaleItemStatus.STOPPED);
-        // saleItemRepository.save(saleItem);
+        saleItemRepository.save(saleItem);
 
         SaleList saleList = findSaleListById(event.getId());
         saleList.setStatus(SaleItemStatus.STOPPED);
-        // saleListRepository.save(saleList);
+        saleListRepository.save(saleList);
     }
 
+    @CacheEvict(cacheNames = "SaleItemCache", key = "#event.id")
     @Transactional
     @EventHandler
     public void on(ItemSaleCompletedEvent event) {
         log.debug("[{}] Triggered ItemSaleCompletedEvent.", this.getClass().getSimpleName());
         SaleItem saleItem = findSaleItemById(event.getId());
         saleItem.setStatus(SaleItemStatus.COMPLETED);
-        // saleItemRepository.save(saleItem);
+        saleItemRepository.save(saleItem);
 
         SaleList saleList = findSaleListById(event.getId());
         saleList.setStatus(SaleItemStatus.COMPLETED);
-        // saleListRepository.save(saleList);
+        saleListRepository.save(saleList);
     }
 
     private SaleItem findSaleItemById(String id) {
