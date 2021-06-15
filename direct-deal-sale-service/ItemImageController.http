@@ -1,8 +1,33 @@
+### Create an account
+
+POST http://localhost:8080/account HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"seller@directdeal.co.kr",
+    "name":"seller",
+    "password":"1q2w3e"
+}
+
+### login and get an access token
+
+POST http://localhost:8080/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"seller@directdeal.co.kr",
+    "password":"1q2w3e"
+}
+
+###
+
 GET http://localhost:8081/actuator/beans HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzY1Mjk4fQ.VWhrZ0TsYyoT7MijTaKv4N-bsFt3Ur8_O_zWhUS8F-NsBjXnnSrqY6qZRs6khxuvuKHUo2tS6_EXcrDiWJ8a4A
 
 ###
 
 POST http://localhost:8081/image
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzY1Mjk4fQ.VWhrZ0TsYyoT7MijTaKv4N-bsFt3Ur8_O_zWhUS8F-NsBjXnnSrqY6qZRs6khxuvuKHUo2tS6_EXcrDiWJ8a4A
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -14,7 +39,8 @@ Content-Type: image/jpg; image/png; image/gif;
 
 ###
 
-GET http://localhost:8081/image/check-upload-status/d780b4fc-8d41-43bc-8ea0-bc0ff6f769af HTTP/1.1
+GET http://localhost:8081/image/check-upload-status/c173ded7-e9a7-45b6-8c68-9ea9d262f59a HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzY1Mjk4fQ.VWhrZ0TsYyoT7MijTaKv4N-bsFt3Ur8_O_zWhUS8F-NsBjXnnSrqY6qZRs6khxuvuKHUo2tS6_EXcrDiWJ8a4A
 
 ###
 

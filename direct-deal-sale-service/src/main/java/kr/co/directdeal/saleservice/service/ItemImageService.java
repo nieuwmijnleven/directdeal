@@ -1,6 +1,8 @@
 package kr.co.directdeal.saleservice.service;
 
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 public class ItemImageService {
     
     public static final String IMAGE_REPOSITORY_PATH = "resources/images";
+
+    public static final Path IMAGE_REPOSITORY = Paths.get(IMAGE_REPOSITORY_PATH);
 
     private final AsyncImageSaveRunner asyncSaveImageRunner;
 
@@ -68,6 +72,17 @@ public class ItemImageService {
                             .path("/{id}")
                             .buildAndExpand(checkId)
                             .toUriString();
+        
+        if (Files.notExists(IMAGE_REPOSITORY)) {
+            try {
+                Files.createDirectories(IMAGE_REPOSITORY);
+            } catch (IOException e) {
+                throw ItemImageException.builder()
+                        .messageKey("saleservice.exception.itemimageservice.saveimages.cannotcreatedirectory.message")
+                        .messageArgs(new String[]{ IMAGE_REPOSITORY.toAbsolutePath().toString() })
+                        .build();
+            }
+        }
 
         asyncSaveImageRunner.execute(files, images, checkId);
 
