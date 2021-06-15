@@ -4,9 +4,10 @@ plugins {
 	id 'kr.co.directdeal.java-common-conventions'
 }
 
-// ext {
-// 	set('springCloudVersion', "2020.0.3-SNAPSHOT")
-// }
+bootJar {
+	baseName = 'direct-deal-account-service'
+	version = '0.1'
+}
 
 dependencies {
 	implementation project(':direct-deal-common')

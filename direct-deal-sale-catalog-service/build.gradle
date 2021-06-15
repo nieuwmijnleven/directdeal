@@ -4,6 +4,11 @@ plugins {
 	id 'kr.co.directdeal.java-common-conventions'
 }
 
+bootJar {
+	baseName = 'direct-deal-sale-catalog-service'
+	version = '0.1'
+}
+
 dependencies {
 	implementation project(':direct-deal-common')
 

@@ -6,14 +6,14 @@ spring:
             #    - args:
             routes:
             - id: account-controller
-              uri: http://localhost:8080/
+              uri: http://account-service:8080/
               predicates:
               - Path=/api/v1/account/**
               filters:
               - RewritePath=/api/v1(?<segment>/?.*), $\{segment} 
 
             - id: auth-controller
-              uri: http://localhost:8080/
+              uri: http://account-service:8080/
               predicates:
               - Path=/api/v1/auth/login
               filters:

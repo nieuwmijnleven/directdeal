@@ -1,6 +1,7 @@
 package kr.co.directdeal.transactionhistoryservice.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.context.ApplicationEventPublisher;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.directdeal.common.mapper.Mapper;
+import kr.co.directdeal.common.security.util.SecurityUtils;
 import kr.co.directdeal.transactionhistoryservice.domain.TransactionHistory;
 import kr.co.directdeal.transactionhistoryservice.event.BuyerSetEvent;
 import kr.co.directdeal.transactionhistoryservice.exception.TransactionHistoryException;
@@ -46,6 +48,13 @@ public class TransactionHistoryService {
                                         .messageKey("transactionhistoryservice.exception.setbuyer.transaction.notfound.message")
                                         .messageArgs(new String[]{ dto.getId() })
                                         .build());
+
+        String userId = SecurityUtils.getCurrentUserLogin();
+        if (!Objects.equals(userId, transactionHistory.getSellerId()))
+            throw TransactionHistoryException.builder()
+                    .messageKey("transactionhistorycontroller.exception.setbuyer.notthesame.message")
+                    .messageArgs(new String[]{userId, dto.getSellerId()})
+                    .build();
 
         transactionHistory.setBuyerId(dto.getBuyerId());
         applicationEventPublisher.publishEvent(new BuyerSetEvent(mapper.toDTO(transactionHistory)));

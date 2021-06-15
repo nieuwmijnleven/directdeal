@@ -31,14 +31,7 @@ public class TransactionHistoryController {
     }
 
     @PutMapping("/setbuyer")
-    public void setBuyer(@RequestBody TransactionHistoryDTO dto) {
-        String userId = SecurityUtils.getCurrentUserLogin();
-        if (!Objects.equals(userId, dto.getSellerId()))
-            throw TransactionHistoryException.builder()
-                    .messageKey("transactionhistorycontroller.exception.setbuyer.notthesame.message")
-                    .messageArgs(new String[]{userId, dto.getSellerId()})
-                    .build();
-        
+    public void setBuyer(@RequestBody TransactionHistoryDTO dto) {        
         log.debug("TransactionHistoryController.setBuyer(), dto => " + dto);
         transactionHistoryService.setBuyer(dto);
     }

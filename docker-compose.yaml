@@ -1,0 +1,139 @@
+version: "3.7"
+services:
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - 2181:2181
+    networks:
+      - network1
+
+  kafka:
+    image: wurstmeister/kafka
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_PORT: 9092
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092"
+      KAFKA_LISTENERS: "PLAINTEXT://:9092"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_CREATE_TOPICS: "local.event:1:1"
+    ports:
+      - 9092:9092
+    networks:
+      - network1
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    networks:
+      - network1
+
+  account-service:
+    build: ./direct-deal-account-service
+    image: direct-deal-account-service:latest
+    ports:
+      - 8080:8080
+    networks:
+      - network1
+    deploy:
+      resources:
+        limits:
+        #  cpus: '0.7'
+          memory: 256M
+        #reservations:
+        #  cpus: '0.25'
+        #  memory: 256M
+
+  sale-service:
+    build: ./direct-deal-sale-service
+    image: direct-deal-sale-service:latest
+    depends_on:
+      - kafka
+    ports:
+      - 8081:8081
+    networks:
+      - network1
+    deploy:
+      resources:
+        limits:
+        #  cpus: '0.7'
+          memory: 256M
+        #reservations:
+        #  cpus: '0.25'
+        #  memory: 256M
+
+  sale-catalog-service:
+    build: ./direct-deal-sale-catalog-service
+    image: direct-deal-sale-catalog-service:latest
+    depends_on:
+      - kafka
+    ports:
+      - 8082:8082
+    networks:
+      - network1
+    deploy:
+      resources:
+        limits:
+        #  cpus: '0.7'
+          memory: 256M
+        #reservations:
+        #  cpus: '0.25'
+        #  memory: 256M
+
+  transaction-history-service:
+    build: ./direct-deal-transaction-history-service
+    image: direct-deal-transaction-history-service:latest
+    depends_on:
+      - kafka
+    ports:
+      - 8083:8083
+    networks:
+      - network1
+    deploy:
+      resources:
+        limits:
+        #  cpus: '0.7'
+          memory: 256M
+        #reservations:
+        #  cpus: '0.25'
+        #  memory: 256M
+
+  gateway:
+    build: ./direct-deal-gateway
+    image: direct-deal-gateway:latest
+    ports:
+      - 8084:8084
+    networks:
+      - network1
+    deploy:
+      resources:
+        limits:
+        #  cpus: '0.7'
+          memory: 256M
+        #reservations:
+        #  cpus: '0.25'
+        #  memory: 256M
+
+  chatting-service:
+    build: ./direct-deal-chatting-service
+    image: direct-deal-chatting-service:latest
+    ports:
+      - 8085:8085
+    networks:
+      - network1
+    deploy:
+      resources:
+        limits:
+        #  cpus: '0.7'
+          memory: 256M
+        #reservations:
+        #  cpus: '0.25'
+        #  memory: 256M
+
+networks:
+  network1:

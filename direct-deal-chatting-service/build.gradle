@@ -4,10 +4,9 @@ plugins {
 	id 'kr.co.directdeal.java-common-conventions'
 }
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+bootJar {
+	baseName = 'direct-deal-chatting-service'
+	version = '0.1'
 }
 
 dependencies {
@@ -25,12 +24,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
 	// implementation ('org.axonframework:axon-spring-boot-starter:4.5')
-	implementation ('org.axonframework:axon-spring-boot-starter:4.5') {
-		exclude group: "org.axonframework", module: 'axon-server-connector'
-	}
-	implementation 'org.axonframework:axon-micrometer:4.5'
-	implementation 'org.axonframework.extensions.kafka:axon-kafka-spring-boot-starter:4.0-RC3'
-	implementation 'org.apache.kafka:kafka-clients:2.8.0'
+	// implementation ('org.axonframework:axon-spring-boot-starter:4.5') {
+	// 	exclude group: "org.axonframework", module: 'axon-server-connector'
+	// }
+	// implementation 'org.axonframework:axon-micrometer:4.5'
+	// implementation 'org.axonframework.extensions.kafka:axon-kafka-spring-boot-starter:4.0-RC3'
+	// implementation 'org.apache.kafka:kafka-clients:2.8.0'
 
 	// implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.5.0'
 	// implementation group: 'org.axonframework.extensions.mongo', name: 'axon-mongo', version: '4.4'

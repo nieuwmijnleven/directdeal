@@ -4,7 +4,7 @@ spring:
   
   profiles:
     active:
-    - dev
+    - route-v1
 
 server:
-  port: 8070
+  port: 8084

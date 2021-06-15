@@ -19,12 +19,11 @@ Content-Type: application/json
     "password":"1q2w3e"
 }
 
-
 ###
 
 POST http://localhost:8085/chatting HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzY3ODIzfQ.QTrD8XY7IG2GE2BZ1YOCtEAK5QloSs3GBa855rTNV7CjKICfg8GsaBEByIeeZNQVrYTkU58RRW5dZoZO6niYwQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzM1ODk1fQ.tZR9BwhL91c8buPL-6ZNmPJLs0_01tL8m017rZ3vnDBtanyOaNWc4ejzJ6pDwwyxe-VFUoUtbLpbsC_YMl0DvQ
 
 {
     "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
@@ -36,7 +35,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 
 PUT http://localhost:8085/chatting HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzY3ODIzfQ.QTrD8XY7IG2GE2BZ1YOCtEAK5QloSs3GBa855rTNV7CjKICfg8GsaBEByIeeZNQVrYTkU58RRW5dZoZO6niYwQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzM1ODk1fQ.tZR9BwhL91c8buPL-6ZNmPJLs0_01tL8m017rZ3vnDBtanyOaNWc4ejzJ6pDwwyxe-VFUoUtbLpbsC_YMl0DvQ
 
 {
     "chattingRoomId":"1",
@@ -48,7 +47,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 
 # GET http://localhost:8085/chatting HTTP/1.1
 # Content-Type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzY3ODIzfQ.QTrD8XY7IG2GE2BZ1YOCtEAK5QloSs3GBa855rTNV7CjKICfg8GsaBEByIeeZNQVrYTkU58RRW5dZoZO6niYwQ
+# Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzM1ODk1fQ.tZR9BwhL91c8buPL-6ZNmPJLs0_01tL8m017rZ3vnDBtanyOaNWc4ejzJ6pDwwyxe-VFUoUtbLpbsC_YMl0DvQ
 
 # {
 #     "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
@@ -60,7 +59,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 
 PUT http://localhost:8085/chatting HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzY3ODIzfQ.QTrD8XY7IG2GE2BZ1YOCtEAK5QloSs3GBa855rTNV7CjKICfg8GsaBEByIeeZNQVrYTkU58RRW5dZoZO6niYwQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzM1ODk1fQ.tZR9BwhL91c8buPL-6ZNmPJLs0_01tL8m017rZ3vnDBtanyOaNWc4ejzJ6pDwwyxe-VFUoUtbLpbsC_YMl0DvQ
 
 {
     "chattingRoomId":"1",
@@ -72,7 +71,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 
 GET http://localhost:8085/chatting/fetch-unread-messages HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzY3ODIzfQ.QTrD8XY7IG2GE2BZ1YOCtEAK5QloSs3GBa855rTNV7CjKICfg8GsaBEByIeeZNQVrYTkU58RRW5dZoZO6niYwQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzM1ODk1fQ.tZR9BwhL91c8buPL-6ZNmPJLs0_01tL8m017rZ3vnDBtanyOaNWc4ejzJ6pDwwyxe-VFUoUtbLpbsC_YMl0DvQ
 
 {
     "chattingRoomId":"1",
@@ -83,7 +82,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 
 GET http://localhost:8085/chatting/fetch-unread-messages HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzY3ODIzfQ.QTrD8XY7IG2GE2BZ1YOCtEAK5QloSs3GBa855rTNV7CjKICfg8GsaBEByIeeZNQVrYTkU58RRW5dZoZO6niYwQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzM1ODk1fQ.tZR9BwhL91c8buPL-6ZNmPJLs0_01tL8m017rZ3vnDBtanyOaNWc4ejzJ6pDwwyxe-VFUoUtbLpbsC_YMl0DvQ
 
 {
     "chattingRoomId":"1",
@@ -93,18 +92,30 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 ###
 
 GET http://localhost:8085/chatting/1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzY3ODIzfQ.QTrD8XY7IG2GE2BZ1YOCtEAK5QloSs3GBa855rTNV7CjKICfg8GsaBEByIeeZNQVrYTkU58RRW5dZoZO6niYwQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzM1ODk1fQ.tZR9BwhL91c8buPL-6ZNmPJLs0_01tL8m017rZ3vnDBtanyOaNWc4ejzJ6pDwwyxe-VFUoUtbLpbsC_YMl0DvQ
+
+###
+
+GET http://localhost:8085/chatting HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzM1ODk1fQ.tZR9BwhL91c8buPL-6ZNmPJLs0_01tL8m017rZ3vnDBtanyOaNWc4ejzJ6pDwwyxe-VFUoUtbLpbsC_YMl0DvQ
+Content-Type: application/json
+
+{
+    "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
+    "sellerId":"seller@directdeal.co.kr",
+    "customerId":"customer@directdeal.co.kr"
+}
 
 ###
 
 GET http://localhost:8085/chatting/1/fetch-from/6 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzY3ODIzfQ.QTrD8XY7IG2GE2BZ1YOCtEAK5QloSs3GBa855rTNV7CjKICfg8GsaBEByIeeZNQVrYTkU58RRW5dZoZO6niYwQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzM1ODk1fQ.tZR9BwhL91c8buPL-6ZNmPJLs0_01tL8m017rZ3vnDBtanyOaNWc4ejzJ6pDwwyxe-VFUoUtbLpbsC_YMl0DvQ
 
 ###
 
 POST http://localhost:8085/chatting HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzY3ODIzfQ.QTrD8XY7IG2GE2BZ1YOCtEAK5QloSs3GBa855rTNV7CjKICfg8GsaBEByIeeZNQVrYTkU58RRW5dZoZO6niYwQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzM1ODk1fQ.tZR9BwhL91c8buPL-6ZNmPJLs0_01tL8m017rZ3vnDBtanyOaNWc4ejzJ6pDwwyxe-VFUoUtbLpbsC_YMl0DvQ
 
 {
     "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
@@ -116,7 +127,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 
 POST http://localhost:8085/chatting HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzY3ODIzfQ.QTrD8XY7IG2GE2BZ1YOCtEAK5QloSs3GBa855rTNV7CjKICfg8GsaBEByIeeZNQVrYTkU58RRW5dZoZO6niYwQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzM1ODk1fQ.tZR9BwhL91c8buPL-6ZNmPJLs0_01tL8m017rZ3vnDBtanyOaNWc4ejzJ6pDwwyxe-VFUoUtbLpbsC_YMl0DvQ
 
 {
     "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
@@ -128,7 +139,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 
 POST http://localhost:8085/chatting HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzY3ODIzfQ.QTrD8XY7IG2GE2BZ1YOCtEAK5QloSs3GBa855rTNV7CjKICfg8GsaBEByIeeZNQVrYTkU58RRW5dZoZO6niYwQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzM1ODk1fQ.tZR9BwhL91c8buPL-6ZNmPJLs0_01tL8m017rZ3vnDBtanyOaNWc4ejzJ6pDwwyxe-VFUoUtbLpbsC_YMl0DvQ
 
 {
     "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
@@ -140,7 +151,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 
 POST http://localhost:8085/chatting HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzY3ODIzfQ.QTrD8XY7IG2GE2BZ1YOCtEAK5QloSs3GBa855rTNV7CjKICfg8GsaBEByIeeZNQVrYTkU58RRW5dZoZO6niYwQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzM1ODk1fQ.tZR9BwhL91c8buPL-6ZNmPJLs0_01tL8m017rZ3vnDBtanyOaNWc4ejzJ6pDwwyxe-VFUoUtbLpbsC_YMl0DvQ
 
 {
     "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
@@ -151,5 +162,5 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 ###
 
 GET http://localhost:8085/chatting/d4c02e9b-1497-48df-885e-6ba6426e73d2/customer-list HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzMzY3ODIzfQ.QTrD8XY7IG2GE2BZ1YOCtEAK5QloSs3GBa855rTNV7CjKICfg8GsaBEByIeeZNQVrYTkU58RRW5dZoZO6niYwQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzM1ODk1fQ.tZR9BwhL91c8buPL-6ZNmPJLs0_01tL8m017rZ3vnDBtanyOaNWc4ejzJ6pDwwyxe-VFUoUtbLpbsC_YMl0DvQ
 
