@@ -1,10 +1,31 @@
 GET http://localhost:8084/api/v1/actuator/beans HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzU3OTQ0fQ.D0_Z6cVZ2qQXJwmWNcY3bJYLzT5kERRD5a0BcV2hsqKBvpBpVlwI-8FX3ys16UA31dTM40jBE8H0mXtvUGngsw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzY2MjE0fQ.9ebbjy3_v3LuRvODJtcuVeAyGM8VbT4oVTqIqasuQ5OHbpRkcF5OAlZGmhQqw7JN2tj7oVYj7Dm5CwkENMNkSA
+
+### Create an account
+
+POST http://localhost:8084/api/v1/account HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"seller@directdeal.co.kr",
+    "name":"seller",
+    "password":"1q2w3e"
+}
+
+### login and get an access token
+
+POST http://localhost:8084/api/v1/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"seller@directdeal.co.kr",
+    "password":"1q2w3e"
+}
 
 ###
 
 POST http://localhost:8084/api/v1/image HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzU3OTQ0fQ.D0_Z6cVZ2qQXJwmWNcY3bJYLzT5kERRD5a0BcV2hsqKBvpBpVlwI-8FX3ys16UA31dTM40jBE8H0mXtvUGngsw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzY2MjE0fQ.9ebbjy3_v3LuRvODJtcuVeAyGM8VbT4oVTqIqasuQ5OHbpRkcF5OAlZGmhQqw7JN2tj7oVYj7Dm5CwkENMNkSA
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -16,11 +37,11 @@ Content-Type: image/jpg; image/png; image/gif;
 
 ###
 
-GET http://localhost:8084/api/v1/image/check-upload-status/aba4f7e4-8b0f-4caa-9e69-498f96db0464 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzU3OTQ0fQ.D0_Z6cVZ2qQXJwmWNcY3bJYLzT5kERRD5a0BcV2hsqKBvpBpVlwI-8FX3ys16UA31dTM40jBE8H0mXtvUGngsw
+GET http://localhost:8084/api/v1/image/check-upload-status/896c63a3-f9fc-4c39-af09-cb9c5566ad9f HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzY2MjE0fQ.9ebbjy3_v3LuRvODJtcuVeAyGM8VbT4oVTqIqasuQ5OHbpRkcF5OAlZGmhQqw7JN2tj7oVYj7Dm5CwkENMNkSA
 
 ###
 
-GET http://localhost:8084/api/v1/image/e2db2203-3368-4bcf-84db-aad395de4224.jpg HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzU3OTQ0fQ.D0_Z6cVZ2qQXJwmWNcY3bJYLzT5kERRD5a0BcV2hsqKBvpBpVlwI-8FX3ys16UA31dTM40jBE8H0mXtvUGngsw
+GET http://localhost:8084/api/v1/image/0fe8a657-e234-44df-8dca-963236e56477.jpg HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzY2MjE0fQ.9ebbjy3_v3LuRvODJtcuVeAyGM8VbT4oVTqIqasuQ5OHbpRkcF5OAlZGmhQqw7JN2tj7oVYj7Dm5CwkENMNkSA
 
