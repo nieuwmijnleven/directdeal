@@ -1,0 +1,26 @@
+GET http://localhost:8084/api/v1/actuator/beans HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzU3OTQ0fQ.D0_Z6cVZ2qQXJwmWNcY3bJYLzT5kERRD5a0BcV2hsqKBvpBpVlwI-8FX3ys16UA31dTM40jBE8H0mXtvUGngsw
+
+###
+
+POST http://localhost:8084/api/v1/image HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzU3OTQ0fQ.D0_Z6cVZ2qQXJwmWNcY3bJYLzT5kERRD5a0BcV2hsqKBvpBpVlwI-8FX3ys16UA31dTM40jBE8H0mXtvUGngsw
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="files"; filename="1.jpg"
+Content-Type: image/jpg; image/png; image/gif;
+
+< ../samples/1.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+GET http://localhost:8084/api/v1/image/check-upload-status/aba4f7e4-8b0f-4caa-9e69-498f96db0464 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzU3OTQ0fQ.D0_Z6cVZ2qQXJwmWNcY3bJYLzT5kERRD5a0BcV2hsqKBvpBpVlwI-8FX3ys16UA31dTM40jBE8H0mXtvUGngsw
+
+###
+
+GET http://localhost:8084/api/v1/image/e2db2203-3368-4bcf-84db-aad395de4224.jpg HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzU3OTQ0fQ.D0_Z6cVZ2qQXJwmWNcY3bJYLzT5kERRD5a0BcV2hsqKBvpBpVlwI-8FX3ys16UA31dTM40jBE8H0mXtvUGngsw
+

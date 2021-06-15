@@ -1,0 +1,17 @@
+POST http://localhost:8084/api/v1/favorite HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzU3OTQ0fQ.D0_Z6cVZ2qQXJwmWNcY3bJYLzT5kERRD5a0BcV2hsqKBvpBpVlwI-8FX3ys16UA31dTM40jBE8H0mXtvUGngsw
+Content-Type: application/json
+
+{
+    "itemId":"80b1616d-c8a8-47f3-80bb-20926444974c"
+}
+
+###
+
+GET http://localhost:8084/api/v1/favorite HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzU3OTQ0fQ.D0_Z6cVZ2qQXJwmWNcY3bJYLzT5kERRD5a0BcV2hsqKBvpBpVlwI-8FX3ys16UA31dTM40jBE8H0mXtvUGngsw
+
+###
+
+DELETE http://localhost:8084/api/v1/favorite/80b1616d-c8a8-47f3-80bb-20926444974c HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzNzU3OTQ0fQ.D0_Z6cVZ2qQXJwmWNcY3bJYLzT5kERRD5a0BcV2hsqKBvpBpVlwI-8FX3ys16UA31dTM40jBE8H0mXtvUGngsw
