@@ -14,7 +14,9 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.CreatedDate;
 
@@ -45,12 +47,16 @@ public class ChattingRoom {
     @Column(name = "CHATTING_ROOM_ITEM_ID", nullable = false)
     private String itemId;
 
-    @NotNull
-    @Column(name = "CHATTING_ROOM_SELLER_ID", nullable = false)
+    @Email
+	@NotNull
+    @Size(min = 5, max = 64)
+    @Column(name = "CHATTING_ROOM_SELLER_ID", length = 50, nullable = false)
     private String sellerId;
 
-    @NotNull
-    @Column(name = "CHATTING_ROOM_CUMSTOMER_ID", nullable = false)
+    @Email
+	@NotNull
+    @Size(min = 5, max = 64)
+    @Column(name = "CHATTING_ROOM_CUMSTOMER_ID", length = 50, nullable = false)
     private String customerId;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -58,7 +64,7 @@ public class ChattingRoom {
     private List<ChattingMessage> messages = new ArrayList<>();
 
     @CreatedDate
-    @Column(name = "CHATTING_ROOM_CREATED_DATE", nullable = false)
+    @Column(name = "CHATTING_ROOM_CREATED_DATE", nullable = false, updatable = false)
     private Instant createdDate;
 
     public void addMessage(ChattingMessage message) {

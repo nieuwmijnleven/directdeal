@@ -109,6 +109,7 @@ public class SaleItemAggregate {
                                     .discountable(cmd.isDiscountable())
                                     .text(cmd.getText())
                                     .images(cmd.getImages())
+                                    //.status(SaleItemStatus.SALE)
                                     .lastModifiedDate(cmd.getLastModifiedDate())
                                     .build());
     }

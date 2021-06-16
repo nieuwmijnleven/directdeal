@@ -30,13 +30,16 @@ import lombok.ToString;
 public class ImageUploadStatus {
     @NotNull
     @Id
+    @Column(name = "IMAGE_UPLOAD_STATUS_ID")
     private String id;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(name = "IMAGE_UPLOAD_STATUS_RESULT")
     private Status status;
 
     @CreatedDate
-    @Column
+    @Column(name = "IMAGE_UPLOAD_STATUS_CREATED_DATE")
     private Instant createdDate; 
 
     public enum Status {

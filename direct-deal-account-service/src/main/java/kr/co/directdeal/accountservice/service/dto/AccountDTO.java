@@ -25,7 +25,7 @@ public class AccountDTO {
 	private String id;
 
 	@Email
-    @Size(min = 5, max = 254)
+    @Size(min = 5, max = 64)
 	private String email;
 
 	@JsonProperty(access = Access.WRITE_ONLY)

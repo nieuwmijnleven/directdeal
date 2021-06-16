@@ -4,13 +4,11 @@ import java.time.Instant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -33,26 +31,25 @@ import lombok.ToString;
 @ToString
 public class ChattingMessage {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CHATTING_MESSAGE_ID", nullable = false)
+    @Column(name = "CHATTING_MESSAGE_ID")
     private String id;
 
     // @ManyToOne(fetch = FetchType.LAZY)
     // @JoinColumn(name = "CHATTING_ROOM_ID", insertable = false, updatable = false)
     // private ChattingRoom chattingRoom;
 
-    // @ManyToOne
-    // @JoinColumn(name = "CHATTING_ROOM_ID", insertable = false, updatable = false)
-
     @Column(name = "CHATTING_ROOM_ID", nullable = false)
     private String chattingRoomId;
     
-    @NotNull
-    @Column(name = "CHATTING_MESSAGE_TALKER_ID", nullable = false)
+    @Email
+	@NotNull
+    @Size(min = 5, max = 64)
+    @Column(name = "CHATTING_MESSAGE_TALKER_ID", length = 50, nullable = false)
     private String talkerId;
 
     @NotNull
-    @Size(min = 1, max = 256)
-    @Column(name = "CHATTING_MESSAGE_TEXT", nullable = false)
+    @Size(min = 1, max = 512)
+    @Column(name = "CHATTING_MESSAGE_TEXT", length = 512, nullable = false)
     private String text;
 
     @NotNull

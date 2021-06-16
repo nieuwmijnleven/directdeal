@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,11 +39,12 @@ import lombok.ToString;
 @ToString
 public class ItemCategory {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CATEGORY_ID")
+    @Column(name = "ITEM_CATEGORY_ID")
     private String id;
 
     @NotNull
-    @Column(name = "CATEGORY_NAME", nullable = false)
+    @Size(min = 1, max = 128)
+    @Column(name = "ITEM_CATEGORY_NAME", length = 128, nullable = false)
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)

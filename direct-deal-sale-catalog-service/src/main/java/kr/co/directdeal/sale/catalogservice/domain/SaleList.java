@@ -3,6 +3,8 @@ package kr.co.directdeal.sale.catalogservice.domain;
 import java.time.Instant;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -26,19 +28,29 @@ import lombok.ToString;
 @ToString
 public class SaleList {
     @NotNull
+    @Size(min = 36, max = 36)
     @Id
     private String id;
 
+    @NotNull
+    @Size(min = 1, max = 128)
     private String title;
 
+    @NotNull
+    @Size(min = 1, max = 128)
     private String category;
 
+    @NotNull
+    @Positive
     private long targetPrice;
 
     private boolean discountable;
 
+    @NotNull
+    @Size(min = 1, max = 128)
     private String mainImage;
 
+    @NotNull
     private SaleItemStatus status;
 
     @CreatedDate

@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name = "account")
+@Table(name = "ACCOUNT")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -36,35 +36,35 @@ public class Account extends AbstractAuditingEntity {
 	@JsonIgnore
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "account_id")
+	@Column(name = "ACCOUNT_ID")
 	private String id;
 	
 	@Email
 	@NotNull
-    @Size(min = 5, max = 254)
-    @Column(length = 254, unique = true)
+    @Size(min = 5, max = 64)
+    @Column(name = "ACCOUNT_EMAIL", length = 64, unique = true)
 	private String email;
 	
 	@JsonIgnore
 	@NotNull
 	@Size(min = 60, max = 60)
-	@Column(name = "password_hash", length = 60, nullable = false)
+	@Column(name = "PASSWORD_HASH", length = 60, nullable = false)
 	private String password;
 	
 	@NotNull
 	@Size(min = 1, max = 30)
-	@Column(length = 30)
+	@Column(name = "ACCOUNT_NAME", length = 30)
 	private String name;
 
 	@NotNull
-	@Column(nullable = false)
+	@Column(name = "ACCOUNT_ACTIVATED", nullable = false)
 	private boolean activated;
 
 	@ManyToMany
 	@JoinTable(
-		name = "account_authority",
-		joinColumns = {@JoinColumn(name = "account_id", referencedColumnName = "account_id")},
-		inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
+		name = "ACCOUNT_AUTHORITY",
+		joinColumns = {@JoinColumn(name = "ACCOUNT_ID", referencedColumnName = "ACCOUNT_ID")},
+		inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_NAME", referencedColumnName = "AUTHORITY_NAME")})
 	private Set<Authority> authorities;
 	
 	public void updateFrom(AccountDTO dto) {

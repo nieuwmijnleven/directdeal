@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +23,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "BUY_HISTORY", 
         indexes = {
-            @Index(unique = false, columnList = "BUY_TRANSACTION_ITEM_BUYER_ID, BUY_TRANSACTION_ITEM_ID, BUY_TRANSACTION_ITEM_COMPLETION_TIME")
+            @Index(unique = false, columnList = "BUY_ITEM_BUYER_ID, BUY_ITEM_ID")
         })
 @Data
 @NoArgsConstructor
@@ -31,34 +33,40 @@ import lombok.ToString;
 @ToString
 public class BuyHistory {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "BUY_TRANSACTION_ID")
+    @Column(name = "BUY_ID")
     private String id;
 
     @NotNull
-    @Column(name = "BUY_TRANSACTION_ITEM_BUYER_ID", nullable = false)
+    @Size(min = 1, max = 64)
+    @Column(name = "BUY_ITEM_BUYER_ID", length = 50, nullable = false)
     private String buyerId;
 
     @NotNull
-    @Column(name = "BUY_TRANSACTION_ITEM_ID", nullable = false)
+    @Size(min = 36, max = 36)
+    @Column(name = "BUY_ITEM_ID", length = 36, nullable = false)
     private String itemId;
 
     @NotNull
-    @Column(name = "BUY_TRANSACTION_ITEM_TITLE", nullable = false)
+    @Size(min = 1, max = 128)
+    @Column(name = "BUY_ITEM_TITLE", length = 128, nullable = false)
     private String title;
 
     @NotNull
-    @Column(name = "BUY_TRANSACTION_ITEM_CATEGORY", nullable = false)
+    @Size(min = 1, max = 128)
+    @Column(name = "BUY_ITEM_CATEGORY", length = 128, nullable = false)
     private String category;
 
     @NotNull
-    @Column(name = "BUY_TRANSACTION_ITEM_TARGET_PRICE", nullable = false)
+    @Positive
+    @Column(name = "BUY_ITEM_TARGET_PRICE", nullable = false)
     private long targetPrice;
 
     @NotNull
-    @Column(name = "BUY_TRANSACTION_ITEM_SELLER", nullable = true)
+    @Size(min = 1, max = 64)
+    @Column(name = "BUY_ITEM_SELLER", length = 50, nullable = true)
     private String sellerId;
 
     @NotNull
-    @Column(name = "BUY_TRANSACTION_ITEM_COMPLETION_TIME", nullable = false)
+    @Column(name = "BUY_ITEM_COMPLETION_TIME", nullable = false)
     private Instant completionTime; 
 }

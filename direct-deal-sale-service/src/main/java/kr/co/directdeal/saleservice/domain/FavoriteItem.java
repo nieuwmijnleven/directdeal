@@ -32,16 +32,16 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class FavoriteItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "FAVORITE_ITEM_ID")
     private String id;
 
     @NotNull
-    @Column(name = "USER_ID", nullable = false)
+    @Column(name = "USER_ID", length = 50, unique = true)
     private String userId;
 
     @NotNull
-    @Column(name = "ITEM_ID", nullable = false)
+    @Column(name = "ITEM_ID", length = 36, nullable = false)
     private String itemId;
 
     @CreatedDate

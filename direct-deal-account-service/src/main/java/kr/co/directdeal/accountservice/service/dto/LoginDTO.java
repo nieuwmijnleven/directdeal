@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class LoginDTO {
 
    @NotNull
-   @Size(min = 5, max = 254)
+   @Size(min = 5, max = 64)
    private String email;
 
    @NotNull

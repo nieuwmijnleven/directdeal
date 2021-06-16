@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,8 +23,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "TRANSACTION_HISTORY", 
         indexes = {
-            @Index(unique = false, columnList = "TRANSACTION_ITEM_ID, TRANSACTION_ITEM_SELLER_ID"),
-            @Index(unique = false, columnList = "TRANSACTION_ITEM_BUYER_ID")
+            @Index(unique = false, columnList = "TRANSACTION_ITEM_ID, TRANSACTION_ITEM_SELLER_ID")
         })
 @Data
 @NoArgsConstructor
@@ -36,26 +37,33 @@ public class TransactionHistory {
     private String id;
 
     @NotNull
-    @Column(name = "TRANSACTION_ITEM_ID", nullable = false)
-    private String itemId;
-
-    @NotNull
-    @Column(name = "TRANSACTION_ITEM_SELLER_ID", nullable = false)
+    @Size(min = 1, max = 64)
+    @Column(name = "TRANSACTION_ITEM_SELLER_ID", length = 50, nullable = false)
     private String sellerId;
 
     @NotNull
-    @Column(name = "TRANSACTION_ITEM_TITLE", nullable = false)
+    @Size(min = 36, max = 36)
+    @Column(name = "TRANSACTION_ITEM_ID", length = 36, nullable = false)
+    private String itemId;
+
+    @NotNull
+    @Size(min = 1, max = 128)
+    @Column(name = "TRANSACTION_ITEM_TITLE", length = 128, nullable = false)
     private String title;
 
     @NotNull
-    @Column(name = "TRANSACTION_ITEM_CATEGORY", nullable = false)
+    @Size(min = 1, max = 128)
+    @Column(name = "TRANSACTION_ITEM_CATEGORY", length = 128, nullable = false)
     private String category;
 
     @NotNull
+    @Positive
     @Column(name = "TRANSACTION_ITEM_TARGET_PRICE", nullable = false)
     private long targetPrice;
 
-    @Column(name = "TRANSACTION_ITEM_BUYER_ID", nullable = true)
+    @NotNull
+    @Size(min = 1, max = 64)
+    @Column(name = "TRANSACTION_ITEM_BUYER_ID", length = 50, nullable = true)
     private String buyerId;
 
     @NotNull
