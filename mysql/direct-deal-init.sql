@@ -1,19 +1,21 @@
 CREATE DATABASE IF NOT EXISTS `DIRECT-DEAL-ACCOUNT-DB` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'direct-deal-account'@'%' IDENTIFIED BY 'secret';
+CREATE USER IF NOT EXISTS 'direct-deal-account'@'%' IDENTIFIED BY 'secret';
 GRANT ALL PRIVILEGES ON `DIRECT-DEAL-ACCOUNT-DB`.* TO 'direct-deal-account'@'%';
 
 CREATE DATABASE IF NOT EXISTS `DIRECT-DEAL-CHATTING-DB` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'direct-deal-chatting'@'%' IDENTIFIED BY 'secret';
+CREATE USER IF NOT EXISTS 'direct-deal-chatting'@'%' IDENTIFIED BY 'secret';
 GRANT ALL PRIVILEGES ON `DIRECT-DEAL-CHATTING-DB`.* TO 'direct-deal-chatting'@'%';
 
 CREATE DATABASE IF NOT EXISTS `DIRECT-DEAL-SALE-DB` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'direct-deal-sale'@'%' IDENTIFIED BY 'secret';
+CREATE USER IF NOT EXISTS 'direct-deal-sale'@'%' IDENTIFIED BY 'secret';
 GRANT ALL PRIVILEGES ON `DIRECT-DEAL-SALE-DB`.* TO 'direct-deal-sale'@'%';
 
 CREATE DATABASE IF NOT EXISTS `DIRECT-DEAL-SALE-CATALOG-DB` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'direct-deal-sale-catalog'@'%' IDENTIFIED BY 'secret';
+CREATE USER IF NOT EXISTS 'direct-deal-sale-catalog'@'%' IDENTIFIED BY 'secret';
 GRANT ALL PRIVILEGES ON `DIRECT-DEAL-SALE-CATALOG-DB`.* TO 'direct-deal-sale-catalog'@'%';
 
 CREATE DATABASE IF NOT EXISTS `DIRECT-DEAL-TRANSACTION-HISTORY-DB` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'direct-deal-transaction-history'@'%' IDENTIFIED BY 'secret';
+CREATE USER IF NOT EXISTS 'direct-deal-transaction-history'@'%' IDENTIFIED BY 'secret';
 GRANT ALL PRIVILEGES ON `DIRECT-DEAL-TRANSACTION-HISTORY-DB`.* TO 'direct-deal-transaction-history'@'%';
+
+FLUSH PRIVILEGES;
