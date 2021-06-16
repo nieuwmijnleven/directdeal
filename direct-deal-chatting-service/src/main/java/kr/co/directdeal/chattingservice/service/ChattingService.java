@@ -39,7 +39,7 @@ public class ChattingService {
     }
 
     @Transactional
-    public ChattingRoomDTO getChattingRoom(String id) {
+    public ChattingRoomDTO getChattingRoom(Long id) {
         ChattingRoom chattingRoom = findChattingRoomById(id);    
         checkValidTalker(chattingRoom);  
         changeMessageSentStatus(chattingRoom);
@@ -87,7 +87,7 @@ public class ChattingService {
     }
 
     @Transactional
-    public List<ChattingMessageDTO> fetchMessagesFrom(String chattingRoomId, int skip) {
+    public List<ChattingMessageDTO> fetchMessagesFrom(Long chattingRoomId, int skip) {
         ChattingRoom chattingRoom = findChattingRoomById(chattingRoomId);
         checkValidTalker(chattingRoom);
 
@@ -122,12 +122,12 @@ public class ChattingService {
                                             .build());
     }
 
-    private ChattingRoom findChattingRoomById(String id) {
+    private ChattingRoom findChattingRoomById(Long id) {
         return chattingRepository
                     .findById(id)
                     .orElseThrow(() -> ChattingException.builder()
                                             .messageKey("chattingroomservice.exception.sendchattingmessage.chattingroom.notfound.message")
-                                            .messageArgs(new String[]{id})
+                                            .messageArgs(new String[]{id.toString()})
                                             .build());
     }
 

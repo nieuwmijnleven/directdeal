@@ -50,7 +50,7 @@ public class BuyHistoryService {
             buyHistoryRepository.findByIdAndBuyerId(dto.getId(), dto.getBuyerId())
                 .orElseThrow(() -> BuyHistoryException.builder()
                                         .messageKey("buyhistoryservice.exception.delete.transaction.notfound.message")
-                                        .messageArgs(new String[]{ dto.getId(), dto.getBuyerId() })
+                                        .messageArgs(new String[]{ dto.getId().toString(), dto.getBuyerId() })
                                         .build());
 
             buyHistoryRepository.delete(buyHistory);

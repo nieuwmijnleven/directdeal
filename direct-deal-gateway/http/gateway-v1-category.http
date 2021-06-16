@@ -1,0 +1,124 @@
+POST http://localhost:8084/api/v1/category HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+
+{
+    "name":"Appliances"
+}
+
+###
+
+GET http://localhost:8084/api/v1/category HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+
+###
+
+POST http://localhost:8084/api/v1/category HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+
+{
+    "name":"Food"
+}
+
+###
+
+GET http://localhost:8084/api/v1/category HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+
+###
+
+POST http://localhost:8084/api/v1/category HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+
+{
+    "name":"Computer",
+    "parent": {"id":"1"}
+}
+
+###
+
+GET http://localhost:8084/api/v1/category HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+
+###
+
+POST http://localhost:8084/api/v1/category HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+Content-Type: application/json
+
+{
+    "name":"NoteBook",
+    "parent": {"id":"3"}
+}
+
+###
+
+GET http://localhost:8084/api/v1/category HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+
+###
+
+PUT http://localhost:8084/api/v1/category HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+Content-Type: application/json
+
+{
+    "id":"4",
+    "name":"iPad",
+    "parent": {"id":"3"}
+}
+
+###
+
+GET http://localhost:8084/api/v1/category HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+
+###
+
+PUT http://localhost:8084/api/v1/category HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+Content-Type: application/json
+
+{
+    "id":"1",
+    "name":"Appliances"
+}
+
+###
+
+GET http://localhost:8084/api/v1/category HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+
+###
+
+DELETE http://localhost:8084/api/v1/category/4 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+
+###
+
+GET http://localhost:8084/api/v1/category HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+
+###
+
+DELETE http://localhost:8084/api/v1/category/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+
+###
+
+GET http://localhost:8084/api/v1/category HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+
+###
+
+DELETE http://localhost:8084/api/v1/category/2 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+
+###
+
+GET http://localhost:8084/api/v1/category HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg4ODY0MX0.YVfyIcjBNbKfKevhtZPPSvogEdJ_bJbG42uC4uxISqfLWZBvIxpC7wPKrPmrPzvvwNKErpgjpVoniqaTWIDIRw
+
+###

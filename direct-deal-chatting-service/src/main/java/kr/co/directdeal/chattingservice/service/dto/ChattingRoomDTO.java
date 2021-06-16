@@ -18,7 +18,7 @@ import lombok.ToString;
 @Builder
 @ToString
 public class ChattingRoomDTO {
-    private String id;
+    private Long id;
     private String itemId;
     private String sellerId;
     private String customerId;

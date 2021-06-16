@@ -71,7 +71,7 @@ public class AccountServiceImpl implements AccountService {
 								.findById(accountDTO.getId())
 								.orElseThrow(() -> AccountException.builder()
 										.messageKey("account.exception.update.id.message")
-										.messageArgs(new String[]{accountDTO.getId()})
+										.messageArgs(new String[]{accountDTO.getId().toString()})
 										.build());
 			
 		boolean validEmail = accountRepository

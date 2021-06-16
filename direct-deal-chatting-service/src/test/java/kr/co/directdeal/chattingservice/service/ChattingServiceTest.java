@@ -82,7 +82,7 @@ public class ChattingServiceTest {
         given(chattingRepository
                     .findByItemIdAndSellerIdAndCustomerId(dto.getItemId(), dto.getSellerId(), dto.getCustomerId()))
             .willReturn(Optional.of(ChattingRoom.builder()
-                                        .id("1")
+                                        .id(1L)
                                         .itemId(dto.getItemId())
                                         .sellerId(dto.getSellerId())
                                         .customerId(dto.getCustomerId())
@@ -111,7 +111,7 @@ public class ChattingServiceTest {
         given(chattingRepository
                     .findByItemIdAndSellerIdAndCustomerId(dto.getItemId(), dto.getSellerId(), dto.getCustomerId()))
             .willReturn(Optional.of(ChattingRoom.builder()
-                                        .id("1")
+                                        .id(1L)
                                         .itemId(dto.getItemId())
                                         .sellerId(dto.getSellerId())
                                         .customerId(dto.getCustomerId())
@@ -130,7 +130,7 @@ public class ChattingServiceTest {
             verify(chattingRepository)
                     .findByItemIdAndSellerIdAndCustomerId(dto.getItemId(), dto.getSellerId(), dto.getCustomerId());
 
-            assertThat(resultDTO.getId(), equalTo("1"));
+            assertThat(resultDTO.getId(), equalTo(1L));
             assertThat(resultDTO.getItemId(), equalTo(dto.getItemId()));
             assertThat(resultDTO.getSellerId(), equalTo(dto.getSellerId()));
             assertThat(resultDTO.getCustomerId(), equalTo(dto.getCustomerId()));
@@ -191,7 +191,7 @@ public class ChattingServiceTest {
             .willReturn(false);
 
         ChattingRoom chattingRoom = chattingRoomMapper.toEntity(dto);
-        chattingRoom.setId("1");
+        chattingRoom.setId(1L);
         chattingRoom.setCreatedDate(createdDate);
 
         given(chattingRepository.save(any(ChattingRoom.class)))
@@ -209,7 +209,7 @@ public class ChattingServiceTest {
                     .existsByItemIdAndSellerIdAndCustomerId(dto.getItemId(), dto.getSellerId(), dto.getCustomerId());
             verify(chattingRepository).save(any(ChattingRoom.class));
 
-            assertThat(resultDTO.getId(), equalTo("1"));
+            assertThat(resultDTO.getId(), equalTo(1L));
             assertThat(resultDTO.getItemId(), equalTo(dto.getItemId()));
             assertThat(resultDTO.getSellerId(), equalTo(dto.getSellerId()));
             assertThat(resultDTO.getCustomerId(), equalTo(dto.getCustomerId()));
@@ -385,7 +385,7 @@ public class ChattingServiceTest {
     @Test
     public void FetchMessageFrom_InvalidChattingRoomId_ThrowChattingException() throws Exception {
         //given
-        String chattingRoomId = "1";
+        Long chattingRoomId = 1L;
         int skip = 1;
 
         given(chattingRepository.findById(chattingRoomId))
@@ -400,7 +400,7 @@ public class ChattingServiceTest {
     @Test
     public void FetchMessageFrom_InvalidTalker_ThrowChattingException() throws Exception {
         //given
-        String chattingRoomId = "1";
+        Long chattingRoomId = 1L;
         int skip = 1;
 
         given(chattingRepository.findById(chattingRoomId))
@@ -420,7 +420,7 @@ public class ChattingServiceTest {
     @Test
     public void FetchMessageFrom_ValidChattingRoomIdAndTalker_ReturnUnreadMessages() throws Exception {
         //given
-        String chattingRoomId = "1";
+        Long chattingRoomId = 1L;
         int skip = 0;
 
         ChattingRoom chattingRoom = mock(ChattingRoom.class);
@@ -456,7 +456,7 @@ public class ChattingServiceTest {
     @Test
     public void FetchMessageFrom_ValidChattingRoomIdAndTalker_ReturnEmptyMessage() throws Exception {
         //given
-        String chattingRoomId = "1";
+        Long chattingRoomId = 1L;
         int skip = 1;
 
         ChattingRoom chattingRoom = mock(ChattingRoom.class);

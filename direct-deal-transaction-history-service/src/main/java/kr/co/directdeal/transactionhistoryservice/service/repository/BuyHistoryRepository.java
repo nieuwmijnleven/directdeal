@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 import kr.co.directdeal.transactionhistoryservice.domain.BuyHistory;
 
 @Repository
-public interface BuyHistoryRepository extends JpaRepository<BuyHistory, String> {
-    Optional<BuyHistory> findByIdAndBuyerId(String id, String buyerId);
+public interface BuyHistoryRepository extends JpaRepository<BuyHistory, Long> {
+    Optional<BuyHistory> findByIdAndBuyerId(Long id, String buyerId);
     List<BuyHistory> findAllByBuyerId(String buyerId);
     boolean existsByBuyerIdAndItemIdAndCompletionTime(String buyerId, String itemId, Instant completionTime);
 }

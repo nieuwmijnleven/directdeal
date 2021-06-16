@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 @Configuration
-public class MongoConfig {
+public class MongoConfig /*extends AbstractMongoConfiguration*/ {
 
     @Value("${spring.data.mongodb.host}")  
     private String host;
@@ -17,11 +17,14 @@ public class MongoConfig {
     @Value("${spring.data.mongodb.port}")  
     private String port;
     
-    // @Value("${spring.data.mongodb.username}")  
-    // private String username;
+    @Value("${spring.data.mongodb.username}")  
+    private String username;
     
-    // @Value("${spring.data.mongodb.password}") 
-    // private String password;
+    @Value("${spring.data.mongodb.password}") 
+    private String password;
+
+    @Value("${spring.data.mongodb.authentication-database}")
+    private String authenticationDatabase;
     
     @Value("${spring.data.mongodb.database}")
     private String database;
@@ -31,7 +34,8 @@ public class MongoConfig {
 	
     @Bean
 	public MongoClient mongoClients() { 
-        String connectionString = String.format("mongodb://%s:%s", host, port);
+        // String connectionString = String.format("mongodb://%s:%s", host, port);
+        String connectionString = String.format("mongodb://%s:%s@%s:%s/?authSource=%s", username, password, host, port, authenticationDatabase);
         return MongoClients.create(connectionString);
 	}
 

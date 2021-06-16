@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import kr.co.directdeal.accountservice.domain.account.Account;
 
 @Repository
-public interface AccountRepository extends JpaRepository<Account, String> {
+public interface AccountRepository extends JpaRepository<Account, Long> {
 
     public Optional<Account> findByEmail(String email);
 

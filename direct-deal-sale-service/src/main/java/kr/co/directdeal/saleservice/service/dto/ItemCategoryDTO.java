@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ItemCategoryDTO {
-    private String id;
+    private Long id;
     private String name;
     private ItemCategoryDTO parent;
     private List<ItemCategoryDTO> child = new ArrayList<>();

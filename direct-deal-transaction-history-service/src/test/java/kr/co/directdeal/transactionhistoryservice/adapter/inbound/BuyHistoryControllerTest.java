@@ -57,7 +57,7 @@ public class BuyHistoryControllerTest {
         //given
         String userId = SecurityUtils.getCurrentUserLogin();
         BuyHistoryDTO dto = BuyHistoryDTO.builder()
-                                        .id("1")
+                                        .id(1L)
                                         .itemId("0d49649c-ee95-4a6a-ad92-369bde5ad8b7")
                                         .sellerId("seller@directdeal.co.kr")
                                         .buyerId("buyer@directdeal.co.kr")
@@ -74,7 +74,7 @@ public class BuyHistoryControllerTest {
         this.mvc.perform(get("/buy-history"))
                     .andDo(print())
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$[0].id", is(dto.getId())))
+                    .andExpect(jsonPath("$[0].id", is(dto.getId().intValue())))
                     .andExpect(jsonPath("$[0].itemId", is(dto.getItemId())))
                     .andExpect(jsonPath("$[0].sellerId", is(dto.getSellerId())))
                     .andExpect(jsonPath("$[0].buyerId", is(dto.getBuyerId())))
@@ -90,12 +90,12 @@ public class BuyHistoryControllerTest {
     @WithMockUser(username = "invalid-user@directdeal.co.kr")
     public void Delete_InvalidUserId_ThrowBuyHistoryException() throws Exception {
         //given
-        String id = "1";
+        Long id = 1L;
         String userId = SecurityUtils.getCurrentUserLogin();
 
         willThrow(BuyHistoryException.builder()
                     .messageKey("buyhistoryservice.exception.delete.transaction.notfound.message")
-                    .messageArgs(new String[]{ id, userId })
+                    .messageArgs(new String[]{ id.toString(), userId })
                     .build())   
             .given(buyHistoryService).delete(any(BuyHistoryDTO.class));
 
@@ -111,7 +111,7 @@ public class BuyHistoryControllerTest {
     @WithMockUser(username = "buyer@directdeal.co.kr")
     public void Delete_ValidIdAndUserId_Success() throws Exception {
         //given
-        String id = "1";
+        Long id = 1L;
 
         //when and then
         this.mvc.perform(delete("/buy-history/" + id))

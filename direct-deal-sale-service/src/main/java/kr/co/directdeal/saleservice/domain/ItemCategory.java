@@ -40,7 +40,7 @@ import lombok.ToString;
 public class ItemCategory {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ITEM_CATEGORY_ID")
-    private String id;
+    private Long id;
 
     @NotNull
     @Size(min = 1, max = 128)

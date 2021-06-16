@@ -49,7 +49,7 @@ public class TransactionHistoryServiceTest {
         //given
         TransactionHistoryDTO transactionHistoryDTO = 
             TransactionHistoryDTO.builder()
-                // .id("1")
+                // .id(1L)
                 .itemId("9aaf0862-84b8-4fe9-b1bd-65261eaa334b")
                 .sellerId("seller@directdeal.co.kr")
                 .title("M1 Macbook Air")
@@ -72,7 +72,7 @@ public class TransactionHistoryServiceTest {
         //given
         TransactionHistoryDTO transactionHistoryDTO = 
             TransactionHistoryDTO.builder()
-                .id("1")
+                .id(1L)
                 .buyerId("buyer@directdeal.co.kr")
                 .build();
 
@@ -90,7 +90,7 @@ public class TransactionHistoryServiceTest {
         //given
         TransactionHistoryDTO transactionHistoryDTO = 
             TransactionHistoryDTO.builder()
-                .id("1")
+                .id(1L)
                 .buyerId("buyer@directdeal.co.kr")
                 .build();
 

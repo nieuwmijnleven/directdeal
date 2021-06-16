@@ -33,7 +33,7 @@ public class BuyHistoryController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") String id) {
+    public void delete(@PathVariable("id") Long id) {
         String buyerId = SecurityUtils.getCurrentUserLogin();
         buyHistoryService.delete(BuyHistoryDTO.builder()
                                     .id(id)

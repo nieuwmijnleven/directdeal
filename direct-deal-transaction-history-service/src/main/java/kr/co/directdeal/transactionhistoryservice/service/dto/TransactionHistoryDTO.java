@@ -16,7 +16,7 @@ import lombok.ToString;
 @Builder
 @ToString
 public class TransactionHistoryDTO {
-    private String id;
+    private Long id;
     private String itemId;
     private String sellerId;
     private String title;

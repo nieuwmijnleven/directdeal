@@ -16,7 +16,7 @@ import lombok.ToString;
 @Builder
 @ToString
 public class BuyHistoryDTO {
-    private String id;
+    private Long id;
     private String buyerId;
     private String itemId;
     private String title;

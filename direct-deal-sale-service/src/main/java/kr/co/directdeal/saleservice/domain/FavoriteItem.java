@@ -34,7 +34,7 @@ import lombok.ToString;
 public class FavoriteItem {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "FAVORITE_ITEM_ID")
-    private String id;
+    private Long id;
 
     @NotNull
     @Column(name = "USER_ID", length = 50, unique = true)

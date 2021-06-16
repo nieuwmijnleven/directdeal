@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import kr.co.directdeal.chattingservice.domain.ChattingRoom;
 
 @Repository
-public interface ChattingRepository extends JpaRepository<ChattingRoom, String> {
+public interface ChattingRepository extends JpaRepository<ChattingRoom, Long> {
     public Optional<ChattingRoom> findByItemIdAndSellerIdAndCustomerId(String itemId, String sellerId, String customerId);
     public List<ChattingRoom> findBySellerIdAndItemId(String sellerId, String itemId);
     public boolean existsByItemIdAndSellerIdAndCustomerId(String itemId, String sellerId, String customerId);

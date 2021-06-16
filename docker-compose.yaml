@@ -6,7 +6,7 @@ services:
     ports:
       - 2181:2181
     networks:
-      - network1
+      - direct-deal-network1
 
   kafka:
     image: wurstmeister/kafka
@@ -24,22 +24,49 @@ services:
     ports:
       - 9092:9092
     networks:
-      - network1
+      - direct-deal-network1
 
   redis:
-    image: redis
+    image: redis:6.2.4-alpine3.13
     ports:
       - 6379:6379
     networks:
-      - network1
+      - direct-deal-network1
+
+  mysql:
+    image: mysql:5.7.34
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - ./mysql/direct-deal-my.cnf:/etc/mysql/conf.d/custom.cnf
+      - ./mysql/direct-deal-init.sql:/docker-entrypoint-initdb.d/direct-deal-init.sql
+    ports:
+      - 3306:3306
+    networks:
+      - direct-deal-network1
+    #command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+      
+  mongo:
+    image: mongo:4.0.25
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    ports:
+      - 27017:27017
+    networks:
+      - direct-deal-network1
 
   account-service:
     build: ./direct-deal-account-service
     image: direct-deal-account-service:latest
+    depends_on:
+      - mysql
     ports:
       - 8080:8080
     networks:
-      - network1
+      - direct-deal-network1
     deploy:
       resources:
         limits:
@@ -54,10 +81,12 @@ services:
     image: direct-deal-sale-service:latest
     depends_on:
       - kafka
+      - mongo
+      - mysql
     ports:
       - 8081:8081
     networks:
-      - network1
+      - direct-deal-network1
     deploy:
       resources:
         limits:
@@ -72,10 +101,13 @@ services:
     image: direct-deal-sale-catalog-service:latest
     depends_on:
       - kafka
+      - mongo
+      - mysql
+      - redis
     ports:
       - 8082:8082
     networks:
-      - network1
+      - direct-deal-network1
     deploy:
       resources:
         limits:
@@ -90,10 +122,11 @@ services:
     image: direct-deal-transaction-history-service:latest
     depends_on:
       - kafka
+      - mysql
     ports:
       - 8083:8083
     networks:
-      - network1
+      - direct-deal-network1
     deploy:
       resources:
         limits:
@@ -109,7 +142,7 @@ services:
     ports:
       - 8084:8084
     networks:
-      - network1
+      - direct-deal-network1
     deploy:
       resources:
         limits:
@@ -122,10 +155,12 @@ services:
   chatting-service:
     build: ./direct-deal-chatting-service
     image: direct-deal-chatting-service:latest
+    depends_on:
+      - mysql
     ports:
       - 8085:8085
     networks:
-      - network1
+      - direct-deal-network1
     deploy:
       resources:
         limits:
@@ -136,4 +171,4 @@ services:
         #  memory: 256M
 
 networks:
-  network1:
+  direct-deal-network1:

@@ -50,7 +50,7 @@ public class FavoriteItemServiceTest {
                                     .build();
 
         FavoriteItem entity = FavoriteItem.builder()
-                                    .id("1")
+                                    .id(1L)
                                     .userId(dto.getUserId())
                                     .itemId("0d49649c-ee95-4a6a-ad92-369bde5ad8b7")
                                     .createdDate(createdDate)
@@ -64,7 +64,7 @@ public class FavoriteItemServiceTest {
 
         //then
         assertThat(resultList.size(), equalTo(1));
-        assertThat(resultList.get(0).getId(), equalTo("1"));
+        assertThat(resultList.get(0).getId(), equalTo(1L));
         assertThat(resultList.get(0).getUserId(), equalTo("user@directdeal.co.kr"));
         assertThat(resultList.get(0).getItemId(), equalTo("0d49649c-ee95-4a6a-ad92-369bde5ad8b7"));
         assertThat(resultList.get(0).getCreatedDate(), equalTo(createdDate));
@@ -111,7 +111,7 @@ public class FavoriteItemServiceTest {
                                     .build();
 
         FavoriteItem entity = FavoriteItem.builder()
-                                    .id("1")
+                                    .id(1L)
                                     .userId("user@directdeal.co.kr")
                                     .itemId("0d49649c-ee95-4a6a-ad92-369bde5ad8b7")
                                     .createdDate(Instant.now())

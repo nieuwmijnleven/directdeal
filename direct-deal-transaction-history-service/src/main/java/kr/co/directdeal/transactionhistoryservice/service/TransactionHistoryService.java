@@ -46,7 +46,7 @@ public class TransactionHistoryService {
             transactionHistoryRepository.findById(dto.getId())
                 .orElseThrow(() -> TransactionHistoryException.builder()
                                         .messageKey("transactionhistoryservice.exception.setbuyer.transaction.notfound.message")
-                                        .messageArgs(new String[]{ dto.getId() })
+                                        .messageArgs(new String[]{ dto.getId().toString() })
                                         .build());
 
         String userId = SecurityUtils.getCurrentUserLogin();
@@ -67,7 +67,7 @@ public class TransactionHistoryService {
             transactionHistoryRepository.findById(dto.getId())
                 .orElseThrow(() -> TransactionHistoryException.builder()
                                         .messageKey("transactionhistoryservice.exception.delete.transaction.notfound.message")
-                                        .messageArgs(new String[]{ dto.getId() })
+                                        .messageArgs(new String[]{ dto.getId().toString() })
                                         .build());
 
         transactionHistoryRepository.delete(transactionHistory);

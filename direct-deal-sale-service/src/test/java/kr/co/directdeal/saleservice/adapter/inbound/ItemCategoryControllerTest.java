@@ -60,16 +60,16 @@ public class ItemCategoryControllerTest {
     public void List_NormalState_Success() throws Exception {
         //given
         ItemCategoryDTO parentDTO = ItemCategoryDTO.builder()
-                                        .id("1")
+                                        .id(1L)
                                         .name("Appliances")
                                         .parent(null)
                                         .build();
 
         ItemCategoryDTO childDTO = ItemCategoryDTO.builder()
-                                        .id("2")
+                                        .id(2L)
                                         .name("Computer")
                                         .parent(ItemCategoryDTO.builder()
-                                                    .id("1")
+                                                    .id(1L)
                                                     .name("Appliances")
                                                     .build())
                                         .child(Collections.emptyList())
@@ -84,11 +84,11 @@ public class ItemCategoryControllerTest {
         this.mvc.perform(get("/category"))
                     .andDo(print())
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$[0].id", is("1")))
+                    .andExpect(jsonPath("$[0].id", is(1)))
                     .andExpect(jsonPath("$[0].name", is("Appliances")))
-                    .andExpect(jsonPath("$[0].child[0].id", is("2")))
+                    .andExpect(jsonPath("$[0].child[0].id", is(2)))
                     .andExpect(jsonPath("$[0].child[0].name", is("Computer")))
-                    .andExpect(jsonPath("$[0].child[0].parent.id", is("1")))
+                    .andExpect(jsonPath("$[0].child[0].parent.id", is(1)))
                     .andExpect(jsonPath("$[0].child[0].parent.name", is("Appliances")));
 
         verify(itemCategoryService).list();
@@ -101,7 +101,7 @@ public class ItemCategoryControllerTest {
         ItemCategoryDTO dto = ItemCategoryDTO.builder()
                                         .name("Appliances")
                                         .parent(ItemCategoryDTO.builder()
-                                                    .id("2")
+                                                    .id(2L)
                                                     .name("No Data")
                                                     .build())
                                         .child(Collections.emptyList())
@@ -111,7 +111,7 @@ public class ItemCategoryControllerTest {
 
         willThrow(ItemCategoryException.builder()
                     .messageKey("saleservice.exception.itemcategoryservice.insert.message")
-                    .messageArgs(new String[]{"1"})
+                    .messageArgs(new String[]{ String.valueOf(1L) })
                     .build())
             .given(itemCategoryService).insert(dto);
 
@@ -134,7 +134,7 @@ public class ItemCategoryControllerTest {
         ItemCategoryDTO dto = ItemCategoryDTO.builder()
                                         .name("Appliances")
                                         .parent(ItemCategoryDTO.builder()
-                                                    .id("2")
+                                                    .id(2L)
                                                     .name("No Data")
                                                     .build())
                                         .child(Collections.emptyList())
@@ -157,7 +157,7 @@ public class ItemCategoryControllerTest {
     public void Update_InvalidId_ThrowItemCategoryException() throws Exception {
         //given
         ItemCategoryDTO dto = ItemCategoryDTO.builder()
-                                        .id("1")
+                                        .id(1L)
                                         .name("Appliances")
                                         .parent(null)
                                         .child(Collections.emptyList())
@@ -167,7 +167,7 @@ public class ItemCategoryControllerTest {
 
         willThrow(ItemCategoryException.builder()
                     .messageKey("saleservice.exception.itemcategoryservice.update.message")
-                    .messageArgs(new String[]{ dto.getId() })
+                    .messageArgs(new String[]{ dto.getId().toString() })
                     .build())
             .given(itemCategoryService).update(dto);
 
@@ -188,7 +188,7 @@ public class ItemCategoryControllerTest {
     public void Update_ValidId_Success() throws Exception {
         //given
         ItemCategoryDTO dto = ItemCategoryDTO.builder()
-                                        .id("1")
+                                        .id(1L)
                                         .name("Appliances")
                                         .parent(null)
                                         .child(Collections.emptyList())
@@ -211,12 +211,12 @@ public class ItemCategoryControllerTest {
     public void Delete_InvalidId_ThrowItemCategoryException() throws Exception {
         //given
         ItemCategoryDTO dto = ItemCategoryDTO.builder()
-                                        .id("1")
+                                        .id(1L)
                                         .build();
 
         willThrow(ItemCategoryException.builder()
                     .messageKey("saleservice.exception.itemcategoryservice.delete.message")
-                    .messageArgs(new String[]{ dto.getId() })
+                    .messageArgs(new String[]{ dto.getId().toString() })
                     .build())
             .given(itemCategoryService).delete(dto);
 
@@ -235,7 +235,7 @@ public class ItemCategoryControllerTest {
     public void Delete_ValidId_Success() throws Exception {
         //given
         ItemCategoryDTO dto = ItemCategoryDTO.builder()
-                                        .id("1")
+                                        .id(1L)
                                         .build();
 
         //when and then

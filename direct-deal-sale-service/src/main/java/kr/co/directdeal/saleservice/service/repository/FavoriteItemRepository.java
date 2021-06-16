@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import kr.co.directdeal.saleservice.domain.FavoriteItem;
 
 @Repository
-public interface FavoriteItemRepository extends JpaRepository<FavoriteItem, String> {
+public interface FavoriteItemRepository extends JpaRepository<FavoriteItem, Long> {
     public Optional<FavoriteItem> findByUserIdAndItemId(String userId, String itemId);
     public List<FavoriteItem> findAllByUserId(String userId);
     public void deleteByUserIdAndItemId(String userId, String itemId);

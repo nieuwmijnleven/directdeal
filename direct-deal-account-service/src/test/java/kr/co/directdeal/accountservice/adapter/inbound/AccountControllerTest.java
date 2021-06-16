@@ -117,7 +117,7 @@ public class AccountControllerTest {
         String loginEmail = SecurityUtils.getCurrentUserLogin();
 
         AccountDTO accountDTO = AccountDTO.builder()
-                                    .id("1")
+                                    .id(1L)
                                     .email(loginEmail)
                                     .password("1q2w3e")
                                     .name("account")
@@ -150,7 +150,7 @@ public class AccountControllerTest {
             .given(accountService).updateAccount(any(AccountDTO.class));
 
         AccountDTO accountDTO = AccountDTO.builder()
-                                    .id("1")
+                                    .id(1L)
                                     .email("incorrect@directdeal.co.kr")
                                     .password("1q2w3e")
                                     .name("account")
@@ -176,7 +176,7 @@ public class AccountControllerTest {
         String loginEmail = SecurityUtils.getCurrentUserLogin();
 
         AccountDTO resultDTO = AccountDTO.builder()
-                                    .id("1")
+                                    .id(1L)
                                     .email(loginEmail)
                                     .name("account")
                                     .activated(true)
@@ -191,7 +191,7 @@ public class AccountControllerTest {
             .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.id", is(resultDTO.getId())))
+            .andExpect(jsonPath("$.id", is(resultDTO.getId().intValue())))
             .andExpect(jsonPath("$.email", is(resultDTO.getEmail())))
             .andExpect(jsonPath("$.name", is(resultDTO.getName())));
     }

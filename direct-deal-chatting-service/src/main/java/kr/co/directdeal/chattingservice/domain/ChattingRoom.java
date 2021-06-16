@@ -41,7 +41,7 @@ import lombok.ToString;
 public class ChattingRoom {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CHATTING_ROOM_ID")
-    private String id;
+    private Long id;
 
     @NotNull
     @Column(name = "CHATTING_ROOM_ITEM_ID", nullable = false)

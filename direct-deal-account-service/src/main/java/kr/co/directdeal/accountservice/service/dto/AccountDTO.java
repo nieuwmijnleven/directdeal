@@ -22,7 +22,7 @@ import lombok.ToString;
 @ToString
 public class AccountDTO {
 	
-	private String id;
+	private Long id;
 
 	@Email
     @Size(min = 5, max = 64)

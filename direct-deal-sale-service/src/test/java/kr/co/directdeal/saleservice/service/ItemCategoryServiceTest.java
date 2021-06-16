@@ -46,7 +46,7 @@ public class ItemCategoryServiceTest {
     public void List_NormalState_ReturnItemCategoryList() {
         //given
         ItemCategory itemCategory = ItemCategory.builder()
-                                        .id("1")
+                                        .id(1L)
                                         .name("컴퓨터")
                                         .parent(null)
                                         .child(Collections.emptyList())
@@ -72,14 +72,14 @@ public class ItemCategoryServiceTest {
     public void Insert_HasParentAndSuccessToFindParent_Success() {
         //given
         ItemCategoryDTO parentDTO = ItemCategoryDTO.builder()
-                                        .id("1")
+                                        .id(1L)
                                         .name("컴퓨터")
                                         .parent(null)
                                         // .child(Collections.singletonList(child));
                                         .build();
 
         ItemCategoryDTO childDTO = ItemCategoryDTO.builder()
-                                        .id("2")
+                                        .id(2L)
                                         .name("노트북")
                                         .parent(parentDTO)
                                         .child(Collections.emptyList())
@@ -104,14 +104,14 @@ public class ItemCategoryServiceTest {
     public void Insert_HasParentAndFailToFindParent_Success() {
         //given
         ItemCategoryDTO parentDTO = ItemCategoryDTO.builder()
-                                        .id("1")
+                                        .id(1L)
                                         .name("컴퓨터")
                                         .parent(null)
                                         // .child(Collections.singletonList(child));
                                         .build();
 
         ItemCategoryDTO childDTO = ItemCategoryDTO.builder()
-                                        .id("2")
+                                        .id(2L)
                                         .name("노트북")
                                         .parent(parentDTO)
                                         .child(Collections.emptyList())
@@ -132,7 +132,7 @@ public class ItemCategoryServiceTest {
     public void Insert_NoParent_Success() {
         //given
         ItemCategoryDTO childDTO = ItemCategoryDTO.builder()
-                                        .id("2")
+                                        .id(2L)
                                         .name("노트북")
                                         .parent(null)
                                         .child(Collections.emptyList())
@@ -149,7 +149,7 @@ public class ItemCategoryServiceTest {
     public void Update_InvalidId_ThrowItemCategoryException() {
         //given
         ItemCategoryDTO dto = ItemCategoryDTO.builder()
-                                .id("1")
+                                .id(1L)
                                 .build();
 
         given(itemCategoryRepository.findById(dto.getId()))
@@ -165,7 +165,7 @@ public class ItemCategoryServiceTest {
     public void Update_ValidId_Success() {
         //given
         ItemCategoryDTO dto = ItemCategoryDTO.builder()
-                                .id("2")
+                                .id(2L)
                                 .name("노트북")
                                 .parent(null)
                                 .child(Collections.emptyList())
@@ -188,7 +188,7 @@ public class ItemCategoryServiceTest {
     public void Delete_InvalidId_ThrowItemCategoryException() {
         //given
         ItemCategoryDTO dto = ItemCategoryDTO.builder()
-                                .id("1")
+                                .id(1L)
                                 .build();
 
         given(itemCategoryRepository.findById(dto.getId()))
@@ -204,7 +204,7 @@ public class ItemCategoryServiceTest {
     public void Update_InvalidId_Success() {
         //given
         ItemCategoryDTO dto = ItemCategoryDTO.builder()
-                                .id("2")
+                                .id(2L)
                                 .name("노트북")
                                 .parent(null)
                                 .child(Collections.emptyList())

@@ -34,7 +34,7 @@ public class ChattingController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ChattingRoomDTO getChattingRoom(@PathVariable("id") String id) {
+    public ChattingRoomDTO getChattingRoom(@PathVariable("id") Long id) {
         return chattingService.getChattingRoom(id);
     }
 
@@ -46,7 +46,7 @@ public class ChattingController {
 
     @GetMapping("/{chattingRoomId}/fetch-from/{skip:\\d+}")
     @ResponseStatus(HttpStatus.OK)
-    public List<ChattingMessageDTO> fetchMessagesFrom(@PathVariable("chattingRoomId") String chattingRoomId, @PathVariable("skip") int skip) {
+    public List<ChattingMessageDTO> fetchMessagesFrom(@PathVariable("chattingRoomId") Long chattingRoomId, @PathVariable("skip") int skip) {
         return chattingService.fetchMessagesFrom(chattingRoomId, skip);
     }
 

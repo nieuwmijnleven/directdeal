@@ -37,7 +37,7 @@ public class Account extends AbstractAuditingEntity {
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ACCOUNT_ID")
-	private String id;
+	private Long id;
 	
 	@Email
 	@NotNull
@@ -48,7 +48,7 @@ public class Account extends AbstractAuditingEntity {
 	@JsonIgnore
 	@NotNull
 	@Size(min = 60, max = 60)
-	@Column(name = "PASSWORD_HASH", length = 60, nullable = false)
+	@Column(name = "ACCOUNT_PASSWORD_HASH", length = 60, nullable = false)
 	private String password;
 	
 	@NotNull

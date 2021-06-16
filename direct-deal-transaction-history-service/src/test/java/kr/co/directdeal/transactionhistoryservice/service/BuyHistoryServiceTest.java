@@ -44,7 +44,7 @@ public class BuyHistoryServiceTest {
         //given
         BuyHistoryDTO buyHistoryDTO = 
             BuyHistoryDTO.builder()
-                // .id("1")
+                // .id(1L)
                 .itemId("9aaf0862-84b8-4fe9-b1bd-65261eaa334b")
                 .buyerId("buyer@directdeal.co.kr")
                 .title("M1 Macbook Air")
@@ -67,7 +67,7 @@ public class BuyHistoryServiceTest {
         //given
         BuyHistoryDTO dto = 
             BuyHistoryDTO.builder()
-                .id("1")
+                .id(1L)
                 .buyerId("buyer@directdeal.co.kr")
                 .build();
 

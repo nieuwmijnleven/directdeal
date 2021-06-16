@@ -112,13 +112,13 @@ public class ChattingControllerTest {
         ChattingRoomDTO dto = objectMapper.readValue(srcJSON, ChattingRoomDTO.class);
 
         ChattingRoomDTO resultDTO = ChattingRoomDTO.builder()
-                                        .id("1")
+                                        .id(1L)
                                         .itemId(dto.getItemId())
                                         .sellerId(dto.getSellerId())
                                         .customerId(dto.getCustomerId())
                                         .messages(List.of(ChattingMessageDTO.builder()
-                                                                .id("1")
-                                                                .chattingRoomId("1")
+                                                                .id(1L)
+                                                                .chattingRoomId(1L)
                                                                 .talkerId(dto.getSellerId())
                                                                 .text("Hi!")
                                                                 .createdDate(Instant.now())
@@ -135,13 +135,13 @@ public class ChattingControllerTest {
                     .content(srcJSON))
                     .andDo(print())
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.id", is(resultDTO.getId())))
+                    .andExpect(jsonPath("$.id", is(resultDTO.getId().intValue())))
                     .andExpect(jsonPath("$.itemId", is(resultDTO.getItemId())))
                     .andExpect(jsonPath("$.sellerId", is(resultDTO.getSellerId())))
                     .andExpect(jsonPath("$.customerId", is(resultDTO.getCustomerId())))
                     .andExpect(jsonPath("$.createdDate", is(resultDTO.getCreatedDate().toString())))
-                    .andExpect(jsonPath("$.messages[0].id", is(resultDTO.getMessages().get(0).getId())))
-                    .andExpect(jsonPath("$.messages[0].chattingRoomId", is(resultDTO.getMessages().get(0).getChattingRoomId())))
+                    .andExpect(jsonPath("$.messages[0].id", is(resultDTO.getMessages().get(0).getId().intValue())))
+                    .andExpect(jsonPath("$.messages[0].chattingRoomId", is(resultDTO.getMessages().get(0).getChattingRoomId().intValue())))
                     .andExpect(jsonPath("$.messages[0].talkerId", is(resultDTO.getMessages().get(0).getTalkerId())))
                     .andExpect(jsonPath("$.messages[0].text", is(resultDTO.getMessages().get(0).getText())))
                     .andExpect(jsonPath("$.messages[0].createdDate", is(resultDTO.getMessages().get(0).getCreatedDate().toString())));
@@ -157,7 +157,7 @@ public class ChattingControllerTest {
         given(chattingService.fetchUnreadMessage(dto))
             .willThrow(ChattingException.builder()
                             .messageKey("chattingroomservice.exception.sendchattingmessage.chattingroom.notfound.message")
-                            .messageArgs(new String[]{ dto.getChattingRoomId() })
+                            .messageArgs(new String[]{ dto.getChattingRoomId().toString() })
                             .build());
 
         //when and then
@@ -201,8 +201,8 @@ public class ChattingControllerTest {
         ChattingMessageDTO dto = objectMapper.readValue(srcJSON, ChattingMessageDTO.class);
 
         ChattingMessageDTO resultDTO = ChattingMessageDTO.builder()
-                                            .id("1")
-                                            .chattingRoomId("1")
+                                            .id(1L)
+                                            .chattingRoomId(1L)
                                             .talkerId("customer@directdeal.co.kr")
                                             .text("Hi!")
                                             .createdDate(Instant.now())
@@ -218,8 +218,8 @@ public class ChattingControllerTest {
             .content(srcJSON))
             .andDo(print())
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$[0].id", is(resultDTO.getId())))
-            .andExpect(jsonPath("$[0].chattingRoomId", is(resultDTO.getChattingRoomId())))
+            .andExpect(jsonPath("$[0].id", is(resultDTO.getId().intValue())))
+            .andExpect(jsonPath("$[0].chattingRoomId", is(resultDTO.getChattingRoomId().intValue())))
             .andExpect(jsonPath("$[0].talkerId", is(resultDTO.getTalkerId())))
             .andExpect(jsonPath("$[0].text", is(resultDTO.getText())))
             .andExpect(jsonPath("$[0].createdDate", is(resultDTO.getCreatedDate().toString())))
@@ -232,13 +232,13 @@ public class ChattingControllerTest {
     @WithMockUser(username = "seller@directdeal.co.kr")
     public void FetchMessageFrom_InvalidChattingRoomId_ThrowChattingException() throws Exception {
         //given
-        String chattingRoomId = "1";
+        Long chattingRoomId = 1L;
         int skip = 1;
 
         given(chattingService.fetchMessagesFrom(chattingRoomId, skip))
             .willThrow(ChattingException.builder()
                             .messageKey("chattingroomservice.exception.sendchattingmessage.chattingroom.notfound.message")
-                            .messageArgs(new String[]{ chattingRoomId })
+                            .messageArgs(new String[]{ chattingRoomId.toString() })
                             .build());
 
         //when and then
@@ -253,7 +253,7 @@ public class ChattingControllerTest {
     @WithMockUser(username = "seller@directdeal.co.kr")
     public void FetchMessageFrom_InvalidTalker_ThrowChattingException() throws Exception {
         //given
-        String chattingRoomId = "1";
+        Long chattingRoomId = 1L;
         int skip = 1;
 
         given(chattingService.fetchMessagesFrom(chattingRoomId, skip))
@@ -273,12 +273,12 @@ public class ChattingControllerTest {
     @WithMockUser(username = "customer@directdeal.co.kr")
     public void FetchMessageFrom_ValidChattingRoomIdAndTalker_ReturnUnreadMessages() throws Exception {
         //given
-        String chattingRoomId = "1";
+        Long chattingRoomId = 1L;
         int skip = 0;
 
         ChattingMessageDTO resultDTO = ChattingMessageDTO.builder()
-                                            .id("1")
-                                            .chattingRoomId("1")
+                                            .id(1L)
+                                            .chattingRoomId(1L)
                                             .talkerId("customer@directdeal.co.kr")
                                             .text("Hi!")
                                             .createdDate(Instant.now().minus(1, ChronoUnit.MINUTES))
@@ -292,8 +292,8 @@ public class ChattingControllerTest {
         this.mvc.perform(get("/chatting/" + chattingRoomId + "/fetch-from/" + skip))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id", is(resultDTO.getId())))
-                .andExpect(jsonPath("$[0].chattingRoomId", is(resultDTO.getChattingRoomId())))
+                .andExpect(jsonPath("$[0].id", is(resultDTO.getId().intValue())))
+                .andExpect(jsonPath("$[0].chattingRoomId", is(resultDTO.getChattingRoomId().intValue())))
                 .andExpect(jsonPath("$[0].talkerId", is(resultDTO.getTalkerId())))
                 .andExpect(jsonPath("$[0].text", is(resultDTO.getText())))
                 .andExpect(jsonPath("$[0].createdDate", is(resultDTO.getCreatedDate().toString())))
@@ -356,13 +356,13 @@ public class ChattingControllerTest {
         ChattingRoomDTO dto = objectMapper.readValue(srcJSON, ChattingRoomDTO.class);
 
         ChattingRoomDTO resultDTO = ChattingRoomDTO.builder()
-                                        .id("1")
+                                        .id(1L)
                                         .itemId(dto.getItemId())
                                         .sellerId(dto.getSellerId())
                                         .customerId(dto.getCustomerId())
                                         .messages(List.of(ChattingMessageDTO.builder()
-                                                                .id("1")
-                                                                .chattingRoomId("1")
+                                                                .id(1L)
+                                                                .chattingRoomId(1L)
                                                                 .talkerId(dto.getSellerId())
                                                                 .text("Hi!")
                                                                 .createdDate(Instant.now())
@@ -379,13 +379,13 @@ public class ChattingControllerTest {
                     .content(srcJSON))
                     .andDo(print())
                     .andExpect(status().isCreated())
-                    .andExpect(jsonPath("$.id", is(resultDTO.getId())))
+                    .andExpect(jsonPath("$.id", is(resultDTO.getId().intValue())))
                     .andExpect(jsonPath("$.itemId", is(resultDTO.getItemId())))
                     .andExpect(jsonPath("$.sellerId", is(resultDTO.getSellerId())))
                     .andExpect(jsonPath("$.customerId", is(resultDTO.getCustomerId())))
                     .andExpect(jsonPath("$.createdDate", is(resultDTO.getCreatedDate().toString())))
-                    .andExpect(jsonPath("$.messages[0].id", is(resultDTO.getMessages().get(0).getId())))
-                    .andExpect(jsonPath("$.messages[0].chattingRoomId", is(resultDTO.getMessages().get(0).getChattingRoomId())))
+                    .andExpect(jsonPath("$.messages[0].id", is(resultDTO.getMessages().get(0).getId().intValue())))
+                    .andExpect(jsonPath("$.messages[0].chattingRoomId", is(resultDTO.getMessages().get(0).getChattingRoomId().intValue())))
                     .andExpect(jsonPath("$.messages[0].talkerId", is(resultDTO.getMessages().get(0).getTalkerId())))
                     .andExpect(jsonPath("$.messages[0].text", is(resultDTO.getMessages().get(0).getText())))
                     .andExpect(jsonPath("$.messages[0].createdDate", is(resultDTO.getMessages().get(0).getCreatedDate().toString())));
@@ -400,7 +400,7 @@ public class ChattingControllerTest {
 
         willThrow(ChattingException.builder()
                         .messageKey("chattingroomservice.exception.sendchattingmessage.chattingroom.notfound.message")
-                        .messageArgs(new String[]{ dto.getChattingRoomId() })
+                        .messageArgs(new String[]{ dto.getChattingRoomId().toString() })
                         .build())
             .given(chattingService).sendMessage(dto);
         

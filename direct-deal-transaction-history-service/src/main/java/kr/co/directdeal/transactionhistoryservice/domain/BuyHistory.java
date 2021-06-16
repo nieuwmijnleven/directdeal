@@ -34,11 +34,11 @@ import lombok.ToString;
 public class BuyHistory {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "BUY_ID")
-    private String id;
+    private Long id;
 
     @NotNull
     @Size(min = 1, max = 64)
-    @Column(name = "BUY_ITEM_BUYER_ID", length = 50, nullable = false)
+    @Column(name = "BUY_ITEM_BUYER_ID", length = 64, nullable = false)
     private String buyerId;
 
     @NotNull
@@ -63,7 +63,7 @@ public class BuyHistory {
 
     @NotNull
     @Size(min = 1, max = 64)
-    @Column(name = "BUY_ITEM_SELLER", length = 50, nullable = true)
+    @Column(name = "BUY_ITEM_SELLER", length = 64, nullable = true)
     private String sellerId;
 
     @NotNull

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class FavoriteItemDTO {
-    private String id;
+    private Long id;
     private String userId;
     private String itemId;
     private Instant createdDate; 

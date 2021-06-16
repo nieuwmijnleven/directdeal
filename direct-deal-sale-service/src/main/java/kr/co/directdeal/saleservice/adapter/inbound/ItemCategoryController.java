@@ -51,7 +51,7 @@ public class ItemCategoryController {
     //@PreAuthority()
     @DeleteMapping("/{id:\\d+}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") String id) {
+    public void delete(@PathVariable("id") Long id) {
         itemCategoryService.delete(ItemCategoryDTO.builder()
                                         .id(id)
                                         .build());

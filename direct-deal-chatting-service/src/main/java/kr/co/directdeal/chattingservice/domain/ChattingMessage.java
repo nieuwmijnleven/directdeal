@@ -32,14 +32,14 @@ import lombok.ToString;
 public class ChattingMessage {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CHATTING_MESSAGE_ID")
-    private String id;
+    private Long id;
 
     // @ManyToOne(fetch = FetchType.LAZY)
     // @JoinColumn(name = "CHATTING_ROOM_ID", insertable = false, updatable = false)
     // private ChattingRoom chattingRoom;
 
     @Column(name = "CHATTING_ROOM_ID", nullable = false)
-    private String chattingRoomId;
+    private Long chattingRoomId;
     
     @Email
 	@NotNull

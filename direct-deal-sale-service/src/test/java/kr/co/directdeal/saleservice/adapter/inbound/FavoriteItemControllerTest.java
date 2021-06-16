@@ -88,7 +88,7 @@ public class FavoriteItemControllerTest {
 
         given(favoriteItemRepository.findAllByUserId(favoriteItemDTO.getUserId()))
             .willReturn(Collections.singletonList(FavoriteItem.builder()
-                                                    .id("1")
+                                                    .id(1L)
                                                     .userId(favoriteItemDTO.getUserId())
                                                     .itemId("80b1616d-c8a8-47f3-80bb-20926444974c")
                                                     .build()));
@@ -97,7 +97,7 @@ public class FavoriteItemControllerTest {
         this.mvc.perform(get("/favorite"))
                     .andDo(print())
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$[0].id", is("1")))
+                    .andExpect(jsonPath("$[0].id", is(1)))
                     .andExpect(jsonPath("$[0].userId", is("seller@directdeal.co.kr")))
                     .andExpect(jsonPath("$[0].itemId", is("80b1616d-c8a8-47f3-80bb-20926444974c")));
 

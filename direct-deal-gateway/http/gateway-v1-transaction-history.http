@@ -22,13 +22,13 @@ Content-Type: application/json
 ###
 
 GET http://localhost:8084/api/v1/transaction-history HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJidXllckBkaXJlY3RkZWFsLmNvLmtyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MjM4MjI0MTV9.0mFYQ3aLn3yyp80G3-j5dpsXRBn2PxCPy8j8n88qiQ4lTtIrRI-oH9H0t0YTEqlsKy2WGcDW0szDEqiaVqSTxQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJidXllckBkaXJlY3RkZWFsLmNvLmtyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MjM4ODkwMjh9.FcKqsjkb9KBWU5fQNhNVPLA-7pgwRYZhYq9p4Q8YcPJudWpxkQeooEDVQUkp6D8hCPCLLy-dm2dSCO6orbqTKw
 
 ###
 
 PUT http://localhost:8084/api/v1/transaction-history/setbuyer HTTP/1.1
 Content-Type : application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJidXllckBkaXJlY3RkZWFsLmNvLmtyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MjM4MjI0MTV9.0mFYQ3aLn3yyp80G3-j5dpsXRBn2PxCPy8j8n88qiQ4lTtIrRI-oH9H0t0YTEqlsKy2WGcDW0szDEqiaVqSTxQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJidXllckBkaXJlY3RkZWFsLmNvLmtyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MjM4ODkwMjh9.FcKqsjkb9KBWU5fQNhNVPLA-7pgwRYZhYq9p4Q8YcPJudWpxkQeooEDVQUkp6D8hCPCLLy-dm2dSCO6orbqTKw
 
 {
     "id":"1",
@@ -39,12 +39,17 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJidXllckBkaXJlY3RkZWFsLmNvL
 
 PUT http://localhost:8084/api/v1/transaction-history/setbuyer HTTP/1.1
 Content-Type : application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJidXllckBkaXJlY3RkZWFsLmNvLmtyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MjM4MjI0MTV9.0mFYQ3aLn3yyp80G3-j5dpsXRBn2PxCPy8j8n88qiQ4lTtIrRI-oH9H0t0YTEqlsKy2WGcDW0szDEqiaVqSTxQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJidXllckBkaXJlY3RkZWFsLmNvLmtyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MjM4ODkwMjh9.FcKqsjkb9KBWU5fQNhNVPLA-7pgwRYZhYq9p4Q8YcPJudWpxkQeooEDVQUkp6D8hCPCLLy-dm2dSCO6orbqTKw
 
 {
     "id":"2",
     "buyerId":"buyer@directdeal.co.kr"
 }
+
+###
+
+GET http://localhost:8084/api/v1/transaction-history HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJidXllckBkaXJlY3RkZWFsLmNvLmtyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MjM4ODkwMjh9.FcKqsjkb9KBWU5fQNhNVPLA-7pgwRYZhYq9p4Q8YcPJudWpxkQeooEDVQUkp6D8hCPCLLy-dm2dSCO6orbqTKw
 
 ### Create an account
 
@@ -70,20 +75,20 @@ Content-Type: application/json
 ###
 
 GET http://localhost:8084/api/v1/buy-history HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJidXllckBkaXJlY3RkZWFsLmNvLmtyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MjM4MjI0MTV9.0mFYQ3aLn3yyp80G3-j5dpsXRBn2PxCPy8j8n88qiQ4lTtIrRI-oH9H0t0YTEqlsKy2WGcDW0szDEqiaVqSTxQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJidXllckBkaXJlY3RkZWFsLmNvLmtyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MjM4ODkwMjh9.FcKqsjkb9KBWU5fQNhNVPLA-7pgwRYZhYq9p4Q8YcPJudWpxkQeooEDVQUkp6D8hCPCLLy-dm2dSCO6orbqTKw
 
 ###
 DELETE http://localhost:8084/api/v1/buy-history/1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJidXllckBkaXJlY3RkZWFsLmNvLmtyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MjM4MjI0MTV9.0mFYQ3aLn3yyp80G3-j5dpsXRBn2PxCPy8j8n88qiQ4lTtIrRI-oH9H0t0YTEqlsKy2WGcDW0szDEqiaVqSTxQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJidXllckBkaXJlY3RkZWFsLmNvLmtyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MjM4ODkwMjh9.FcKqsjkb9KBWU5fQNhNVPLA-7pgwRYZhYq9p4Q8YcPJudWpxkQeooEDVQUkp6D8hCPCLLy-dm2dSCO6orbqTKw
 
 ###
 
 GET http://localhost:8084/api/v1/buy-history HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJidXllckBkaXJlY3RkZWFsLmNvLmtyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MjM4MjI0MTV9.0mFYQ3aLn3yyp80G3-j5dpsXRBn2PxCPy8j8n88qiQ4lTtIrRI-oH9H0t0YTEqlsKy2WGcDW0szDEqiaVqSTxQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJidXllckBkaXJlY3RkZWFsLmNvLmtyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MjM4ODkwMjh9.FcKqsjkb9KBWU5fQNhNVPLA-7pgwRYZhYq9p4Q8YcPJudWpxkQeooEDVQUkp6D8hCPCLLy-dm2dSCO6orbqTKw
 
 ###
 
 DELETE http://localhost:8084/api/v1/buy-history/2 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJidXllckBkaXJlY3RkZWFsLmNvLmtyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MjM4MjI0MTV9.0mFYQ3aLn3yyp80G3-j5dpsXRBn2PxCPy8j8n88qiQ4lTtIrRI-oH9H0t0YTEqlsKy2WGcDW0szDEqiaVqSTxQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJidXllckBkaXJlY3RkZWFsLmNvLmtyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MjM4ODkwMjh9.FcKqsjkb9KBWU5fQNhNVPLA-7pgwRYZhYq9p4Q8YcPJudWpxkQeooEDVQUkp6D8hCPCLLy-dm2dSCO6orbqTKw
 
 ###

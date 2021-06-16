@@ -33,11 +33,12 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.5.0'
 	implementation group: 'org.axonframework.extensions.mongo', name: 'axon-mongo', version: '4.4'
-	implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.0.0'
+	// implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.0.0'
 
 	// developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-	runtimeOnly 'com.h2database:h2'
+	// runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'mysql:mysql-connector-java'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

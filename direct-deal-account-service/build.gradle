@@ -33,7 +33,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 	
-	runtimeOnly 'com.h2database:h2'
+	// runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'mysql:mysql-connector-java'
 	
 	developmentOnly "org.springframework.boot:spring-boot-devtools"

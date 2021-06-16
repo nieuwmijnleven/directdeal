@@ -109,13 +109,13 @@ public class AccountServiceTest {
         //given
         AccountDTO accountDTO = mock(AccountDTO.class);
         given(accountDTO.getId())
-            .willReturn("1");
+            .willReturn(1L);
         given(accountDTO.getEmail())
             .willReturn("user@directdeal.co.kr");
 
         Account accountById = mock(Account.class);
         given(accountById.getId())
-            .willReturn("1");
+            .willReturn(1L);
 
         given(accountRepository.findById(accountDTO.getId()))
             .willReturn(Optional.of(accountById));
@@ -136,7 +136,7 @@ public class AccountServiceTest {
         //given
         AccountDTO accountDTO = mock(AccountDTO.class);
         given(accountDTO.getId())
-            .willReturn("1");
+            .willReturn(1L);
 
         given(accountRepository.findById(accountDTO.getId()))
             .willReturn(Optional.empty());
@@ -152,19 +152,19 @@ public class AccountServiceTest {
         //given
         AccountDTO accountDTO = mock(AccountDTO.class);
         given(accountDTO.getId())
-            .willReturn("1");
+            .willReturn(1L);
         given(accountDTO.getEmail())
             .willReturn("account@directdeal.co.kr");
 
         Account accountById = mock(Account.class);
         given(accountById.getId())
-            .willReturn("1");
+            .willReturn(1L);
         given(accountDTO.getEmail())
             .willReturn("account@directdeal.co.kr");
 
         Account accountByEmail = mock(Account.class);
         given(accountByEmail.getId())
-            .willReturn("1");
+            .willReturn(1L);
 
         given(accountRepository.findById(accountDTO.getId()))
             .willReturn(Optional.of(accountById));
@@ -185,19 +185,19 @@ public class AccountServiceTest {
         //given
         AccountDTO accountDTO = mock(AccountDTO.class);
         given(accountDTO.getId())
-            .willReturn("1");
+            .willReturn(1L);
         given(accountDTO.getEmail())
             .willReturn("account@directdeal.co.kr");
 
         Account accountById = mock(Account.class);
         given(accountById.getId())
-            .willReturn("1");
+            .willReturn(1L);
         given(accountDTO.getEmail())
             .willReturn("account@directdeal.co.kr");
 
         Account accountByEmail = mock(Account.class);
         given(accountByEmail.getId())
-            .willReturn("2");
+            .willReturn(2L);
 
         given(accountRepository.findById(accountDTO.getId()))
             .willReturn(Optional.of(accountById));
@@ -217,7 +217,7 @@ public class AccountServiceTest {
 
         Account accountByEmail = mock(Account.class);
         given(accountByEmail.getId())
-            .willReturn("1");
+            .willReturn(1L);
         given(accountByEmail.getEmail())
             .willReturn(loginEmail);
         given(accountByEmail.getPassword())

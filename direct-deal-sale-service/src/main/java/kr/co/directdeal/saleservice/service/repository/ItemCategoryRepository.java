@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import kr.co.directdeal.saleservice.domain.ItemCategory;
 
 @Repository
-public interface ItemCategoryRepository extends JpaRepository<ItemCategory, String> {
+public interface ItemCategoryRepository extends JpaRepository<ItemCategory, Long> {
     List<ItemCategory> findAllByParentIsNull();
 }

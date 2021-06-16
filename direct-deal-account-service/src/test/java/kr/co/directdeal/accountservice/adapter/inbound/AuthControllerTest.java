@@ -91,7 +91,7 @@ public class AuthControllerTest {
                                 .build();
 
         Account accountByEmail = Account.builder()
-                                    .id("1")
+                                    .id(1L)
                                     .email("account@directdeal.co.kr")
                                     .password("$2a$10$9arZnwNlbgpxMHdLv82ZXuOLID5ODJR0BhciQ1wxvds2ei1hzG8he")
                                     .name("account")
@@ -126,7 +126,7 @@ public class AuthControllerTest {
                                 .build();
 
         Account accountByEmail = Account.builder()
-                                    .id("1")
+                                    .id(1L)
                                     .email("account@directdeal.co.kr")
                                     .password("$2a$10$9arZnwNlbgpxMHdLv82ZXuOLID5ODJR0BhciQ1wxvds2ei1hzG8he")
                                     .name("account")
