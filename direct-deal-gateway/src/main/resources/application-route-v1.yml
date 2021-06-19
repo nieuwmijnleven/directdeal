@@ -4,6 +4,7 @@ spring:
             globalcors:
               corsConfigurations:
                 '[/**]':
+                  allowedOriginPatterns: "*"
                   allow-credentials: true   #추가
                   allowedHeaders:
                     - x-requested-with
