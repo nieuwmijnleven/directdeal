@@ -1,9 +1,15 @@
 spring:
     cloud:
         gateway:
-            #default-filters:
-            #    - name: GlobalFilter
-            #    - args:
+            globalcors:
+              corsConfigurations:
+                '[/**]':
+                  allowedOrigins: "*"
+                  allowedMethods:
+                    - GET
+                    - POST
+                    - PUT
+                    - DELETE
             routes:
             - id: account-service
               uri: http://account-service:8080/
