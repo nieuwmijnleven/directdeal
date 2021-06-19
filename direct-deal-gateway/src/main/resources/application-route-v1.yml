@@ -4,11 +4,19 @@ spring:
             globalcors:
               corsConfigurations:
                 '[/**]':
-                  allowedOrigins: "*"
+                  allow-credentials: true   #추가
+                  allowedHeaders:
+                    - x-requested-with
+                    - authorization
+                    - content-type
+                    - credential
+                    - X-AUTH-TOKEN
+                    - X-CSRF-TOKEN
                   allowedMethods:
-                    - GET
                     - POST
+                    - GET
                     - PUT
+                    - OPTIONS
                     - DELETE
             routes:
             - id: account-service
