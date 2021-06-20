@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class SaleItemDTO {
     private String id;
+    private String ownerId;
     private String title;
     private String category;
     private long targetPrice;

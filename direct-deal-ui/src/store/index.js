@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     authorization: '',
     showBottomNavigation: true,
-    selectedBottomNavigationItem: 'home'
+    selectedBottomNavigationItem: 'home',
+    routerParams: {}
   },
   mutations: {
     setAuthorization(state, auth) {
@@ -18,7 +19,10 @@ export default new Vuex.Store({
       state.showBottomNavigation = visible
     },
     setSelectedBottomNavigationItem(state, selected) {
-      state.selectedBottomNavigationItem = selected;
+      state.selectedBottomNavigationItem = selected
+    },
+    setRouterParams(state, params) {
+      state.routerParams = params
     }
   },
   getters: {

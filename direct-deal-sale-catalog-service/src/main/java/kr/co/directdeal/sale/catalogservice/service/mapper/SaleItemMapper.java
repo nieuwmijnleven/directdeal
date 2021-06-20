@@ -13,6 +13,7 @@ public class SaleItemMapper implements Mapper<SaleItem, SaleItemDTO> {
 	public SaleItem toEntity(SaleItemDTO dto) {
 		return SaleItem.builder()
 					.id(dto.getId())
+					.ownerId(dto.getOwnerId())
 					.title(dto.getTitle())
 					.category(dto.getCategory())
 					.targetPrice(dto.getTargetPrice())
@@ -29,6 +30,7 @@ public class SaleItemMapper implements Mapper<SaleItem, SaleItemDTO> {
 	public SaleItemDTO toDTO(SaleItem entity) {
 		return SaleItemDTO.builder()
 					.id(entity.getId())
+					.ownerId(entity.getOwnerId())
 					.title(entity.getTitle())
 					.category(entity.getCategory())
 					.targetPrice(entity.getTargetPrice())

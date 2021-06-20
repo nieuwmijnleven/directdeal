@@ -25,7 +25,7 @@
                 ></v-text-field>
 
                 <v-row align="center" class="mx-0">
-                  <v-col cols="8" class="mx-0 px-0">
+                  <v-col cols="7" class="mx-0 px-0">
                     <v-text-field
                       v-model="price"
                       :rules="priceRules"
@@ -33,10 +33,10 @@
                       required
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="3" offset="1" class="mx-0">
+                  <v-col cols="4" offset="1" class="mx-0">
                     <v-checkbox
                       v-model="discountable"
-                      label="Discount"
+                      label="Discountable"
                     ></v-checkbox>
                   </v-col>
                 </v-row>
@@ -55,7 +55,7 @@
             <v-divider class="mt-2"></v-divider>
 
             <v-card-actions>
-              <v-btn text @click="cancel"> Cancel </v-btn>
+              <v-btn text @click="reset"> Cancel </v-btn>
               <v-spacer></v-spacer>
               <v-btn color="primary" text @click="submit"> Submit </v-btn>
             </v-card-actions>
@@ -96,14 +96,14 @@ export default {
     ],
   }),
   methods: {
-    cancel() {
-      this.files = []
-      this.title = "";
-      this.price = "";
-      this.text = "";
-    },
     validate() {
       return this.$refs.form.validate();
+    },
+    reset () {
+      this.$refs.form.reset()
+    },
+    resetValidation () {
+      this.$refs.form.resetValidation()
     },
     async submit() {
       if (!this.validate() || !this.files)
@@ -139,9 +139,9 @@ export default {
           })
 
           if (response.status == 201) {
-            //this.$router.push("/home");
-            console.log("3")
-            alert("Success")
+            this.$router.push("/");
+            // console.log("3")
+            // alert("Success")
           } else {
             alert("An incorrect response code is returned: " + response.status);
           }

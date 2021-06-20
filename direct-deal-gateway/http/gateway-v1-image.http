@@ -42,6 +42,6 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 
 ###
 
-GET http://localhost:8084/api/v1/image/0fe8a657-e234-44df-8dca-963236e56477.jpg HTTP/1.1
+GET http://localhost:8084/api/v1/image/13934d49-f106-4c0f-a98f-25e630e65ac8.jpg HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzODg4NzQwfQ.wcfz3m8A9Atu_W44WfOZQ1_uDJsrAtOhkzPHPLAdnlkNLr-jGuy3zdqiavHf8aRqkoAqBOd1uX6NDLEdSNMAaQ
 

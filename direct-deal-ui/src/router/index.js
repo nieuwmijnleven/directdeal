@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import SignUp from '../views/SignUp.vue'
 import RegisterItem from '../views/RegisterItem.vue'
+import ItemDetail from '../views/ItemDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/register-item',
     name: 'RegisterItem',
     component: RegisterItem
+  },
+  {
+    path: '/item-detail',
+    name: 'ItemDetail',
+    component: ItemDetail
   },
   {
     path: '/about',
