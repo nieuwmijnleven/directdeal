@@ -12,5 +12,6 @@ import kr.co.directdeal.chattingservice.domain.ChattingRoom;
 public interface ChattingRepository extends JpaRepository<ChattingRoom, Long> {
     public Optional<ChattingRoom> findByItemIdAndSellerIdAndCustomerId(String itemId, String sellerId, String customerId);
     public List<ChattingRoom> findBySellerIdAndItemId(String sellerId, String itemId);
+    public List<ChattingRoom> findBySellerIdOrCustomerId(String sellerId, String customerId);
     public boolean existsByItemIdAndSellerIdAndCustomerId(String itemId, String sellerId, String customerId);
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import kr.co.directdeal.chattingservice.exception.ChattingException;
+import kr.co.directdeal.chattingservice.exception.ChattingRoomAlreadyCreatedException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -48,6 +49,13 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler({ChattingException.class})
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorResponse handleException(ChattingException ex) {
+		String message = messageSource.getMessage(ex.getMessageKey(), ex.getMessageArgs(), LocaleContextHolder.getLocale());
+		return new ErrorResponse("Chatting Service Error", message);
+	}
+
+	@ExceptionHandler({ChattingRoomAlreadyCreatedException.class})
+	@ResponseStatus(HttpStatus.CONFLICT)
+	public ErrorResponse handleException(ChattingRoomAlreadyCreatedException ex) {
 		String message = messageSource.getMessage(ex.getMessageKey(), ex.getMessageArgs(), LocaleContextHolder.getLocale());
 		return new ErrorResponse("Chatting Service Error", message);
 	}

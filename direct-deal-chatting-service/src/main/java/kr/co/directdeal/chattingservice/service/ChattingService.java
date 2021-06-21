@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.directdeal.chattingservice.domain.ChattingMessage;
 import kr.co.directdeal.chattingservice.domain.ChattingRoom;
 import kr.co.directdeal.chattingservice.exception.ChattingException;
+import kr.co.directdeal.chattingservice.exception.ChattingRoomAlreadyCreatedException;
 import kr.co.directdeal.chattingservice.service.dto.ChattingMessageDTO;
 import kr.co.directdeal.chattingservice.service.dto.ChattingRoomDTO;
 import kr.co.directdeal.chattingservice.service.repository.ChattingRepository;
@@ -29,6 +30,14 @@ public class ChattingService {
     private final Mapper<ChattingRoom, ChattingRoomDTO> chattingRoomMapper;
 
     private final Mapper<ChattingMessage, ChattingMessageDTO> chattingMessageMapper;
+
+    @Transactional(readOnly = true)
+    public List<ChattingRoomDTO> getChattingRoomList(String userId) {
+        return chattingRepository.findBySellerIdOrCustomerId(userId, userId)
+                    .stream()
+                    .map(chattingRoomMapper::toDTO)
+                    .collect(Collectors.toList());
+    }
 
     @Transactional
     public ChattingRoomDTO getChattingRoom(ChattingRoomDTO dto) {
@@ -155,7 +164,7 @@ public class ChattingService {
                 .existsByItemIdAndSellerIdAndCustomerId(dto.getItemId(), dto.getSellerId(), dto.getCustomerId());
 
         if (hasAlreadyCreated)
-            throw ChattingException.builder()
+            throw ChattingRoomAlreadyCreatedException.builder()
                     .messageKey("chattingroomservice.exception.createchattingroom.chattingroom.hasalreadycreated.message")
                     .messageArgs(new String[]{})
                     .build();

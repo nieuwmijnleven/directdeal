@@ -18,6 +18,7 @@
             label="Password"
             outlined
             required
+            @keypress.enter="submit"
           ></v-text-field>
 
           <v-card-actions>
@@ -43,17 +44,27 @@ import axios from 'axios'
 export default {
   data: () => ({
     valid: true,
-    password: "",
+    password: '',
     passwordRules: [
       (v) => !!v || "Password is required",
       (v) => (v && v.length >= 6) || "Password must be more than 6 characters",
     ],
-    email: "",
+    //email: '',
     emailRules: [
       (v) => !!v || "E-mail is required",
       (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
     ]
   }),
+  computed: {
+    email: {
+      get() {
+        return this.$store.state.userId
+      },
+      set(value) {
+        this.$store.commit("setUserId", value)
+      }
+    }
+  },
   methods: {
     signUp() {
       this.$router.push('/SignUp')

@@ -21,7 +21,7 @@
           상품등록
           <v-icon>mdi-plus-box</v-icon>
         </v-btn>
-        <v-btn text value="chat" @click="route('/')">
+        <v-btn text value="chat" @click="route('/chatting-room-list')">
           채팅
           <v-icon>mdi-chat</v-icon>
         </v-btn>

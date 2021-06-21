@@ -1,15 +1,21 @@
 <template>
   <v-container fluid justify-center v-if="isLoaded">
     <v-card flat class="mx-auto">
-      <v-list two-line v-for="item in items" :key="item.id" class="my-0 py-0">
-          <v-list-item @click="selectItem(item.id)">
-            <v-list-item-avatar size="100" class="rounded" >
-              <v-img :src="'http://localhost:8084/api/v1/image/' + item.mainImage"></v-img>
+      <v-list two-line v-for="chattingRoom in chattingRoomList" :key="chattingRoom.id" class="my-0 py-0">
+          <v-list-item @click="selectChattingRoom(chattingRoom.id)">
+            <v-list-item-avatar class="green white--text" >
+              {{chattingRoom.sellerId[0]}}
+              <!--v-img :src="'http://localhost:8084/api/v1/image/' + item.mainImage"></v-img-->
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>{{item.title}}</v-list-item-title>
-              <v-list-item-subtitle>{{item.targetPrice}}원</v-list-item-subtitle>
+              <v-list-item-title>{{chattingRoom.sellerId}}</v-list-item-title>
+              <v-list-item-subtitle v-if="chattingRoom.messages.length > 0">{{chattingRoom.messages[chattingRoom.messages.length-1].text}}</v-list-item-subtitle>
             </v-list-item-content>
+            <v-list-item-action v-if="(chattingRoom.messages.length - readMessageCountMap[chattingRoom.id]) > 0">                  
+              <div class="px-2 py-0 orange white--text rounded-circle d-inline-block">
+                {{(chattingRoom.messages.length - readMessageCountMap[chattingRoom.id])}}
+              </div>
+            </v-list-item-action>
           </v-list-item>
           <v-divider></v-divider>
       </v-list>
@@ -32,37 +38,24 @@ import axios from 'axios'
 export default {
   data: () => ({
     isLoaded: false,
-    items: []
-    /*items: [
-      {
-        "id": "7ed0820f-42ce-4e74-9cee-5f3ec25a841f",
-        "title": "1",
-        "category": "gems",
-        "targetPrice": 2,
-        "discountable": false,
-        "mainImage": "e11c203d-39d6-439e-9ed4-cbd507ed5ba3.jpg",
-        "status": "SALE",
-        "createdDate": "2021-06-20T01:33:04.271Z",
-      }
-    ]*/
+    chattingRoomList: []
   }),
+  computed: {
+    readMessageCountMap() {
+      return this.$store.state.readMessageCountMap
+    }
+  },
   methods: {
-    async fetchSaleList() {
+    async fetchChattingRoomList() {
       this.isLoaded = false
       try {     
         let response = await axios({
           method: 'GET',
-          url: 'http://localhost:8084/api/v1/salelist?page=0&size=10&sort=createdDate,desc', 
+          url: 'http://localhost:8084/api/v1/chatting/list', 
         })
 
         if (response.status == 200) {
-          //this.$router.push("/home");
-          //alert("Success")
-          // for (const item of response.data) {
-          //   console.log(item)
-          //   item.mainImage = 'http://localhost:8084/api/v1/image/' + item.mainImage
-          // }
-          this.items = response.data
+          this.chattingRoomList = response.data
           this.isLoaded = true
         } else {
           alert("An incorrect response code is returned: " + response.status);
@@ -82,19 +75,19 @@ export default {
         }
       }
     },
-    selectItem(itemId) {
-      console.log("select item => " + itemId)
+    selectChattingRoom(chattingRoomId) {
+      console.log("chatting room id => " + chattingRoomId)
       //this.$router.params = {id: itemId}
-      this.$store.commit('setRouterParams', {id: itemId})
-      this.$router.push('/item-detail')
+      this.$store.commit('setRouterParams', {id: chattingRoomId})
+      this.$router.push('/chatting-room')
       //this.$router.push({path: '/item-detail', params:{id: itemId}})
     }
   },
   mounted() {
     this.$store.commit("setShowBottomNavigation", true)
-    this.$store.commit("setSelectedBottomNavigationItem", 'home')
+    this.$store.commit("setSelectedBottomNavigationItem", 'chat')
     axios.defaults.headers.common['Authorization'] = this.$store.state.authorization
-    this.fetchSaleList()
+    this.fetchChattingRoomList()
   },
 };
 </script>

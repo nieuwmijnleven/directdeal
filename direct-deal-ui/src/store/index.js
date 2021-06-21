@@ -6,12 +6,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    userId:'',
     authorization: '',
     showBottomNavigation: true,
     selectedBottomNavigationItem: 'home',
-    routerParams: {}
+    routerParams: {},
+    readMessageCountMap: {}
   },
   mutations: {
+    setUserId(state, id) {
+      state.userId = id
+    },
     setAuthorization(state, auth) {
       state.authorization = auth
     },
@@ -23,6 +28,10 @@ export default new Vuex.Store({
     },
     setRouterParams(state, params) {
       state.routerParams = params
+    },
+    setReadMessageCountMap(state, entry) {
+      console.log("setReadMessageCountMap " + entry.id + "," + entry.count)
+      state.readMessageCountMap[entry.id] = entry.count
     }
   },
   getters: {
@@ -31,6 +40,9 @@ export default new Vuex.Store({
     },
     getShowBottomNavigation(state) {
       return state.showBottomNavigation
+    },
+    getReadMessageCountMap(state, chattingRoomId) {
+      return state.readMessageCountMap[chattingRoomId]
     }
   },
   actions: {
