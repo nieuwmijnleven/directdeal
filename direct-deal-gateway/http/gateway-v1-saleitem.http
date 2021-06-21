@@ -30,5 +30,9 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 GET http://localhost:8084/api/v1/actuator/env HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzODIxODc2fQ.-D-JWSQWE2r5CWfa_yfEi6u5UOZLCmcFOis6myTBiG4T0lsUWyh88bz7tr4yTn0U85NcQL_ixFpNCJNxh_8sQw
 
-
 ###
+
+
+GET http://localhost:8084/api/v1/saleitem/seller-items HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjIzODg4ODk2fQ.boqy-boN5eI9SYZJyw67RPamm835S1BDhJvgkL5E4zkNjon7N21BO2M2V5spWNOqlVh8lovgf9dKYTulkgn6xw
+

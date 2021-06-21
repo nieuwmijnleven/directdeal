@@ -7,6 +7,7 @@ import RegisterItem from '../views/RegisterItem.vue'
 import ItemDetail from '../views/ItemDetail.vue'
 import ChattingRoomList from '../views/ChattingRoomList.vue'
 import ChattingRoom from '../views/ChattingRoom.vue'
+import TransactionHistory from '../views/TransactionHistory.vue'
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,11 @@ const routes = [
     path: '/chatting-room',
     name: 'ChattingRoom',
     component: ChattingRoom
+  },
+  {
+    path: '/transaction-history',
+    name: 'TransactionHistory',
+    component: TransactionHistory
   },
   {
     path: '/about',

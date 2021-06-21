@@ -25,7 +25,7 @@
           채팅
           <v-icon>mdi-chat</v-icon>
         </v-btn>
-        <v-btn text value="account" @click="route('/')">
+        <v-btn text value="transaction" @click="route('/transaction-history')">
           거래내역
           <v-icon>mdi-account</v-icon>
         </v-btn>

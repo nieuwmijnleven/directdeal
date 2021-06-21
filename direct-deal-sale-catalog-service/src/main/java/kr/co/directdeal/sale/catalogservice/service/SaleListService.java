@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.directdeal.common.mapper.Mapper;
+import kr.co.directdeal.common.sale.constant.SaleItemStatus;
 import kr.co.directdeal.sale.catalogservice.domain.SaleList;
 import kr.co.directdeal.sale.catalogservice.exception.SaleListException;
 import kr.co.directdeal.sale.catalogservice.service.dto.SaleListDTO;
@@ -29,7 +30,7 @@ public class SaleListService {
 
     @Transactional(readOnly = true)
     public List<SaleListDTO> list(Pageable pageable) {
-        Page<SaleList> saleLists = saleListRepository.findAll(pageable);
+        Page<SaleList> saleLists = saleListRepository.findAllByStatus(pageable, SaleItemStatus.SALE);
         return saleLists.stream()
                     .map(mapper::toDTO)
                     .collect(Collectors.toList());
