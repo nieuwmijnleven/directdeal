@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark> 
-      <v-app-bar-nav-icon />
+      <!-- <v-app-bar-nav-icon /> -->
       <v-app-bar-title>Direct Deal</v-app-bar-title>
     </v-app-bar>
 
@@ -55,7 +55,11 @@ export default {
   },
   methods: {
     route(url) {
-      this.$router.push(url)
+      if (this.$router.currentRoute.path === url) {
+        this.$router.go(0)
+      } else {
+        this.$router.push(url, () => {})
+      }
     }
   }
 };
