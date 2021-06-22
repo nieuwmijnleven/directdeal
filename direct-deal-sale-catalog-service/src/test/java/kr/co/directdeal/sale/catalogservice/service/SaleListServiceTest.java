@@ -21,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import kr.co.directdeal.common.mapper.Mapper;
+import kr.co.directdeal.common.sale.constant.SaleItemStatus;
 import kr.co.directdeal.sale.catalogservice.domain.SaleList;
 import kr.co.directdeal.sale.catalogservice.exception.SaleListException;
 import kr.co.directdeal.sale.catalogservice.service.dto.SaleListDTO;
@@ -56,7 +57,7 @@ public class SaleListServiceTest {
                                         .id(id)
                                         .build();    
 
-        given(saleListRepository.findAll(any(Pageable.class)))
+        given(saleListRepository.findAllByStatus(any(Pageable.class), any(SaleItemStatus.class)))
             .willReturn(new PageImpl<SaleList>(Collections.singletonList(saleList), PageRequest.of(0,1), 1));
         
         //when
@@ -70,7 +71,7 @@ public class SaleListServiceTest {
     @Test
     public void List_ValidPageable_ReturnEmptyList() {
         //given
-        given(saleListRepository.findAll(any(Pageable.class)))
+        given(saleListRepository.findAllByStatus(any(Pageable.class), any(SaleItemStatus.class)))
             .willReturn(new PageImpl<SaleList>(Collections.emptyList(), PageRequest.of(0,1), 0));
         
         //when

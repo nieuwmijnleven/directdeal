@@ -62,8 +62,15 @@ public class ChattingControllerTest {
     @WithMockUser(username = "seller@directdeal.co.kr")
     public void GetChattingRoom_NonExistingChattingRoom_ThrowChattingException() throws Exception {
         //given
-        String srcJSON = "{\"itemId\":\"d4c02e9b-1497-48df-885e-6ba6426e73d2\", \"sellerId\":\"seller@directdeal.co.kr\", \"customerId\":\"customer@directdeal.co.kr\"}"; 
-        ChattingRoomDTO dto = objectMapper.readValue(srcJSON, ChattingRoomDTO.class);
+        String itemId = "d4c02e9b-1497-48df-885e-6ba6426e73d2";
+        String sellerId = "seller@directdeal.co.kr";
+        String customerId = "customer@directdeal.co.kr";
+
+        ChattingRoomDTO dto = ChattingRoomDTO.builder()
+                                    .itemId(itemId)
+                                    .sellerId(sellerId)
+                                    .customerId(customerId)
+                                    .build();
 
         given(chattingService.getChattingRoom(dto))
             .willThrow(ChattingException.builder()
@@ -72,9 +79,7 @@ public class ChattingControllerTest {
                             .build());
 
         //when and then
-        this.mvc.perform(get("/chatting")
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .content(srcJSON))
+        this.mvc.perform(get(String.format("/chatting/%s/%s/%s", itemId, sellerId, customerId)))
                     .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.error", is("Chatting Service Error")))
@@ -85,8 +90,15 @@ public class ChattingControllerTest {
     @WithMockUser(username = "seller@directdeal.co.kr")
     public void GetChattingRoom_InvalidTalker_ThrowChattingException() throws Exception {
         //given
-        String srcJSON = "{\"itemId\":\"d4c02e9b-1497-48df-885e-6ba6426e73d2\", \"sellerId\":\"seller@directdeal.co.kr\", \"customerId\":\"customer@directdeal.co.kr\"}"; 
-        ChattingRoomDTO dto = objectMapper.readValue(srcJSON, ChattingRoomDTO.class);
+        String itemId = "d4c02e9b-1497-48df-885e-6ba6426e73d2";
+        String sellerId = "seller@directdeal.co.kr";
+        String customerId = "customer@directdeal.co.kr";
+
+        ChattingRoomDTO dto = ChattingRoomDTO.builder()
+                                    .itemId(itemId)
+                                    .sellerId(sellerId)
+                                    .customerId(customerId)
+                                    .build();
 
         given(chattingService.getChattingRoom(dto))
             .willThrow(ChattingException.builder()
@@ -95,9 +107,7 @@ public class ChattingControllerTest {
                             .build());
 
         //when and then
-        this.mvc.perform(get("/chatting")
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .content(srcJSON))
+        this.mvc.perform(get(String.format("/chatting/%s/%s/%s", itemId, sellerId, customerId)))
                     .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.error", is("Chatting Service Error")))
@@ -107,19 +117,25 @@ public class ChattingControllerTest {
     @Test
     @WithMockUser(username = "seller@directdeal.co.kr")
     public void GetChattingRoom_ValidChattingRoomAndValidTalker_Success() throws Exception {
-        //given
-        String srcJSON = "{\"itemId\":\"d4c02e9b-1497-48df-885e-6ba6426e73d2\", \"sellerId\":\"seller@directdeal.co.kr\", \"customerId\":\"customer@directdeal.co.kr\"}"; 
-        ChattingRoomDTO dto = objectMapper.readValue(srcJSON, ChattingRoomDTO.class);
+        String itemId = "d4c02e9b-1497-48df-885e-6ba6426e73d2";
+        String sellerId = "seller@directdeal.co.kr";
+        String customerId = "customer@directdeal.co.kr";
+
+        ChattingRoomDTO dto = ChattingRoomDTO.builder()
+                                    .itemId(itemId)
+                                    .sellerId(sellerId)
+                                    .customerId(customerId)
+                                    .build();
 
         ChattingRoomDTO resultDTO = ChattingRoomDTO.builder()
                                         .id(1L)
-                                        .itemId(dto.getItemId())
-                                        .sellerId(dto.getSellerId())
-                                        .customerId(dto.getCustomerId())
+                                        .itemId(itemId)
+                                        .sellerId(sellerId)
+                                        .customerId(customerId)
                                         .messages(List.of(ChattingMessageDTO.builder()
                                                                 .id(1L)
                                                                 .chattingRoomId(1L)
-                                                                .talkerId(dto.getSellerId())
+                                                                .talkerId(sellerId)
                                                                 .text("Hi!")
                                                                 .createdDate(Instant.now())
                                                                 .build()))
@@ -130,9 +146,7 @@ public class ChattingControllerTest {
             .willReturn(resultDTO);
 
         //when and then
-        this.mvc.perform(get("/chatting")
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .content(srcJSON))
+        this.mvc.perform(get(String.format("/chatting/%s/%s/%s", itemId, sellerId, customerId)))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id", is(resultDTO.getId().intValue())))

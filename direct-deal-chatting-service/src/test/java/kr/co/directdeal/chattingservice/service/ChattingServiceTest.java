@@ -27,6 +27,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import kr.co.directdeal.chattingservice.domain.ChattingMessage;
 import kr.co.directdeal.chattingservice.domain.ChattingRoom;
 import kr.co.directdeal.chattingservice.exception.ChattingException;
+import kr.co.directdeal.chattingservice.exception.ChattingRoomAlreadyCreatedException;
+import kr.co.directdeal.chattingservice.exception.ChattingRoomAlreadyCreatedException;
 import kr.co.directdeal.chattingservice.service.dto.ChattingMessageDTO;
 import kr.co.directdeal.chattingservice.service.dto.ChattingRoomDTO;
 import kr.co.directdeal.chattingservice.service.mapper.ChattingMessageMapper;
@@ -152,7 +154,7 @@ public class ChattingServiceTest {
             .willReturn(true);
 
         //when and then
-        assertThrows(ChattingException.class, () -> {
+        assertThrows(ChattingRoomAlreadyCreatedException.class, () -> {
             chattingService.createChattingRoom(dto);
         });
     }

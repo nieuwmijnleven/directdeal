@@ -1,5 +1,6 @@
 package kr.co.directdeal.saleservice.adapter.inbound;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -61,8 +62,6 @@ public class ItemControllerTest {
 
         String payload = objectMapper.writeValueAsString(dto);
 
-        dto.setOwnerId("seller@directdeal.co.kr");
-
         //when and then
         this.mvc.perform(post("/item")
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -70,7 +69,7 @@ public class ItemControllerTest {
                     .andDo(print())
                     .andExpect(status().isCreated());
 
-        verify(itemService).register(dto);
+        verify(itemService).register(any(ItemDTO.class));
     }
 
     @Test
