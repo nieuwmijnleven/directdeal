@@ -26,8 +26,9 @@ export default new Vuex.Store({
     setSelectedBottomNavigationItem(state, selected) {
       state.selectedBottomNavigationItem = selected
     },
-    setRouterParams(state, params) {
-      state.routerParams = params
+    setRouterParams(state, entry) {
+      console.log("setRouterParams " + entry.path + "," + entry.value)
+      state.routerParams[entry.path] = entry.value
     },
     setReadMessageCountMap(state, entry) {
       console.log("setReadMessageCountMap " + entry.id + "," + entry.count)

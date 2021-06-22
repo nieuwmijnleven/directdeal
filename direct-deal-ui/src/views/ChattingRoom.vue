@@ -102,7 +102,7 @@ export default {
       }
     },
     async fetchChattingRoom() {
-      this.chattingRoom = this.$store.state.routerParams
+      this.chattingRoom = this.$store.state.routerParams['/chatting-room']
       console.log('chattingRoom => ' + JSON.stringify(this.chattingRoom))
      
       try {     

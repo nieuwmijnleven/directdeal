@@ -309,7 +309,7 @@ export default {
     selectItem(itemId) {
       console.log("select item => " + itemId);
       //this.$router.params = {id: itemId}
-      this.$store.commit("setRouterParams", { id: itemId });
+      this.$store.commit("setRouterParams", {path: '/item-detail', value: { id: itemId }});
       this.$router.push("/item-detail");
       //this.$router.push({path: '/item-detail', params:{id: itemId}})
     },

@@ -65,7 +65,7 @@ export default {
       }
     },
     selectItem(itemId) {
-      this.$store.commit('setRouterParams', {id: itemId})
+      this.$store.commit('setRouterParams', {path: '/item-detail', value: {id: itemId}})
       this.$router.push('/item-detail')
     }
   },

@@ -5,7 +5,6 @@
           <v-list-item @click="selectChattingRoom(chattingRoom.id)">
             <v-list-item-avatar class="green white--text" >
               {{chattingRoom.sellerId[0]}}
-              <!--v-img :src="'http://localhost:8084/api/v1/image/' + item.mainImage"></v-img-->
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>{{chattingRoom.sellerId}}</v-list-item-title>
@@ -77,10 +76,8 @@ export default {
     },
     selectChattingRoom(chattingRoomId) {
       console.log("chatting room id => " + chattingRoomId)
-      //this.$router.params = {id: itemId}
-      this.$store.commit('setRouterParams', {id: chattingRoomId})
+      this.$store.commit('setRouterParams', {path: '/chatting-room', value: {id: chattingRoomId}})
       this.$router.push('/chatting-room')
-      //this.$router.push({path: '/item-detail', params:{id: itemId}})
     }
   },
   mounted() {

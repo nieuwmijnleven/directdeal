@@ -51,36 +51,20 @@ export default {
   data: () => ({
     isLoaded: false,
     item: {}
-    /*item: {
-      "id": "7ed0820f-42ce-4e74-9cee-5f3ec25a841f",
-      "title": "1",
-      "category": "gems",
-      "targetPrice": 2,
-      "discountable": false,
-      //"images": ["e11c203d-39d6-439e-9ed4-cbd507ed5ba3.jpg"],
-      "status": "SALE",
-      "createdDate": "2021-06-20T01:33:04.271Z",
-    }*/
   }),
   methods: {
     async fetchSaleItem() {
       try {     
         let response = await axios({
           method: 'GET',
-          url: 'http://localhost:8084/api/v1/saleitem/' + this.$store.state.routerParams.id, 
+          url: 'http://localhost:8084/api/v1/saleitem/' + this.$store.state.routerParams['/item-detail'].id, 
         })
 
         if (response.status == 200) {
-          //this.$router.push("/home");
-          //alert("Success")
           this.item = response.data
           this.isLoaded = true 
           console.log(this.item)
-          // for (let image of this.item.images) {
-          //   item.image = 'http://localhost:8084/api/v1/image/' + image
-          // }
           console.log(response.data)
-          // this.items = response.data
         } 
       } catch(error) {
         if (error.response) {
@@ -117,7 +101,7 @@ export default {
         })
 
         if (response.status == 201) {
-          this.$store.commit('setRouterParams', response.data)
+          this.$store.commit('setRouterParams', {path: '/chatting-room', value: response.data})
           this.$router.push('/chatting-room')
         } 
       } catch(error) {
@@ -146,7 +130,7 @@ export default {
         })
 
         if (response.status == 200) {
-          this.$store.commit('setRouterParams', response.data)
+          this.$store.commit('setRouterParams', {path: '/chatting-room', value: response.data})
           this.$router.push('/chatting-room')
         } 
       } catch(error) {

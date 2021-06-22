@@ -11,7 +11,7 @@ import kr.co.directdeal.sale.catalogservice.domain.SaleItem;
 
 @Repository
 public interface SaleItemRepository extends MongoRepository<SaleItem, String> {
-    @Cacheable(cacheNames = "SaleItemCache", key="#p0") //key="#id" is not working. https://github.com/spring-projects/spring-framework/issues/13406
+    @Cacheable(cacheNames = "SaleItemCache", key = "#p0", unless = "#result == null") //key="#id" is not working. https://github.com/spring-projects/spring-framework/issues/13406
     public Optional<SaleItem> findById(String id);
     public List<SaleItem> findByOwnerIdAndStatus(String ownerId, SaleItemStatus status);
 }
