@@ -1,7 +1,7 @@
 <template>
   <v-container class="fill-height">
       <v-row class="fill-height pb-16" align="end">
-        <v-col cols="12">
+        <v-col cols="12" class="pb-16 overflow-y-auto">
           <div v-for="(message, index) in chattingRoom.messages" :key="index" 
               :class="['d-flex flex-row align-center my-2', message.talkerId == userId ? 'justify-end': null]">
             <span v-if="message.talkerId == userId" class="blue--text mr-3 rounded">{{ message.text }}</span>
@@ -84,8 +84,12 @@ export default {
         })
 
         if (response.status == 200) {
-          this.chattingRoom.messages = this.chattingRoom.messages.concat(response.data)
-          console.log(this.chattingRoom.messages)
+          const count = response.data.length;
+          if (!!count && count > 0) {
+            this.chattingRoom.messages = this.chattingRoom.messages.concat(response.data)
+            console.log(this.chattingRoom.messages)
+            this.$vuetify.goTo(document.body.scrollHeight)
+          }
         } 
       } catch(error) {
         if (error.response) {

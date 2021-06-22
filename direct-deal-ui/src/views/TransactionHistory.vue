@@ -18,9 +18,16 @@
                   <v-list-item-avatar size="100" class="rounded" >
                     <v-img :src="'http://localhost:8084/api/v1/image/' + item.images[0]"></v-img>
                   </v-list-item-avatar>
-                  <v-list-item-content>
+                  <v-list-item-content class="mb-7">
                     <v-list-item-title>{{item.title}}</v-list-item-title>
-                    <v-list-item-subtitle>{{item.targetPrice}}원</v-list-item-subtitle>
+                    <v-list-item-subtitle class="mt-1">
+                      {{item.targetPrice}} USD
+                    </v-list-item-subtitle>
+                    <v-list-item-subtitle class="mt-1">
+                      <v-chip x-small>
+                        {{item.category}}
+                      </v-chip>
+                    </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-card-text>
@@ -42,9 +49,16 @@
                   <v-list-item-avatar size="100" class="rounded" >
                     <v-img :src="'http://localhost:8084/api/v1/image/' + item.mainImage"></v-img>
                   </v-list-item-avatar>
-                  <v-list-item-content>
+                  <v-list-item-content class="mb-7">
                     <v-list-item-title>{{item.title}}</v-list-item-title>
-                    <v-list-item-subtitle>{{item.targetPrice}}원</v-list-item-subtitle>
+                    <v-list-item-subtitle class="mt-1">
+                      {{item.targetPrice}} USD
+                    </v-list-item-subtitle>
+                    <v-list-item-subtitle class="mt-1">
+                      <v-chip x-small>
+                        {{item.category}}
+                      </v-chip>
+                    </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-card-text>
@@ -65,9 +79,16 @@
                   <v-list-item-avatar size="100" class="rounded" >
                     <v-img :src="'http://localhost:8084/api/v1/image/' + item.mainImage"></v-img>
                   </v-list-item-avatar>
-                  <v-list-item-content>
+                  <v-list-item-content class="mb-7">
                     <v-list-item-title>{{item.title}}</v-list-item-title>
-                    <v-list-item-subtitle>{{item.targetPrice}}원</v-list-item-subtitle>
+                    <v-list-item-subtitle class="mt-1">
+                      {{item.targetPrice}} USD
+                    </v-list-item-subtitle>
+                    <v-list-item-subtitle class="mt-1">
+                      <v-chip x-small>
+                        {{item.category}}
+                      </v-chip>
+                    </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
                 <v-divider></v-divider>

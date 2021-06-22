@@ -14,19 +14,19 @@
     <v-footer height="50" v-if="showBottomNavigation">
       <v-bottom-navigation fixed v-model="selected" class="align-center justify-center">
         <v-btn text value="home" @click="route('/')">
-          홈
+          Home
           <v-icon>mdi-home-variant</v-icon>
         </v-btn>
         <v-btn text value="register-item" @click="route('/register-item')">
-          상품등록
+          Add Items
           <v-icon>mdi-plus-box</v-icon>
         </v-btn>
         <v-btn text value="chat" @click="route('/chatting-room-list')">
-          채팅
+          Chat
           <v-icon>mdi-chat</v-icon>
         </v-btn>
         <v-btn text value="transaction" @click="route('/transaction-history')">
-          거래내역
+          History
           <v-icon>mdi-account</v-icon>
         </v-btn>
       </v-bottom-navigation>

@@ -1,16 +1,18 @@
 <template>
   <v-container fluid justify-center v-if="isLoaded">
     <v-card flat class="mx-auto">
-      <v-list three-line v-for="item in items" :key="item.id" class="my-0 py-0">
+      <v-list two-line v-for="item in items" :key="item.id" class="my-0 py-0">
           <v-list-item @click="selectItem(item.id)">
             <v-list-item-avatar size="100" class="rounded" >
               <v-img :src="'http://localhost:8084/api/v1/image/' + item.mainImage"></v-img>
             </v-list-item-avatar>
-            <v-list-item-content>
+            <v-list-item-content class="mb-7">
               <v-list-item-title>{{item.title}}</v-list-item-title>
-              <v-list-item-subtitle>{{item.targetPrice}} USD</v-list-item-subtitle>
-              <v-list-item-subtitle>
-                <v-chip x-small color="secondary" class="ma-0 py-0">
+              <v-list-item-subtitle class="mt-1">
+                {{item.targetPrice}} USD
+              </v-list-item-subtitle>
+              <v-list-item-subtitle class="mt-1">
+                <v-chip x-small>
                   {{item.category}}
                 </v-chip>
               </v-list-item-subtitle>
