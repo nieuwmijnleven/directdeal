@@ -18,4 +18,5 @@ public class ItemSaleCompletedEvent {
     private String title;
     private String category;
     private long targetPrice;
+    private String mainImage;
 }

@@ -18,6 +18,7 @@ public class BuyHistoryMapper implements Mapper<BuyHistory, BuyHistoryDTO> {
                     .title(dto.getTitle())
                     .category(dto.getCategory())
                     .targetPrice(dto.getTargetPrice())
+                    .mainImage(dto.getMainImage())
                     .sellerId(dto.getSellerId())
                     .completionTime(dto.getCompletionTime())
                     .build();
@@ -32,6 +33,7 @@ public class BuyHistoryMapper implements Mapper<BuyHistory, BuyHistoryDTO> {
                     .title(entity.getTitle())
                     .category(entity.getCategory())
                     .targetPrice(entity.getTargetPrice())
+                    .mainImage(entity.getMainImage())
                     .sellerId(entity.getSellerId())
                     .completionTime(entity.getCompletionTime())
                     .build();

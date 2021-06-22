@@ -22,6 +22,7 @@ public class BuyHistoryDTO {
     private String title;
     private String category;
     private long targetPrice;
+    private String mainImage;
     private String sellerId;
     private Instant completionTime; 
 }

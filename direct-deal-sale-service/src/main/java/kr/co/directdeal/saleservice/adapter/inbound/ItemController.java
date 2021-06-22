@@ -1,5 +1,7 @@
 package kr.co.directdeal.saleservice.adapter.inbound;
 
+import java.util.UUID;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.directdeal.common.security.util.SecurityUtils;
+import kr.co.directdeal.saleservice.adapter.inbound.result.ItemRegistrationResult;
 import kr.co.directdeal.saleservice.service.ItemService;
 import kr.co.directdeal.saleservice.service.dto.ItemDTO;
 import lombok.RequiredArgsConstructor;
@@ -29,10 +32,17 @@ public class ItemController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@Valid @RequestBody ItemDTO itemDTO) {
+    public ItemRegistrationResult register(@Valid @RequestBody ItemDTO itemDTO) {
+        String itemId = UUID.randomUUID().toString();
         String userId = SecurityUtils.getCurrentUserLogin();
+
+        itemDTO.setId(itemId);
         itemDTO.setOwnerId(userId);
         itemService.register(itemDTO);
+
+        return ItemRegistrationResult.builder()
+                    .itemId(itemId)
+                    .build();
     }
 
     @PutMapping 

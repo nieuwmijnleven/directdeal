@@ -55,14 +55,14 @@ public class SaleItemEventDispatcher {
         log.debug("saleItem => " + saleItem.toString()); 
 
         SaleList saleList = SaleList.builder()
-                                        .id(event.getId())
-                                        .title(event.getTitle())
-                                        .category(event.getCategory())
-                                        .targetPrice(event.getTargetPrice())
-                                        .mainImage(event.getImages().get(0))
-                                        .status(event.getStatus())
-                                        .createdDate(Instant.now())
-                                        .build();
+                                .id(event.getId())
+                                .title(event.getTitle())
+                                .category(event.getCategory())
+                                .targetPrice(event.getTargetPrice())
+                                .mainImage(event.getImages().get(0))
+                                .status(event.getStatus())
+                                .createdDate(Instant.now())
+                                .build();
 
         saleListRepository.save(saleList);
         log.debug("saleList => " + saleList.toString());

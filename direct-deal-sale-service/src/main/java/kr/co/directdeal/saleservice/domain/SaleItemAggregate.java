@@ -144,6 +144,7 @@ public class SaleItemAggregate {
                                     .title(this.getTitle())
                                     .category(this.getCategory())
                                     .targetPrice(this.getTargetPrice())
+                                    .mainImage(this.getImages().get(0))
                                     .build());
 
         log.debug("ItemSaleCompletedEvent: {}", this);

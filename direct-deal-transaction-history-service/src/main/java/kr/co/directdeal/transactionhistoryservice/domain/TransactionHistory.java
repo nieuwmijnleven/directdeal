@@ -61,6 +61,11 @@ public class TransactionHistory {
     @Column(name = "TRANSACTION_ITEM_TARGET_PRICE", nullable = false)
     private long targetPrice;
 
+    @NotNull
+    @Size(min = 36, max = 40)
+    @Column(name = "TRANSACTION_ITEM_MAIN_IMAGE", length = 40, nullable = false)
+    private String mainImage;
+
     @Size(min = 1, max = 64)
     @Column(name = "TRANSACTION_ITEM_BUYER_ID", length = 64, nullable = true)
     private String buyerId;

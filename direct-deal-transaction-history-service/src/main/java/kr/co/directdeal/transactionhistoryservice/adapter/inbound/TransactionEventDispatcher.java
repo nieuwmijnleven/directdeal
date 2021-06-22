@@ -36,6 +36,7 @@ public class TransactionEventDispatcher {
                 .title(event.getTitle())
                 .category(event.getCategory())
                 .targetPrice(event.getTargetPrice())
+                .mainImage(event.getMainImage())
                 .completionTime(Instant.now())
                 .build();
 
@@ -52,6 +53,7 @@ public class TransactionEventDispatcher {
                 .title(dto.getTitle())
                 .category(dto.getCategory())
                 .targetPrice(dto.getTargetPrice())
+                .mainImage(dto.getMainImage())
                 .sellerId(dto.getSellerId())
                 .completionTime(dto.getCompletionTime())
                 .build();

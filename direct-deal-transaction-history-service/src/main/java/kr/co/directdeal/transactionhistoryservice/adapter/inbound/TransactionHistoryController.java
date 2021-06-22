@@ -1,7 +1,6 @@
 package kr.co.directdeal.transactionhistoryservice.adapter.inbound;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.directdeal.common.security.util.SecurityUtils;
-import kr.co.directdeal.transactionhistoryservice.exception.TransactionHistoryException;
 import kr.co.directdeal.transactionhistoryservice.service.TransactionHistoryService;
 import kr.co.directdeal.transactionhistoryservice.service.dto.TransactionHistoryDTO;
 import lombok.RequiredArgsConstructor;

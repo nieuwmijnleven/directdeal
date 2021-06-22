@@ -62,6 +62,12 @@ public class BuyHistory {
     private long targetPrice;
 
     @NotNull
+    @Size(min = 36, max = 40)
+    @Column(name = "BUY_ITEM_MAIN_IMAGE", length = 40, nullable = false)
+    private String mainImage;
+
+
+    @NotNull
     @Size(min = 1, max = 64)
     @Column(name = "BUY_ITEM_SELLER", length = 64, nullable = true)
     private String sellerId;

@@ -125,7 +125,34 @@ export default {
           if (error.response.status == 401) {
             this.$router.push('/login')
           } else if (error.response.status == 409) {
-            alert("The chatting room has been already created.")
+            //alert("The chatting room has been already created.")
+            await this.enterChattingRoom(item)
+          } else {
+            alert(error.response.data.error);
+            console.log(error.response.data.message);
+          }
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log("Error", error.message);
+        }
+      }
+    },
+    async enterChattingRoom(item) {
+      try {     
+        let response = await axios({
+          method: 'GET',
+          url: 'http://localhost:8084/api/v1/chatting/' + item.id + '/' + item.ownerId + '/' + this.$store.state.userId
+        })
+
+        if (response.status == 200) {
+          this.$store.commit('setRouterParams', response.data)
+          this.$router.push('/chatting-room')
+        } 
+      } catch(error) {
+        if (error.response) {
+          if (error.response.status == 401) {
+            this.$router.push('/login')
           } else {
             alert(error.response.data.error);
             console.log(error.response.data.message);

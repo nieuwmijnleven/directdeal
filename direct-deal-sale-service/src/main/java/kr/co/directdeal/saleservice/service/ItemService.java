@@ -30,7 +30,8 @@ public class ItemService {
         log.debug("calll {}.register(), id = {}", this.getClass().getSimpleName(), itemDTO.getId());
         
         commandGateway.send(ItemRegisterCommand.builder()
-                                .id(UUID.randomUUID().toString())
+                                //.id(UUID.randomUUID().toString())
+                                .id(itemDTO.getId())
                                 .ownerId(SecurityUtils.getCurrentUserLogin())
                                 .title(itemDTO.getTitle())
                                 .category(itemDTO.getCategory())

@@ -2,7 +2,6 @@ package kr.co.directdeal.chattingservice.adapter.inbound;
 
 import java.util.List;
 
-import org.apache.catalina.security.SecurityUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,18 +26,23 @@ import lombok.extern.slf4j.Slf4j;
 public class ChattingController {
 
     private final ChattingService chattingService;
-    
-    // @GetMapping
-    // @ResponseStatus(HttpStatus.OK)
-    // public ChattingRoomDTO getChattingRoom(@RequestBody ChattingRoomDTO dto) {
-    //     return chattingService.getChattingRoom(dto);
-    // }
 
     @GetMapping("/list")
     @ResponseStatus(HttpStatus.OK)
     public List<ChattingRoomDTO> getChattingRoomList() {
         String userId = SecurityUtils.getCurrentUserLogin();
         return chattingService.getChattingRoomList(userId);
+    }
+
+    @GetMapping("/{itemId}/{sellerId}/{customerId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ChattingRoomDTO getChattingRoom(@PathVariable("itemId") String itemId, @PathVariable("sellerId") String sellerId, @PathVariable("customerId") String customerId) {
+        ChattingRoomDTO dto = ChattingRoomDTO.builder()
+                                    .itemId(itemId)
+                                    .sellerId(sellerId)
+                                    .customerId(customerId)
+                                    .build();
+        return chattingService.getChattingRoom(dto);
     }
 
     @GetMapping("/{id}")

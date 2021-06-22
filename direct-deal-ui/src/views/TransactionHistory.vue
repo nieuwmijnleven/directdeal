@@ -39,8 +39,8 @@
             <v-list two-line v-for="item in completedItems" :key="item.id" class="my-0 py-0">
               <v-card-text class="ma-0 pa-0">
                 <v-list-item @click="selectItem(item.itemId)">
-                  <v-list-item-avatar size="100" class="green rounded" >
-                    <!-- <v-img :src="'http://localhost:8084/api/v1/image/' + item.images[0]"></v-img> -->
+                  <v-list-item-avatar size="100" class="rounded" >
+                    <v-img :src="'http://localhost:8084/api/v1/image/' + item.mainImage"></v-img>
                   </v-list-item-avatar>
                   <v-list-item-content>
                     <v-list-item-title>{{item.title}}</v-list-item-title>
@@ -62,8 +62,8 @@
           <v-card flat>
             <v-list two-line v-for="item in buyItems" :key="item.id" class="my-0 py-0">
                 <v-list-item @click="selectItem(item.itemId)">
-                  <v-list-item-avatar size="100" class="green rounded" >
-                    <!-- <v-img :src="'http://localhost:8084/api/v1/image/' + item.images[0]"></v-img> -->
+                  <v-list-item-avatar size="100" class="rounded" >
+                    <v-img :src="'http://localhost:8084/api/v1/image/' + item.mainImage"></v-img>
                   </v-list-item-avatar>
                   <v-list-item-content>
                     <v-list-item-title>{{item.title}}</v-list-item-title>

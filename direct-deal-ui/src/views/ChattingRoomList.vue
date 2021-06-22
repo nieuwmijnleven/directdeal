@@ -11,9 +11,9 @@
               <v-list-item-title>{{chattingRoom.sellerId}}</v-list-item-title>
               <v-list-item-subtitle v-if="chattingRoom.messages.length > 0">{{chattingRoom.messages[chattingRoom.messages.length-1].text}}</v-list-item-subtitle>
             </v-list-item-content>
-            <v-list-item-action v-if="(chattingRoom.messages.length - readMessageCountMap[chattingRoom.id]) > 0">                  
+            <v-list-item-action v-if="(chattingRoom.messages.length - readMessageCount(chattingRoom.id)) > 0">                  
               <div class="px-2 py-0 orange white--text rounded-circle d-inline-block">
-                {{(chattingRoom.messages.length - readMessageCountMap[chattingRoom.id])}}
+                {{(chattingRoom.messages.length - readMessageCount(chattingRoom.id))}}
               </div>
             </v-list-item-action>
           </v-list-item>
@@ -40,12 +40,12 @@ export default {
     isLoaded: false,
     chattingRoomList: []
   }),
-  computed: {
-    readMessageCountMap() {
-      return this.$store.state.readMessageCountMap
-    }
-  },
   methods: {
+    readMessageCount(chattingRoomId) {
+      let count = this.$store.state.readMessageCountMap[chattingRoomId]
+      if (!count) count = 0
+      return count
+    },
     async fetchChattingRoomList() {
       this.isLoaded = false
       try {     

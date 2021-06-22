@@ -18,6 +18,7 @@ public class TransactionHistoryMapper implements Mapper<TransactionHistory, Tran
                     .title(dto.getTitle())
                     .category(dto.getCategory())
                     .targetPrice(dto.getTargetPrice())
+                    .mainImage(dto.getMainImage())
                     .buyerId(dto.getBuyerId())
                     .completionTime(dto.getCompletionTime())
                     .build();
@@ -32,6 +33,7 @@ public class TransactionHistoryMapper implements Mapper<TransactionHistory, Tran
                     .title(entity.getTitle())
                     .category(entity.getCategory())
                     .targetPrice(entity.getTargetPrice())
+                    .mainImage(entity.getMainImage())
                     .buyerId(entity.getBuyerId())
                     .completionTime(entity.getCompletionTime())
                     .build();

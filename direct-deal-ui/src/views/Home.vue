@@ -33,18 +33,6 @@ export default {
   data: () => ({
     isLoaded: false,
     items: []
-    /*items: [
-      {
-        "id": "7ed0820f-42ce-4e74-9cee-5f3ec25a841f",
-        "title": "1",
-        "category": "gems",
-        "targetPrice": 2,
-        "discountable": false,
-        "mainImage": "e11c203d-39d6-439e-9ed4-cbd507ed5ba3.jpg",
-        "status": "SALE",
-        "createdDate": "2021-06-20T01:33:04.271Z",
-      }
-    ]*/
   }),
   methods: {
     async fetchSaleList() {
@@ -56,12 +44,6 @@ export default {
         })
 
         if (response.status == 200) {
-          //this.$router.push("/home");
-          //alert("Success")
-          // for (const item of response.data) {
-          //   console.log(item)
-          //   item.mainImage = 'http://localhost:8084/api/v1/image/' + item.mainImage
-          // }
           this.items = response.data
           this.isLoaded = true
         } else {
@@ -83,11 +65,8 @@ export default {
       }
     },
     selectItem(itemId) {
-      console.log("select item => " + itemId)
-      //this.$router.params = {id: itemId}
       this.$store.commit('setRouterParams', {id: itemId})
       this.$router.push('/item-detail')
-      //this.$router.push({path: '/item-detail', params:{id: itemId}})
     }
   },
   mounted() {
