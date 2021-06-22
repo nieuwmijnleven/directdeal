@@ -21,6 +21,7 @@ public class ChattingRoomMapper implements Mapper<ChattingRoom, ChattingRoomDTO>
     public ChattingRoom toEntity(ChattingRoomDTO dto) {
         return ChattingRoom.builder()
                     .id(dto.getId())
+                    .title(dto.getTitle())
                     .itemId(dto.getItemId())
                     .sellerId(dto.getSellerId())
                     .customerId(dto.getCustomerId())
@@ -36,6 +37,7 @@ public class ChattingRoomMapper implements Mapper<ChattingRoom, ChattingRoomDTO>
     public ChattingRoomDTO toDTO(ChattingRoom entity) {
         return ChattingRoomDTO.builder()
                     .id(entity.getId())
+                    .title(entity.getTitle())
                     .itemId(entity.getItemId())
                     .sellerId(entity.getSellerId())
                     .customerId(entity.getCustomerId())

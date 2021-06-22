@@ -44,6 +44,11 @@ public class ChattingRoom {
     private Long id;
 
     @NotNull
+    @Size(min = 1, max = 128)
+    @Column(name = "CHATTING_ROOM_TITLE", length = 128, nullable = false)
+    private String title;
+
+    @NotNull
     @Column(name = "CHATTING_ROOM_ITEM_ID", nullable = false)
     private String itemId;
 

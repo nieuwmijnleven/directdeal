@@ -94,9 +94,10 @@ export default {
             'Content-Type':'application/json'
           },
           data: {
-            "itemId":item.id,
-            "sellerId":item.ownerId,
-            "customerId":this.$store.state.userId
+            title: item.title,
+            itemId: item.id,
+            sellerId: item.ownerId,
+            customerId: this.$store.state.userId
           }
         })
 

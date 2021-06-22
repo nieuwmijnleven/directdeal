@@ -24,6 +24,14 @@
                 required
               ></v-text-field>
 
+              <v-select
+                v-model="selectedCategory"
+                :items="category"
+                :rules="categoryRules"
+                label="Category"
+                required
+              ></v-select>
+
               <v-row align="center" class="mx-0">
                 <v-col cols="7" class="mx-0 px-0">
                   <v-text-field
@@ -102,6 +110,21 @@ export default {
       (v) => !!v || "Title is required",
       (v) => (v && v.length <= 128) || "Title must be less than 128 characters",
     ],
+    selectedCategory: null,
+    category: [
+      "Computers",
+      "Electronics",
+      "Home & Kitchen",
+      "Foods",
+      "Beauty & Personal Care",
+      "Books",
+      "Women's Fashion",
+      "Men's Fashion",
+      "Etc."
+    ],
+    categoryRules: [
+      (v) => !!v || "Category is required"
+    ],
     price: "",
     priceRules: [
       (v) => !!v || "Price is required",
@@ -149,7 +172,7 @@ export default {
             url: "http://localhost:8084/api/v1/item",
             data: {
               title: this.title,
-              category: "none",
+              category: this.selectedCategory,
               targetPrice: this.price,
               discountable: this.discountable,
               text: this.text,
