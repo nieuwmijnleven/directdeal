@@ -81,14 +81,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		web
 			.ignoring()
 			.antMatchers(HttpMethod.OPTIONS, "/**")
-			.antMatchers("/v2/api-docs")
-			.antMatchers("/configuration/ui")
-			.antMatchers("/webjars/**")
-			.antMatchers("/swagger/**")
-			.antMatchers("/swagger-resources/**")
-			.antMatchers("/swagger-ui.html")
-			.antMatchers("/h2-console/**")
-
+			// .antMatchers("/v2/api-docs")
+			// .antMatchers("/configuration/ui")
+			// .antMatchers("/webjars/**")
+			// .antMatchers("/swagger/**")
+			// .antMatchers("/swagger-resources/**")
+			// .antMatchers("/swagger-ui.html")
+			// .antMatchers("/h2-console/**")
+			.antMatchers("/actuator/health")
 			.antMatchers(HttpMethod.POST, "/account");
 	}
 	

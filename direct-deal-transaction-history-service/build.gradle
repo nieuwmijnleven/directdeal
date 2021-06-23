@@ -12,18 +12,13 @@ bootJar {
 dependencies {
 	implementation project(':direct-deal-common')
 
-	// implementation 'commons-io:commons-io:2.9.0'
-	// implementation 'commons-fileupload:commons-fileupload:1.4'
-
-	// implementation "org.springframework.boot:spring-boot-starter-actuator"
-
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
+	implementation "org.springframework.boot:spring-boot-starter-actuator"
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
-	// implementation ('org.axonframework:axon-spring-boot-starter:4.5')
 	implementation ('org.axonframework:axon-spring-boot-starter:4.5') {
 		exclude group: "org.axonframework", module: 'axon-server-connector'
 	}
@@ -31,13 +26,6 @@ dependencies {
 	implementation 'org.axonframework.extensions.kafka:axon-kafka-spring-boot-starter:4.0-RC3'
 	implementation 'org.apache.kafka:kafka-clients:2.8.0'
 
-	// implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.5.0'
-	// implementation group: 'org.axonframework.extensions.mongo', name: 'axon-mongo', version: '4.4'
-	// implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.0.0'
-
-	// developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
-	// runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'mysql:mysql-connector-java'
 
 	compileOnly 'org.projectlombok:lombok'

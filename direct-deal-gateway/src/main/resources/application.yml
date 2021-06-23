@@ -1,3 +1,6 @@
+server:
+  port: 8084
+
 spring:
   application:
     name: direct-deal-account-service
@@ -6,10 +9,14 @@ spring:
     active:
     - route-v1
 
-server:
-  port: 8084
+# management:
+#   endpoint:
+#     gateway:
+#       enabled: true
 
 management:
+  endpoints:
+    enabled-by-default: false
   endpoint:
-    gateway:
+    health:
       enabled: true
