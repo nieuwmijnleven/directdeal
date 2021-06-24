@@ -35,26 +35,26 @@ spec:
         version: 'v1'
     spec:
       initContainers:
-        - name: init-ds
-          image: busybox:latest
-          command:
-            - '/bin/sh'
-            - '-c'
-            - |
-              while true
-              do
-                rt=$(nc -z -w 1 mysql 3306 && nc -z -w 1 mongo 27017 && nc -z -w 1 kafka 9092)
-                if [ $? -eq 0 ]; then
-                  echo "DB is UP"
-                  break
-                fi
-                echo "DB is not yet reachable;sleep for 10s before retry"
-                sleep 10
-              done
+      - name: init-ds
+        image: busybox:latest
+        command:
+          - '/bin/sh'
+          - '-c'
+          - |
+            while true
+            do
+              rt=$(nc -z -w 1 mysql 3306 && nc -z -w 1 mongo 27017 && nc -z -w 1 kafka 9092)
+              if [ $? -eq 0 ]; then
+                echo "DB is UP"
+                break
+              fi
+              echo "DB is not yet reachable;sleep for 10s before retry"
+              sleep 10
+            done
       containers:
       - name: sale-service
-        image: direct-deal-sale-service:latest
-        imagePullPolicy: Never
+        image: localhost:5000/direct-deal-sale-service:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8081
           name: httpport
