@@ -9,6 +9,12 @@ bootJar {
 	version = '0.1'
 }
 
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
 dependencies {
 	implementation project(':direct-deal-common')
 
@@ -19,23 +25,22 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-actuator"
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
-	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-all:2.0.3'
+	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-all'
 
-	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.5.0'
-	//implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.0.0'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
-	implementation ('org.axonframework:axon-spring-boot-starter:4.5') {
+	implementation ('org.axonframework:axon-spring-boot-starter') {
 		exclude group: "org.axonframework", module: 'axon-server-connector'
 	}
-	implementation 'org.axonframework:axon-micrometer:4.5'
-	implementation 'org.axonframework.extensions.kafka:axon-kafka-spring-boot-starter:4.0-RC3'
-	implementation 'org.apache.kafka:kafka-clients:2.8.0'
+	implementation 'org.axonframework:axon-micrometer'
+	implementation 'org.axonframework.extensions.kafka:axon-kafka-spring-boot-starter'
+	implementation 'org.apache.kafka:kafka-clients'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.11.4'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.11.4'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.4'
-    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.11.4'
+	implementation 'com.fasterxml.jackson.core:jackson-core'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
 	// developmentOnly 'org.springframework.boot:spring-boot-devtools'
 

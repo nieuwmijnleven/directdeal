@@ -1,50 +1,28 @@
 plugins {
 	id 'org.springframework.boot' version '2.5.0'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	// id 'org.jetbrains.kotlin.jvm' version '1.5.10'
-	// id 'org.jetbrains.kotlin.plugin.spring' version '1.5.10'
     id 'kr.co.directdeal.java-library-conventions'
 }
 
 bootJar.enabled = false
 
-// compileKotlin.destinationDir = compileJava.destinationDir
-
-// sourceSets {
-// 	main.java.srcDirs = ['src/main/java']
-// 	main.kotlin.srcDirs = ['src/main/kotlin']
-// 	main.resources.srcDirs = ['src/main/resources']
-// }
-
-// compileKotlin {
-//     kotlinOptions {
-//         freeCompilerArgs = ["-Xjsr305=strict"]
-//         jvmTarget = "11"
-//     }
-// }
-
-// compileTestKotlin {
-//     kotlinOptions {
-//         freeCompilerArgs = ["-Xjsr305=strict"]
-//         jvmTarget = "11"
-//     }
-// }
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
 
 dependencies {
-	// implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
-	// implementation "org.jetbrains.kotlin:kotlin-reflect"
-	// implementation "org.jetbrains.kotlin:kotlin-stdlib"
-	
 	compileOnly 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.springframework.boot:spring-boot-starter-security'
 	compileOnly 'org.springframework.boot:spring-boot-starter-data-jpa'
 	
-	compileOnly 'org.axonframework:axon-spring-boot-starter:4.5'
-	compileOnly 'org.axonframework:axon-micrometer:4.5'
+	compileOnly 'org.axonframework:axon-spring-boot-starter'
+	compileOnly 'org.axonframework:axon-micrometer'
 
-	compileOnly 'io.jsonwebtoken:jjwt-api:0.11.2'
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
-	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+	compileOnly 'io.jsonwebtoken:jjwt-api'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson'
 	
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

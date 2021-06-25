@@ -9,34 +9,29 @@ bootJar {
 	version = '0.1'
 }
 
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
 dependencies {
 	implementation project(':direct-deal-common')
-	//implementation 'org.springframework.boot:spring-boot-starter-parent'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	//implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-	// implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-kubernetes', version: '2.0.3'
-	// implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-kubernetes-fabric8-all', version: '2.0.3'
-	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-all:2.0.3'
-	// implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-kubernetes-client-all', version: '2.0.3'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-all'
+	
+	implementation 'io.springfox:springfox-swagger-ui'
+	implementation 'io.springfox:springfox-boot-starter'
 
-	// implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-kubernetes-all', version: '1.1.9.RELEASE'
-	// implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-config'
-	// implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-config'
-	//implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-	//implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
-	//implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
-	//implementation 'io.springfox:springfox-swagger2:2.10.5'	
-	implementation 'io.springfox:springfox-swagger-ui:2.8.0'
-	implementation 'io.springfox:springfox-boot-starter:3.0.0'
-
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
-	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+	implementation 'io.jsonwebtoken:jjwt-api'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson'
 	
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -47,17 +42,7 @@ dependencies {
 	
 	// developmentOnly "org.springframework.boot:spring-boot-devtools"
 	
-	//testImplementation project(':direct-deal-common')
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
-// dependencyManagement {
-// 	imports {
-// 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-// 	}
-// }
-
-// test {
-// 	useJUnitPlatform()
-// }

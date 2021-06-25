@@ -9,6 +9,12 @@ bootJar {
 	version = '0.1'
 }
 
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
 dependencies {
 	implementation project(':direct-deal-common')
 
@@ -19,14 +25,14 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-actuator"
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
-	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-all:2.0.3'
+	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-all'
 
-	implementation ('org.axonframework:axon-spring-boot-starter:4.5') {
+	implementation ('org.axonframework:axon-spring-boot-starter') {
 		exclude group: "org.axonframework", module: 'axon-server-connector'
 	}
-	implementation 'org.axonframework:axon-micrometer:4.5'
-	implementation 'org.axonframework.extensions.kafka:axon-kafka-spring-boot-starter:4.0-RC3'
-	implementation 'org.apache.kafka:kafka-clients:2.8.0'
+	implementation 'org.axonframework:axon-micrometer'
+	implementation 'org.axonframework.extensions.kafka:axon-kafka-spring-boot-starter'
+	implementation 'org.apache.kafka:kafka-clients'
 
 	runtimeOnly 'mysql:mysql-connector-java'
 
@@ -36,8 +42,4 @@ dependencies {
 	testImplementation 'org.mockito:mockito-inline'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-}
-
-test {
-	useJUnitPlatform()
 }
