@@ -20,11 +20,13 @@ do
 done
 
 echo "Applying Port Forwarding..."
-kubectl port-forward --namespace kube-system $(kubectl get po -n kube-system | grep kube-registry-v0 | awk '{print $1;}') 5000:5000 &
+sh -c "kubectl port-forward --namespace kube-system $(kubectl get po -n kube-system | grep kube-registry-v0 | awk '{print $1;}') 5000:5000 &"
 
 echo "Building Direct-Deal Project..."
-./gradlew build
-./gradlew build -p direct-deal-gateway
+# ./gradlew build
+# ./gradlew build -p direct-deal-gateway
+./gradlew clean bootJar
+./gradlew clean bootJar -p direct-deal-gateway
 
 echo "Making Docker Images..."
 docker image build -t direct-deal-account-service ./direct-deal-account-service

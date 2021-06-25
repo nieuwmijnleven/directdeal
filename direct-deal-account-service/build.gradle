@@ -18,6 +18,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-kubernetes', version: '2.0.3'
+	// implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-kubernetes-fabric8-all', version: '2.0.3'
+	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-all:2.0.3'
+	// implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-kubernetes-client-all', version: '2.0.3'
+
+	// implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-kubernetes-all', version: '1.1.9.RELEASE'
+	// implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-config'
+	// implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-config'
 	//implementation 'org.springframework.boot:spring-boot-starter-hateoas'
 	//implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
 	//implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'

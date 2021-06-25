@@ -1,0 +1,81 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: direct-deal-sale-catalog-service
+data:
+  application.properties: |
+    ---
+    server.port=8082
+    spring.application.name=direct-deal-sale-catalog-service
+
+    # JWT Settings
+    jwt.header=Authorization
+    jwt.secret=L2RpcmVjdC1kZWFsL2RpcmVjdC1kZWFsLWFjY291bnQtc2VydmljZS9kaXJlY3QtZGVhbC9kaXJlY3QtZGVhbC1hY2NvdW50LXNlcnZpY2UvZGlyZWN0LWRlYWwvZGlyZWN0LWRlYWwtYWNjb3VudC1zZXJ2aWNlL2RpcmVjdC1kZWFsL2RpcmVjdC1kZWFsLWFjY291bnQtc2VydmljZQo=
+    jwt.access-token-validity-in-seconds=3600
+    jwt.refresh-token-validity-in-seconds=2592000
+    ---
+    spring.profiles=dev
+
+    #Lift-Up Configuration for catalog service
+    direct.deal.sale.catalog.liftup.interval.day=3
+
+    # Jackson Settings
+    spring.jackson.serialization.write-dates-as-timestamps=false
+
+    #Axon Framework Settings
+    axon.kafka.bootstrap-servers=kafka:9092
+    axon.kafka.client-id=sale-catalog-service-consumer-${random.int}
+    axon.kafka.default-topic=local.event
+    axon.kafka.properties.security.protocol=PLAINTEXT
+
+    axon.kafka.fetcher.poll-timeout=3000
+
+    axon.kafka.consumer.enable-auto-commit=true
+    axon.kafka.consumer.auto-commit-interval=3000
+    axon.kafka.consumer.event-processor-mode=tracking
+
+    axon.eventhandling.processors.saleItem.source=streamableKafkaMessageSource
+    axon.eventhandling.processors.saleItem.mode=TRACKING
+    axon.eventhandling.processors.saleItem.thread-count=1
+    axon.eventhandling.processors.saleItem.batch-size=1
+
+    axon.serializer.general=xstream
+    axon.serializer.events=xstream
+    axon.serializer.messages=xstream
+
+    # JPA Settings
+    spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+    spring.datasource.url=jdbc:mysql://mysql:3306/DIRECT-DEAL-SALE-CATALOG-DB?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
+    spring.datasource.username=direct-deal-sale-catalog
+    spring.datasource.password=secret
+
+    spring.jpa.open-in-view=false
+    spring.jpa.defer-datasource-initialization=true
+    spring.jpa.hibernate.ddl-auto=create-drop
+
+    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL57Dialect
+    spring.jpa.properties.hibernate.dialect.storage_engine=innodb
+    spring.jpa.properties.hibernate.format_sql=true
+
+    # Mongo DB Settings
+    spring.data.mongodb.authentication-database=admin
+    spring.data.mongodb.host=mongo
+    spring.data.mongodb.port=27017
+    spring.data.mongodb.username=root
+    spring.data.mongodb.password=secret
+    spring.data.mongodb.database=SALE_CATALOG_SERVICE_DB
+
+    # Redis Settings
+    spring.redis.host=redis
+    spring.redis.port=6379
+
+    # Log Settings
+    spring.output.ansi.enabled=always
+    logging.level.kr.co.directdeal.accountservice=DEBUG
+    logging.level.org.hibernate.SQL=DEBUG
+    logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+
+    # Actuator Settings
+    management.endpoints.enabled-by-default=false
+    management.endpoint.health.enabled=true
+

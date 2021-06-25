@@ -1,5 +1,28 @@
-spring:
-    cloud:
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: direct-deal-gateway-service
+data:
+  application.yml: |
+    ---
+    server:
+      port: 8084
+
+    spring:
+      application:
+        name: direct-deal-gateway-service
+
+    management:
+      endpoints:
+        enabled-by-default: false
+      endpoint:
+        health:
+          enabled: true
+    ---
+    spring:
+      profiles: dev
+      
+      cloud:
         gateway:
             globalcors:
               corsConfigurations:
@@ -87,14 +110,3 @@ spring:
               filters:
               - RewritePath=/api/v1(?<segment>/?.*), $\{segment}
 
-
-
-
-
-
-
-
-
-              
-
-            

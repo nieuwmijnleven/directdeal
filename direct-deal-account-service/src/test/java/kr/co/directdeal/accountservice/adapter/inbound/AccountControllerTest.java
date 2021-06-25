@@ -41,7 +41,8 @@ import kr.co.directdeal.common.security.util.SecurityUtils;
 @WebMvcTest(controllers = {AccountController.class}, 
     includeFilters = @Filter(type = FilterType.ASSIGNABLE_TYPE, 
         classes = {TokenProvider.class, JWTProperties.class, 
-                   JwtAuthenticationEntryPoint.class, JwtAccessDeniedHandler.class}))
+                   JwtAuthenticationEntryPoint.class, JwtAccessDeniedHandler.class}),
+        properties = {"spring.cloud.kubernetes.config.enabled=false", "spring.cloud.kubernetes.discovery.enabled=false"})
 public class AccountControllerTest {
 
     @Autowired

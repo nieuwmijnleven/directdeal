@@ -55,6 +55,9 @@ spec:
       - name: sale-service
         image: localhost:5000/direct-deal-sale-service:latest
         imagePullPolicy: Always
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "dev"
         ports:
         - containerPort: 8081
           name: httpport

@@ -16,13 +16,13 @@ import lombok.ToString;
 @Component
 public class JWTProperties {
 
-    private String header;
+    private String header = "Authorization";
 
-    private String secret;
+    private String secret = "L2RpcmVjdC1kZWFsL2RpcmVjdC1kZWFsLWFjY291bnQtc2VydmljZS9kaXJlY3QtZGVhbC9kaXJlY3QtZGVhbC1hY2NvdW50LXNlcnZpY2UvZGlyZWN0LWRlYWwvZGlyZWN0LWRlYWwtYWNjb3VudC1zZXJ2aWNlL2RpcmVjdC1kZWFsL2RpcmVjdC1kZWFsLWFjY291bnQtc2VydmljZQo=";
 
-    private long accessTokenValidityInSeconds;    
+    private long accessTokenValidityInSeconds = 3600;    
 
-    private long refreshTokenValidityInSeconds;    
+    private long refreshTokenValidityInSeconds = 2592000;    
 
     public long getAccessTokenValidityInMilliseconds() {
         return this.accessTokenValidityInSeconds * 1000;

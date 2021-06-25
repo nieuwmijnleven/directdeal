@@ -35,6 +35,9 @@ spec:
       - name: gateway
         image: localhost:5000/direct-deal-gateway:latest
         imagePullPolicy: Always
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "dev"
         ports:
         - containerPort: 8084
           name: httpport
