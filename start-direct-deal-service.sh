@@ -1,3 +1,5 @@
+#!/bin/sh
+
 echo "Starting Direct-Deal Service..."
 
 echo "Building Images..."
@@ -9,17 +11,20 @@ sh -c "./kubectl-apply.sh"
 echo "Waiting for all services to be up..."
 while true
 do
-    rt1=$(kubectl get pods | grep 'account-service' | awk '{print $3}')
-    rt2=$(kubectl get pods | grep 'sale-service' | awk '{print $3}')
-    rt3=$(kubectl get pods | grep 'sale-catalog-service' | awk '{print $3}')
-    rt4=$(kubectl get pods | grep 'transaction-history-service' | awk '{print $3}')
-    rt5=$(kubectl get pods | grep 'chatting-service' | awk '{print $3}')
-    rt6=$(kubectl get pods -n kube-system | grep 'kibana' | awk '{print $3}')
-    rt7=$(kubectl get pods -n jenkins | grep 'jenkins' | awk '{print $3}')
+    rt1=$(kubectl get pods | grep 'account-service' | grep 'Running' | awk '{print $2}' | awk -F '/' '{print $1}')
+    rt2=$(kubectl get pods | grep 'sale-service' | grep 'Running' | awk '{print $2}' | awk -F '/' '{print $1}')
+    rt3=$(kubectl get pods | grep 'sale-catalog-service' | grep 'Running' | awk '{print $2}' | awk -F '/' '{print $1}')
+    rt4=$(kubectl get pods | grep 'transaction-history-service' | grep 'Running' | awk '{print $2}' | awk -F '/' '{print $1}')
+    rt5=$(kubectl get pods | grep 'chatting-service' | grep 'Running' | awk '{print $2}' | awk -F '/' '{print $1}')
+    rt6=$(kubectl get pods | grep 'gateway' | grep 'Running' | awk '{print $2}' | awk -F '/' '{print $1}')
+    rt7=$(kubectl get pods -n kube-system | grep 'kibana' | grep 'Running' | awk '{print $2}' | awk -F '/' '{print $1}')
+    rt8=$(kubectl get pods -n jenkins | grep 'jenkins' | grep 'Running' | awk '{print $2}' | awk -F '/' '{print $1}')
 
-    if [ "$rt1" = "Running" ] && [ "$rt2" = "Running" ] && [ "$rt3" = "Running" ] && [ "$rt4" = "Running" ] && [ "$rt5" = "Running" ] && [ "$rt6" = "Running" ] && [ "$rt7" = "Running" ]; then
-    echo "All service are up"
-    break
+    if [ "$rt1" ] && [ "$rt2" ] && [ "$rt3" ] && [ "$rt4" ] && [ "$rt5" ] && [ "$rt6" ] && [ "$rt7" ] && [ "$rt8" ]; then
+        if [ "$rt1" -gt 0 ] && [ "$rt2" -gt 0 ] && [ "$rt3" -gt 0 ] && [ "$rt4" -gt 0 ] && [ "$rt5" -gt 0 ] && [ "$rt6" -gt 0 ] && [ "$rt7" -gt 0 ] && [ "$rt8" -gt 0 ]; then
+        echo "All services are up"
+        break
+        fi
     fi
 
     sleep 5
