@@ -47,7 +47,7 @@ public class SaleList {
     private boolean discountable;
 
     @NotNull
-    @Size(min = 1, max = 128)
+    @Size(min = 6, max = 41)
     private String mainImage;
 
     @NotNull

@@ -32,8 +32,10 @@
                 </v-list-item>
               </v-card-text>
               <v-divider></v-divider>
-              <v-card-actions class="ma-0 pa-0 justify-center">
-                <v-btn text class="primary--text text-caption font-weight-bold" @click="complete(item)">completed</v-btn>
+              <v-card-actions class="ma-0 pa-0">
+                <v-spacer></v-spacer>
+                <v-btn text class="mx-3 primary--text text-caption font-weight-bold" @click="liftup(item)">Lifting Up</v-btn>
+                <v-btn text class="mx-3 primary--text text-caption font-weight-bold" @click="complete(item)">Completed</v-btn>
               </v-card-actions>
               <v-divider></v-divider>
             </v-list>
@@ -161,6 +163,42 @@ export default {
         if (response.status == 200) {
           this.isLoaded = true;
           this.items = response.data;
+        } else {
+          alert("An incorrect response code is returned: " + response.status);
+        }
+      } catch (error) {
+        if (error.response) {
+          alert(error.response.data.error);
+          console.log(error.response.data.message);
+          if (error.response.status == 401) {
+            this.$router.push("/login");
+          }
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log("Error", error.message);
+        }
+      }
+    },
+    /* lift up */
+    async liftup(item) {
+      try {
+        let response = await axios({
+          method: "PUT",
+          url: "http://localhost:8084/api/v1/salelist/" + item.id + "/lift-up",
+        });
+
+        if (response.status == 200) {
+          const liftUpResponse = response.data;
+          if (liftUpResponse.result == "SUCCESS") {
+            this.$router.push('/')
+          } else if (liftUpResponse.result == "FAILURE") {
+            const canLiftUpDate = new Date(item.createdDate)
+            canLiftUpDate.setDate(canLiftUpDate.getDate() + liftUpResponse.intervalDays)
+            alert("Lift-Up will be possible at " + canLiftUpDate.toLocaleString());
+          } else {
+            alert("An incorrect response : " + liftUpResponse.result);
+          }
         } else {
           alert("An incorrect response code is returned: " + response.status);
         }

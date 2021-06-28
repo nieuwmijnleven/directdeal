@@ -59,8 +59,13 @@ public class AsyncImageSaveRunner {
             String filename = images.get(i);
             Path dest = Paths.get(ItemImageService.IMAGE_REPOSITORY_PATH, filename).toAbsolutePath();
             try {
-                Files.move(uploadFile.toPath(), dest);
-                log.info("move [{}] to [{}]", uploadFile, dest);
+                if (diskFileItem.isInMemory()) {
+                    Files.write(dest, diskFileItem.get());
+                    log.info("write the memory cached image to [{}]", dest);
+                } else {
+                    Files.move(uploadFile.toPath(), dest);
+                    log.info("move [{}] to [{}]", uploadFile, dest);
+                }
             } catch(Exception e) {
                 //set the status to FAILURE
                 log.error("fail to move [{}] to [{}]", uploadFile, dest);

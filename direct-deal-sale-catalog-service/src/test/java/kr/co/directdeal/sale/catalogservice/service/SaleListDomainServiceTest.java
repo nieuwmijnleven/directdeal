@@ -16,6 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import kr.co.directdeal.sale.catalogservice.config.prop.LiftUpProperties;
 import kr.co.directdeal.sale.catalogservice.domain.SaleList;
 import kr.co.directdeal.sale.catalogservice.exception.SaleListException;
 
@@ -26,7 +27,7 @@ public class SaleListDomainServiceTest {
 
     @BeforeEach
     public void init() {
-        this.saleListDomainService = new SaleListDomainService();
+        this.saleListDomainService = new SaleListDomainService(new LiftUpProperties());
     }
     
     @Test
