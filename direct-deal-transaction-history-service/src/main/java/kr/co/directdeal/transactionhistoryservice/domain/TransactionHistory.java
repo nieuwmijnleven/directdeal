@@ -62,8 +62,8 @@ public class TransactionHistory {
     private long targetPrice;
 
     @NotNull
-    @Size(min = 36, max = 40)
-    @Column(name = "TRANSACTION_ITEM_MAIN_IMAGE", length = 40, nullable = false)
+    @Size(min = 6, max = 41)
+    @Column(name = "TRANSACTION_ITEM_MAIN_IMAGE", length = 41, nullable = false)
     private String mainImage;
 
     @Size(min = 1, max = 64)

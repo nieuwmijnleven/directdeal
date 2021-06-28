@@ -23,19 +23,20 @@ Content-Type: application/json
 
 POST http://localhost:8084/api/v1/chatting HTTP/1.1
 Content-Type: application/json
-Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0MjQ4OTYyfQ.KCWjh0Mr19roOjsjR7FlxncNYsvUzyLFZCpmK5w2EyH44HGKCCzmKFGpdrxlobNaLou0jtAQvfod02f07GyMfw"
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0ODY2NzY3fQ.OPV5VPiMawhVwUksKmX-21aaJ-e0j-XKzdcy6_V5cLo9GAUo5kNhBfT0aCnewIFTKye9f7DEHH2kOu9aw2QZYQ
 
 {
-    "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
+    "title":"iPhone12 Pro 판매합니다.",
+    "itemId":"906e45d9-24ff-4aae-933a-d8f1caa64f90",
     "sellerId":"seller@directdeal.co.kr",
-    "customerId":"customer@directdeal.co.kr"
+    "customerId":"buyer@directdeal.co.kr"
 }
 
 ###
 
 PUT http://localhost:8084/api/v1/chatting HTTP/1.1
 Content-Type: application/json
-Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0MjQ4OTYyfQ.KCWjh0Mr19roOjsjR7FlxncNYsvUzyLFZCpmK5w2EyH44HGKCCzmKFGpdrxlobNaLou0jtAQvfod02f07GyMfw"
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0ODY2NzY3fQ.OPV5VPiMawhVwUksKmX-21aaJ-e0j-XKzdcy6_V5cLo9GAUo5kNhBfT0aCnewIFTKye9f7DEHH2kOu9aw2QZYQ
 
 {
     "chattingRoomId":"1",
@@ -47,7 +48,7 @@ Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 
 # GET http://localhost:8084/api/v1/chatting HTTP/1.1
 # Content-Type: application/json
-# Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0MjQ4OTYyfQ.KCWjh0Mr19roOjsjR7FlxncNYsvUzyLFZCpmK5w2EyH44HGKCCzmKFGpdrxlobNaLou0jtAQvfod02f07GyMfw"
+# Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0ODY2NzY3fQ.OPV5VPiMawhVwUksKmX-21aaJ-e0j-XKzdcy6_V5cLo9GAUo5kNhBfT0aCnewIFTKye9f7DEHH2kOu9aw2QZYQ
 
 # {
 #     "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
@@ -59,19 +60,19 @@ Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 
 PUT http://localhost:8084/api/v1/chatting HTTP/1.1
 Content-Type: application/json
-Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0MjQ4OTYyfQ.KCWjh0Mr19roOjsjR7FlxncNYsvUzyLFZCpmK5w2EyH44HGKCCzmKFGpdrxlobNaLou0jtAQvfod02f07GyMfw"
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0ODY2NzY3fQ.OPV5VPiMawhVwUksKmX-21aaJ-e0j-XKzdcy6_V5cLo9GAUo5kNhBfT0aCnewIFTKye9f7DEHH2kOu9aw2QZYQ
 
 {
     "chattingRoomId":"1",
     "talkerId":"seller@directdeal.co.kr",
-    "text":"네 말씀하세요."
+    "text":"2025년에 만료됩니다."
 }
 
 ###
 
 GET http://localhost:8084/api/v1/chatting/fetch-unread-messages HTTP/1.1
 Content-Type: application/json
-Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0MjQ4OTYyfQ.KCWjh0Mr19roOjsjR7FlxncNYsvUzyLFZCpmK5w2EyH44HGKCCzmKFGpdrxlobNaLou0jtAQvfod02f07GyMfw"
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0ODY2MzQ2fQ.DB--mznAqWGS61tj2Af3ny5wAWFdi-x6IJt9arFh8gZeacmYvcRoa2RaPngtxAZ7FhdU-w_jtsvBe7YqTupNeg
 
 {
     "chattingRoomId":"1",
@@ -82,7 +83,7 @@ Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 
 GET http://localhost:8084/api/v1/chatting/fetch-unread-messages HTTP/1.1
 Content-Type: application/json
-Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0MjQ4OTYyfQ.KCWjh0Mr19roOjsjR7FlxncNYsvUzyLFZCpmK5w2EyH44HGKCCzmKFGpdrxlobNaLou0jtAQvfod02f07GyMfw"
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0ODY2NzY3fQ.OPV5VPiMawhVwUksKmX-21aaJ-e0j-XKzdcy6_V5cLo9GAUo5kNhBfT0aCnewIFTKye9f7DEHH2kOu9aw2QZYQ
 
 {
     "chattingRoomId":"1",
@@ -92,17 +93,23 @@ Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 ###
 
 GET http://localhost:8084/api/v1/chatting/1 HTTP/1.1
-Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0MjQ4OTYyfQ.KCWjh0Mr19roOjsjR7FlxncNYsvUzyLFZCpmK5w2EyH44HGKCCzmKFGpdrxlobNaLou0jtAQvfod02f07GyMfw"
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0ODY2NzY3fQ.OPV5VPiMawhVwUksKmX-21aaJ-e0j-XKzdcy6_V5cLo9GAUo5kNhBfT0aCnewIFTKye9f7DEHH2kOu9aw2QZYQ
+
+###
+
+
+GET http://localhost:8084/api/v1/chatting/1d7e8acd-8f52-418b-a58c-a467a4f8d716/seller@directdeal.co.kr/buyer@directdeal.co.kr HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0ODY2NzY3fQ.OPV5VPiMawhVwUksKmX-21aaJ-e0j-XKzdcy6_V5cLo9GAUo5kNhBfT0aCnewIFTKye9f7DEHH2kOu9aw2QZYQ
 
 ###
 
 GET http://localhost:8084/api/v1/chatting/list HTTP/1.1
-Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0MjQ4OTYyfQ.KCWjh0Mr19roOjsjR7FlxncNYsvUzyLFZCpmK5w2EyH44HGKCCzmKFGpdrxlobNaLou0jtAQvfod02f07GyMfw"
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0ODY2NzY3fQ.OPV5VPiMawhVwUksKmX-21aaJ-e0j-XKzdcy6_V5cLo9GAUo5kNhBfT0aCnewIFTKye9f7DEHH2kOu9aw2QZYQ
 
 ###
 
 GET http://localhost:8084/api/v1/chatting HTTP/1.1
-Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0MjQ4OTYyfQ.KCWjh0Mr19roOjsjR7FlxncNYsvUzyLFZCpmK5w2EyH44HGKCCzmKFGpdrxlobNaLou0jtAQvfod02f07GyMfw"
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0ODY2NzY3fQ.OPV5VPiMawhVwUksKmX-21aaJ-e0j-XKzdcy6_V5cLo9GAUo5kNhBfT0aCnewIFTKye9f7DEHH2kOu9aw2QZYQ
 Content-Type: application/json
 
 {
@@ -113,14 +120,14 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8084/api/v1/chatting/1/fetch-from/6 HTTP/1.1
-Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0MjQ4OTYyfQ.KCWjh0Mr19roOjsjR7FlxncNYsvUzyLFZCpmK5w2EyH44HGKCCzmKFGpdrxlobNaLou0jtAQvfod02f07GyMfw"
+GET http://localhost:8084/api/v1/chatting/1/fetch-from/5 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0ODY2NzY3fQ.OPV5VPiMawhVwUksKmX-21aaJ-e0j-XKzdcy6_V5cLo9GAUo5kNhBfT0aCnewIFTKye9f7DEHH2kOu9aw2QZYQ
 
 ###
 
 POST http://localhost:8084/api/v1/chatting HTTP/1.1
 Content-Type: application/json
-Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0MjQ4OTYyfQ.KCWjh0Mr19roOjsjR7FlxncNYsvUzyLFZCpmK5w2EyH44HGKCCzmKFGpdrxlobNaLou0jtAQvfod02f07GyMfw"
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0ODY2NzY3fQ.OPV5VPiMawhVwUksKmX-21aaJ-e0j-XKzdcy6_V5cLo9GAUo5kNhBfT0aCnewIFTKye9f7DEHH2kOu9aw2QZYQ
 
 {
     "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
@@ -132,7 +139,7 @@ Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 
 POST http://localhost:8084/api/v1/chatting HTTP/1.1
 Content-Type: application/json
-Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0MjQ4OTYyfQ.KCWjh0Mr19roOjsjR7FlxncNYsvUzyLFZCpmK5w2EyH44HGKCCzmKFGpdrxlobNaLou0jtAQvfod02f07GyMfw"
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0ODY2NzY3fQ.OPV5VPiMawhVwUksKmX-21aaJ-e0j-XKzdcy6_V5cLo9GAUo5kNhBfT0aCnewIFTKye9f7DEHH2kOu9aw2QZYQ
 
 {
     "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
@@ -144,7 +151,7 @@ Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 
 POST http://localhost:8084/api/v1/chatting HTTP/1.1
 Content-Type: application/json
-Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0MjQ4OTYyfQ.KCWjh0Mr19roOjsjR7FlxncNYsvUzyLFZCpmK5w2EyH44HGKCCzmKFGpdrxlobNaLou0jtAQvfod02f07GyMfw"
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0ODY2NzY3fQ.OPV5VPiMawhVwUksKmX-21aaJ-e0j-XKzdcy6_V5cLo9GAUo5kNhBfT0aCnewIFTKye9f7DEHH2kOu9aw2QZYQ
 
 {
     "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
@@ -156,7 +163,7 @@ Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 
 POST http://localhost:8084/api/v1/chatting HTTP/1.1
 Content-Type: application/json
-Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0MjQ4OTYyfQ.KCWjh0Mr19roOjsjR7FlxncNYsvUzyLFZCpmK5w2EyH44HGKCCzmKFGpdrxlobNaLou0jtAQvfod02f07GyMfw"
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0ODY2NzY3fQ.OPV5VPiMawhVwUksKmX-21aaJ-e0j-XKzdcy6_V5cLo9GAUo5kNhBfT0aCnewIFTKye9f7DEHH2kOu9aw2QZYQ
 
 {
     "itemId":"d4c02e9b-1497-48df-885e-6ba6426e73d2",
@@ -166,6 +173,6 @@ Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jb
 
 ###
 
-GET http://localhost:8084/api/v1/chatting/d4c02e9b-1497-48df-885e-6ba6426e73d2/customer-list HTTP/1.1
-Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0MjQ4OTYyfQ.KCWjh0Mr19roOjsjR7FlxncNYsvUzyLFZCpmK5w2EyH44HGKCCzmKFGpdrxlobNaLou0jtAQvfod02f07GyMfw"
+GET http://localhost:8084/api/v1/chatting/1d7e8acd-8f52-418b-a58c-a467a4f8d716/customer-list HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI0ODY2NzY3fQ.OPV5VPiMawhVwUksKmX-21aaJ-e0j-XKzdcy6_V5cLo9GAUo5kNhBfT0aCnewIFTKye9f7DEHH2kOu9aw2QZYQ
 

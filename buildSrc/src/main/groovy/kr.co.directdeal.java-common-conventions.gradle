@@ -52,7 +52,7 @@ dependencies {
         implementation 'org.axonframework.extensions.kafka:axon-kafka-spring-boot-starter:4.0-RC3'
         implementation 'org.axonframework.extensions.mongo:axon-mongo:4.4'
         implementation 'org.apache.kafka:kafka-clients:2.8.0'
-        implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+        implementation 'org.springframework.boot:spring-boot-starter-data-redis:2.5.0'
 
         implementation 'com.fasterxml.jackson.core:jackson-core:2.11.4'
         implementation 'com.fasterxml.jackson.core:jackson-annotations:2.11.4'

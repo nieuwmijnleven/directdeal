@@ -24,23 +24,23 @@ GET http://localhost:8084/api/v1/account HTTP/1.1
 ###
 
 GET http://localhost:8084/api/v1/account HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg5MDMxOH0.rxe5ojovHocIa3NYGJVwWByvqA2faDzGkwAD3nDQblYSawYxlMUmMSgSYR1vcaotO9Y_dO9XQ9CNOYrhNQK5rQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyNDg2NDE0NH0.OWiP55gGSiezOFO2phMw5CmuzbVb_6fGJNQ-MzLJye9VkOIQ_JHRciHW6IqJlqYYzqXpVJst96XK0eHXHTwAwA
 
 ###
 
 PUT http://localhost:8084/api/v1/account HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg5MDMxOH0.rxe5ojovHocIa3NYGJVwWByvqA2faDzGkwAD3nDQblYSawYxlMUmMSgSYR1vcaotO9Y_dO9XQ9CNOYrhNQK5rQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyNDg2NDE0NH0.OWiP55gGSiezOFO2phMw5CmuzbVb_6fGJNQ-MzLJye9VkOIQ_JHRciHW6IqJlqYYzqXpVJst96XK0eHXHTwAwA
 Content-Type: application/json
 
 {
     "email":"account@directdeal.co.kr",
-    "name":"rick"
+    "name":"user"
 }
 
 ###
 
 PUT http://localhost:8084/api/v1/account/change-password HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg5MDMxOH0.rxe5ojovHocIa3NYGJVwWByvqA2faDzGkwAD3nDQblYSawYxlMUmMSgSYR1vcaotO9Y_dO9XQ9CNOYrhNQK5rQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyNDg2NDE0NH0.OWiP55gGSiezOFO2phMw5CmuzbVb_6fGJNQ-MzLJye9VkOIQ_JHRciHW6IqJlqYYzqXpVJst96XK0eHXHTwAwA
 Content-Type: application/json
 
 {
@@ -61,7 +61,7 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:8084/api/v1/account HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyMzg5MDMxOH0.rxe5ojovHocIa3NYGJVwWByvqA2faDzGkwAD3nDQblYSawYxlMUmMSgSYR1vcaotO9Y_dO9XQ9CNOYrhNQK5rQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTYyNDg2NDE0NH0.OWiP55gGSiezOFO2phMw5CmuzbVb_6fGJNQ-MzLJye9VkOIQ_JHRciHW6IqJlqYYzqXpVJst96XK0eHXHTwAwA
 
 ###
 

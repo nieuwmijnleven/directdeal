@@ -37,7 +37,7 @@ public class FavoriteItem {
     private Long id;
 
     @NotNull
-    @Column(name = "USER_ID", length = 50, unique = true)
+    @Column(name = "USER_ID", length = 64, unique = true)
     private String userId;
 
     @NotNull

@@ -49,7 +49,7 @@ public class ChattingRoom {
     private String title;
 
     @NotNull
-    @Column(name = "CHATTING_ROOM_ITEM_ID", nullable = false)
+    @Column(name = "CHATTING_ROOM_ITEM_ID", length = 36, nullable = false)
     private String itemId;
 
     @Email

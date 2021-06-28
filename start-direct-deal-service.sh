@@ -8,7 +8,7 @@ sh -c "./build-images.sh"
 echo "Staring Services..."
 sh -c "./kubectl-apply.sh"
 
-echo "Waiting for all services to be up..."
+echo "Waiting for all services to be up...(Maybe it takes up to about 5 minutes)"
 while true
 do
     rt1=$(kubectl get pods | grep 'account-service' | grep 'Running' | awk '{print $2}' | awk -F '/' '{print $1}')

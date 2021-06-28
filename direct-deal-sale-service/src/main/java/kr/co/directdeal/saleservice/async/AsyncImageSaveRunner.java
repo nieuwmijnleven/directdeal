@@ -45,13 +45,13 @@ public class AsyncImageSaveRunner {
         // MultipartConfigElement
         int i = 0;
         for (MultipartFile file : files) {
-            // if (!(file instanceof CommonsMultipartFile)) 
-            //     throw new IllegalArgumentException("The referece of MultipartFile is not the type of CommonsMultipartFile");         
+            if (!(file instanceof CommonsMultipartFile)) 
+                throw new IllegalArgumentException("The referece of MultipartFile is not the type of CommonsMultipartFile");         
             
             CommonsMultipartFile commonFile = (CommonsMultipartFile)file;
 
-            // if (!(commonFile.getFileItem() instanceof DiskFileItem)) 
-            //     throw new IllegalArgumentException("The referece of FileItem is not the type of DiskFileItem");
+            if (!(commonFile.getFileItem() instanceof DiskFileItem)) 
+                throw new IllegalArgumentException("The referece of FileItem is not the type of DiskFileItem");
             
             DiskFileItem diskFileItem = (DiskFileItem)commonFile.getFileItem();
             File uploadFile = diskFileItem.getStoreLocation();
