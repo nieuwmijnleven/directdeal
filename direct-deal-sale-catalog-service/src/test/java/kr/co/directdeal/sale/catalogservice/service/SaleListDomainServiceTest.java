@@ -25,9 +25,11 @@ public class SaleListDomainServiceTest {
 
     private SaleListDomainService saleListDomainService;
 
+    private LiftUpProperties liftUpProperties = new LiftUpProperties();
+
     @BeforeEach
     public void init() {
-        this.saleListDomainService = new SaleListDomainService(new LiftUpProperties());
+        this.saleListDomainService = new SaleListDomainService(liftUpProperties);
     }
     
     @Test
@@ -40,7 +42,7 @@ public class SaleListDomainServiceTest {
                                         .createdDate(createdDate.minus(3, ChronoUnit.DAYS))
                                         .build();    
 
-        ReflectionTestUtils.setField(saleListDomainService, "liftUpIntervalDays", 3);
+        liftUpProperties.setLiftUpIntervalDays(3);
 
         //when
         boolean result = saleListDomainService.canLiftUp(saleList);
@@ -59,7 +61,7 @@ public class SaleListDomainServiceTest {
                                         .createdDate(createdDate.minus(2, ChronoUnit.DAYS))
                                         .build();    
         
-        ReflectionTestUtils.setField(saleListDomainService, "liftUpIntervalDays", 3);
+        liftUpProperties.setLiftUpIntervalDays(3);
 
         //when
         boolean result = saleListDomainService.canLiftUp(saleList);
@@ -79,7 +81,7 @@ public class SaleListDomainServiceTest {
                                         .build();    
         saleList = spy(saleList);
 
-        ReflectionTestUtils.setField(saleListDomainService, "liftUpIntervalDays", 3);
+        liftUpProperties.setLiftUpIntervalDays(3);
 
         //when
         saleListDomainService.liftUp(saleList);
@@ -98,7 +100,7 @@ public class SaleListDomainServiceTest {
                                         .createdDate(createdDate.minus(1, ChronoUnit.DAYS))
                                         .build();    
 
-        ReflectionTestUtils.setField(saleListDomainService, "liftUpIntervalDays", 3);
+        liftUpProperties.setLiftUpIntervalDays(3);
 
         //when and then
         assertThrows(SaleListException.class, () -> {

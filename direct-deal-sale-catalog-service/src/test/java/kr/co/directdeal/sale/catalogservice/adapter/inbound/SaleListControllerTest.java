@@ -32,6 +32,7 @@ import kr.co.directdeal.common.security.auth.jwt.JwtAccessDeniedHandler;
 import kr.co.directdeal.common.security.auth.jwt.JwtAuthenticationEntryPoint;
 import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
 import kr.co.directdeal.common.security.config.props.JWTProperties;
+import kr.co.directdeal.sale.catalogservice.config.prop.LiftUpProperties;
 import kr.co.directdeal.sale.catalogservice.exception.SaleListException;
 import kr.co.directdeal.sale.catalogservice.service.SaleListService;
 import kr.co.directdeal.sale.catalogservice.service.dto.SaleListDTO;
@@ -41,9 +42,9 @@ import kr.co.directdeal.sale.catalogservice.service.repository.SaleListRepositor
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {SaleListController.class},
     includeFilters = @Filter(type = FilterType.ASSIGNABLE_TYPE, 
-        classes = {TokenProvider.class, JWTProperties.class,
+        classes = {TokenProvider.class, JWTProperties.class, 
                     JwtAuthenticationEntryPoint.class, JwtAccessDeniedHandler.class,
-                    SaleListRepository.class, SaleListMapper.class}))
+                    SaleListRepository.class, SaleListMapper.class, LiftUpProperties.class}))
 public class SaleListControllerTest {
 
     @Autowired
@@ -88,7 +89,7 @@ public class SaleListControllerTest {
     @WithMockUser(username = "seller@directdeal.co.kr")
     public void LiftUp_InvalidId_ThrowSaleListException() throws Exception {
         //given
-       String id = "1";
+        String id = "1";
         willThrow(SaleListException.builder()
                     .messageKey("salecatalogservice.exception.salelistcommandservice.liftup.notfound.message")
                     .messageArgs(new String[]{ id })
@@ -101,6 +102,42 @@ public class SaleListControllerTest {
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.error", is("Sale List Service Error")))
                     .andExpect(jsonPath("$.message", is("Failed to find the sale list item(id = 1)")));
+        
+        verify(saleListService).liftUp(id);
+    }
+
+    @Test
+    @WithMockUser(username = "seller@directdeal.co.kr")
+    public void LiftUp_CanLiftUpIsTrue_Success() throws Exception {
+        //given
+        String id = "1";
+        given(saleListService.liftUp(id))
+            .willReturn(true);
+
+        //when and then
+        this.mvc.perform(put("/salelist/" + id + "/lift-up"))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.result", is("SUCCESS")))
+                    .andExpect(jsonPath("$.intervalDays", is(1)));
+        
+        verify(saleListService).liftUp(id);
+    }
+
+    @Test
+    @WithMockUser(username = "seller@directdeal.co.kr")
+    public void LiftUp_CanLiftUpIsFalse_Failure() throws Exception {
+        //given
+        String id = "1";
+        given(saleListService.liftUp(id))
+            .willReturn(false);
+
+        //when and then
+        this.mvc.perform(put("/salelist/" + id + "/lift-up"))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.result", is("FAILURE")))
+                    .andExpect(jsonPath("$.intervalDays", is(1)));
         
         verify(saleListService).liftUp(id);
     }
