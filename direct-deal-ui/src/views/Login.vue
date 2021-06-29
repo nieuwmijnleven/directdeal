@@ -16,6 +16,7 @@
             :counter="6"
             :rules="passwordRules"
             label="Password"
+            type="password"
             outlined
             required
             @keypress.enter="submit"

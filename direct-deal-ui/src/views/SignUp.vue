@@ -25,6 +25,7 @@
                 :counter="6"
                 :rules="passwordRules"
                 label="Password"
+                type="password"
                 required
               ></v-text-field>
             </v-card-text>
