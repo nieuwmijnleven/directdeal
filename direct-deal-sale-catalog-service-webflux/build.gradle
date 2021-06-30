@@ -1,0 +1,61 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.0'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'kr.co.directdeal.java-common-conventions'
+}
+
+bootJar {
+	baseName = 'direct-deal-sale-catalog-service-webflux'
+	version = '0.1'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+dependencies {
+	implementation project(':direct-deal-common')
+
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	implementation "org.springframework.boot:spring-boot-starter-actuator"
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-all'
+
+	implementation ('org.axonframework:axon-spring-boot-starter') {
+		exclude group: "org.axonframework", module: 'axon-server-connector'
+	}
+
+	implementation 'org.axonframework:axon-micrometer'
+	implementation 'org.axonframework.extensions.kafka:axon-kafka-spring-boot-starter'
+	implementation 'org.apache.kafka:kafka-clients'
+
+	compileOnly 'io.jsonwebtoken:jjwt-api'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson'
+
+	// implementation 'com.fasterxml.jackson.core:jackson-core'
+    // implementation 'com.fasterxml.jackson.core:jackson-annotations'
+    // implementation 'com.fasterxml.jackson.core:jackson-databind'
+    // implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+
+	runtimeOnly 'mysql:mysql-connector-java'
+	
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'io.projectreactor:reactor-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+}
+
+test {
+	useJUnitPlatform()
+}

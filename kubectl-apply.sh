@@ -10,7 +10,8 @@ eval $(minikube -p minikube docker-env)
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/configmap/direct-deal-account-configmap.yml
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/configmap/direct-deal-chatting-configmap.yml
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/configmap/direct-deal-gateway-configmap.yml
-kubectl delete -f ${KUBERNETES_CONFIG_PATH}/configmap/direct-deal-sale-catalog-configmap.yml
+# kubectl delete -f ${KUBERNETES_CONFIG_PATH}/configmap/direct-deal-sale-catalog-configmap.yml
+kubectl delete -f ${KUBERNETES_CONFIG_PATH}/configmap/direct-deal-sale-catalog-webflux-configmap.yml
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/configmap/direct-deal-sale-configmap.yml
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/configmap/direct-deal-transaction-history-configmap.yml
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/spring-cloud-kubernetes-config.yml
@@ -27,7 +28,8 @@ kubectl delete -f ${KUBERNETES_CONFIG_PATH}/kafka-service.yml
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/direct-deal-account-service.yml
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/direct-deal-chatting-service.yml
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/direct-deal-sale-service.yml
-kubectl delete -f ${KUBERNETES_CONFIG_PATH}/direct-deal-sale-catalog-service.yml
+# kubectl delete -f ${KUBERNETES_CONFIG_PATH}/direct-deal-sale-catalog-service.yml
+kubectl delete -f ${KUBERNETES_CONFIG_PATH}/direct-deal-sale-catalog-service-webflux.yml
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/direct-deal-transaction-history-service.yml
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/direct-deal-gateway-service.yml
 
@@ -37,7 +39,8 @@ kubectl create namespace jenkins
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/configmap/direct-deal-account-configmap.yml
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/configmap/direct-deal-chatting-configmap.yml
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/configmap/direct-deal-gateway-configmap.yml
-kubectl create -f ${KUBERNETES_CONFIG_PATH}/configmap/direct-deal-sale-catalog-configmap.yml
+# kubectl create -f ${KUBERNETES_CONFIG_PATH}/configmap/direct-deal-sale-catalog-configmap.yml
+kubectl create -f ${KUBERNETES_CONFIG_PATH}/configmap/direct-deal-sale-catalog-webflux-configmap.yml
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/configmap/direct-deal-sale-configmap.yml
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/configmap/direct-deal-transaction-history-configmap.yml
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/spring-cloud-kubernetes-config.yml
@@ -54,7 +57,8 @@ kubectl create -f ${KUBERNETES_CONFIG_PATH}/kafka-service.yml
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/direct-deal-account-service.yml
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/direct-deal-chatting-service.yml
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/direct-deal-sale-service.yml
-kubectl create -f ${KUBERNETES_CONFIG_PATH}/direct-deal-sale-catalog-service.yml
+# kubectl create -f ${KUBERNETES_CONFIG_PATH}/direct-deal-sale-catalog-service.yml
+kubectl create -f ${KUBERNETES_CONFIG_PATH}/direct-deal-sale-catalog-service-webflux.yml
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/direct-deal-transaction-history-service.yml
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/direct-deal-gateway-service.yml
 

@@ -23,8 +23,8 @@ echo "Applying Port Forwarding..."
 sh -c "kubectl port-forward --namespace kube-system $(kubectl get po -n kube-system | grep kube-registry-v0 | awk '{print $1;}') 5000:5000 &"
 
 echo "Building Direct-Deal Project..."
-./gradlew build
-./gradlew build -p direct-deal-gateway
+./gradlew clean build
+./gradlew clean build -p direct-deal-gateway
 # ./gradlew clean bootJar
 # ./gradlew clean bootJar -p direct-deal-gateway
 
@@ -35,8 +35,11 @@ docker image tag direct-deal-account-service localhost:5000/direct-deal-account-
 docker image build -t direct-deal-sale-service ./direct-deal-sale-service
 docker image tag direct-deal-sale-service localhost:5000/direct-deal-sale-service
 
-docker image build -t direct-deal-sale-catalog-service ./direct-deal-sale-catalog-service
-docker image tag direct-deal-sale-catalog-service localhost:5000/direct-deal-sale-catalog-service
+# docker image build -t direct-deal-sale-catalog-service ./direct-deal-sale-catalog-service
+# docker image tag direct-deal-sale-catalog-service localhost:5000/direct-deal-sale-catalog-service
+
+docker image build -t direct-deal-sale-catalog-service-webflux ./direct-deal-sale-catalog-service-webflux
+docker image tag direct-deal-sale-catalog-service-webflux localhost:5000/direct-deal-sale-catalog-service-webflux
 
 docker image build -t direct-deal-transaction-history-service ./direct-deal-transaction-history-service
 docker image tag direct-deal-transaction-history-service localhost:5000/direct-deal-transaction-history-service
@@ -53,7 +56,8 @@ docker image tag direct-deal-mysql localhost:5000/direct-deal-mysql
 echo "Pushing Docker Images To The Registry..."
 docker push localhost:5000/direct-deal-account-service
 docker push localhost:5000/direct-deal-sale-service
-docker push localhost:5000/direct-deal-sale-catalog-service
+# docker push localhost:5000/direct-deal-sale-catalog-service
+docker push localhost:5000/direct-deal-sale-catalog-service-webflux
 docker push localhost:5000/direct-deal-transaction-history-service
 docker push localhost:5000/direct-deal-chatting-service
 docker push localhost:5000/direct-deal-gateway

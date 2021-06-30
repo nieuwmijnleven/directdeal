@@ -1,0 +1,11 @@
+GET http://localhost:8080/v1/hello HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZWxsZXJAZGlyZWN0ZGVhbC5jby5rciIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjI1MTQ3MDY5fQ.lDxp92i3ZsqN-BIU8KorDNkwzqLXYFwuuO-YE1roXPmQBQh_xa1JLdWwSGFKclHDZxuo85QXyQxwiVU6OFrHzg
+
+###
+
+GET http://localhost:8082/actuator/health HTTP/1.1
+
+###
+
+GET http://localhost:8082/actuator/beans HTTP/1.1
+

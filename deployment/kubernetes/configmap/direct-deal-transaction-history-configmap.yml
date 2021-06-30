@@ -51,7 +51,7 @@ data:
 
     # Log Settings
     spring.output.ansi.enabled=always
-    logging.level.kr.co.directdeal.accountservice=DEBUG
+    logging.level.kr.co.directdeal.transactionhistoryservice=DEBUG
     logging.level.org.hibernate.SQL=DEBUG
     logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
 

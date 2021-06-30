@@ -1,12 +1,12 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: direct-deal-sale-catalog-service
+  name: direct-deal-sale-catalog-service-webflux
 data:
   application.properties: |
     ---
     server.port=8082
-    spring.application.name=direct-deal-sale-catalog-service
+    spring.application.name=direct-deal-sale-catalog-service-webflux
 
     # JWT Settings
     jwt.header=Authorization
@@ -66,8 +66,8 @@ data:
     spring.data.mongodb.database=SALE_CATALOG_SERVICE_DB
 
     # Redis Settings
-    spring.redis.host=redis
-    spring.redis.port=6379
+    # spring.redis.host=redis
+    # spring.redis.port=6379
 
     # Log Settings
     spring.output.ansi.enabled=always

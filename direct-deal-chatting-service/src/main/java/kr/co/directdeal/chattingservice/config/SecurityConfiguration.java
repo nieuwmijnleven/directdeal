@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	private final TokenProvider tokenProvider;
-    // private final CorsFilter corsFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
@@ -42,36 +41,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.frameOptions()
 					.disable()
 
-			// .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
 			.and()
 			.exceptionHandling()
 				.authenticationEntryPoint(jwtAuthenticationEntryPoint)
 				.accessDeniedHandler(jwtAccessDeniedHandler)
 
-			// .and()
-			// .addFilterBefore(filter, beforeFilter)
-			// enable h2-console
-			// .and()
-			// .headers()
-			// 	.frameOptions()
-			// 	.sameOrigin()
-
-			// 세션을 사용하지 않기 때문에 STATELESS로 설정
 			.and()
 			.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
 			.and()
 			.authorizeRequests()
-				// .antMatchers("/").permitAll()
-				// .antMatchers(method, antPatterns)
-				// .antMatchers("/auth/login").permitAll()
-				// .antMatchers(HttpMethod.GET, "/account").hasAnyRole(AuthorityConstants.USER).
 				.anyRequest().authenticated()
 
 			.and()
 			.apply(new JwtSecurityConfig(tokenProvider));
-		
 	}
 
 	@Override
@@ -87,7 +71,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			// .antMatchers("/swagger-ui.html")
 			// .antMatchers("/h2-console/**");
 			.antMatchers("/actuator/health");
-
-			// .antMatchers(HttpMethod.POST, "/account");
 	}
 }
