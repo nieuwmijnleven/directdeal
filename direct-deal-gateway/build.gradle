@@ -7,6 +7,9 @@ plugins {
 bootJar {
 	baseName = 'direct-deal-gateway'
 	version = '0.1'
+    from ('frontend/dist/') {
+        into 'static'
+    }
 }
 
 group = 'kr.co.directdeal.gateway'
@@ -40,3 +43,18 @@ dependencyManagement {
 test {
 	useJUnitPlatform()
 }
+
+// build task for npm
+/*task frontendBuild {}
+frontendBuild.dependsOn(npm_install)
+frontendBuild.dependsOn(npm_run_build)
+
+npm_install {
+  args = ['--prefix', './frontend']
+}
+
+npm_run_build {
+  args = ['--prefix', './frontend']
+}
+
+compileJava.dependsOn(frontendBuild);*/

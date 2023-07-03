@@ -8,9 +8,23 @@ data:
     server:
       port: 8084
 
+    logging:
+      level:
+        root: "DEBUG"
+
     spring:
       application:
         name: direct-deal-gateway-service
+
+      main:
+        web-application-type: "REACTIVE"
+
+      webflux:
+        static-path-pattern: "/**"
+
+      resources:
+        static-locations:
+          - "classpath:/static/"
 
     management:
       endpoints:
@@ -25,23 +39,29 @@ data:
       cloud:
         gateway:
             globalcors:
+              add-to-simple-url-handler-mapping: true
               corsConfigurations:
                 '[/**]':
-                  allowedOriginPatterns: "*"
-                  allow-credentials: true   #추가
-                  allowedHeaders:
-                    - x-requested-with
-                    - authorization
-                    - content-type
-                    - credential
-                    - X-AUTH-TOKEN
-                    - X-CSRF-TOKEN
-                  allowedMethods:
-                    - POST
-                    - GET
-                    - PUT
-                    - OPTIONS
-                    - DELETE
+                  allowedOriginPatterns: 
+                    - "https://*.ngrok-free.app"
+                  #allowedOrigins: 
+                  #  - "https://8080-cs-00199ee9-8e40-4db5-8ac0-b4c460d98bad.cs-europe-west4-bhnf.cloudshell.dev"
+                  allowedHeaders: "*"
+                  allowedMethods: "*"
+                  allowCredentials: true
+                  # allowedHeaders:
+                  #   - x-requested-with
+                  #   - authorization
+                  #   - content-type
+                  #   - credential
+                  #   - X-AUTH-TOKEN
+                  #   - X-CSRF-TOKEN
+                  # allowedMethods:
+                  #   - POST
+                  #   - GET
+                  #   - PUT
+                  #   - OPTIONS
+                  #   - DELETE
             routes:
             - id: account-service
               uri: http://account-service:8080/
