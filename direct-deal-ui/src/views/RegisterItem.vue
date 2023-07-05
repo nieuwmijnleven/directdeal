@@ -160,7 +160,7 @@ export default {
 
       try {
         let response = await axios.post(
-          "http://localhost:8084/api/v1/image",
+          "/api/v1/image",
           formData
         );
         if (response.status == 201) {
@@ -169,7 +169,7 @@ export default {
 
           response = await axios({
             method: "POST",
-            url: "http://localhost:8084/api/v1/item",
+            url: "/api/v1/item",
             data: {
               title: this.title,
               category: this.selectedCategory,
@@ -190,7 +190,7 @@ export default {
               try {
                 response = await axios({
                   method: "GET",
-                  url: "http://localhost:8084/api/v1/saleitem/" + newItemId,
+                  url: "/api/v1/saleitem/" + newItemId,
                 });
 
                 if (response.status == 200) {

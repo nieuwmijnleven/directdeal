@@ -16,7 +16,7 @@
               <v-card-text class="ma-0 pa-0">
                 <v-list-item @click="selectItem(item.id)">
                   <v-list-item-avatar size="100" class="rounded" >
-                    <v-img :src="'http://localhost:8084/api/v1/image/' + item.images[0]"></v-img>
+                    <v-img :src="'/api/v1/image/' + item.images[0]"></v-img>
                   </v-list-item-avatar>
                   <v-list-item-content class="mb-7">
                     <v-list-item-title>{{item.title}}</v-list-item-title>
@@ -49,7 +49,7 @@
               <v-card-text class="ma-0 pa-0">
                 <v-list-item @click="selectItem(item.itemId)">
                   <v-list-item-avatar size="100" class="rounded" >
-                    <v-img :src="'http://localhost:8084/api/v1/image/' + item.mainImage"></v-img>
+                    <v-img :src="'/api/v1/image/' + item.mainImage"></v-img>
                   </v-list-item-avatar>
                   <v-list-item-content class="mb-7">
                     <v-list-item-title>{{item.title}}</v-list-item-title>
@@ -79,7 +79,7 @@
             <v-list two-line v-for="item in buyItems" :key="item.id" class="my-0 py-0">
                 <v-list-item @click="selectItem(item.itemId)">
                   <v-list-item-avatar size="100" class="rounded" >
-                    <v-img :src="'http://localhost:8084/api/v1/image/' + item.mainImage"></v-img>
+                    <v-img :src="'/api/v1/image/' + item.mainImage"></v-img>
                   </v-list-item-avatar>
                   <v-list-item-content class="mb-7">
                     <v-list-item-title>{{item.title}}</v-list-item-title>
@@ -157,7 +157,7 @@ export default {
       try {
         let response = await axios({
           method: "GET",
-          url: "http://localhost:8084/api/v1/saleitem/seller-items",
+          url: "/api/v1/saleitem/seller-items",
         });
 
         if (response.status == 200) {
@@ -185,7 +185,7 @@ export default {
       try {
         let response = await axios({
           method: "PUT",
-          url: "http://localhost:8084/api/v1/salelist/" + item.id + "/lift-up",
+          url: "/api/v1/salelist/" + item.id + "/lift-up",
         });
 
         if (response.status == 200) {
@@ -221,7 +221,7 @@ export default {
       try {
         let response = await axios({
           method: "PUT",
-          url: "http://localhost:8084/api/v1/item/" + item.id + "/complete",
+          url: "/api/v1/item/" + item.id + "/complete",
         });
 
         if (response.status == 201) {
@@ -250,7 +250,7 @@ export default {
       try {
         let response = await axios({
           method: "GET",
-          url: "http://localhost:8084/api/v1/transaction-history",
+          url: "/api/v1/transaction-history",
         });
 
         if (response.status == 200) {
@@ -279,7 +279,7 @@ export default {
       try {
         let response = await axios({
           method: "GET",
-          url: "http://localhost:8084/api/v1/buy-history",
+          url: "/api/v1/buy-history",
         });
 
         if (response.status == 200) {
@@ -309,7 +309,7 @@ export default {
       try {
         let response = await axios({
           method: "GET",
-          url: "http://localhost:8084/api/v1/chatting/" + item.itemId + "/customer-list",
+          url: "/api/v1/chatting/" + item.itemId + "/customer-list",
         });
 
         if (response.status == 200) {
@@ -337,7 +337,7 @@ export default {
       try {
         let response = await axios({
           method: "PUT",
-          url: "http://localhost:8084/api/v1/transaction-history/setbuyer",
+          url: "/api/v1/transaction-history/setbuyer",
           data: {
             id: this.selectedCompletedItem.id,
             buyerId: customerId
