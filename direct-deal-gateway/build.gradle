@@ -44,17 +44,27 @@ test {
 	useJUnitPlatform()
 }
 
-// build task for npm
-/*task frontendBuild {}
-frontendBuild.dependsOn(npm_install)
-frontendBuild.dependsOn(npm_run_build)
-
-npm_install {
-  args = ['--prefix', './frontend']
+task npmInstall(type:Exec){
+    workingDir '../direct-deal-ui'
+    commandLine 'npm', 'install'
 }
 
-npm_run_build {
-  args = ['--prefix', './frontend']
+task npmRunBuild(type:Exec){
+    workingDir '../direct-deal-ui'
+    environment 'NODE_OPTIONS', '--openssl-legacy-provider'
+    commandLine 'npm', 'run', 'build'
 }
 
-compileJava.dependsOn(frontendBuild);*/
+task frontendBuild(){
+    dependsOn 'npmInstall'
+    dependsOn 'npmRunBuild'
+}
+
+bootJar {
+    baseName = 'direct-deal-gateway'
+    version = '0.1'
+    from ('../direct-deal-ui/dist/') {
+        into '/BOOT-INF/classes/static'
+    }
+    dependsOn frontendBuild
+}
