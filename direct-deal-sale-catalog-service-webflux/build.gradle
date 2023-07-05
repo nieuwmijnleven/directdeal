@@ -15,6 +15,10 @@ dependencyManagement {
 	}
 }
 
+configurations.all {
+    transitive = false
+}
+
 dependencies {
 	implementation project(':direct-deal-common')
 
@@ -31,11 +35,13 @@ dependencies {
 
 	implementation ('org.axonframework:axon-spring-boot-starter') {
 		exclude group: "org.axonframework", module: 'axon-server-connector'
+        exclude group: "com.thoughtworks.xstream", module:"xstream"
 	}
 
 	implementation 'org.axonframework:axon-micrometer'
 	implementation 'org.axonframework.extensions.kafka:axon-kafka-spring-boot-starter'
 	implementation 'org.apache.kafka:kafka-clients'
+    implementation 'com.thoughtworks.xstream:xstream:1.4.16'
 
 	compileOnly 'io.jsonwebtoken:jjwt-api'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl'
