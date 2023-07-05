@@ -4,14 +4,6 @@ plugins {
 	id 'java'
 }
 
-bootJar {
-	baseName = 'direct-deal-gateway'
-	version = '0.1'
-    from ('frontend/dist/') {
-        into 'static'
-    }
-}
-
 group = 'kr.co.directdeal.gateway'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
