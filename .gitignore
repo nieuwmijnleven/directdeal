@@ -4,6 +4,7 @@
 .settings
 *.tar
 *.tar.gz
+*.json
 
 # Ignore Gradle build output directory
 build
