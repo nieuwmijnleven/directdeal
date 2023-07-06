@@ -15,9 +15,9 @@ dependencyManagement {
 	}
 }
 
-configurations.all {
-    transitive = false
-}
+// configurations.all {
+//     transitive = false
+// }
 
 dependencies {
 	implementation project(':direct-deal-common')
