@@ -43,13 +43,19 @@ $> ./start-direct-deal-service.sh
 
 # SysteemArchitectuur
 ## 1. De structuur van het geheel systeem
+### EventSourcing + CQRS
+### JWT (JSON WEB TOKEN)
 
 # Micro-Services
 ## 1. direct-deal-account-service
+### JWT (JSON Web Token)
 ## 2. direct-deal-chatting-service
 ## 3. direct-deal-gateway-service
+### Spring Cloud Gateway (Spring Webflux)
 ## 4. direct-deal-sale-service
+### Eventsourcing CQRS
 ## 5. direct-deal-sale-catalog-service
+### Eventsourcing CQRS
 ## 6. direct-deal-transaction-history-service
 
 # To be provided (scheduled)
