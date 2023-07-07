@@ -53,9 +53,12 @@ $> ./start-direct-deal-service.sh
 ## 3. direct-deal-gateway-service
 ### Spring Cloud Gateway (Spring Webflux)
 ## 4. direct-deal-sale-service
-### Eventsourcing CQRS
+### Eventsourcing + CQRS
+### EventStore MYSQL
 ## 5. direct-deal-sale-catalog-service
-### Eventsourcing CQRS
+### Eventsourcing + CQRS
+### REDIS
+### MONGO DB
 ## 6. direct-deal-transaction-history-service
 
 # To be provided (scheduled)
