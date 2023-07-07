@@ -43,6 +43,9 @@ $> ./start-direct-deal-service.sh
 
 # SysteemArchitectuur
 ## 1. De structuur van het geheel systeem
+Het gehele systeem bestaat uit 5 Micro-Services: direct-deal-account-service, direct-deal-chatting-service, direct-deal-gateway-service, direct-deal-sale-service, en direct-deal-sale-catalog-service. Elke Micro-Service speelt een rol in dit systeem. direct-deal-account-service is verantwoordelijk voor het management van gebruikersaccount en in/outloggen.  
+
+
 ### EventSourcing + CQRS
 ### JWT (JSON WEB TOKEN)
 
