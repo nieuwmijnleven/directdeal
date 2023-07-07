@@ -1,5 +1,5 @@
 # DirectDeal
-De DirectDeal is een direct handelssysteem voor iedereen. Daarin kan iedereen vrij zijn spullen verhandelen of anderens producten kopen.  
+DirectDeal is een online direct handelssysteem voor iedereen. Daarin kan iedereen vrij zijn spullen verhandelen of anderens producten kopen.  
 
 # Het Doel
 DirectDeal is mijn vrijetijdsproject die onder gedecentraliseerde omgeving, vooral MSA (Micro Service Architecture), naar ontwerp en implementatie van enterprise java omgeving streeft. In die project gebruikte ik populaire of veelbelovende technologieën, ontwerp patronen, en gereedschappen. Zoals onder meer Spring Boot, Spring Webflux, Event Sourcing(Axon Framework), CQRS Pattern, Kafka, Redis, No Sql(Mongo DB), REST-API, Docker, Kubernetes, Java 11, JPA(Hibernate), en Gradle.  
