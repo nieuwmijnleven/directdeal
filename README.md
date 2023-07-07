@@ -44,13 +44,13 @@ $> cd ./start-direct-deal-service.sh
 # SysteemArchitectuur
 ## 1. De structuur van het geheel systeem
 
-## 2. Micro-Services
-### direct-deal-account-service
-### direct-deal-chatting-service
-### direct-deal-gateway-service
-### direct-deal-sale-service
-### direct-deal-sale-catalog-service
-### direct-deal-transaction-history-service
+# Micro-Services
+## 1. direct-deal-account-service
+## 2. direct-deal-chatting-service
+## 3. direct-deal-gateway-service
+## 4. direct-deal-sale-service
+## 5. direct-deal-sale-catalog-service
+## 6. direct-deal-transaction-history-service
 
 # To be provided (scheduled)
 
