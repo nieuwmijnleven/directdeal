@@ -43,7 +43,8 @@ $> ./start-direct-deal-service.sh
 
 # SysteemArchitectuur
 ## 1. De structuur van het geheel systeem
-Het gehele systeem bestaat uit 5 Micro-Services: direct-deal-account-service, direct-deal-chatting-service, direct-deal-gateway-service, direct-deal-sale-service, en direct-deal-sale-catalog-service. Elke Micro-Service speelt een rol in dit systeem. direct-deal-account-service is bijvoorbeeld verantwoordelijk voor het management van gebruikersaccount en in/outloggen en direct-deal-sale-service geeft functies van het registreren, wijzigen, en verwijderen van producten aan gebruikers. opvallend is dat voor direct-deal-sale-service, direct-deal-sale-catalog-service Event-Sourcing en CQRS Patron gelden.  
+Het gehele systeem bestaat uit 5 Micro-Services: direct-deal-account-service, direct-deal-chatting-service, direct-deal-gateway-service, direct-deal-sale-service, en direct-deal-sale-catalog-service. Elke Micro-Service speelt een rol in dit systeem. direct-deal-account-service is bijvoorbeeld verantwoordelijk voor het management van gebruikersaccount en in/outloggen en direct-deal-sale-service geeft functies van het registreren, wijzigen, en verwijderen van producten aan gebruikers. opvallend is dat voor direct-deal-sale-service en direct-deal-sale-catalog-service Event-Sourcing en CQRS(Command Query Responsibility Segregation) Patron gelden. Daardoor, 
+Event-Sourcing is ~, en CQRS Patron ~. x 
 
 
 ### EventSourcing + CQRS
