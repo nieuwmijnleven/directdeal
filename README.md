@@ -22,6 +22,8 @@ De reden waarom ik die project begon is om het gebrek aan ervaring onder gedecen
 * Hibernate : 5.4.31 
 * Vue.js:2.6.14 
 * Vuetify:2.5.4
+* Mockito:
+* 
 
 # Het Verloop van Uitvoering
 ## 1. De Github-Opslagplaats van DirectDeal Project Klonen
@@ -40,9 +42,15 @@ $> cd ./start-direct-deal-service.sh
 [http://localhost:8084](http://localhost:8084)
 
 # SysteemArchitectuur
+## De structuur van het geheel systeem
 
-
-
+## Micro-Services
+### direct-deal-account-service
+### direct-deal-chatting-service
+### direct-deal-gateway-service
+### direct-deal-sale-service
+### direct-deal-sale-catalog-service
+### direct-deal-transaction-history-service
 
 # To be provided (scheduled)
 
