@@ -36,7 +36,7 @@ $> cd ./directdeal
 
 ## 3. Alle MSA Services Opbouwen en Starten
 ```
-$> cd ./start-direct-deal-service.sh
+$> ./start-direct-deal-service.sh
 ```
 ## 4. DirectDeal Website Koppelen
 [http://localhost:8084](http://localhost:8084)
