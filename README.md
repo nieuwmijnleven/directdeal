@@ -24,23 +24,20 @@ De reden waarom ik die project begon is om het gebrek aan ervaring onder gedecen
 16. Vuetify:2.5.4
 
 ## Het Verloop van Uitvoering
-### 1. Cloning the project repository
+### 1. De Github-Opslagplaats van DirectDeal Project Klonen
 ```
 $> git clone https://github.com/nieuwmijnleven/directdeal.git
 $> cd ./directdeal
 ```
-### 2. Installing minikube
+### 2. Minikube Installeren
 [How to Install Minikube on Ubuntu](https://phoenixnap.com/kb/install-minikube-on-ubuntu#:~:text=Step%201%3A%20Update%20System%20and%20Install%20Required%20Packages%0ABefore,apt-get%20install%20curl%0Asudo%20apt-get%20install%20apt-transport-https%0AIn%20the%20)
 
-### 3. Build en Start
+### 3. Alle MSA Services Opbouwen en Starten
 ```
 $> cd ./start-direct-deal-service.sh
 ```
-
-### 4. Running this project
-```
-$> cd ../start-direct-deal-service.sh
-```
+### 4. DirectDeal Website Koppelen
+[http://localhost:8084](http://localhost:8084)
 
 ## Functionalities
 
