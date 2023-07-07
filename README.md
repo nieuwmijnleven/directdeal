@@ -6,22 +6,22 @@ DirectDeal is mijn vrijetijdsproject die onder gedecentraliseerde omgeving, voor
 De reden waarom ik die project begon is om het gebrek aan ervaring onder gedecentraliseerde omgeving te compenseren. Eindelijk door die project heb ik een enterprise java omgeving implementeren onder MSA omgeving. Daarom geloof ik in dat ik bereid ben om in een project te werken onder gedecentraliseerde omgeving.  
 
 ## Ontwikkelomgeving
-1. Operating System: Linux (Debian/Ubuntu), Windows (WSL) 
-2. JAVA: 12 
-3. Mysql: 5.7 
-4. Mongo DB : 4.0.25 
-5. Kafka: wurstmeister/kafka:2.12-2.4.0 
-6. Redis: 6.2.4 
-7. Spring boot: 2.5.0 
-8. Spring webflux: 5.3.7 
-9. Spring cloud gateway: 3.0.4 
-10. Spring cloud kubernetes: 2.0.4 
-11. Gradle: 7.4 
-12. Axon framework: 4.5 
-13. Kubernetes/minikube : v1.30.1 
-14. Hibernate : 5.4.31 
-15. Vue.js:2.6.14 
-16. Vuetify:2.5.4
+* Operating System: Linux (Debian/Ubuntu), Windows (WSL)
+* JAVA: 12 
+* Mysql: 5.7 
+* Mongo DB : 4.0.25 
+* Kafka: wurstmeister/kafka:2.12-2.4.0 
+* Redis: 6.2.4 
+* Spring boot: 2.5.0 
+* Spring webflux: 5.3.7 
+* Spring cloud gateway: 3.0.4 
+* Spring cloud kubernetes: 2.0.4 
+* Gradle: 7.4 
+* Axon framework: 4.5 
+* Kubernetes/minikube : v1.30.1 
+* Hibernate : 5.4.31 
+* Vue.js:2.6.14 
+* Vuetify:2.5.4
 
 ## Het Verloop van Uitvoering
 ### 1. De Github-Opslagplaats van DirectDeal Project Klonen
