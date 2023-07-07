@@ -29,13 +29,6 @@ De reden waarom ik die project begon is om het gebrek aan ervaring onder gedecen
 
 ## To be provided (scheduled)
 
-1. The Full Standard SQL Support
-2. Constraint Conditions
-3. Index Support
-4. Inner/Outer Join Operation Support
-5. Optimizer/Execution Plan Support 
-6. Synchronization support for multiple thread/process environments
-7. Network Daemon
 
 ## Example
 
