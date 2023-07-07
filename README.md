@@ -42,9 +42,9 @@ $> cd ./start-direct-deal-service.sh
 [http://localhost:8084](http://localhost:8084)
 
 # SysteemArchitectuur
-## De structuur van het geheel systeem
+## 1. De structuur van het geheel systeem
 
-## Micro-Services
+## 2. Micro-Services
 ### direct-deal-account-service
 ### direct-deal-chatting-service
 ### direct-deal-gateway-service
