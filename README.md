@@ -51,7 +51,8 @@ Event-Sourcing is ~, en CQRS Patron ~.
 ## 2. MicroServices
 ### 1. direct-deal-account-service
 * direct-deal-account-service is verantwoordelijk voor het management van gebruikersaccount en in/outloggen
-* die microservice creërt een JWT (JSON WEB TOKEN) en stuurt het een gebruiker wanneer de gebruiker in de directdeal systeem logt. 
+* die microservice creërt een JWT(JSON WEB TOKEN) en stuurt het een gebruiker wanneer de gebruiker in de directdeal systeem logt.
+* door JWT(JSON WEB TOKEN) in de authorization veld van httpaanvraagheader te injecteren, kunnen gebruikers alle andere microservices gebruiken. 
   
 ### 2. direct-deal-chatting-service
 
