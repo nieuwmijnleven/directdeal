@@ -47,7 +47,7 @@ Het gehele systeem bestaat uit 6 Micro-Services: direct-deal-account-service, di
 
 Event-Sourcing is ~, en CQRS Patron ~. 
 
-![image](https://github.com/nieuwmijnleven/directdeal/assets/56591823/7a879037-4f6e-4259-955f-ae7d56df23a6)
+![image](https://github.com/nieuwmijnleven/directdeal/assets/56591823/7faa2486-dd87-46ea-ac18-47ff6f49f35e)
 
 ## 2. MicroServices
 ### 1. direct-deal-account-service
