@@ -58,7 +58,7 @@ Event-Sourcing is ~, en CQRS Patron ~.
 * die microservice verstrekt functionaliteit van chatting tussen verkoper en koper 
 
 ### 3. direct-deal-gateway-service
-
+* Die microservice speelt een rol in API gateway onder MSA-Omgeving
 
 ### 4. direct-deal-sale-service
 * die microservice geeft functionaliteiten van het registreren, wijzigen, en verwijderen van producten aan gebruikers
@@ -72,7 +72,7 @@ Event-Sourcing is ~, en CQRS Patron ~.
 * die microservice implementeert de `Query` deel van CQRS Patron
 * die microservice organiseert de `` in Event-Sourcing 
 
-## 6. direct-deal-transaction-history-service
+### 6. direct-deal-transaction-history-service
 * die microservice geeft list van voltooide transacties aan gebruikers
 
 
