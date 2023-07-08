@@ -55,9 +55,10 @@ Event-Sourcing is ~, en CQRS Patron ~.
 * door JWT in de authorization veld van httpaanvraagheader te injecteren, kunnen gebruikers alle microservices gebruiken. 
   
 ### 2. direct-deal-chatting-service
- 
+* die microservice verstrekt functionaliteit van chatting tussen verkoper en koper 
 
 ### 3. direct-deal-gateway-service
+
 
 ### 4. direct-deal-sale-service
 * die microservice geeft functionaliteiten van het registreren, wijzigen, en verwijderen van producten aan gebruikers
@@ -72,7 +73,7 @@ Event-Sourcing is ~, en CQRS Patron ~.
 * die microservice organiseert de `` in Event-Sourcing 
 
 ## 6. direct-deal-transaction-history-service
-
+* die microservice geeft list van voltooide transacties aan gebruikers
 
 
 ### EventSourcing + CQRS
