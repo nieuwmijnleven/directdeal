@@ -43,9 +43,22 @@ $> ./start-direct-deal-service.sh
 
 # SysteemArchitectuur
 ## 1. De structuur van het geheel systeem
-Het gehele systeem bestaat uit 5 Micro-Services: direct-deal-account-service, direct-deal-chatting-service, direct-deal-gateway-service, direct-deal-sale-service, en direct-deal-sale-catalog-service. Elke Micro-Service speelt een rol in dit systeem. direct-deal-account-service is bijvoorbeeld verantwoordelijk voor het management van gebruikersaccount en in/outloggen en direct-deal-sale-service geeft functionaliteiten van het registreren, wijzigen, en verwijderen van producten aan gebruikers. opvallend is dat voor direct-deal-sale-service en direct-deal-sale-catalog-service Event-Sourcing en CQRS(Command Query Responsibility Segregation) Patron gelden. Daardoor, aan kan de kant van het lezen (direct-deal-sale-catalog-service) wordt lock contention verminderd en hoeft transactie niet gebruikt te worden. Dus, die systeem kan gebruikers voorzien van sneller reactiesnelheid van lezen. 
+Het gehele systeem bestaat uit 6 Micro-Services: direct-deal-account-service, direct-deal-chatting-service, direct-deal-gateway-service, direct-deal-sale-service, en direct-deal-sale-catalog-service. Elke Micro-Service speelt een rol in dit systeem. direct-deal-account-service is bijvoorbeeld verantwoordelijk voor het management van gebruikersaccount en in/outloggen en direct-deal-sale-service geeft functionaliteiten van het registreren, wijzigen, en verwijderen van producten aan gebruikers. opvallend is dat voor direct-deal-sale-service en direct-deal-sale-catalog-service Event-Sourcing en CQRS(Command Query Responsibility Segregation) Patron gelden. Daardoor, aan kan de kant van het lezen (direct-deal-sale-catalog-service) wordt lock contention verminderd en hoeft transactie niet gebruikt te worden. Dus, die systeem kan gebruikers voorzien van sneller reactiesnelheid van lezen. 
 
 Event-Sourcing is ~, en CQRS Patron ~. 
+
+
+## 2. MicroServices
+### 1. direct-deal-account-service
+
+### 2. direct-deal-chatting-service
+
+### 3. direct-deal-gateway-service
+
+### 4. direct-deal-sale-service
+
+### 5. direct-deal-account-service
+
 
 
 ### EventSourcing + CQRS
