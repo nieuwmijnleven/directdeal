@@ -47,9 +47,7 @@ $> ./start-direct-deal-service.sh
 ## 1. De structuur van het geheel systeem
 Het gehele systeem bestaat uit 6 Micro-Services: direct-deal-account-service, direct-deal-chatting-service, direct-deal-gateway-service, direct-deal-sale-service, en direct-deal-sale-catalog-service. Elke Micro-Service speelt een rol in dit systeem. direct-deal-account-service is bijvoorbeeld verantwoordelijk voor het management van gebruikersaccount en in/outloggen en direct-deal-sale-service geeft functionaliteiten van het registreren, wijzigen, en verwijderen van producten aan gebruikers. opvallend is dat voor direct-deal-sale-service en direct-deal-sale-catalog-service Event-Sourcing en CQRS(Command Query Responsibility Segregation) Patron gelden. Daardoor, aan kan de kant van het lezen (direct-deal-sale-catalog-service) wordt lock contentie verminderd en hoeft transactie niet gebruikt te worden. Dus, die systeem kan gebruikers voorzien van sneller reactiesnelheid van lezen. 
 
-Event-Sourcing is ~, en CQRS Patron ~. 
-
-![image](https://github.com/nieuwmijnleven/directdeal/assets/56591823/7faa2486-dd87-46ea-ac18-47ff6f49f35e)
+![image](https://github.com/nieuwmijnleven/directdeal/assets/56591823/e45c1622-d4af-4009-bbc9-ffcb834a794b)
 
 ## 2. MicroServices
 ### 1. direct-deal-account-service
