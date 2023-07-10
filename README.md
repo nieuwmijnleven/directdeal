@@ -38,6 +38,8 @@ $> cd ./directdeal
 ```
 $> ./start-direct-deal-service.sh
 ```
+* Letop: Het kost behoorlijke tijd meer dan 5 minuten. U kan status van elke container controleren als u die opdracht "kubectl get pods" in de shell uitvoert.  
+
 ## 4. DirectDeal Website Koppelen
 [http://localhost:8084](http://localhost:8084)
 
