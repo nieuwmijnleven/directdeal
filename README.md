@@ -64,7 +64,7 @@ Event-Sourcing is ~, en CQRS Patron ~.
 ### 4. direct-deal-sale-service
 * Die microservice geeft functionaliteiten van het registreren, wijzigen, en verwijderen van producten aan gebruikers
 * Event-sourcing en CQRS(Command Query Responsibility Segregation) patron gelden voor die microservice
-* Die microservice implementeert de `Command` deel van CQRS Patron
+* Die microservice implementeert de `Command` deel van CQRS Patroon
 * Die microservice organiseert de `EventStore` in Event-Sourcing
 
 ### 5. direct-deal-account-service
@@ -76,9 +76,15 @@ Event-Sourcing is ~, en CQRS Patron ~.
 ### 6. direct-deal-transaction-history-service
 * Die microservice geeft list van voltooide transacties aan gebruikers
 
+## 3. Technologieën, Ontwerp Patronen, en Gereedschappen
+### 1. EventSourcing
 
-### EventSourcing + CQRS
-### JWT (JSON WEB TOKEN)
+### 2. CQRS(Command Query Responsibility Segregation) Patroon
+
+### 3. JWT (JSON WEB TOKEN)
+
+
+
 
 # Micro-Services
 ## 1. direct-deal-account-service
