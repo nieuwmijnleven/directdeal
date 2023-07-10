@@ -93,23 +93,6 @@ Het implementeren van CQRS kan de prestaties, schaalbaarheid en beveiliging maxi
 ### 3. JWT (JSON WEB TOKEN)
 
 
-
-
-# Micro-Services
-## 1. direct-deal-account-service
-### JWT (JSON Web Token)
-## 2. direct-deal-chatting-service
-## 3. direct-deal-gateway-service
-### Spring Cloud Gateway (Spring Webflux)
-## 4. direct-deal-sale-service
-### Eventsourcing + CQRS
-### EventStore MYSQL
-## 5. direct-deal-sale-catalog-service
-### Eventsourcing + CQRS
-### REDIS
-### MONGO DB
-## 6. direct-deal-transaction-history-service
-
 # To be provided (scheduled)
 
 
