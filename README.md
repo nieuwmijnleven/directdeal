@@ -67,7 +67,7 @@ Event-Sourcing is ~, en CQRS Patron ~.
 * Die microservice implementeert de `Command` deel van CQRS Patroon
 * Die microservice organiseert de `EventStore` in Event-Sourcing
 
-### 5. direct-deal-account-service
+### 5. direct-deal-sale-catalog-service
 * Die microservice geeft lijst van verkrijgbare producten aan gebruikers
 * Event-sourcing en CQRS(Command Query Responsibility Segregation) patron gelden voor die microservice
 * Die microservice implementeert de `Query` deel van CQRS Patron
