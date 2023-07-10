@@ -86,6 +86,8 @@ In deze architectuur, verzoeken om een entiteit te bijwerken worden behandeld do
 
 ### 2. CQRS(Command Query Responsibility Segregation) Patroon
 
+![image](https://github.com/nieuwmijnleven/directdeal/assets/56591823/f47a9d4a-3650-4dd0-8ad9-5406307b52f5)
+
 ### 3. JWT (JSON WEB TOKEN)
 
 
