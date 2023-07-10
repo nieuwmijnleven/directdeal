@@ -78,6 +78,7 @@ Event-Sourcing is ~, en CQRS Patron ~.
 
 ## 3. Technologieën, Ontwerp Patronen, en Gereedschappen
 ### 1. EventSourcing
+Event sourcing is een gunstige manier om atomisch status te bijwerken en evenement te publiceren. De traditionele wijze om een entity aan te houden is om zijn huidige status te bewaren. Event sourcing gebruikt wezenlijk andere, event-gecentrialiseerd aanpak aan persistentie. Een zakelijke object wordt aangehouden door een serie status wijziging evenementen op te slaan. Wanneer de status van een object verandert, een nieuwe evenement wordt toegevoegd aan de serie evenementen. doordat een evenement een operatie is, is het wezenlijk atomisch. De huidige status van een entitie wordt hergebouwd door zijn evenements te overspelen. 
 
 ### 2. CQRS(Command Query Responsibility Segregation) Patroon
 
