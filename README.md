@@ -80,6 +80,10 @@ Event-Sourcing is ~, en CQRS Patron ~.
 ### 1. EventSourcing
 Event sourcing is een gunstige manier om atomisch status te bijwerken en evenement te publiceren. De traditionele wijze om een entiteit aan te houden is om zijn huidige status te bewaren. Event sourcing gebruikt wezenlijk andere, event-gecentrialiseerd aanpak aan persistentie. Een zakelijke object wordt aangehouden door een serie status wijziging evenementen op te slaan. Wanneer de status van een object verandert, een nieuwe evenement wordt toegevoegd aan de serie evenementen. doordat een evenement een operatie is, is het wezenlijk atomisch. De huidige status van een entiteit wordt hergebouwd door zijn evenements te overspelen. 
 
+Evenementen worden aangehouden in een evenementopslag. Niet allen fungeert de evenementopslag als een database van evenementen, maar ook gedraagt als een berichtenbroker. Het verstrekt een API die het mogelijk maken dat services abonneren op evenementen. Elke evenement die wordt aangehouden in de evenementopslag wordt geleverd door de evenementopslag naar alle interessante abonnee. De evenementopslag is de ruggengraat van event-driven microservice architectuur.
+
+In deze architectuur, verzoeken om een entiteit te bijwerken worden behandeld door evenementen van de entiteit te zoeken van de evenementopslag, de huidige status te herbouwen, de entiteit te bijwerken, en de nieuwe evenement te bewaren.  
+
 ### 2. CQRS(Command Query Responsibility Segregation) Patroon
 
 ### 3. JWT (JSON WEB TOKEN)
