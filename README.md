@@ -91,6 +91,7 @@ CQRS staat voor Scheiding van opdracht- en queryverantwoordelijkheid, een patroo
 Het implementeren van CQRS kan de prestaties, schaalbaarheid en beveiliging maximaliseren. 
 
 ![image](https://github.com/nieuwmijnleven/directdeal/assets/56591823/9aea89e2-ff33-4da6-a188-661c29ddface)
+![image](https://github.com/nieuwmijnleven/directdeal/assets/56591823/9aea89e2-ff33-4da6-a188-661c29ddface)
 
 ### 3. JWT (JSON WEB TOKEN)
 
