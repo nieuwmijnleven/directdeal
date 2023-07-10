@@ -90,8 +90,7 @@ In deze architectuur, verzoeken om een entiteit te bijwerken worden behandeld do
 CQRS staat voor Scheiding van opdracht- en queryverantwoordelijkheid, een patroon dat lees- en updatebewerkingen voor een gegevensarchief scheidt. In plaats ervan om een ingewikkeld join query te gebruiken, in CQRS wordt er een allen-lezen view database voor toegevoegd. Het gevolg daarvan is dat lock contentie wordt verminderd door joinbewerkingen en de transactie hoeft niet gebruikt te worden doordat een zakelijke object tussen alleen-lezen database en allen-schrijven database wordt gesychroniseerd volgens de chronologische volgorde van evenementen door middel van een berichtenbroker zoals Kafka en RabbitMQ. In alleen-schrijven database wordt het voorkomen dat updateopdrachten samenvoegingsconflicten op domeinniveau veroorzaken.
 Het implementeren van CQRS kan de prestaties, schaalbaarheid en beveiliging maximaliseren. 
 
-![image](https://github.com/nieuwmijnleven/directdeal/assets/56591823/9aea89e2-ff33-4da6-a188-661c29ddface)
-![image](https://github.com/nieuwmijnleven/directdeal/assets/56591823/9aea89e2-ff33-4da6-a188-661c29ddface)
+![image](https://github.com/nieuwmijnleven/directdeal/assets/56591823/f47a9d4a-3650-4dd0-8ad9-5406307b52f5)
 
 ### 3. JWT (JSON WEB TOKEN)
 
