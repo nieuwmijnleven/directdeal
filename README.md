@@ -2,7 +2,7 @@
 DirectDeal is een online direct handelssysteem voor iedereen. Daarin kan iedereen vrij niet alleen zijn spullen verhandelen maar ook waren kopen die anderen verkopen.  
 
 # Het Doel
-DirectDeal is mijn vrijetijdsproject die onder gedecentraliseerde omgeving, vooral MSA (Micro Service Architecture), naar ontwerp en implementatie van enterprise java omgeving streeft. In die project gebruikte ik populaire of veelbelovende technologieën, ontwerp patronen, en gereedschappen. Zoals onder meer Spring Boot, Spring Webflux, Event Sourcing(Axon Framework), CQRS patron, Kafka, Redis, No Sql(Mongo DB), REST-API, Docker, Kubernetes, Java 11, JPA(Hibernate), en Gradle.  
+DirectDeal is mijn vrijetijdsproject die onder gedecentraliseerde omgeving, vooral MSA (Micro Service Architecture), naar ontwerp en implementatie van enterprise java omgeving streeft. In die project gebruikte ik populaire of veelbelovende technologieën, ontwerp patronen, en gereedschappen. Zoals onder meer Spring Boot, Spring Webflux, Event Sourcing(Axon Framework), CQRS patroon, Kafka, Redis, No Sql(Mongo DB), REST-API, Docker, Kubernetes, Java 11, JPA(Hibernate), en Gradle.  
 De reden waarom ik die project begon is om het gebrek aan ervaring onder gedecentraliseerde omgeving te compenseren. Eindelijk door die project heb ik een enterprise java omgeving implementeren onder MSA omgeving. Daarom geloof ik in dat ik bereid ben om in een project te werken onder gedecentraliseerde omgeving.  
 
 # Ontwikkel-Omgeving
@@ -45,7 +45,7 @@ $> ./start-direct-deal-service.sh
 
 # SysteemArchitectuur
 ## 1. De structuur van het geheel systeem
-Het gehele systeem bestaat uit 6 Micro-Services: direct-deal-account-service, direct-deal-chatting-service, direct-deal-gateway-service, direct-deal-sale-service, en direct-deal-sale-catalog-service. Elke Micro-Service speelt een rol in dit systeem. direct-deal-account-service is bijvoorbeeld verantwoordelijk voor het management van gebruikersaccount en in/outloggen en direct-deal-sale-service geeft functionaliteiten van het registreren, wijzigen, en verwijderen van producten aan gebruikers. opvallend is dat voor direct-deal-sale-service en direct-deal-sale-catalog-service Event-Sourcing en CQRS(Command Query Responsibility Segregation) Patron gelden. Daardoor, aan kan de kant van het lezen (direct-deal-sale-catalog-service) wordt lock contentie verminderd en hoeft transactie niet gebruikt te worden. Dus, die systeem kan gebruikers voorzien van sneller reactiesnelheid van lezen. 
+Het gehele systeem bestaat uit 6 Micro-Services: direct-deal-account-service, direct-deal-chatting-service, direct-deal-gateway-service, direct-deal-sale-service, en direct-deal-sale-catalog-service. Elke Micro-Service speelt een rol in dit systeem. direct-deal-account-service is bijvoorbeeld verantwoordelijk voor het management van gebruikersaccount en in/outloggen en direct-deal-sale-service geeft functionaliteiten van het registreren, wijzigen, en verwijderen van producten aan gebruikers. opvallend is dat voor direct-deal-sale-service en direct-deal-sale-catalog-service Event-Sourcing en CQRS(Command Query Responsibility Segregation) Patroon gelden. Daardoor, aan kan de kant van het lezen (direct-deal-sale-catalog-service) wordt lock contentie verminderd en hoeft transactie niet gebruikt te worden. Dus, die systeem kan gebruikers voorzien van sneller reactiesnelheid van lezen. 
 
 ![image](https://github.com/nieuwmijnleven/directdeal/assets/56591823/20ee3859-962b-4f5b-954a-131340a8ac30)
 
@@ -63,14 +63,14 @@ Het gehele systeem bestaat uit 6 Micro-Services: direct-deal-account-service, di
 
 ### 4. direct-deal-sale-service
 * Die microservice geeft functionaliteiten van het registreren, wijzigen, en verwijderen van producten aan gebruikers
-* Event-sourcing en CQRS(Command Query Responsibility Segregation) patron gelden voor die microservice
+* Event-sourcing en CQRS(Command Query Responsibility Segregation) patroon gelden voor die microservice
 * Die microservice implementeert de `Command` deel van CQRS Patroon
 * Die microservice organiseert de `EventStore` in Event-Sourcing
 
 ### 5. direct-deal-sale-catalog-service
 * Die microservice geeft lijst van verkrijgbare producten aan gebruikers
-* Event-sourcing en CQRS(Command Query Responsibility Segregation) patron gelden voor die microservice
-* Die microservice implementeert de `Query` deel van CQRS Patron
+* Event-sourcing en CQRS(Command Query Responsibility Segregation) patroon gelden voor die microservice
+* Die microservice implementeert de `Query` deel van CQRS Patroon
 * Die microservice organiseert de `` in Event-Sourcing 
 
 ### 6. direct-deal-transaction-history-service
