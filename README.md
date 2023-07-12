@@ -90,9 +90,6 @@ Het implementeren van CQRS kan de prestaties, schaalbaarheid en beveiliging maxi
 
 ![image](https://github.com/nieuwmijnleven/directdeal/assets/56591823/f47a9d4a-3650-4dd0-8ad9-5406307b52f5)
 
-### 3. JWT (JSON WEB TOKEN)
-
-
 # To be provided (scheduled)
 
 
