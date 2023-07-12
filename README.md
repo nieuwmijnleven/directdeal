@@ -22,8 +22,6 @@ De reden waarom ik die project begon is om het gebrek aan ervaring onder gedecen
 * Hibernate : 5.4.31 
 * Vue.js:2.6.14 
 * Vuetify:2.5.4
-* Mockito:
-* 
 
 # Het Verloop van Uitvoering
 ## 1. De Github-Opslagplaats van DirectDeal Project Klonen
