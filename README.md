@@ -92,7 +92,7 @@ Het implementeren van CQRS kan de prestaties, schaalbaarheid en beveiliging maxi
   <img src = "https://github.com/nieuwmijnleven/directdeal/assets/56591823/59875932-ded1-48dd-b4c1-0e04f5c2f4a3" width=670/>
 </p>
 
-# Screenshots
+# Schermafbeeldingen
 <p align="center">
   <kbd>
     <img src = "https://github.com/nieuwmijnleven/directdeal/assets/56591823/f815ea02-6166-42e7-88d4-70997c3590ed" width=200/>    
@@ -105,10 +105,7 @@ Het implementeren van CQRS kan de prestaties, schaalbaarheid en beveiliging maxi
   </kbd>
 </p>
 
-
-# Authors
+# Auteur
 
 * **Jeon, Cheol** 
-
-## License
 
