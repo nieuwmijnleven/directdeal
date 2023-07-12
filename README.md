@@ -92,10 +92,18 @@ Het implementeren van CQRS kan de prestaties, schaalbaarheid en beveiliging maxi
   <img src = "https://github.com/nieuwmijnleven/directdeal/assets/56591823/59875932-ded1-48dd-b4c1-0e04f5c2f4a3" width=670/>
 </p>
 
-# To be provided (scheduled)
-
-
-# Example
+# Screenshots
+<p align="center">
+  <kbd>
+    <img src = "https://github.com/nieuwmijnleven/directdeal/assets/56591823/f815ea02-6166-42e7-88d4-70997c3590ed" width=200/>    
+  </kbd>
+  <kbd>
+    <img src = "https://github.com/nieuwmijnleven/directdeal/assets/56591823/f2c5b0be-1806-40cf-809e-6a2f8d0368f8" width=200/>    
+  </kbd>
+  <kbd>
+    <img src = "https://github.com/nieuwmijnleven/directdeal/assets/56591823/0d21c9a7-f603-4bd9-a77f-182a58f80c11" width=200/>    
+  </kbd>
+</p>
 
 
 # Authors
