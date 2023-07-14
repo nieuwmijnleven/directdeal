@@ -45,7 +45,7 @@ $> ./start-direct-deal-service.sh
 ## 1. De structuur van het geheel systeem
 Het gehele systeem bestaat uit 6 Micro-Services: direct-deal-account-service, direct-deal-chatting-service, direct-deal-gateway-service, direct-deal-sale-service, en direct-deal-sale-catalog-service. Elke Micro-Service speelt een rol in dit systeem. direct-deal-account-service is bijvoorbeeld verantwoordelijk voor het management van gebruikersaccount en in/outloggen en direct-deal-sale-service geeft functionaliteiten van het registreren, wijzigen, en verwijderen van producten aan gebruikers. opvallend is dat voor direct-deal-sale-service en direct-deal-sale-catalog-service Event-Sourcing en CQRS(Command Query Responsibility Segregation) Patroon gelden. Daardoor, aan kan de kant van het lezen (direct-deal-sale-catalog-service) wordt lock contentie verminderd en hoeft transactie niet gebruikt te worden. Dus, die systeem kan gebruikers voorzien van sneller reactiesnelheid van lezen. 
 
-![image](https://github.com/nieuwmijnleven/directdeal/assets/56591823/20ee3859-962b-4f5b-954a-131340a8ac30)
+![image](https://github.com/nieuwmijnleven/directdeal/assets/56591823/8a180293-c45e-4bf8-aab4-447fa0b3a8ad)
 
 ## 2. MicroServices
 ### 1. direct-deal-account-service
@@ -87,19 +87,19 @@ CQRS staat voor Scheiding van opdracht- en queryverantwoordelijkheid, een patroo
 Het implementeren van CQRS kan de prestaties, schaalbaarheid en beveiliging maximaliseren. 
 
 <p align="center">
-  <img src = "https://github.com/nieuwmijnleven/directdeal/assets/56591823/59875932-ded1-48dd-b4c1-0e04f5c2f4a3" width=670/>
+  <img src = "" width=670/>
 </p>
 
 # Schermafbeeldingen
 <p align="center">
   <kbd>
-    <img src = "https://github.com/nieuwmijnleven/directdeal/assets/56591823/f815ea02-6166-42e7-88d4-70997c3590ed" width=200/>    
+    <img src = "https://github.com/nieuwmijnleven/directdeal/assets/56591823/ac292c21-5ff8-415f-9363-89568ae71de9" width=200/>    
   </kbd>
   <kbd>
-    <img src = "https://github.com/nieuwmijnleven/directdeal/assets/56591823/f2c5b0be-1806-40cf-809e-6a2f8d0368f8" width=200/>    
+    <img src = "https://github.com/nieuwmijnleven/directdeal/assets/56591823/b56f8942-5276-42bc-95db-27b222c18987" width=200/>    
   </kbd>
   <kbd>
-    <img src = "https://github.com/nieuwmijnleven/directdeal/assets/56591823/0d21c9a7-f603-4bd9-a77f-182a58f80c11" width=200/>    
+    <img src = "https://github.com/nieuwmijnleven/directdeal/assets/56591823/c0f9c429-bd78-4740-9515-fcaa815273d2" width=200/>    
   </kbd>
 </p>
 
