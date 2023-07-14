@@ -87,7 +87,7 @@ CQRS staat voor Scheiding van opdracht- en queryverantwoordelijkheid, een patroo
 Het implementeren van CQRS kan de prestaties, schaalbaarheid en beveiliging maximaliseren. 
 
 <p align="center">
-  <img src = "" width=670/>
+  <img src = "https://github.com/nieuwmijnleven/directdeal/assets/56591823/c2aace41-7e20-4e9d-9285-ed9f6c745c42" width=670/>
 </p>
 
 # Schermafbeeldingen
