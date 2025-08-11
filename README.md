@@ -52,7 +52,7 @@ Het systeem bestaat uit zes microservices: direct-deal-account-service, direct-d
 Opvallend is dat voor direct-deal-sale-service en direct-deal-sale-catalog-service het Event Sourcing- en CQRS-patroon (Command Query Responsibility Segregation) wordt toegepast. Hierdoor wordt de lock-contentie aan de leeszijde (direct-deal-sale-catalog-service) verminderd en is het niet nodig om transacties te gebruiken. Dit stelt het systeem in staat om gebruikers een snellere reactietijd bij het lezen van gegevens te bieden.
 ![image](https://github.com/nieuwmijnleven/directdeal/assets/56591823/8a180293-c45e-4bf8-aab4-447fa0b3a8ad)
 
-## 2. MicroServices
+## 2. Microservices
 ### 1. direct-deal-account-service
 * De microservice is verantwoordelijk voor het beheer van gebruikersaccounts en het in- en uitloggen.
 * Deze microservice creëert een JWT (JSON Web Token) en stuurt dit naar de gebruiker wanneer deze in het DirectDeal-systeem inlogt.
