@@ -2,7 +2,7 @@
 DirectDeal is een online direct-handelsplatform voor iedereen. Daar kunnen mensen niet alleen vrij hun spullen verhandelen, maar ook producten kopen die door anderen worden verkocht.  
 
 # Het Doel
-DirectDeal is mijn vrijetijdsproject dat zich in een gedecentraliseerde omgeving, met name binnen een microservices-architectuur (MSA), richt op het ontwerpen en implementeren van een enterprise Java-omgeving. In dit project heb ik gebruikgemaakt van populaire en veelbelovende technologieën, ontwerp­patronen en tools, zoals onder andere Spring Boot, Spring WebFlux, Event Sourcing (Axon Framework), het CQRS-patroon, Kafka, Redis, NoSQL (MongoDB), REST API, Docker, Kubernetes, Java 11, JPA (Hibernate) en Gradle.
+DirectDeal is mijn vrijetijdsproject dat zich in een gedecentraliseerde omgeving, met name binnen een microservices-architectuur (MSA), richt op het ontwerpen en implementeren van een enterprise Java-omgeving. In dit project heb ik gebruikgemaakt van populaire en veelbelovende technologieën, ontwerp­patronen en tools, zoals onder andere Spring Boot, Spring WebFlux, Event Sourcing (Axon Framework), het CQRS-patroon, Kafka, Redis, NoSQL (MongoDB), REST API, Docker, Kubernetes, Java 12, JPA (Hibernate) en Gradle.
 De reden waarom ik dit project ben begonnen, is om mijn gebrek aan ervaring met gedecentraliseerde omgevingen te compenseren. Dankzij dit project heb ik met succes een enterprise Java-omgeving geïmplementeerd binnen een MSA-structuur. Daarom geloof ik dat ik goed voorbereid ben om aan projecten in een gedecentraliseerde omgeving te werken.
 
 # Ontwikkel-Omgeving
@@ -23,22 +23,27 @@ De reden waarom ik dit project ben begonnen, is om mijn gebrek aan ervaring met 
 * Vue.js:2.6.14 
 * Vuetify:2.5.4
 
-# Het Verloop van Uitvoering
-## 1. De Github-Opslagplaats van DirectDeal Project Klonen
+# Uitvoeringsstappen
+## 1. De GitHub-opslagplaats van het DirectDeal-project klonen
 ```
 $> git clone https://github.com/nieuwmijnleven/directdeal.git
 $> cd ./directdeal
 ```
 ## 2. Minikube Installeren
+Volg de instructies om Minikube op Ubuntu te installeren.
 [How to Install Minikube on Ubuntu](https://phoenixnap.com/kb/install-minikube-on-ubuntu#:~:text=Step%201%3A%20Update%20System%20and%20Install%20Required%20Packages%0ABefore,apt-get%20install%20curl%0Asudo%20apt-get%20install%20apt-transport-https%0AIn%20the%20)
 
-## 3. Alle MSA Services Opbouwen en Starten
+## 3. Alle MSA-services bouwen en starten
 ```
 $> ./start-direct-deal-service.sh
 ```
-* Letop: Het kost behoorlijke tijd meer dan 5 minuten. U kan status van elke container controleren als u die opdracht "kubectl get pods" in de shell uitvoert.  
+Let op: dit proces kan langer dan vijf minuten duren.
+U kunt de status van alle containers bekijken met het commando: 
+```
+$> kubectl get pods
+```
 
-## 4. DirectDeal Website Koppelen
+## 4. De DirectDeal-website openen
 [http://localhost:8084](http://localhost:8084)
 
 # SysteemArchitectuur
