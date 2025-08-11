@@ -54,9 +54,9 @@ Opvallend is dat voor direct-deal-sale-service en direct-deal-sale-catalog-servi
 
 ## 2. MicroServices
 ### 1. direct-deal-account-service
-* Die microservice is verantwoordelijk voor het management van gebruikersaccount en in/outloggen
-* Die microservice creërt een JWT(JSON Web Token) en stuurt het een gebruiker wanneer de gebruiker in de directdeal systeem logt.
-* door JWT in de authorization veld van httpaanvraagheader te injecteren, kunnen gebruikers alle microservices gebruiken. 
+* De microservice is verantwoordelijk voor het beheer van gebruikersaccounts en het in- en uitloggen.
+* Deze microservice creëert een JWT (JSON Web Token) en stuurt dit naar de gebruiker wanneer deze in het DirectDeal-systeem inlogt.
+* Door het JWT in de authorization-header van de HTTP-aanvraag te plaatsen, kunnen gebruikers alle microservices gebruiken. 
   
 ### 2. direct-deal-chatting-service
 * Die microservice verstrekt functionaliteit van chatting tussen verkoper en koper 
