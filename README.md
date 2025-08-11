@@ -46,10 +46,10 @@ $> kubectl get pods
 ## 4. De DirectDeal-website openen
 [http://localhost:8084](http://localhost:8084)
 
-# SysteemArchitectuur
-## 1. De structuur van het geheel systeem
-Het gehele systeem bestaat uit 6 Micro-Services: direct-deal-account-service, direct-deal-chatting-service, direct-deal-gateway-service, direct-deal-sale-service, en direct-deal-sale-catalog-service. Elke Micro-Service speelt een rol in dit systeem. direct-deal-account-service is bijvoorbeeld verantwoordelijk voor het management van gebruikersaccount en in/outloggen en direct-deal-sale-service geeft functionaliteiten van het registreren, wijzigen, en verwijderen van producten aan gebruikers. opvallend is dat voor direct-deal-sale-service en direct-deal-sale-catalog-service Event-Sourcing en CQRS(Command Query Responsibility Segregation) Patroon gelden. Daardoor, aan kan de kant van het lezen (direct-deal-sale-catalog-service) wordt lock contentie verminderd en hoeft transactie niet gebruikt te worden. Dus, die systeem kan gebruikers voorzien van sneller reactiesnelheid van lezen. 
-
+# Systeemarchitectuur
+## 1. De structuur van het gehele systeem
+Het systeem bestaat uit zes microservices: direct-deal-account-service, direct-deal-chatting-service, direct-deal-gateway-service, direct-deal-sale-service en direct-deal-sale-catalog-service. Elke microservice vervult een specifieke rol binnen het systeem. Zo is direct-deal-account-service verantwoordelijk voor het beheer van gebruikersaccounts en het in- en uitloggen, terwijl direct-deal-sale-service functionaliteiten biedt voor het registreren, wijzigen en verwijderen van producten door gebruikers.
+Opvallend is dat voor direct-deal-sale-service en direct-deal-sale-catalog-service het Event Sourcing- en CQRS-patroon (Command Query Responsibility Segregation) wordt toegepast. Hierdoor wordt de lock-contentie aan de leeszijde (direct-deal-sale-catalog-service) verminderd en is het niet nodig om transacties te gebruiken. Dit stelt het systeem in staat om gebruikers een snellere reactietijd bij het lezen van gegevens te bieden.
 ![image](https://github.com/nieuwmijnleven/directdeal/assets/56591823/8a180293-c45e-4bf8-aab4-447fa0b3a8ad)
 
 ## 2. MicroServices
