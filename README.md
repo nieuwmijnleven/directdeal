@@ -79,17 +79,20 @@ Opvallend is dat voor direct-deal-sale-service en direct-deal-sale-catalog-servi
 ### 6. direct-deal-transaction-history-service
 * Deze microservice toont gebruikers een overzicht van afgeronde transacties
 
-## 3. Technologieën, Ontwerp Patronen, en Gereedschappen
+## 3. Technologieën, Ontwerp Patronen en Tools
 ### 1. EventSourcing
-Event sourcing is een gunstige manier om atomisch status te bijwerken en evenement te publiceren. De traditionele wijze om een entiteit aan te houden is om zijn huidige status te bewaren. Event sourcing gebruikt wezenlijk andere, event-gecentrialiseerd aanpak aan persistentie. Een zakelijke object wordt aangehouden door een serie status wijziging evenementen op te slaan. Wanneer de status van een object verandert, een nieuwe evenement wordt toegevoegd aan de serie evenementen. doordat een evenement een operatie is, is het wezenlijk atomisch. De huidige status van een entiteit wordt hergebouwd door zijn evenements te overspelen. 
+Event Sourcing is een benadering waarbij elke wijziging in de status van een domeinobject wordt vastgelegd als een afzonderlijk evenement. In tegenstelling tot de traditionele manier van persistente opslag — waarbij enkel de actuele status van een entiteit wordt bewaard — bewaart Event Sourcing een serie van statuswijzigingen (evenementen) in een event store. De actuele toestand van een entiteit wordt samengesteld door al deze evenementen achtereenvolgens toe te passen ('replayen').
 
-Evenementen worden aangehouden in een evenementopslag. Niet allen fungeert de evenementopslag als een database van evenementen, maar ook gedraagt als een berichtenbroker. Het verstrekt een API die het mogelijk maken dat services abonneren op evenementen. Elke evenement die wordt aangehouden in de evenementopslag wordt geleverd door de evenementopslag naar alle interessante abonnee. De evenementopslag is de ruggengraat van event-driven microservice architectuur.
+Elke statuswijziging resulteert in een nieuw evenement, dat als een op zichzelf staande operatie wordt opgeslagen; dit maakt het proces intrinsiek atomair. De event store fungeert niet alleen als database voor evenementen, maar vaak ook als message broker. Hierdoor kunnen andere services zich abonneren op relevante evenementen via een aangeboden API. Elk opgeslagen evenement wordt vervolgens doorgestuurd naar alle geïnteresseerde abonnees, wat van de event store de ruggengraat maakt van een event-driven microservice-architectuur.
 
-In deze architectuur, verzoeken om een entiteit te bijwerken worden behandeld door evenementen van de entiteit te zoeken van de evenementopslag, de huidige status te herbouwen, de entiteit te bijwerken, en de nieuwe evenement te bewaren.  
+In deze architectuur worden bewerkingen als volgt afgehandeld: bij een wijzigingsverzoek worden eerst de relevante evenementen uit de event store opgehaald om de actuele status van de entiteit te reconstrueren. Daarna wordt de entiteit bijgewerkt en een nieuw evenement toegevoegd.  
 
 ### 2. CQRS(Command Query Responsibility Segregation) Patroon
-CQRS staat voor Scheiding van opdracht- en queryverantwoordelijkheid, een patroon dat lees- en updatebewerkingen voor een gegevensarchief scheidt. In plaats ervan om een ingewikkeld join query te gebruiken, in CQRS wordt er een allen-lezen view database voor toegevoegd. Het gevolg daarvan is dat lock contentie wordt verminderd door joinbewerkingen en de transactie hoeft niet gebruikt te worden doordat een zakelijke object tussen alleen-lezen database en allen-schrijven database wordt gesychroniseerd volgens de chronologische volgorde van evenementen door middel van een berichtenbroker zoals Kafka en RabbitMQ. In alleen-schrijven database wordt het voorkomen dat updateopdrachten samenvoegingsconflicten op domeinniveau veroorzaken.
-Het implementeren van CQRS kan de prestaties, schaalbaarheid en beveiliging maximaliseren. 
+CQRS staat voor Command Query Responsibility Segregation, een patroon waarbij lees- en schrijfbewerkingen strikt worden gescheiden. In plaats van complexe join-queries toe te passen op één centrale database, wordt er binnen CQRS een aparte view-database ingericht voor alleen-lezen doeleinden.
+
+Deze aanpak vermindert lock-contentie bij het uitvoeren van join-bewerkingen en maakt het mogelijk om transacties te vermijden voor leesoperaties. Synchronisatie tussen de alleen-lezen en de alleen-schrijven databases vindt plaats in chronologische volgorde van gebeurtenissen, doorgaans via een berichtensysteem zoals Kafka of RabbitMQ. Dit voorkomt samenvoegingsconflicten op domeinniveau in de schrijfdatabank.
+
+Door CQRS te implementeren kunnen prestaties, schaalbaarheid en beveiliging van het systeem significant worden verbeterd.
 
 <p align="center">
   <img src = "https://github.com/nieuwmijnleven/directdeal/assets/56591823/c2aace41-7e20-4e9d-9285-ed9f6c745c42" width=670/>
