@@ -54,30 +54,30 @@ Opvallend is dat voor direct-deal-sale-service en direct-deal-sale-catalog-servi
 
 ## 2. Microservices
 ### 1. direct-deal-account-service
-* De microservice is verantwoordelijk voor het beheer van gebruikersaccounts en het in- en uitloggen.
-* Deze microservice creëert een JWT (JSON Web Token) en stuurt dit naar de gebruiker wanneer deze in het DirectDeal-systeem inlogt.
-* Door het JWT in de authorization-header van de HTTP-aanvraag te plaatsen, kunnen gebruikers alle microservices gebruiken. 
+* De microservice is verantwoordelijk voor het beheer van gebruikersaccounts en het in- en uitloggen
+* Bij het inloggen genereert de service een JWT (JSON Web Token) en stuurt deze naar de gebruiker
+* Door het JWT in de authorization-header van de HTTP-aanvraag mee te sturen, krijgen gebruikers toegang tot alle microservices binnen het systeem 
   
 ### 2. direct-deal-chatting-service
-* Die microservice verstrekt functionaliteit van chatting tussen verkoper en koper 
+* Deze microservice biedt chatfunctionaliteit tussen verkopers en kopers
 
 ### 3. direct-deal-gateway-service
-* Die microservice speelt een rol in API gateway onder MSA-Omgeving
+* Deze microservice fungeert als API Gateway binnen de MSA-omgeving en vormt het centrale toegangspunt voor externe aanvragen richting de achterliggende microservices
 
 ### 4. direct-deal-sale-service
-* Die microservice geeft functionaliteiten van het registreren, wijzigen, en verwijderen van producten aan gebruikers
-* Event-sourcing en CQRS(Command Query Responsibility Segregation) patroon gelden voor die microservice
-* Die microservice implementeert de `Command` deel van CQRS Patroon
-* Die microservice organiseert de `EventStore` in Event-Sourcing
+* Deze microservice faciliteert functies voor het registreren, aanpassen en verwijderen van producten door gebruikers
+* Zowel het Eventsourcing- als CQRS-patroon (Command Query Responsibility Segregation) worden toegepast op deze service
+* De service is verantwoordelijk voor het Command-gedeelte van het CQRS-patroon
+* Daarnaast beheert deze service de EventStore ten behoeve van Eventsourcing
 
 ### 5. direct-deal-sale-catalog-service
-* Die microservice geeft lijst van verkrijgbare producten aan gebruikers
-* Event-sourcing en CQRS(Command Query Responsibility Segregation) patroon gelden voor die microservice
-* Die microservice implementeert de `Query` deel van CQRS Patroon
-* Die microservice organiseert de `` in Event-Sourcing 
+* Deze microservice voorziet gebruikers van een overzicht van beschikbare producten
+* Voor deze service gelden eveneens Eventsourcing en het CQRS-patroon
+* De service implementeert het Query-gedeelte van CQRS
+* Daarnaast leest deze service uit de EventStore als onderdeel van Eventsourcing
 
 ### 6. direct-deal-transaction-history-service
-* Die microservice geeft list van voltooide transacties aan gebruikers
+* Deze microservice toont gebruikers een overzicht van afgeronde transacties
 
 ## 3. Technologieën, Ontwerp Patronen, en Gereedschappen
 ### 1. EventSourcing
