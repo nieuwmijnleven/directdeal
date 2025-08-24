@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 KUBERNETES_CONFIG_PATH="./deployment/kubernetes"
 
@@ -8,16 +8,32 @@ echo "Creating Registry..."
 #docker run -d -p 5000:5000 --name registry registry:2
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/registry.yml
 
+first_time_fail=true
+spinstr='|/-\\'
+spin_index=0
+
 while true
 do
-    rt=$(minikube ssh curl localhost:5000)
+    rt=$(minikube ssh curl localhost:5000 > /dev/null 2>&1)
+
     if [ $? -eq 0 ]; then
-    echo "Registry is UP"
-    break
+        echo -e "\nRegistry is UP"
+        break
     fi
-    echo "Registry is not yet reachable;sleep for 10s before retry"
-    sleep 10
+
+    if [ "$first_time_fail" = true ]; then
+        echo -n "Waiting until the Registry is ready... "
+        first_time_fail=false
+    fi
+
+    # 커서 맨 끝에 스피너 출력
+    printf "\b%s" "${spinstr:spin_index:1}"
+    ((spin_index=(spin_index+1)%${#spinstr}))
+
+    sleep 2
 done
+printf "\n"
+
 
 echo "Applying Port Forwarding..."
 sh -c "kubectl port-forward --namespace kube-system $(kubectl get po -n kube-system | grep kube-registry-v0 | awk '{print $1;}') 5000:5000 &"
