@@ -43,11 +43,12 @@ sh -c "kubectl port-forward service/jenkins 7080:7080 -n jenkins 1>>/dev/null &"
 echo "Starting HTTP-Server for Front-End..."
 rt=$(npm)
 if [ $? -eq 127 ]; then
-echo "Installing NPM(Node Package Manager)..."
-sh -c "npm install --save-dev"
+    echo "Installing NPM(Node Package Manager)..."
+    sh -c "cd direct-deal-ui && npm install --save-dev"
 fi
 
-sh -c "cd direct-deal-ui; npm run serve"
+NODE_OPTIONS=--openssl-legacy-provider sh -c "cd direct-deal-ui && npm run serve"
+
 
 # echo "Closing Port Forwarding..."
 # kill -9 `ps -aux | grep 'kubectl port-forward' | grep -v grep | awk '{print $2;}'`
