@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "Starting Direct-Deal Service..."
 
@@ -14,25 +14,78 @@ echo "Staring Services..."
 sh -c "./kubectl-apply.sh"
 
 echo "Waiting for all services to be up...(Maybe it takes up to about 5 minutes)"
-while true
-do
-    rt1=$(kubectl get pods | grep 'account-service' | grep 'Running' | awk '{print $2}' | awk -F '/' '{print $1}')
-    rt2=$(kubectl get pods | grep 'sale-service' | grep 'Running' | awk '{print $2}' | awk -F '/' '{print $1}')
-    rt3=$(kubectl get pods | grep 'sale-catalog-service' | grep 'Running' | awk '{print $2}' | awk -F '/' '{print $1}')
-    rt4=$(kubectl get pods | grep 'transaction-history-service' | grep 'Running' | awk '{print $2}' | awk -F '/' '{print $1}')
-    rt5=$(kubectl get pods | grep 'chatting-service' | grep 'Running' | awk '{print $2}' | awk -F '/' '{print $1}')
-    rt6=$(kubectl get pods | grep 'gateway' | grep 'Running' | awk '{print $2}' | awk -F '/' '{print $1}')
-    rt7=$(kubectl get pods -n kube-system | grep 'kibana' | grep 'Running' | awk '{print $2}' | awk -F '/' '{print $1}')
-    rt8=$(kubectl get pods -n jenkins | grep 'jenkins' | grep 'Running' | awk '{print $2}' | awk -F '/' '{print $1}')
 
-    if [ "$rt1" ] && [ "$rt2" ] && [ "$rt3" ] && [ "$rt4" ] && [ "$rt5" ] && [ "$rt6" ] && [ "$rt7" ] && [ "$rt8" ]; then
-        if [ "$rt1" -gt 0 ] && [ "$rt2" -gt 0 ] && [ "$rt3" -gt 0 ] && [ "$rt4" -gt 0 ] && [ "$rt5" -gt 0 ] && [ "$rt6" -gt 0 ] && [ "$rt7" -gt 0 ] && [ "$rt8" -gt 0 ]; then
-        echo "All services are up"
-        break
-        fi
+# [service-name namespace] array definition (namespace can be omitted if it's default)
+services=(
+  "account-service default"
+  "sale-service default"
+  "sale-catalog-service default"
+  "transaction-history-service default"
+  "chatting-service default"
+  "gateway default"
+  "kibana kube-system"
+  "jenkins jenkins"
+)
+
+# Function to check if the pod is Running
+check_pod_running() {
+  local svc=$1
+  local ns=$2
+  local namespace_opt=""
+
+  [[ "$ns" != "default" ]] && namespace_opt="-n $ns"
+
+  kubectl get pods $namespace_opt 2>/dev/null \
+    | grep "$svc" \
+    | grep "Running" \
+    | awk '{print $2}' \
+    | awk -F '/' '{print $1}' \
+    | awk '{sum+=$1} END {print sum}'
+}
+
+# Function to remove printed lines (to refresh the output)
+remove_lines() {
+  local lines_to_remove=$1
+  for (( i=0; i<lines_to_remove; i++ )); do
+    echo -ne "\x1b[2K"   # clear current line
+    echo -e "\x1b[1A"    # move cursor up one line
+  done
+}
+
+while true; do
+  all_up=true
+  output=()
+
+  output+=("Checking service statuses...")
+
+  for entry in "${services[@]}"; do
+    read -r svc ns <<<"$entry"
+    running_count=$(check_pod_running "$svc" "$ns")
+
+    if [[ -z "$running_count" || "$running_count" -le 0 ]]; then
+      output+=("❌ $svc (namespace: $ns) is NOT ready")
+      all_up=false
+    else
+      output+=("✅ $svc (namespace: $ns) is running")
     fi
+  done
 
-    sleep 5
+  # Print collected output
+  for line in "${output[@]}"; do
+    echo "$line"
+  done
+
+  if $all_up; then
+    echo "-----------------------------------------"
+    echo "🎉 All services are up and running!"
+    break
+  fi
+
+  echo "Waiting 5 seconds before next check..."
+  sleep 5
+
+  # Remove previously printed lines (output lines + waiting message)
+  remove_lines $(( ${#output[@]} + 2 ))
 done
 
 echo "Applying Port Forwarding..."
