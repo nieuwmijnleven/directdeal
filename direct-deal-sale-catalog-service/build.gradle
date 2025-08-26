@@ -32,6 +32,12 @@ dependencies {
 	implementation ('org.axonframework:axon-spring-boot-starter') {
 		exclude group: "org.axonframework", module: 'axon-server-connector'
 	}
+	
+	implementation ('org.slf4j:slf4j-api') {
+        exclude group: 'com.thoughtworks.xstream', module: 'xstream'
+	}
+	implementation 'com.thoughtworks.xstream:xstream:1.4.16'
+	
 	implementation 'org.axonframework:axon-micrometer'
 	implementation 'org.axonframework.extensions.kafka:axon-kafka-spring-boot-starter'
 	implementation 'org.apache.kafka:kafka-clients'
