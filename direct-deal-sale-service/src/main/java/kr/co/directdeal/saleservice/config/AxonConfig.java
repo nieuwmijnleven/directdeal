@@ -20,7 +20,11 @@ import org.axonframework.messaging.interceptors.CorrelationDataInterceptor;
 import org.axonframework.serialization.Serializer;
 import org.axonframework.spring.config.AxonConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Qualifier;
+import com.thoughtworks.xstream.XStream;
+import org.axonframework.serialization.xml.XStreamSerializer;
 
 @Configuration
 public class AxonConfig {
@@ -46,6 +50,20 @@ public class AxonConfig {
                 .messageMonitor(configuration.messageMonitor(EventStore.class, "eventStore"))
                 .build();
     }
+    
+    /*@Bean
+    @Primary
+    @Qualifier("CustomizedxStreamSerializer")
+    public Serializer xStreamSerializer() {
+        XStream xStream = new XStream();
+        xStream.allowTypesByWildcard(new String[]{
+            "kr.co.directdeal.common.sale.event.**"
+        });
+
+        return XStreamSerializer.builder()
+                .xStream(xStream)
+                .build();
+    }*/
 
     @Bean
     public EventStorageEngine storageEngine(MongoClient client) {
