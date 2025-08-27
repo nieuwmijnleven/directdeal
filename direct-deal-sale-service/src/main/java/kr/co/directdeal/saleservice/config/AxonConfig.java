@@ -66,15 +66,13 @@ public class AxonConfig {
     
     @Bean
     @Qualifier("messageSerializer")
-    public Serializer messageSerializer(Serializer genericSerializer, RevisionResolver revisionResolver) {
+    public Serializer messageSerializer() {
         return xStreamSerializer();
     }
 
     @Bean
     @Qualifier("eventSerializer")
-    public Serializer eventSerializer(@Qualifier("messageSerializer") Serializer messageSerializer,
-                                      Serializer generalSerializer,
-                                      RevisionResolver revisionResolver) {
+    public Serializer eventSerializer() {
         return xStreamSerializer();
     }
 
