@@ -51,9 +51,8 @@ public class AxonConfig {
                 .build();
     }
     
-    /*@Bean
+    @Bean
     @Primary
-    @Qualifier("CustomizedxStreamSerializer")
     public Serializer xStreamSerializer() {
         XStream xStream = new XStream();
         xStream.allowTypesByWildcard(new String[]{
@@ -63,7 +62,7 @@ public class AxonConfig {
         return XStreamSerializer.builder()
                 .xStream(xStream)
                 .build();
-    }*/
+    }
 
     @Bean
     public EventStorageEngine storageEngine(MongoClient client) {
