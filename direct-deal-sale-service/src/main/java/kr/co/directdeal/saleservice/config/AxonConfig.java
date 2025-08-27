@@ -63,6 +63,20 @@ public class AxonConfig {
                 .xStream(xStream)
                 .build();
     }
+    
+    @Bean
+    @Qualifier("messageSerializer")
+    public Serializer messageSerializer(Serializer genericSerializer, RevisionResolver revisionResolver) {
+        return xStreamSerializer();
+    }
+
+    @Bean
+    @Qualifier("eventSerializer")
+    public Serializer eventSerializer(@Qualifier("messageSerializer") Serializer messageSerializer,
+                                      Serializer generalSerializer,
+                                      RevisionResolver revisionResolver) {
+        return xStreamSerializer();
+    }
 
     @Bean
     public EventStorageEngine storageEngine(MongoClient client) {
