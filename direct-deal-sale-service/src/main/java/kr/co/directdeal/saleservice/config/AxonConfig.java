@@ -59,10 +59,10 @@ public class AxonConfig {
     @Primary
     public Serializer xStreamSerializer() {
         XStream xStream = new XStream();
-        xstream.addPermission(NoTypePermission.NONE);
-        xstream.addPermission(NullPermission.NULL);
-        xstream.addPermission(PrimitiveTypePermission.PRIMITIVES);
-        xstream.allowTypeHierarchy(Collection.class);
+        xStream.addPermission(NoTypePermission.NONE);
+        xStream.addPermission(NullPermission.NULL);
+        xStream.addPermission(PrimitiveTypePermission.PRIMITIVES);
+        xStream.allowTypeHierarchy(Collection.class);
         xStream.allowTypesByWildcard(new String[]{
             "kr.co.directdeal.common.sale.event.**"
         });
