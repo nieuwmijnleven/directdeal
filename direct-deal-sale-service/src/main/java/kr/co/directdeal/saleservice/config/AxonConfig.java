@@ -28,6 +28,8 @@ import com.thoughtworks.xstream.security.NoTypePermission;
 import com.thoughtworks.xstream.security.NullPermission;
 import com.thoughtworks.xstream.security.PrimitiveTypePermission;
 import org.axonframework.serialization.xml.XStreamSerializer;
+import org.axonframework.config.Configurer;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Collection;
 
 @Configuration
