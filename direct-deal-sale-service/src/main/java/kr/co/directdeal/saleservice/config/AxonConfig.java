@@ -56,7 +56,7 @@ public class AxonConfig {
     }
     
     @Bean
-    //@Primary
+    @Primary
     public Serializer xStreamSerializer() {
         XStream xStream = new XStream();
         xStream.addPermission(NoTypePermission.NONE);
@@ -65,7 +65,7 @@ public class AxonConfig {
         xStream.allowTypeHierarchy(Collection.class);
         xStream.allowTypesByWildcard(new String[]{
             //"kr.co.directdeal.common.sale.event.**"
-            "kr.co.directdeal.common.**"
+            "kr.co.directdeal.**"
         });
 
         return XStreamSerializer.builder()
