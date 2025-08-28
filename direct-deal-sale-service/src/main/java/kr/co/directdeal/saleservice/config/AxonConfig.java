@@ -25,7 +25,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Qualifier;
 import com.thoughtworks.xstream.XStream;
 import org.axonframework.serialization.xml.XStreamSerializer;
+import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
+import java.lang.reflect.Field;
 
+import org.axonframework.common.transaction.TransactionManager;
+import org.axonframework.spring.messaging.unitofwork.SpringTransactionManager;
+import org.springframework.data.mongodb.MongoTransactionManager;
+import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
+import org.springframework.transaction.PlatformTransactionManager;
+
+
+@Slf4j
 @Configuration
 public class AxonConfig {
     @Bean
@@ -51,32 +63,31 @@ public class AxonConfig {
                 .build();
     }
     
-    /*@Bean
+    @Bean
     @Primary
-    @Qualifier("CustomizedxStreamSerializer")
-    public Serializer xStreamSerializer() {
+    public XStream mySecuredXStream() {
         XStream xStream = new XStream();
         xStream.allowTypesByWildcard(new String[]{
-            "kr.co.directdeal.common.sale.event.**"
+            "kr.co.directdeal.**",
+            "org.axonframework.**" 
         });
-
+        return xStream;
+    }
+    
+    @Bean
+    @Primary
+    public Serializer xStreamSerializer(XStream xStream) {
         return XStreamSerializer.builder()
                 .xStream(xStream)
                 .build();
-    }*/
-
-    @Bean
-    public EventStorageEngine storageEngine(MongoClient client) {
-        return MongoEventStorageEngine.builder()
-                    .mongoTemplate(mongoTemplate(client))
-                    .build();
     }
 
     @Bean
-    public TokenStore tokenStore(MongoClient client, Serializer serializer) {
-        return MongoTokenStore.builder()
+    public EventStorageEngine storageEngine(MongoClient client, Serializer serializer) {
+        return MongoEventStorageEngine.builder()
                     .mongoTemplate(mongoTemplate(client))
-                    .serializer(serializer)
+                    .eventSerializer(serializer)
+                    .snapshotSerializer(serializer)
                     .build();
     }
 
