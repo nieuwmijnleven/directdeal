@@ -21,20 +21,24 @@ data:
     axon.kafka.default-topic=local.event
     axon.kafka.properties.security.protocol=PLAINTEXT
 
-    axon.kafka.fetcher.poll-timeout=3000
+    #axon.kafka.fetcher.poll-timeout=3000
+    axon.kafka.fetcher.enabled = true
 
-    axon.kafka.consumer.enable-auto-commit=true
-    axon.kafka.consumer.auto-commit-interval=3000
+    #axon.kafka.consumer.group-id=transaction-history-service
+    #enable.auto.commit cannot be set to true when default group id (null) is used
+    axon.kafka.consumer.enable-auto-commit=false
+    #axon.kafka.consumer.auto-commit-interval=3000
     axon.kafka.consumer.event-processor-mode=tracking
+    #axon.kafka.consumer.auto-offset-reset=earliest
 
     axon.eventhandling.processors.transactionHistory.source=streamableKafkaMessageSource
     axon.eventhandling.processors.transactionHistory.mode=TRACKING
-    axon.eventhandling.processors.transactionHistory.thread-count=1
-    axon.eventhandling.processors.transactionHistory.batch-size=1
+    #axon.eventhandling.processors.transactionHistory.thread-count=1
+    #axon.eventhandling.processors.transactionHistory.batch-size=1
 
-    axon.serializer.general=xstream
-    axon.serializer.events=xstream
-    axon.serializer.messages=xstream
+    #axon.serializer.general=xstream
+    #axon.serializer.events=xstream
+    #axon.serializer.messages=xstream
 
     # JPA Settings
     spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
@@ -49,11 +53,21 @@ data:
     spring.jpa.properties.hibernate.dialect.storage_engine=innodb
     spring.jpa.properties.hibernate.format_sql=true
 
+    # Mongo DB Settings
+    spring.data.mongodb.authentication-database=admin
+    spring.data.mongodb.host=mongo
+    spring.data.mongodb.port=27017
+    spring.data.mongodb.username=root
+    spring.data.mongodb.password=secret
+    spring.data.mongodb.database=TRANSACTION_HISTORY_SERVICE_DB
+
     # Log Settings
     spring.output.ansi.enabled=always
-    logging.level.kr.co.directdeal.transactionhistoryservice=DEBUG
-    logging.level.org.hibernate.SQL=DEBUG
-    logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+    logging.level.kr.co.directdeal.transactionhistoryservice=INFO
+    logging.level.org.hibernate.SQL=INFO
+    logging.level.org.hibernate.type.descriptor.sql.BasicBinder=INFO
+    logging.level.org.axonframework.kafka=INFO
+    logging.level.org.apache.kafka=INFO
 
     # Actuator Settings
     management.endpoints.enabled-by-default=false

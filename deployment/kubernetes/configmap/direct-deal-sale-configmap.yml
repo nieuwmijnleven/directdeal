@@ -26,9 +26,9 @@ data:
     axon.kafka.producer.transaction-id-prefix=sale-service
     axon.kafka.producer.event-processor-mode=subscribing
 
-    axon.serializer.general=xstream
-    axon.serializer.events=xstream
-    axon.serializer.messages=xstream
+    #axon.serializer.general=xstream
+    #axon.serializer.events=xstream
+    #axon.serializer.messages=xstream
 
     # Mongo DB Settings
     spring.data.mongodb.authentication-database=admin
@@ -54,9 +54,11 @@ data:
 
     # Log Settings
     spring.output.ansi.enabled=always
-    logging.level.kr.co.directdeal.saleservice=DEBUG
-    logging.level.org.hibernate.SQL=DEBUG
-    logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+    logging.level.kr.co.directdeal.saleservice=INFO
+    logging.level.org.hibernate.SQL=INFO
+    logging.level.org.hibernate.type.descriptor.sql.BasicBinder=INFO
+    logging.level.org.axonframework.kafka=INFO
+    logging.level.org.apache.kafka=INFO
 
     # Actuator Settings
     management.endpoints.enabled-by-default=false
