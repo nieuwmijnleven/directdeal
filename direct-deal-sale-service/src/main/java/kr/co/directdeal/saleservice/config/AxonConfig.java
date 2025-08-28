@@ -46,14 +46,6 @@ public class AxonConfig {
         );
         return commandBus;
     }
-
-    @Bean
-    public EmbeddedEventStore eventStore(EventStorageEngine storageEngine, AxonConfiguration configuration) {
-        return EmbeddedEventStore.builder()
-                .storageEngine(storageEngine)
-                .messageMonitor(configuration.messageMonitor(EventStore.class, "eventStore"))
-                .build();
-    }
     
     @Bean
     @Primary
@@ -70,6 +62,21 @@ public class AxonConfig {
 
         return XStreamSerializer.builder()
                 .xStream(xStream)
+                .build();
+    }
+    
+    @Autowired
+    public void configure(Configurer configurer, Serializer myCustomSerializer) {
+        configurer.configureSerializer(config -> xStreamSerializer)
+                  .configureMessageSerializer(config -> xStreamSerializer)
+                  .configureEventSerializer(config -> xStreamSerializer);
+    }
+
+    @Bean
+    public EmbeddedEventStore eventStore(EventStorageEngine storageEngine, AxonConfiguration configuration) {
+        return EmbeddedEventStore.builder()
+                .storageEngine(storageEngine)
+                .messageMonitor(configuration.messageMonitor(EventStore.class, "eventStore"))
                 .build();
     }
     
