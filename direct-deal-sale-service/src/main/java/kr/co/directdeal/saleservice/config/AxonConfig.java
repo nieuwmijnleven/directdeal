@@ -68,10 +68,10 @@ public class AxonConfig {
     }
     
     @Autowired
-    public void configure(Configurer configurer, Serializer myCustomSerializer) {
-        configurer.configureSerializer(config -> xStreamSerializer)
-                  .configureMessageSerializer(config -> xStreamSerializer)
-                  .configureEventSerializer(config -> xStreamSerializer);
+    public void configure(Configurer configurer, Serializer serializer) {
+        configurer.configureSerializer(config -> serializer)
+                  .configureMessageSerializer(config -> serializer)
+                  .configureEventSerializer(config -> serializer);
     }
 
     @Bean
