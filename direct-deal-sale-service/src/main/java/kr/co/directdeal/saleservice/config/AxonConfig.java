@@ -64,7 +64,8 @@ public class AxonConfig {
         xStream.addPermission(PrimitiveTypePermission.PRIMITIVES);
         xStream.allowTypeHierarchy(Collection.class);
         xStream.allowTypesByWildcard(new String[]{
-            "kr.co.directdeal.common.sale.event.**"
+            //"kr.co.directdeal.common.sale.event.**"
+            "kr.co.directdeal.common.**""
         });
 
         return XStreamSerializer.builder()
