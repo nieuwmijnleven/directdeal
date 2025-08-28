@@ -56,7 +56,7 @@ public class AxonConfig {
     }
     
     @Bean
-    @Primary
+    //@Primary
     public Serializer xStreamSerializer() {
         XStream xStream = new XStream();
         xStream.addPermission(NoTypePermission.NONE);
