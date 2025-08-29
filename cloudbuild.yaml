@@ -163,3 +163,7 @@ steps:
       kubectl apply -f ./deployment/kubernetes/
 
 timeout: '1200s'  # Maximum build timeout set to 30 minutes
+
+
+options:
+  logging: CLOUD_LOGGING_ONLY
