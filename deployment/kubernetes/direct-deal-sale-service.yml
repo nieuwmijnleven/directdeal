@@ -53,11 +53,13 @@ spec:
             done
       containers:
       - name: sale-service
-        image: localhost:5000/direct-deal-sale-service:latest
+        image: gcr.io/${PROJECT_ID}/direct-deal-sale-service:latest
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "dev"
+        - name: PROJECT_ID
+          value: "${PROJECT_ID}"  
         ports:
         - containerPort: 8081
           name: httpport

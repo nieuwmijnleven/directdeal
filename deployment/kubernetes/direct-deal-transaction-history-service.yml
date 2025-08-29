@@ -50,11 +50,13 @@ spec:
             done
       containers:
       - name: transaction-history-service
-        image: localhost:5000/direct-deal-transaction-history-service:latest
+        image: gcr.io/${PROJECT_ID}/direct-deal-transaction-history-service:latest
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "dev"
+        - name: PROJECT_ID
+          value: "${PROJECT_ID}"
         ports:
         - containerPort: 8083
           name: httpport

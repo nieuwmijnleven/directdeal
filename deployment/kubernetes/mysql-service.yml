@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: localhost:5000/direct-deal-mysql:latest
+        image: gcr.io/${PROJECT_ID}/direct-deal-mysql:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 3306
@@ -38,6 +38,8 @@ spec:
         env:
           - name: MYSQL_ROOT_PASSWORD
             value: "secret"
+          - name: PROJECT_ID
+            value: "${PROJECT_ID}"
         # resources:
         #     # requests:
         #     #   memory: '512Mi'

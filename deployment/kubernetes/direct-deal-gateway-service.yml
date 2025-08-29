@@ -33,11 +33,13 @@ spec:
     spec:
       containers:
       - name: gateway
-        image: localhost:5000/direct-deal-gateway:latest
+        image: gcr.io/${PROJECT_ID}/direct-deal-gateway:latest
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "dev"
+        - name: PROJECT_ID
+          value: "${PROJECT_ID}"
         ports:
         - containerPort: 8084
           name: httpport
