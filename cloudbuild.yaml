@@ -10,14 +10,11 @@ steps:
       ./gradlew clean build -p direct-deal-gateway
 
 # 2. Docker image build and tag (each service in multiple steps)
-
 - name: 'gcr.io/cloud-builders/docker'
   id: 'docker-build-account-service'
   args:
     [
-      'build',
-      '-t', 'gcr.io/$PROJECT_ID/direct-deal-account-service',
-      '-f', 'direct-deal-account-service/Dockerfile'
+      'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-account-service', './direct-deal-account-service'
     ]
 - name: 'gcr.io/cloud-builders/docker'
   id: 'docker-tag-account-service'
@@ -30,9 +27,7 @@ steps:
   id: 'docker-build-sale-service'
   args:
     [
-      'build',
-      '-t', 'gcr.io/$PROJECT_ID/direct-deal-sale-service',
-      '-f', 'direct-deal-sale-service/Dockerfile'
+      'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-sale-service', './direct-deal-sale-service'
     ]
 - name: 'gcr.io/cloud-builders/docker'
   id: 'docker-tag-sale-service'
@@ -45,9 +40,7 @@ steps:
   id: 'docker-build-sale-catalog-service-webflux'
   args:
     [
-      'build',
-      '-t', 'gcr.io/$PROJECT_ID/direct-deal-sale-catalog-service-webflux',
-      '-f', 'direct-deal-sale-catalog-service-webflux/Dockerfile'
+      'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-sale-catalog-service-webflux', './direct-deal-sale-catalog-service-webflux'
     ]
 - name: 'gcr.io/cloud-builders/docker'
   id: 'docker-tag-sale-catalog-service-webflux'
@@ -60,9 +53,7 @@ steps:
   id: 'docker-build-transaction-history-service'
   args:
     [
-      'build',
-      '-t', 'gcr.io/$PROJECT_ID/direct-deal-transaction-history-service',
-      '-f', 'direct-deal-transaction-history-service/Dockerfile'
+      'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-transaction-history-service', './direct-deal-transaction-history-service'
     ]
 - name: 'gcr.io/cloud-builders/docker'
   id: 'docker-tag-transaction-history-service'
@@ -75,9 +66,7 @@ steps:
   id: 'docker-build-chatting-service'
   args:
     [
-      'build',
-      '-t', 'gcr.io/$PROJECT_ID/direct-deal-chatting-service',
-      '-f', 'direct-deal-chatting-service/Dockerfile'
+      'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-chatting-service', './direct-deal-chatting-service'
     ]
 - name: 'gcr.io/cloud-builders/docker'
   id: 'docker-tag-chatting-service'
@@ -90,9 +79,7 @@ steps:
   id: 'docker-build-gateway'
   args:
     [
-      'build',
-      '-t', 'gcr.io/$PROJECT_ID/direct-deal-gateway',
-      '-f', 'direct-deal-gateway/Dockerfile'
+      'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-gateway', './direct-deal-gateway'
     ]
 - name: 'gcr.io/cloud-builders/docker'
   id: 'docker-tag-gateway'
@@ -105,9 +92,7 @@ steps:
   id: 'docker-build-mysql'
   args:
     [
-      'build',
-      '-t', 'gcr.io/$PROJECT_ID/direct-deal-mysql',
-      '-f', 'mysql/Dockerfile'
+      'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-mysql', './mysql'
     ]
 - name: 'gcr.io/cloud-builders/docker'
   id: 'docker-tag-mysql'
@@ -163,7 +148,6 @@ steps:
       kubectl apply -f ./deployment/kubernetes/
 
 timeout: '1200s'  # Maximum build timeout set to 30 minutes
-
 
 options:
   logging: CLOUD_LOGGING_ONLY
