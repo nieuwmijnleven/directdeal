@@ -140,7 +140,7 @@ steps:
     ]
 
 # 4. Deploy to Kubernetes cluster by applying manifests
-- name: 'gcr.io/cloud-builders/gcloud'
+- name: 'gcr.io/cloud-builders/kubectl'
   entrypoint: 'bash'
   args:
     - '-c'
