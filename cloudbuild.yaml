@@ -171,6 +171,9 @@ steps:
 #         envsubst < $file | kubectl apply -f -
 #       done
 #   env:
+#     - 'CLOUDSDK_COMPUTE_ZONE=$_DEPLOY_REGION'      # 원하는 GCP 리전/존으로 수정
+#     - 'CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER' # GKE 클러스터 이름으로 수정
+
 
 timeout: '1200s'  # Maximum build timeout set to 20 minutes
 
