@@ -140,11 +140,12 @@ steps:
     ]
 
 # 4. Deploy to Kubernetes cluster by applying manifests
-- name: 'gcr.io/cloud-builders/kubectl'
+- name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
     - '-c'
     - |
+      apt-get update && apt-get install -y gettext-base
       envsubst < ./deployment/kubernetes/direct-deal-account-service.yml | kubectl apply -f -
   env:
      - 'CLOUDSDK_COMPUTE_ZONE=europe-west12'      # 원하는 GCP 리전/존으로 수정
