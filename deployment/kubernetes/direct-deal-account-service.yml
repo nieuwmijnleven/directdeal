@@ -59,7 +59,7 @@ spec:
         - name: SPRING_PROFILES_ACTIVE
           value: "dev"
         - name: PROJECT_ID
-          value: "${PROJECT_ID}
+          value: "${PROJECT_ID}"
         ports:
         - containerPort: 8080
           name: httpport
