@@ -141,6 +141,15 @@ steps:
 
 # 4. Deploy to Kubernetes cluster by applying manifests
 - name: 'gcr.io/cloud-builders/gcloud'
+  args:
+    [
+      'container', 'clusters', 'get-credentials',
+      '$_GKE_CLUSTER',      # <-- 클러스터 이름
+      '--zone', '$_DEPLOY_REGION',
+      '--project', '$PROJECT_ID'
+    ]
+
+- name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
     - '-c'
@@ -148,8 +157,8 @@ steps:
       apt-get update && apt-get install -y gettext-base
       envsubst < ./deployment/kubernetes/direct-deal-account-service.yml | kubectl apply -f -
   env:
-     - 'CLOUDSDK_COMPUTE_ZONE=europe-west12'      # 원하는 GCP 리전/존으로 수정
-     - 'CLOUDSDK_CONTAINER_CLUSTER=directdeal-autopilot-cluster' # GKE 클러스터 이름으로 수정
+     - 'CLOUDSDK_COMPUTE_ZONE=$_DEPLOY_REGION'      # 원하는 GCP 리전/존으로 수정
+     - 'CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER' # GKE 클러스터 이름으로 수정
 
 # 4. Deploy to Kubernetes cluster by applying manifests (all at once)
 # - name: 'gcr.io/cloud-builders/gcloud'
