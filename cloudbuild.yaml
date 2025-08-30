@@ -139,86 +139,41 @@ steps:
       'push', 'gcr.io/$PROJECT_ID/direct-deal-mysql'
     ]
 
-# 4. Deploy to Cloud Run for each service
+# 4. Deploy to Kubernetes cluster by applying manifests
+# - name: 'gcr.io/cloud-builders/kubectl'
+#   id: 'deploy-to-gke'
+#   args:
+#     [
+#       'apply', '-f', './deployment/kubernetes'
+#     ]
+#   env:
+#     - 'CLOUDSDK_COMPUTE_ZONE=europe-west12'      # 원하는 GCP 리전/존으로 수정
+#     - 'CLOUDSDK_CONTAINER_CLUSTER=directdeal-autopilot-cluster' # GKE 클러스터 이름으로 수정
+
+# 4. Deploy to Kubernetes cluster by applying manifests
 - name: 'gcr.io/cloud-builders/gcloud'
-  id: 'cloud-run-deploy-account-service'
+  entrypoint: 'bash'
   args:
-    [
-      'run', 'deploy', 'direct-deal-account-service',
-      '--image', 'gcr.io/$PROJECT_ID/direct-deal-account-service',
-      '--region', 'europe-west4',
-      '--platform', 'managed',
-      '--allow-unauthenticated'
-    ]
+    - '-c'
+    - |
+      envsubst < ./deployment/kubernetes/account-service.yml | kubectl apply -f -
+  env:
+     - 'CLOUDSDK_COMPUTE_ZONE=europe-west12'      # 원하는 GCP 리전/존으로 수정
+     - 'CLOUDSDK_CONTAINER_CLUSTER=directdeal-autopilot-cluster' # GKE 클러스터 이름으로 수정
 
-- name: 'gcr.io/cloud-builders/gcloud'
-  id: 'cloud-run-deploy-sale-service'
-  args:
-    [
-      'run', 'deploy', 'direct-deal-sale-service',
-      '--image', 'gcr.io/$PROJECT_ID/direct-deal-sale-service',
-      '--region', 'europe-west4',
-      '--platform', 'managed',
-      '--allow-unauthenticated'
-    ]
+# 4. Deploy to Kubernetes cluster by applying manifests (all at once)
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   entrypoint: 'bash'
+#   args:
+#     - '-c'
+#     - |
+#       for file in ./deployment/kubernetes/*.yml; do
+#         echo "Applying $file"
+#         envsubst < $file | kubectl apply -f -
+#       done
+#   env:
 
-- name: 'gcr.io/cloud-builders/gcloud'
-  id: 'cloud-run-deploy-sale-catalog-service-webflux'
-  args:
-    [
-      'run', 'deploy', 'direct-deal-sale-catalog-service-webflux',
-      '--image', 'gcr.io/$PROJECT_ID/direct-deal-sale-catalog-service-webflux',
-      '--region', 'europe-west4',
-      '--platform', 'managed',
-      '--allow-unauthenticated'
-    ]
-
-- name: 'gcr.io/cloud-builders/gcloud'
-  id: 'cloud-run-deploy-transaction-history-service'
-  args:
-    [
-      'run', 'deploy', 'direct-deal-transaction-history-service',
-      '--image', 'gcr.io/$PROJECT_ID/direct-deal-transaction-history-service',
-      '--region', 'europe-west4',
-      '--platform', 'managed',
-      '--allow-unauthenticated'
-    ]
-
-- name: 'gcr.io/cloud-builders/gcloud'
-  id: 'cloud-run-deploy-chatting-service'
-  args:
-    [
-      'run', 'deploy', 'direct-deal-chatting-service',
-      '--image', 'gcr.io/$PROJECT_ID/direct-deal-chatting-service',
-      '--region', 'europe-west4',
-      '--platform', 'managed',
-      '--allow-unauthenticated'
-    ]
-
-- name: 'gcr.io/cloud-builders/gcloud'
-  id: 'cloud-run-deploy-gateway'
-  args:
-    [
-      'run', 'deploy', 'direct-deal-gateway',
-      '--image', 'gcr.io/$PROJECT_ID/direct-deal-gateway',
-      '--region', 'europe-west4',
-      '--platform', 'managed',
-      '--allow-unauthenticated'
-    ]
-
-- name: 'gcr.io/cloud-builders/gcloud'
-  id: 'cloud-run-deploy-mysql'
-  args:
-    [
-      'run', 'deploy', 'direct-deal-mysql',
-      '--image', 'gcr.io/$PROJECT_ID/direct-deal-mysql',
-      '--region', 'europe-west4',
-      '--platform', 'managed',
-      '--allow-unauthenticated'
-    ]
-
-
-timeout: '1200s'  # Maximum build timeout set to 30 minutes
+timeout: '1200s'  # Maximum build timeout set to 20 minutes
 
 options:
   logging: CLOUD_LOGGING_ONLY
