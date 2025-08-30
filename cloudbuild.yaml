@@ -156,7 +156,7 @@ steps:
   args:
     - '-c'
     - |
-      envsubst < ./deployment/kubernetes/account-service.yml | kubectl apply -f -
+      envsubst < ./deployment/kubernetes/direct-deal-account-service.yml | kubectl apply -f -
   env:
      - 'CLOUDSDK_COMPUTE_ZONE=europe-west12'      # 원하는 GCP 리전/존으로 수정
      - 'CLOUDSDK_CONTAINER_CLUSTER=directdeal-autopilot-cluster' # GKE 클러스터 이름으로 수정
