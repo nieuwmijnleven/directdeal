@@ -53,11 +53,13 @@ spec:
             done
       containers:
       - name: sale-catalog-service
-        image: localhost:5000/direct-deal-sale-catalog-service-webflux:latest
+        image: gcr.io/${PROJECT_ID}/direct-deal-sale-catalog-service-webflux:latest
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "dev"
+        - name: PROJECT_ID
+          value: "${PROJECT_ID}"
         ports:
         - containerPort: 8082
           name: httpport

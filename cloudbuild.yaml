@@ -149,16 +149,43 @@ steps:
       '--project', '$PROJECT_ID'
     ]
 
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   entrypoint: 'bash'
+#   args:
+#     - '-c'
+#     - |
+#       apt-get update && apt-get install -y gettext-base
+#       envsubst < ./deployment/kubernetes/direct-deal-account-service.yml | kubectl apply -f -
+#   env:
+#      - 'CLOUDSDK_COMPUTE_ZONE=$_DEPLOY_REGION'      
+#      - 'CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER' 
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      for file in ./deployment/kubernetes/configmap/*.yml; do
+        echo "Applying $file"
+        kubectl apply -f $file
+      done
+  env:
+    - 'CLOUDSDK_COMPUTE_ZONE=$_DEPLOY_REGION'      
+    - 'CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER' 
+
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
     - '-c'
     - |
       apt-get update && apt-get install -y gettext-base
-      envsubst < ./deployment/kubernetes/direct-deal-account-service.yml | kubectl apply -f -
+      for file in ./deployment/kubernetes/*.yml; do
+        echo "Applying $file"
+        envsubst < $file | kubectl apply -f -
+      done
   env:
-     - 'CLOUDSDK_COMPUTE_ZONE=$_DEPLOY_REGION'      
-     - 'CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER' 
+    - 'CLOUDSDK_COMPUTE_ZONE=$_DEPLOY_REGION'      
+    - 'CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER' 
 
 timeout: '1200s'  # Maximum build timeout set to 20 minutes
 
