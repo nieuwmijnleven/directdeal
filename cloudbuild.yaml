@@ -186,6 +186,7 @@ steps:
   env:
     - 'CLOUDSDK_COMPUTE_ZONE=$_DEPLOY_REGION'      
     - 'CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER' 
+    - 'PROJECT_ID=$PROJECT_ID'
 
 timeout: '1200s'  # Maximum build timeout set to 20 minutes
 
