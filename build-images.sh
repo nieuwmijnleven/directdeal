@@ -34,7 +34,6 @@ do
 done
 printf "\n"
 
-
 echo "Applying Port Forwarding..."
 sh -c "kubectl port-forward --namespace kube-system $(kubectl get po -n kube-system | grep kube-registry-v0 | awk '{print $1;}') 5000:5000 &"
 
@@ -51,9 +50,6 @@ docker image tag direct-deal-account-service localhost:5000/direct-deal-account-
 docker image build -t direct-deal-sale-service ./direct-deal-sale-service
 docker image tag direct-deal-sale-service localhost:5000/direct-deal-sale-service
 
-# docker image build -t direct-deal-sale-catalog-service ./direct-deal-sale-catalog-service
-# docker image tag direct-deal-sale-catalog-service localhost:5000/direct-deal-sale-catalog-service
-
 docker image build -t direct-deal-sale-catalog-service-webflux ./direct-deal-sale-catalog-service-webflux
 docker image tag direct-deal-sale-catalog-service-webflux localhost:5000/direct-deal-sale-catalog-service-webflux
 
@@ -69,6 +65,9 @@ docker image tag direct-deal-gateway localhost:5000/direct-deal-gateway
 docker image build -t direct-deal-mysql ./mysql
 docker image tag direct-deal-mysql localhost:5000/direct-deal-mysql
 
+docker image build -t direct-deal-nginx ./direct-deal-ui
+docker image tag direct-deal-nginx localhost:5000/direct-deal-nginx
+
 echo "Pushing Docker Images To The Registry..."
 docker push localhost:5000/direct-deal-account-service
 docker push localhost:5000/direct-deal-sale-service
@@ -78,6 +77,7 @@ docker push localhost:5000/direct-deal-transaction-history-service
 docker push localhost:5000/direct-deal-chatting-service
 docker push localhost:5000/direct-deal-gateway
 docker push localhost:5000/direct-deal-mysql
+docker push localhost:5000/direct-deal-nginx
 
 echo "Closing Port Forwarding..."
 kill -9 `ps -aux | grep 'kubectl port-forward' | grep -v grep | awk '{print $2;}'`
