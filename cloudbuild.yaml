@@ -100,6 +100,18 @@ steps:
     [
       'tag', 'gcr.io/$PROJECT_ID/direct-deal-mysql', 'gcr.io/$PROJECT_ID/direct-deal-mysql'
     ]
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-build-nginx'
+  args:
+    [
+      'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-nginx', './direct-deal-ui'
+    ]
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-tag-nginx'
+  args:
+    [
+      'tag', 'gcr.io/$PROJECT_ID/direct-deal-nginx', 'gcr.io/$PROJECT_ID/direct-deal-nginx'
+    ]
 
 # 3. Push images to the registry
 - name: 'gcr.io/cloud-builders/docker'
@@ -137,6 +149,11 @@ steps:
   args:
     [
       'push', 'gcr.io/$PROJECT_ID/direct-deal-mysql'
+    ]
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    [
+      'push', 'gcr.io/$PROJECT_ID/direct-deal-nginx'
     ]
 
 # 4. Deploy to Kubernetes cluster by applying manifests
