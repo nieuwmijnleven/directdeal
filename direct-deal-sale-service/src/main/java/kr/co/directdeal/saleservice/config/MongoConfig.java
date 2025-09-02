@@ -39,8 +39,8 @@ public class MongoConfig /*extends AbstractMongoConfiguration*/ {
         return MongoClients.create(connectionString);
 	}
 
-    @Bean
+    /*@Bean
     public MongoTemplate mongoTemplate() {
         return new MongoTemplate(mongoClients(), database);
-    }
+    }*/
 }
