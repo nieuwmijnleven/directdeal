@@ -25,6 +25,7 @@ kubectl delete -f ${KUBERNETES_CONFIG_PATH}/mysql-service.yml
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/mongo-service.yml
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/redis-service.yml
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/kafka-service.yml
+kubectl delete -f ${KUBERNETES_CONFIG_PATH}/nginx-service.yml
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/direct-deal-account-service.yml
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/direct-deal-chatting-service.yml
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/direct-deal-sale-service.yml
@@ -54,6 +55,7 @@ kubectl create -f ${KUBERNETES_CONFIG_PATH}/mysql-service.yml
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/mongo-service.yml
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/redis-service.yml
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/kafka-service.yml
+kubectl create -f ${KUBERNETES_CONFIG_PATH}/nginx-service.yml
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/direct-deal-account-service.yml
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/direct-deal-chatting-service.yml
 kubectl create -f ${KUBERNETES_CONFIG_PATH}/direct-deal-sale-service.yml
