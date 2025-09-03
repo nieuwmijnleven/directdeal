@@ -202,10 +202,7 @@ steps:
     - docker-push-sale-service
     - docker-push-mysql
     - docker-push-nginx
-    - docker-push-redis
-    - docker-push-kafka
-    - docker-push-mongo
-    - docker-push-zookeeper
+    
 # - name: 'gcr.io/cloud-builders/gcloud'
 #   entrypoint: 'bash'
 #   args:
@@ -280,10 +277,6 @@ steps:
     - docker-push-sale-service
     - docker-push-mysql
     - docker-push-nginx
-    - docker-push-redis
-    - docker-push-kafka
-    - docker-push-mongo
-    - docker-push-zookeeper
     - apply-configmaps
 
 timeout: '1200s'  # Maximum build timeout set to 20 minutes
