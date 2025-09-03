@@ -1,13 +1,15 @@
 steps:
 # 1. Execute Gradle build
-- name: 'gradle:jdk11'
+- name: 'alpine/java:11.0.22'
   id: 'build-gradle'
   entrypoint: 'bash'
   args:
     - '-c'
     - |
-      ./gradlew clean build
-      ./gradlew clean build -p direct-deal-gateway
+      #./gradlew clean build
+      #./gradlew clean build -p direct-deal-gateway
+      ./gradlew build --parallel -Dorg.gradle.jvmargs="-Xmx2g"
+      ./gradlew build -p direct-deal-gateway -Dorg.gradle.jvmargs="-Xmx2g"
 
 # 2. Docker image build and tag (each service in multiple steps)
 - name: 'gcr.io/cloud-builders/docker'
@@ -16,6 +18,7 @@ steps:
     [
       'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-account-service:$REVISION_ID', './direct-deal-account-service'
     ]
+  waitFor: ["-"]
 
 - name: 'gcr.io/cloud-builders/docker'
   id: 'docker-build-sale-service'
@@ -23,13 +26,15 @@ steps:
     [
       'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-sale-service:$REVISION_ID', './direct-deal-sale-service'
     ]
-
+  waitFor: ["-"]
+  
 - name: 'gcr.io/cloud-builders/docker'
   id: 'docker-build-sale-catalog-service-webflux'
   args:
     [
       'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-sale-catalog-service-webflux:$REVISION_ID', './direct-deal-sale-catalog-service-webflux'
     ]
+  waitFor: ["-"]
 
 - name: 'gcr.io/cloud-builders/docker'
   id: 'docker-build-transaction-history-service'
@@ -37,6 +42,7 @@ steps:
     [
       'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-transaction-history-service:$REVISION_ID', './direct-deal-transaction-history-service'
     ]
+  waitFor: ["-"]
 
 - name: 'gcr.io/cloud-builders/docker'
   id: 'docker-build-chatting-service'
@@ -44,6 +50,7 @@ steps:
     [
       'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-chatting-service:$REVISION_ID', './direct-deal-chatting-service'
     ]
+  waitFor: ["-"]
 
 - name: 'gcr.io/cloud-builders/docker'
   id: 'docker-build-gateway'
@@ -51,6 +58,7 @@ steps:
     [
       'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-gateway:$REVISION_ID', './direct-deal-gateway'
     ]
+  waitFor: ["-"]
 
 - name: 'gcr.io/cloud-builders/docker'
   id: 'docker-build-mysql'
@@ -58,6 +66,7 @@ steps:
     [
       'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-mysql:$REVISION_ID', './mysql'
     ]
+  waitFor: ["-"]
 
 - name: 'gcr.io/cloud-builders/docker'
   id: 'docker-build-nginx'
@@ -65,7 +74,7 @@ steps:
     [
       'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-nginx:$REVISION_ID', './direct-deal-ui'
     ]
-
+  
 # 3. Push images to the registry
 - name: 'gcr.io/cloud-builders/docker'
   id: 'docker-push-all'
@@ -73,36 +82,50 @@ steps:
     [
       'push', 'gcr.io/$PROJECT_ID/direct-deal-account-service:$REVISION_ID'
     ]
+  waitFor: ["-"]
+
 - name: 'gcr.io/cloud-builders/docker'
   args:
     [
       'push', 'gcr.io/$PROJECT_ID/direct-deal-sale-service:$REVISION_ID'
     ]
+  waitFor: ["-"]
+
 - name: 'gcr.io/cloud-builders/docker'
   args:
     [
       'push', 'gcr.io/$PROJECT_ID/direct-deal-sale-catalog-service-webflux:$REVISION_ID'
     ]
+  waitFor: ["-"]
+
 - name: 'gcr.io/cloud-builders/docker'
   args:
     [
       'push', 'gcr.io/$PROJECT_ID/direct-deal-transaction-history-service:$REVISION_ID'
     ]
+  waitFor: ["-"]
+
 - name: 'gcr.io/cloud-builders/docker'
   args:
     [
       'push', 'gcr.io/$PROJECT_ID/direct-deal-chatting-service:$REVISION_ID'
     ]
+  waitFor: ["-"]
+
 - name: 'gcr.io/cloud-builders/docker'
   args:
     [
       'push', 'gcr.io/$PROJECT_ID/direct-deal-gateway:$REVISION_ID'
     ]
+  waitFor: ["-"]
+
 - name: 'gcr.io/cloud-builders/docker'
   args:
     [
       'push', 'gcr.io/$PROJECT_ID/direct-deal-mysql:$REVISION_ID'
     ]
+  waitFor: ["-"]
+
 - name: 'gcr.io/cloud-builders/docker'
   args:
     [
@@ -213,3 +236,4 @@ timeout: '1200s'  # Maximum build timeout set to 20 minutes
 
 options:
   logging: CLOUD_LOGGING_ONLY
+  machineType: E2_HIGHCPU_8
