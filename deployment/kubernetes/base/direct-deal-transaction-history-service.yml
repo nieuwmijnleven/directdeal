@@ -1,37 +1,34 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: sale-service
+  name: transaction-history-service
   # namespace: default
   labels:
-    app: sale-service
+    app: transaction-history-service
 spec:
   ports:
   - name: httpport
-    port: 8081
+    port: 8083
     protocol: TCP
-    targetPort: 8081
+    targetPort: 8083
   selector:
-    app: sale-service
+    app: transaction-history-service
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sale-service
+  name: transaction-history-service
   # namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sale-service
+      app: transaction-history-service
       version: 'v1'
-  # strategy:
-  #   rollingUpdate:
-  #     maxUnavailable: 0
   template:
     metadata:
       labels:
-        app: sale-service
+        app: transaction-history-service
         version: 'v1'
     spec:
       initContainers:
@@ -43,7 +40,7 @@ spec:
           - |
             while true
             do
-              rt=$(nc -z -w 1 mysql 3306 && nc -z -w 1 mongo 27017 && nc -z -w 1 kafka 9092)
+              rt=$(nc -z -w 1 mysql 3306 && nc -z -w 1 kafka 9092)
               if [ $? -eq 0 ]; then
                 echo "DB is UP"
                 break
@@ -52,35 +49,35 @@ spec:
               sleep 10
             done
       containers:
-      - name: sale-service
-        image: gcr.io/${PROJECT_ID}/direct-deal-sale-service:latest
+      - name: transaction-history-service
+        image: direct-deal-transaction-history-service:dummy
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "dev"
         - name: PROJECT_ID
-          value: "${PROJECT_ID}"  
+          value: "${PROJECT_ID}"
         ports:
-        - containerPort: 8081
+        - containerPort: 8083
           name: httpport
         # resources:
         #     # requests:
         #     #   memory: '512Mi'
         #     #   cpu: '500m'
         #     limits:
-        #       memory: '512Mi'
+        #       memory: '256Mi'
         #       # cpu: '100m'
         livenessProbe:
           httpGet:
             path: /actuator/health
-            port: 8081
+            port: 8083
           initialDelaySeconds: 120
           periodSeconds: 20
           failureThreshold: 10
         readinessProbe:
           httpGet:
             path: /actuator/health
-            port: 8081
+            port: 8083
           initialDelaySeconds: 120
           periodSeconds: 20
           failureThreshold: 10

@@ -1,45 +1,40 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
+  name: nginx
   labels:
-    app: mysql
+    app: nginx
 spec:
   selector:
-    app: mysql
+    app: nginx
   ports:
-  - name: mysqlport
-    port: 3306
-    targetPort: 3306
+  - name: nginxport
+    port: 9000
+    targetPort: 9000
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
+  name: nginx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mysql
+      app: nginx
       version: 'v1'
   template:
     metadata:
       labels:
-        app: mysql
+        app: nginx
         version: 'v1'
     spec:
       containers:
-      - name: mysql
-        image: gcr.io/${PROJECT_ID}/direct-deal-mysql:latest
+      - name: nginx
+        image: direct-deal-nginx:dummy
         imagePullPolicy: Always
         ports:
-        - containerPort: 3306
-          name: mysqlport
-        env:
-          - name: MYSQL_ROOT_PASSWORD
-            value: "secret"
-          - name: PROJECT_ID
-            value: "${PROJECT_ID}"
+        - containerPort: 9000
+          name: nginxport
         # resources:
         #     # requests:
         #     #   memory: '512Mi'

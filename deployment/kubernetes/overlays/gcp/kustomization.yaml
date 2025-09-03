@@ -1,0 +1,37 @@
+resources:
+  - ../../base
+
+images:
+  - name: direct-deal-account-service
+    newName: gcr.io/${PROJECT_ID}/direct-deal-account-service
+    newTag: ${REVISION_ID}
+
+  - name: direct-deal-chatting-service
+    newName: gcr.io/${PROJECT_ID}/direct-deal-chatting-service
+    newTag: ${REVISION_ID}
+
+  - name: direct-deal-gateway
+    newName: gcr.io/${PROJECT_ID}/direct-deal-gateway
+    newTag: ${REVISION_ID}
+
+  - name: direct-deal-sale-service
+    newName: gcr.io/${PROJECT_ID}/direct-deal-sale-service
+    newTag: ${REVISION_ID}
+
+  - name: direct-deal-sale-catalog-service-webflux
+    newName: gcr.io/${PROJECT_ID}/direct-deal-sale-catalog-service-webflux
+    newTag: ${REVISION_ID}
+
+  - name: direct-deal-transaction-history-service
+    newName: gcr.io/${PROJECT_ID}/direct-deal-transaction-history-service
+    newTag: ${REVISION_ID}
+
+  - name: direct-deal-mysql
+    newName: gcr.io/${PROJECT_ID}/direct-deal-mysql
+    newTag: ${REVISION_ID}
+    
+  - name: direct-deal-nginx
+    newName: gcr.io/${PROJECT_ID}/direct-deal-nginx
+    newTag: ${REVISION_ID}
+
+
