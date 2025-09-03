@@ -2,7 +2,7 @@ steps:
 # 1. Execute Gradle build
 - name: 'alpine/java:11.0.22'
   id: 'build-gradle'
-  entrypoint: 'bash'
+  entrypoint: 'sh'
   args:
     - '-c'
     - |
