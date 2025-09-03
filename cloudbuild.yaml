@@ -257,6 +257,7 @@ steps:
       for deploy in "${!manifests[@]}"; do
           if ! kubectl get deployment $deploy -n default > /dev/null 2>&1; then
               echo "Creating deployment for $deploy"
+              apt-get update && apt-get install -y gettext-base
               envsubst < "${manifests[$deploy]}" | kubectl apply -n default -f -
               # Wait for the deployment to be ready
               # kubectl rollout status deployment/$deploy -n default
