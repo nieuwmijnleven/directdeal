@@ -8,8 +8,8 @@ steps:
     - |
       #./gradlew clean build
       #./gradlew clean build -p direct-deal-gateway
-      ./gradlew build clean --parallel -Dorg.gradle.jvmargs="-Xmx4g"
-      ./gradlew build clean -p direct-deal-gateway -Dorg.gradle.jvmargs="-Xmx4g"
+      ./gradlew clean build --parallel -Dorg.gradle.jvmargs="-Xmx2g"
+      ./gradlew clean build -p direct-deal-gateway -Dorg.gradle.jvmargs="-Xmx2g"
 
 # 2. Docker image build and tag (each service in multiple steps)
 - name: 'gcr.io/cloud-builders/docker'
