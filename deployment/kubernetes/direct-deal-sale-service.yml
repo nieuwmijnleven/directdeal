@@ -55,6 +55,10 @@ spec:
       - name: sale-service
         image: localhost:5000/direct-deal-sale-service:latest
         imagePullPolicy: Always
+        args:
+        # - "--spring.cloud.bootstrap.enabled=true"
+        - "--spring.cloud.kubernetes.config.name=direct-deal-sale-service"
+        - "--spring.cloud.kubernetes.config.namespace=default"
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "dev"

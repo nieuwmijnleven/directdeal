@@ -13,6 +13,9 @@ data:
     jwt.secret=L2RpcmVjdC1kZWFsL2RpcmVjdC1kZWFsLWFjY291bnQtc2VydmljZS9kaXJlY3QtZGVhbC9kaXJlY3QtZGVhbC1hY2NvdW50LXNlcnZpY2UvZGlyZWN0LWRlYWwvZGlyZWN0LWRlYWwtYWNjb3VudC1zZXJ2aWNlL2RpcmVjdC1kZWFsL2RpcmVjdC1kZWFsLWFjY291bnQtc2VydmljZQo=
     jwt.access-token-validity-in-seconds=3600
     jwt.refresh-token-validity-in-seconds=2592000
+
+    # ConfigMap
+    spring.config.import=kubernetes:
     ---
     spring.profiles=dev
 
@@ -55,9 +58,7 @@ data:
 
     spring.jpa.open-in-view=false
     spring.jpa.defer-datasource-initialization=true
-    spring.jpa.hibernate.ddl-auto=create-drop
-
-    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL57Dialect
+    spring.jpa.hibernate.ddl-auto=update
     spring.jpa.properties.hibernate.dialect.storage_engine=innodb
     spring.jpa.properties.hibernate.format_sql=true
 

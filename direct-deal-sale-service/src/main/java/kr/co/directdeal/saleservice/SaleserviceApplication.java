@@ -5,18 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.multipart.MultipartResolver;
 
-import kr.co.directdeal.saleservice.custom.CustomMultipartResolver;
-
 // @SpringBootApplication(exclude = {KafkaAutoConfiguration.class})
 @SpringBootApplication
 public class SaleserviceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SaleserviceApplication.class, args);
-	}
-
-	@Bean
-	public MultipartResolver multipartResolver() {
-		return new CustomMultipartResolver();
 	}
 }

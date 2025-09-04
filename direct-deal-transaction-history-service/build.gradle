@@ -1,6 +1,6 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.0'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'org.springframework.boot' version '3.2.12'
+	id 'io.spring.dependency-management' version '1.1.4'
 	id 'kr.co.directdeal.java-common-conventions'
 }
 
@@ -12,6 +12,7 @@ bootJar {
 dependencyManagement {
 	imports {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
 	}
 }
 
@@ -25,7 +26,8 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-actuator"
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
-	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-all'
+	//implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-all'
+	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-config'
 
 	implementation ('org.axonframework:axon-spring-boot-starter') {
 		exclude group: "org.axonframework", module: 'axon-server-connector'

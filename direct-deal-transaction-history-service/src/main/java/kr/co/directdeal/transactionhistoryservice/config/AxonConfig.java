@@ -19,25 +19,6 @@ import org.axonframework.eventhandling.tokenstore.TokenStore;
 @Configuration
 public class AxonConfig {
     @Bean
-    @Primary
-    public XStream mySecuredXStream() {
-        XStream xStream = new XStream();
-        xStream.allowTypesByWildcard(new String[]{
-            "kr.co.directdeal.**",
-            "org.axonframework.**" 
-        });
-        return xStream;
-    }
-    
-    @Bean
-    @Primary
-    public Serializer xStreamSerializer(XStream xStream) {
-        return XStreamSerializer.builder()
-                .xStream(xStream)
-                .build();
-    }
-
-    @Bean
     public TokenStore tokenStore(MongoTemplate mongoTemplate, Serializer serializer) {
         return MongoTokenStore.builder()
                     .mongoTemplate(mongoTemplate)
@@ -46,9 +27,10 @@ public class AxonConfig {
     }
 
     @Bean("axonMongoTemplate")
-    public MongoTemplate mongoTemplate(MongoClient client) {
+    @Primary
+    public MongoTemplate mongoTemplate(MongoClient mongoClient) {
         return DefaultMongoTemplate.builder()
-                    .mongoDatabase(client)
+                    .mongoDatabase(mongoClient)
                     .build();
     }
 }

@@ -13,8 +13,11 @@ data:
     jwt.secret=L2RpcmVjdC1kZWFsL2RpcmVjdC1kZWFsLWFjY291bnQtc2VydmljZS9kaXJlY3QtZGVhbC9kaXJlY3QtZGVhbC1hY2NvdW50LXNlcnZpY2UvZGlyZWN0LWRlYWwvZGlyZWN0LWRlYWwtYWNjb3VudC1zZXJ2aWNlL2RpcmVjdC1kZWFsL2RpcmVjdC1kZWFsLWFjY291bnQtc2VydmljZQo=
     jwt.access-token-validity-in-seconds=3600
     jwt.refresh-token-validity-in-seconds=2592000
+
     ---
-    spring.profiles=dev
+    # Profiles
+    #spring.profiles=dev
+    spring.profiles.active=dev,kubernetes
 
     #Lift-Up Configuration for catalog service
     direct.deal.sale.catalog.liftup.interval.day=3
@@ -27,7 +30,7 @@ data:
     axon.kafka.client-id=sale-catalog-service-consumer-${random.int}
     axon.kafka.default-topic=local.event
     axon.kafka.properties.security.protocol=PLAINTEXT
-
+  
     #axon.kafka.fetcher.poll-timeout=3000
     axon.kafka.fetcher.enabled = true
 
@@ -43,9 +46,14 @@ data:
     #axon.eventhandling.processors.saleItem.thread-count=1
     #axon.eventhandling.processors.saleItem.batch-size=1
 
-    #axon.serializer.general=xstream
-    #axon.serializer.events=xstream
-    #axon.serializer.messages=xstream
+    axon.serializer.general=jackson
+    axon.serializer.events=jackson
+    axon.serializer.messages=jackson
+
+    spring.kafka.properties.jmx.enabled=false
+    spring.kafka.properties.jmx=false
+    axon.kafka.properties.jmx.enabled=false
+    spring.jmx.enabled=false
 
     # JPA Settings
     spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
@@ -55,9 +63,7 @@ data:
 
     spring.jpa.open-in-view=false
     spring.jpa.defer-datasource-initialization=true
-    spring.jpa.hibernate.ddl-auto=create-drop
-
-    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL57Dialect
+    spring.jpa.hibernate.ddl-auto=update
     spring.jpa.properties.hibernate.dialect.storage_engine=innodb
     spring.jpa.properties.hibernate.format_sql=true
 

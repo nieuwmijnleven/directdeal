@@ -2,8 +2,8 @@ package kr.co.directdeal.saleservice.adapter.inbound;
 
 import java.util.UUID;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;

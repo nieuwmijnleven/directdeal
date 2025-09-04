@@ -1,6 +1,6 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.0'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'org.springframework.boot' version '3.2.12'
+	id 'io.spring.dependency-management' version '1.1.4'
 	id 'kr.co.directdeal.java-common-conventions'
 }
 
@@ -12,6 +12,7 @@ bootJar {
 dependencyManagement {
 	imports {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
 	}
 }
 
@@ -24,10 +25,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-all'
-	
-	implementation 'io.springfox:springfox-swagger-ui'
-	implementation 'io.springfox:springfox-boot-starter'
+	// implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-all'
+	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-config'
+
+	// implementation 'io.springfox:springfox-swagger-ui'
+	// implementation 'io.springfox:springfox-boot-starter'
 
 	implementation 'io.jsonwebtoken:jjwt-api'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl'

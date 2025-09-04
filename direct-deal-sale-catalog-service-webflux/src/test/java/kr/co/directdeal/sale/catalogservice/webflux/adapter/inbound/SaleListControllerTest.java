@@ -33,7 +33,7 @@ import kr.co.directdeal.sale.catalogservice.webflux.service.dto.SaleListDTO;
 import kr.co.directdeal.sale.catalogservice.webflux.service.mapper.SaleListMapper;
 import kr.co.directdeal.sale.catalogservice.webflux.service.repository.SaleListRepository;
 import reactor.core.publisher.Flux;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.ActiveProfiles;
 
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = {SaleListController.class},
@@ -41,7 +41,7 @@ import org.springframework.test.context.TestPropertySource;
         classes = {TokenProvider.class, JWTProperties.class,
                     SaleListRepository.class, SaleListMapper.class, 
                     LiftUpProperties.class, WebConfig.class}))
-@TestPropertySource(properties = "spring.cloud.kubernetes.enabled=false")
+@ActiveProfiles("test")
 public class SaleListControllerTest {
 
     @MockBean
