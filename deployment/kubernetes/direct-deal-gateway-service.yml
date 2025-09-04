@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
       - name: gateway
-        image: gcr.io/${PROJECT_ID}/direct-deal-gateway:${REVISION_ID}
+        image: direct-deal-gateway:dummy
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE

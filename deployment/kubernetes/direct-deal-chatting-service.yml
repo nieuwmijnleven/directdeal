@@ -53,7 +53,7 @@ spec:
             done
       containers:
       - name: chatting-service
-        image: gcr.io/${PROJECT_ID}/direct-deal-chatting-service:${REVISION_ID}
+        image: direct-deal-chatting-service:dummy
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE

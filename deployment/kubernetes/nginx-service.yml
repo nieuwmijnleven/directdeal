@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: gcr.io/${PROJECT_ID}/direct-deal-nginx:${REVISION_ID}
+        image: direct-deal-nginx:dummy
         imagePullPolicy: Always
         ports:
         - containerPort: 9000
