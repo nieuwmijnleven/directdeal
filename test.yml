@@ -1,0 +1,29 @@
+      set -e
+      declare -A images
+      images[account-service]="europe-west4-docker.pkg.dev/$PROJECT_ID/my-repo/account-service:$SHORT_SHA"
+      images[chatting-service]="europe-west4-docker.pkg.dev/$PROJECT_ID/my-repo/chatting-service:$SHORT_SHA"
+      images[gateway]="europe-west4-docker.pkg.dev/$PROJECT_ID/my-repo/gateway:$SHORT_SHA"
+      images[kafka]="europe-west4-docker.pkg.dev/$PROJECT_ID/my-repo/kafka:$SHORT_SHA"
+      images[mongo]="europe-west4-docker.pkg.dev/$PROJECT_ID/my-repo/mongo:$SHORT_SHA"
+      images[mysql]="europe-west4-docker.pkg.dev/$PROJECT_ID/my-repo/mysql:$SHORT_SHA"
+      images[nginx]="europe-west4-docker.pkg.dev/$PROJECT_ID/my-repo/nginx:$SHORT_SHA"
+      images[redis]="europe-west4-docker.pkg.dev/$PROJECT_ID/my-repo/redis:$SHORT_SHA"
+      images[sale-catalog-service]="europe-west4-docker.pkg.dev/$PROJECT_ID/my-repo/sale-catalog-service:$SHORT_SHA"
+      images[sale-service]="europe-west4-docker.pkg.dev/$PROJECT_ID/my-repo/sale-service:$SHORT_SHA"
+      images[transaction-history-service]="europe-west4-docker.pkg.dev/$PROJECT_ID/my-repo/transaction-history-service:$SHORT_SHA"
+      images[zookeeper]="europe-west4-docker.pkg.dev/$PROJECT_ID/my-repo/zookeeper:$SHORT_SHA"
+
+      for deploy in "${!images[@]}"; do
+        echo ">>> Processing $deploy"
+        if ! kubectl get deployment $deploy -n default > /dev/null 2>&1; then
+          echo "Deployment $deploy not found, applying manifest..."
+          kubectl apply -f ./deployment/kubernetes/deployment/${deploy}.yml
+        fi
+        echo "Updating image for $deploy"
+        kubectl set image deployment/$deploy $deploy=${images[$deploy]} -n default
+      done
+  env:
+    - 'CLOUDSDK_COMPUTE_ZONE=$_DEPLOY_REGION'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER'
+    - 'PROJECT_ID=$PROJECT_ID'
+    - 'SHORT_SHA=$SHORT_SHA'

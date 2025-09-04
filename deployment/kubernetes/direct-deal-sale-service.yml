@@ -53,7 +53,7 @@ spec:
             done
       containers:
       - name: sale-service
-        image: gcr.io/${PROJECT_ID}/direct-deal-sale-service:latest
+        image: gcr.io/${PROJECT_ID}/direct-deal-sale-service:${REVISION_ID}
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE

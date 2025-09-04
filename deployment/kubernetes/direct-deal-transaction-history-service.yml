@@ -50,7 +50,7 @@ spec:
             done
       containers:
       - name: transaction-history-service
-        image: gcr.io/${PROJECT_ID}/direct-deal-transaction-history-service:latest
+        image: gcr.io/${PROJECT_ID}/direct-deal-transaction-history-service:${REVISION_ID}
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE

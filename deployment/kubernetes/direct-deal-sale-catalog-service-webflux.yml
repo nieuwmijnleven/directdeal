@@ -53,7 +53,7 @@ spec:
             done
       containers:
       - name: sale-catalog-service
-        image: gcr.io/${PROJECT_ID}/direct-deal-sale-catalog-service-webflux:latest
+        image: gcr.io/${PROJECT_ID}/direct-deal-sale-catalog-service-webflux:${REVISION_ID}
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE

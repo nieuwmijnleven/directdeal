@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: gcr.io/${PROJECT_ID}/direct-deal-mysql:latest
+        image: gcr.io/${PROJECT_ID}/direct-deal-mysql:${REVISION_ID}
         imagePullPolicy: Always
         ports:
         - containerPort: 3306

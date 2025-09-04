@@ -8,8 +8,8 @@ steps:
     - |
       #./gradlew clean build
       #./gradlew clean build -p direct-deal-gateway
-      ./gradlew build --parallel -Dorg.gradle.jvmargs="-Xmx20g"
-      ./gradlew build -p direct-deal-gateway -Dorg.gradle.jvmargs="-Xmx20g"
+      ./gradlew build clean --parallel -Dorg.gradle.jvmargs="-Xmx4g"
+      ./gradlew build clean -p direct-deal-gateway -Dorg.gradle.jvmargs="-Xmx4g"
 
 # 2. Docker image build and tag (each service in multiple steps)
 - name: 'gcr.io/cloud-builders/docker'
@@ -261,9 +261,10 @@ steps:
               envsubst < "${manifests[$deploy]}" | kubectl apply -n default -f -
               # Wait for the deployment to be ready
               # kubectl rollout status deployment/$deploy -n default
+          else
+            echo "Updating image for $deploy"
+            kubectl set image deployment/$deploy $deploy=${images[$deploy]} -n default
           fi
-          echo "Updating image for $deploy"
-          kubectl set image deployment/$deploy $deploy=${images[$deploy]} -n default
       done
   env:
     - 'CLOUDSDK_COMPUTE_ZONE=$_DEPLOY_REGION'      

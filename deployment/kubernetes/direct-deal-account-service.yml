@@ -52,36 +52,36 @@ spec:
               sleep 10
             done
       containers:
-      - name: account-service
-        image: gcr.io/${PROJECT_ID}/direct-deal-account-service:latest
-        imagePullPolicy: Always
-        env:
-        - name: SPRING_PROFILES_ACTIVE
-          value: "dev"
-        - name: PROJECT_ID
-          value: "${PROJECT_ID}"
-        ports:
-        - containerPort: 8080
-          name: httpport
-        # resources:
-        #     # requests:
-        #     #   memory: '512Mi'
-        #     #   cpu: '500m'
-        #     limits:
-        #       memory: '256Mi'
-        #       # cpu: '100m'
-        livenessProbe:
-          httpGet:
-            path: /actuator/health
-            port: 8080
-          initialDelaySeconds: 120
-          periodSeconds: 20
-          failureThreshold: 10
-        readinessProbe:
-          httpGet:
-            path: /actuator/health
-            port: 8080
-          initialDelaySeconds: 120
-          periodSeconds: 20
-          failureThreshold: 10
+        - name: account-service
+          image: gcr.io/${PROJECT_ID}/direct-deal-account-service:${REVISION_ID}
+          imagePullPolicy: Always
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: "dev"
+          - name: PROJECT_ID
+            value: "${PROJECT_ID}"
+          ports:
+          - containerPort: 8080
+            name: httpport
+          # resources:
+          #     # requests:
+          #     #   memory: '512Mi'
+          #     #   cpu: '500m'
+          #     limits:
+          #       memory: '256Mi'
+          #       # cpu: '100m'
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 120
+            periodSeconds: 20
+            failureThreshold: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 120
+            periodSeconds: 20
+            failureThreshold: 10
 ---
