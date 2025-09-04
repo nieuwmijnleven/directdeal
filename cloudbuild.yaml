@@ -270,6 +270,7 @@ steps:
     - 'CLOUDSDK_COMPUTE_ZONE=$_DEPLOY_REGION'      
     - 'CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER' 
     - 'PROJECT_ID=$PROJECT_ID'
+    - 'REVISION_ID=$REVISION_ID'
   waitFor:
     - docker-push-account-service
     - docker-push-chatting-service
