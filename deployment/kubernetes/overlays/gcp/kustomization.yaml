@@ -30,8 +30,8 @@ images:
     newName: gcr.io/${PROJECT_ID}/direct-deal-mysql
     newTag: ${REVISION_ID}
     
-  - name: nginx
-    newName: gcr.io/${PROJECT_ID}/nginx
+  - name: direct-deal-nginx
+    newName: gcr.io/${PROJECT_ID}/direct-deal-nginx
     newTag: ${REVISION_ID}
 
 
