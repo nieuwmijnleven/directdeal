@@ -227,7 +227,7 @@ steps:
       set -e
       echo "Applying deployment for all services"
       apt-get update && apt-get install -y gettext-base
-      kubectl kustomize build ./deployment/kubernetes/overlays/gcp | envsubst | kubectl apply -n default -f -
+      kubectl kustomize ./deployment/kubernetes/overlays/gcp | envsubst | kubectl apply -n default -f -
   env:
     - 'CLOUDSDK_COMPUTE_ZONE=$_DEPLOY_REGION'      
     - 'CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER' 
