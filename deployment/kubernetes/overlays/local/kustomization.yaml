@@ -1,12 +1,5 @@
 resources:
-  - ../../direct-deal-account-service.yml
-  - ../../direct-deal-chatting-service.yml
-  - ../../direct-deal-gateway.yml
-  - ../../direct-deal-sale-catalog-service-webflux.yml
-  - ../../direct-deal-sale-service.yml
-  - ../../direct-deal-transaction-history-service.yml
-  - ../../nginx-service.yml
-  - ../../mysql.yml
+  - ../../base
 
 images:
   - name: direct-deal-account-service
@@ -37,8 +30,8 @@ images:
     newName: localhost:5000/direct-deal-mysql
     newTag: latest
     
-  - name: nginx
-    newName: localhost:5000/nginx
+  - name: direct-deal-nginx
+    newName: localhost:5000/direct-deal-nginx
     newTag: latest
 
 

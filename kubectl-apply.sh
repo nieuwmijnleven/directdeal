@@ -4,7 +4,7 @@ minikube ssh sudo ip link set docker0 promisc on
 
 KUBERNETES_CONFIG_PATH="./deployment/kubernetes"
 
-eval $(minikube -p minikube docker-env)
+#eval $(minikube -p minikube docker-env)
 
 # kubectl delete -f ${KUBERNETES_CONFIG_PATH}/registry.yml
 kubectl delete -f ${KUBERNETES_CONFIG_PATH}/configmap/direct-deal-account-configmap.yml
@@ -34,7 +34,7 @@ kubectl delete -f ${KUBERNETES_CONFIG_PATH}/kafka-service.yml
 # kubectl delete -f ${KUBERNETES_CONFIG_PATH}/direct-deal-transaction-history-service.yml
 # kubectl delete -f ${KUBERNETES_CONFIG_PATH}/direct-deal-gateway-service.yml
 
-kubectl kustomize ./deployment/kubernetes/overlays/gcp | envsubst | kubectl delete -n default -f -
+kubectl kustomize ./deployment/kubernetes/overlays/local | kubectl delete -n default -f -
 
 # kubectl create namespace jenkins
 
@@ -66,4 +66,4 @@ kubectl create -f ${KUBERNETES_CONFIG_PATH}/kafka-service.yml
 # kubectl create -f ${KUBERNETES_CONFIG_PATH}/direct-deal-transaction-history-service.yml
 # kubectl create -f ${KUBERNETES_CONFIG_PATH}/direct-deal-gateway-service.yml
 
-kubectl kustomize ./deployment/kubernetes/overlays/gcp | envsubst | kubectl create -n default -f -
+kubectl kustomize ./deployment/kubernetes/overlays/local | kubectl create -n default -f -
