@@ -228,9 +228,9 @@ steps:
       echo "Applying deployment for all services"
       apt-get update && apt-get install -y gettext-base
       kubectl kustomize ./deployment/kubernetes/overlays/gcp | envsubst | kubectl apply -n default -f -
-      kubectl apply -f ./development/kubernetes/mongo-service.yml
-      kubectl apply -f ./development/kubernetes/zookeeper-service.yml
-      kubectl apply -f ./development/kubernetes/kafka-service.yml
+      kubectl apply -f ./deployment/kubernetes/mongo-service.yml
+      kubectl apply -f ./deployment/kubernetes/zookeeper-service.yml
+      kubectl apply -f ./deployment/kubernetes/kafka-service.yml
   env:
     - 'CLOUDSDK_COMPUTE_ZONE=$_DEPLOY_REGION'      
     - 'CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER' 
