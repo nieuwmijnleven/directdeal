@@ -1,45 +1,67 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: gateway
+  name: account-service
   # namespace: default
   labels:
-    app: gateway
+    app: account-service
 spec:
   ports:
   - name: httpport
-    port: 8084
+    port: 8080
     protocol: TCP
-    targetPort: 8084
+    targetPort: 8080
   selector:
-    app: gateway
+    app: account-service
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gateway
+  name: account-service
   # namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: gateway
+      app: account-service
       version: 'v1'
+  # strategy:
+  #   rollingUpdate:
+  #     maxUnavailable: 0
   template:
     metadata:
       labels:
-        app: gateway
+        app: account-service
         version: 'v1'
     spec:
+      initContainers:
+      - name: init-ds
+        image: busybox:latest
+        command:
+          - '/bin/sh'
+          - '-c'
+          - |
+            while true
+            do
+              rt=$(nc -z -w 1 mysql 3306)
+              if [ $? -eq 0 ]; then
+                echo "DB is UP"
+                break
+              fi
+              echo "DB is not yet reachable;sleep for 10s before retry"
+              sleep 10
+            done
       containers:
-      - name: gateway
-        image: localhost:5000/direct-deal-gateway:latest
+      - name: account-service
+        image: direct-deal-account-service:dummy
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "dev"
+        - name: PROJECT_ID
+          value: "${PROJECT_ID}"
         ports:
-        - containerPort: 8084
+        - containerPort: 8080
           name: httpport
         # resources:
         #     # requests:
@@ -51,14 +73,14 @@ spec:
         livenessProbe:
           httpGet:
             path: /actuator/health
-            port: 8084
+            port: 8080
           initialDelaySeconds: 120
           periodSeconds: 20
           failureThreshold: 10
         readinessProbe:
           httpGet:
             path: /actuator/health
-            port: 8084
+            port: 8080
           initialDelaySeconds: 120
           periodSeconds: 20
           failureThreshold: 10

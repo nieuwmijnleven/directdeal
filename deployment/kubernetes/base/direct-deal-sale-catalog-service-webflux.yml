@@ -53,11 +53,13 @@ spec:
             done
       containers:
       - name: sale-catalog-service
-        image: localhost:5000/direct-deal-sale-catalog-service:latest
+        image: direct-deal-sale-catalog-service-webflux:dummy
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "dev"
+        - name: PROJECT_ID
+          value: "${PROJECT_ID}"
         ports:
         - containerPort: 8082
           name: httpport
@@ -68,18 +70,18 @@ spec:
         #     limits:
         #       memory: '512Mi'
         #       # cpu: '100m'
-        livenessProbe:
-          httpGet:
-            path: /actuator/health
-            port: 8082
-          initialDelaySeconds: 120
-          periodSeconds: 20
-          failureThreshold: 10
-        readinessProbe:
-          httpGet:
-            path: /actuator/health
-            port: 8082
-          initialDelaySeconds: 120
-          periodSeconds: 20
-          failureThreshold: 10
+        # livenessProbe:
+        #   httpGet:
+        #     path: /actuator/health
+        #     port: 8082
+        #   initialDelaySeconds: 120
+        #   periodSeconds: 20
+        #   failureThreshold: 10
+        # readinessProbe:
+        #   httpGet:
+        #     path: /actuator/health
+        #     port: 8082
+        #   initialDelaySeconds: 120
+        #   periodSeconds: 20
+        #   failureThreshold: 10
 ---
