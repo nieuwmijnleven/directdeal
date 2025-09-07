@@ -23,6 +23,6 @@ public class ChattingRoomDTO {
     private String itemId;
     private String sellerId;
     private String customerId;
-    private List<ChattingMessageDTO> messages = new ArrayList<>();
+    private List<ChattingMessageDTO> messages;
     private Instant createdDate;
 }

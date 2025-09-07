@@ -52,7 +52,7 @@ public class ItemCategory {
     private ItemCategory parent;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemCategory> child = new ArrayList<>();
+    private List<ItemCategory> child;
 
     public void addChildItemCategory(ItemCategory itemCategory) {
         this.child.add(itemCategory);
