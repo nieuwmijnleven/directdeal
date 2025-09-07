@@ -1,29 +1,29 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: account-service
+  name: sale-service
   # namespace: default
   labels:
-    app: account-service
+    app: sale-service
 spec:
   ports:
   - name: httpport
-    port: 8080
+    port: 8081
     protocol: TCP
-    targetPort: 8080
+    targetPort: 8081
   selector:
-    app: account-service
+    app: sale-service
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: account-service
+  name: sale-service
   # namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: account-service
+      app: sale-service
       version: 'v1'
   # strategy:
   #   rollingUpdate:
@@ -31,7 +31,7 @@ spec:
   template:
     metadata:
       labels:
-        app: account-service
+        app: sale-service
         version: 'v1'
     spec:
       initContainers:
@@ -43,7 +43,7 @@ spec:
           - |
             while true
             do
-              rt=$(nc -z -w 1 mysql 3306)
+              rt=$(nc -z -w 1 mysql 3306 && nc -z -w 1 mongo 27017 && nc -z -w 1 kafka 9092)
               if [ $? -eq 0 ]; then
                 echo "DB is UP"
                 break
@@ -52,33 +52,39 @@ spec:
               sleep 10
             done
       containers:
-      - name: account-service
-        image: localhost:5000/direct-deal-account-service:latest
+      - name: sale-service
+        image: direct-deal-sale-service:dummy
         imagePullPolicy: Always
+        args:
+        # - "--spring.cloud.bootstrap.enabled=true"
+        - "--spring.cloud.kubernetes.config.name=direct-deal-sale-service"
+        - "--spring.cloud.kubernetes.config.namespace=default"
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "dev"
+        - name: PROJECT_ID
+          value: "${PROJECT_ID}"  
         ports:
-        - containerPort: 8080
+        - containerPort: 8081
           name: httpport
         # resources:
         #     # requests:
         #     #   memory: '512Mi'
         #     #   cpu: '500m'
         #     limits:
-        #       memory: '256Mi'
+        #       memory: '512Mi'
         #       # cpu: '100m'
         livenessProbe:
           httpGet:
             path: /actuator/health
-            port: 8080
+            port: 8081
           initialDelaySeconds: 120
           periodSeconds: 20
           failureThreshold: 10
         readinessProbe:
           httpGet:
             path: /actuator/health
-            port: 8080
+            port: 8081
           initialDelaySeconds: 120
           periodSeconds: 20
           failureThreshold: 10

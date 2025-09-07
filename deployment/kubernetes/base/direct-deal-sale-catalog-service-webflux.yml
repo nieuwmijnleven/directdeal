@@ -1,29 +1,29 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: sale-service
+  name: sale-catalog-service
   # namespace: default
   labels:
-    app: sale-service
+    app: sale-catalog-service
 spec:
   ports:
   - name: httpport
-    port: 8081
+    port: 8082
     protocol: TCP
-    targetPort: 8081
+    targetPort: 8082
   selector:
-    app: sale-service
+    app: sale-catalog-service
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sale-service
+  name: sale-catalog-service
   # namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sale-service
+      app: sale-catalog-service
       version: 'v1'
   # strategy:
   #   rollingUpdate:
@@ -31,7 +31,7 @@ spec:
   template:
     metadata:
       labels:
-        app: sale-service
+        app: sale-catalog-service
         version: 'v1'
     spec:
       initContainers:
@@ -52,18 +52,16 @@ spec:
               sleep 10
             done
       containers:
-      - name: sale-service
-        image: localhost:5000/direct-deal-sale-service:latest
+      - name: sale-catalog-service
+        image: direct-deal-sale-catalog-service-webflux:dummy
         imagePullPolicy: Always
-        args:
-        # - "--spring.cloud.bootstrap.enabled=true"
-        - "--spring.cloud.kubernetes.config.name=direct-deal-sale-service"
-        - "--spring.cloud.kubernetes.config.namespace=default"
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "dev"
+        - name: PROJECT_ID
+          value: "${PROJECT_ID}"
         ports:
-        - containerPort: 8081
+        - containerPort: 8082
           name: httpport
         # resources:
         #     # requests:
@@ -72,18 +70,18 @@ spec:
         #     limits:
         #       memory: '512Mi'
         #       # cpu: '100m'
-        livenessProbe:
-          httpGet:
-            path: /actuator/health
-            port: 8081
-          initialDelaySeconds: 120
-          periodSeconds: 20
-          failureThreshold: 10
-        readinessProbe:
-          httpGet:
-            path: /actuator/health
-            port: 8081
-          initialDelaySeconds: 120
-          periodSeconds: 20
-          failureThreshold: 10
+        # livenessProbe:
+        #   httpGet:
+        #     path: /actuator/health
+        #     port: 8082
+        #   initialDelaySeconds: 120
+        #   periodSeconds: 20
+        #   failureThreshold: 10
+        # readinessProbe:
+        #   httpGet:
+        #     path: /actuator/health
+        #     port: 8082
+        #   initialDelaySeconds: 120
+        #   periodSeconds: 20
+        #   failureThreshold: 10
 ---

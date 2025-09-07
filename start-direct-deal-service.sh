@@ -89,7 +89,7 @@ while true; do
 done
 
 echo "Applying Port Forwarding..."
-sh -c "kubectl port-forward service/gateway 8084:8084 1>>/dev/null &"
+#sh -c "kubectl port-forward service/gateway 8084:8084 1>>/dev/null &"
 sh -c "kubectl port-forward service/nginx 9000:9000 1>>/dev/null &"
 #sh -c "kubectl port-forward service/kibana 5601:5601 -n kube-system 1>>/dev/null &"
 #sh -c "kubectl port-forward service/jenkins 7080:7080 -n jenkins 1>>/dev/null &"

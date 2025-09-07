@@ -1,45 +1,64 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: gateway
+  name: transaction-history-service
   # namespace: default
   labels:
-    app: gateway
+    app: transaction-history-service
 spec:
   ports:
   - name: httpport
-    port: 8084
+    port: 8083
     protocol: TCP
-    targetPort: 8084
+    targetPort: 8083
   selector:
-    app: gateway
+    app: transaction-history-service
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gateway
+  name: transaction-history-service
   # namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: gateway
+      app: transaction-history-service
       version: 'v1'
   template:
     metadata:
       labels:
-        app: gateway
+        app: transaction-history-service
         version: 'v1'
     spec:
+      initContainers:
+      - name: init-ds
+        image: busybox:latest
+        command:
+          - '/bin/sh'
+          - '-c'
+          - |
+            while true
+            do
+              rt=$(nc -z -w 1 mysql 3306 && nc -z -w 1 kafka 9092)
+              if [ $? -eq 0 ]; then
+                echo "DB is UP"
+                break
+              fi
+              echo "DB is not yet reachable;sleep for 10s before retry"
+              sleep 10
+            done
       containers:
-      - name: gateway
-        image: localhost:5000/direct-deal-gateway:latest
+      - name: transaction-history-service
+        image: direct-deal-transaction-history-service:dummy
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "dev"
+        - name: PROJECT_ID
+          value: "${PROJECT_ID}"
         ports:
-        - containerPort: 8084
+        - containerPort: 8083
           name: httpport
         # resources:
         #     # requests:
@@ -51,14 +70,14 @@ spec:
         livenessProbe:
           httpGet:
             path: /actuator/health
-            port: 8084
+            port: 8083
           initialDelaySeconds: 120
           periodSeconds: 20
           failureThreshold: 10
         readinessProbe:
           httpGet:
             path: /actuator/health
-            port: 8084
+            port: 8083
           initialDelaySeconds: 120
           periodSeconds: 20
           failureThreshold: 10
