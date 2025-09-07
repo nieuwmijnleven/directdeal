@@ -1,7 +1,7 @@
 package kr.co.directdeal.sale.catalogservice.webflux.config;
 
-import java.nio.charset.StandardCharsets;
-
+import kr.co.directdeal.sale.catalogservice.webflux.security.SecurityContextRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -12,11 +12,10 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.server.ServerWebExchange;
-
-import kr.co.directdeal.sale.catalogservice.webflux.security.SecurityContextRepository;
-import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.nio.charset.StandardCharsets;
 
 @EnableWebFluxSecurity
 @RequiredArgsConstructor
