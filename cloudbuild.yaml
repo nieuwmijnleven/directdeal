@@ -1,6 +1,6 @@
 steps:
 # 1. Execute Gradle build
-- name: 'alpine/java:11.0.22'
+- name: 'alpine/java:17.0.9-jdk'
   id: 'build-gradle'
   entrypoint: 'sh'
   args:
