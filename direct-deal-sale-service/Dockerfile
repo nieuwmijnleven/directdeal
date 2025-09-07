@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11:alpine-jre
+FROM alpine/java:17.0.9-jre
 LABEL image.authors="Jeon, Cheol"
 ADD build/libs/direct-deal-sale-service-0.1.jar .
 EXPOSE 8081

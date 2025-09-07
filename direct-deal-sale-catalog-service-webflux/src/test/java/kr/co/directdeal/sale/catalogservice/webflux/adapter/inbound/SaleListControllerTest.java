@@ -33,6 +33,7 @@ import kr.co.directdeal.sale.catalogservice.webflux.service.dto.SaleListDTO;
 import kr.co.directdeal.sale.catalogservice.webflux.service.mapper.SaleListMapper;
 import kr.co.directdeal.sale.catalogservice.webflux.service.repository.SaleListRepository;
 import reactor.core.publisher.Flux;
+import org.springframework.test.context.ActiveProfiles;
 
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = {SaleListController.class},
@@ -40,6 +41,7 @@ import reactor.core.publisher.Flux;
         classes = {TokenProvider.class, JWTProperties.class,
                     SaleListRepository.class, SaleListMapper.class, 
                     LiftUpProperties.class, WebConfig.class}))
+@ActiveProfiles("test")
 public class SaleListControllerTest {
 
     @MockBean

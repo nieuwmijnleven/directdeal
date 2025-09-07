@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -57,12 +59,22 @@ public class ItemImageService {
         //                 .build();
 
         //allocate normalized image names
-        List<String> images = new ArrayList<>();
+        // List<String> imageNames = new ArrayList<>();
+        // List<byte[]> imageFiles = new ArrayList<>();
+        Map<String, byte[]> images = new HashMap<>();
         for (MultipartFile file : files) {
             String originalFilename = file.getOriginalFilename();
             String ext = originalFilename.substring(originalFilename.lastIndexOf('.') + 1);
             String filename = UUID.randomUUID().toString() + "." + ext;
-            images.add(filename);
+
+            try {
+                images.put(filename, file.getBytes());
+            } catch (IOException ioe) {
+                throw ItemImageException.builder()
+                            .messageKey("saleservice.exception.itemimageservice.saveimages.cannotloadImage.message")
+                            .messageArgs(new String[]{ file.getOriginalFilename() })
+                            .build();
+            }
         }
 
         String checkId = UUID.randomUUID().toString();
@@ -84,12 +96,12 @@ public class ItemImageService {
             }
         }
 
-        asyncSaveImageRunner.execute(files, images, checkId);
+        asyncSaveImageRunner.execute(images, checkId);
 
         return ItemImageDTO.builder()
                     .checkId(checkId)
                     .checkURL(checkURL)
-                    .images(images)
+                    .images(images.keySet().stream().toList())
                     .build();
     }
 

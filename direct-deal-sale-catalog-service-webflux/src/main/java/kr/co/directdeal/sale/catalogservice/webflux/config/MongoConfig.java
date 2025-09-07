@@ -7,9 +7,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+import org.axonframework.extensions.mongo.DefaultMongoTemplate;
 
 @Configuration
-public class MongoConfig /*extends AbstractMongoConfiguration*/ {
+public class MongoConfig {
 
     @Value("${spring.data.mongodb.host}")  
     private String host;
@@ -30,13 +31,13 @@ public class MongoConfig /*extends AbstractMongoConfiguration*/ {
     private String database;
 	
     @Bean
-	public MongoClient mongoClients() { 
+	public MongoClient mongoClient() { 
         String connectionString = String.format("mongodb://%s:%s@%s:%s/?authSource=%s", username, password, host, port, authenticationDatabase);
         return MongoClients.create(connectionString);
 	}
 
     @Bean
-    public ReactiveMongoTemplate reactiveMongoTemplate() {
-        return new ReactiveMongoTemplate(mongoClients(), database);
+    public ReactiveMongoTemplate reactiveMongoTemplate(MongoClient mongoClient) {
+        return new ReactiveMongoTemplate(mongoClient, database);
     }
 }

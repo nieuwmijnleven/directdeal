@@ -55,7 +55,7 @@ export default {
       try {     
         let response = await axios({
           method: 'GET',
-          url: 'http://localhost:8084/api/v1/chatting/list', 
+          url: '/api/v1/chatting/list', 
         })
 
         if (response.status == 200) {

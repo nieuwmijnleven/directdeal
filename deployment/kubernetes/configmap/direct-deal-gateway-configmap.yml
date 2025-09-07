@@ -34,7 +34,8 @@ data:
           enabled: true
     ---
     spring:
-      profiles: dev
+      profiles:
+        active: dev,kubernetes
       
       cloud:
         gateway:
@@ -42,8 +43,9 @@ data:
               add-to-simple-url-handler-mapping: true
               corsConfigurations:
                 '[/**]':
-                  allowedOriginPatterns: 
-                    - "https://*.ngrok-free.app"
+                  allowedOriginPatterns:
+                    - "*" 
+                    # - "https://*.ngrok-free.app"
                   #allowedOrigins: 
                   #  - "https://8080-cs-00199ee9-8e40-4db5-8ac0-b4c460d98bad.cs-europe-west4-bhnf.cloudshell.dev"
                   allowedHeaders: "*"

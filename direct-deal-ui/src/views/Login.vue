@@ -85,7 +85,7 @@ export default {
         'Content-Type': 'application/json'
       }
 
-      axios.post('http://localhost:8084/api/v1/auth/login', data, header)
+      axios.post('/api/v1/auth/login', data, header)
         .then(response => {
           if (response.status == 200) {
             const authorization = "Bearer " + response.data.accessToken;

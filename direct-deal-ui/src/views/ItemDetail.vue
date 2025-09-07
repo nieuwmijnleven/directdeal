@@ -5,7 +5,7 @@
           <v-list-item>
             <v-carousel hide-delimiter-background>
               <v-carousel-item v-for="(image, index) in item.images" :key="index">
-                <v-img :src="'http://localhost:8084/api/v1/image/' + image"></v-img>
+                <v-img :src="'/api/v1/image/' + image"></v-img>
               </v-carousel-item>
             </v-carousel>
           </v-list-item>
@@ -57,7 +57,7 @@ export default {
       try {     
         let response = await axios({
           method: 'GET',
-          url: 'http://localhost:8084/api/v1/saleitem/' + this.$store.state.routerParams['/item-detail'].id, 
+          url: '/api/v1/saleitem/' + this.$store.state.routerParams['/item-detail'].id, 
         })
 
         if (response.status == 200) {
@@ -89,7 +89,7 @@ export default {
       try {     
         let response = await axios({
           method: 'POST',
-          url: 'http://localhost:8084/api/v1/chatting',
+          url: '/api/v1/chatting',
           headers: {
             'Content-Type':'application/json'
           },
@@ -127,7 +127,7 @@ export default {
       try {     
         let response = await axios({
           method: 'GET',
-          url: 'http://localhost:8084/api/v1/chatting/' + item.id + '/' + item.ownerId + '/' + this.$store.state.userId
+          url: '/api/v1/chatting/' + item.id + '/' + item.ownerId + '/' + this.$store.state.userId
         })
 
         if (response.status == 200) {

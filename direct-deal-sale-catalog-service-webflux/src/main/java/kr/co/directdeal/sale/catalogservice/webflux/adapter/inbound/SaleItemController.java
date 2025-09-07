@@ -1,6 +1,6 @@
 package kr.co.directdeal.sale.catalogservice.webflux.adapter.inbound;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;

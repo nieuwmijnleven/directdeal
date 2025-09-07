@@ -46,7 +46,7 @@ export default {
       try {     
         let response = await axios({
           method: 'PUT',
-          url: 'http://localhost:8084/api/v1/chatting',
+          url: '/api/v1/chatting',
           headers: {
             'Content-Type':'application/json'
           },
@@ -80,7 +80,7 @@ export default {
       try {     
         let response = await axios({
           method: 'GET',
-          url: 'http://localhost:8084/api/v1/chatting/' + this.chattingRoom.id + '/fetch-from/' + this.chattingRoom.messages.length
+          url: '/api/v1/chatting/' + this.chattingRoom.id + '/fetch-from/' + this.chattingRoom.messages.length
         })
 
         if (response.status == 200) {
@@ -112,7 +112,7 @@ export default {
       try {     
         let response = await axios({
           method: 'GET',
-          url: 'http://localhost:8084/api/v1/chatting/' + this.chattingRoom.id
+          url: '/api/v1/chatting/' + this.chattingRoom.id
         })
 
         if (response.status == 200) {

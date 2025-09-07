@@ -90,7 +90,7 @@ export default {
       };
 
       axios
-        .post("http://localhost:8084/api/v1/account", data, header)
+        .post("/api/v1/account", data, header)
         .then((response) => {
           // console.log(response)
           if (response.status == 201) {

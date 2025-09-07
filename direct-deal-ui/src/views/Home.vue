@@ -4,7 +4,7 @@
       <v-list two-line v-for="item in items" :key="item.id" class="my-0 py-0">
           <v-list-item @click="selectItem(item.id)">
             <v-list-item-avatar size="100" class="rounded" >
-              <v-img :src="'http://localhost:8084/api/v1/image/' + item.mainImage"></v-img>
+              <v-img :src="'/api/v1/image/' + item.mainImage"></v-img>
             </v-list-item-avatar>
             <v-list-item-content class="mb-7">
               <v-list-item-title>{{item.title}}</v-list-item-title>
@@ -47,7 +47,8 @@ export default {
       try {     
         let response = await axios({
           method: 'GET',
-          url: 'http://localhost:8084/api/v1/salelist?page=0&size=10&sort=createdDate,desc', 
+          //url: 'http://localhost:8084/api/v1/salelist?page=0&size=10&sort=createdDate,desc', 
+          url: '/api/v1/salelist?page=0&size=10&sort=createdDate,desc', 
         })
 
         if (response.status == 200) {

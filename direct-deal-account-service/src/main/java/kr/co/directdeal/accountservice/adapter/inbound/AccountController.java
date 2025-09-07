@@ -1,6 +1,6 @@
 package kr.co.directdeal.accountservice.adapter.inbound;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;

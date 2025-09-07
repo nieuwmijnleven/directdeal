@@ -13,6 +13,9 @@ data:
     jwt.secret=L2RpcmVjdC1kZWFsL2RpcmVjdC1kZWFsLWFjY291bnQtc2VydmljZS9kaXJlY3QtZGVhbC9kaXJlY3QtZGVhbC1hY2NvdW50LXNlcnZpY2UvZGlyZWN0LWRlYWwvZGlyZWN0LWRlYWwtYWNjb3VudC1zZXJ2aWNlL2RpcmVjdC1kZWFsL2RpcmVjdC1kZWFsLWFjY291bnQtc2VydmljZQo=
     jwt.access-token-validity-in-seconds=3600
     jwt.refresh-token-validity-in-seconds=2592000
+
+    # ConfigMap
+    spring.config.import=kubernetes:
     ---
     spring.profiles=dev
 
@@ -28,20 +31,24 @@ data:
     axon.kafka.default-topic=local.event
     axon.kafka.properties.security.protocol=PLAINTEXT
 
-    axon.kafka.fetcher.poll-timeout=3000
+    #axon.kafka.fetcher.poll-timeout=3000
+    axon.kafka.fetcher.enabled = true
 
-    axon.kafka.consumer.enable-auto-commit=true
-    axon.kafka.consumer.auto-commit-interval=3000
+    #axon.kafka.consumer.group-id=sale-catalog-service
+    #enable.auto.commit cannot be set to true when default group id (null) is used
+    axon.kafka.consumer.enable-auto-commit=false
+    #axon.kafka.consumer.auto-commit-interval=3000
     axon.kafka.consumer.event-processor-mode=tracking
+    #axon.kafka.consumer.auto-offset-reset=earliest
 
     axon.eventhandling.processors.saleItem.source=streamableKafkaMessageSource
     axon.eventhandling.processors.saleItem.mode=TRACKING
-    axon.eventhandling.processors.saleItem.thread-count=1
-    axon.eventhandling.processors.saleItem.batch-size=1
+    #axon.eventhandling.processors.saleItem.thread-count=1
+    #axon.eventhandling.processors.saleItem.batch-size=1
 
-    axon.serializer.general=xstream
-    axon.serializer.events=xstream
-    axon.serializer.messages=xstream
+    #axon.serializer.general=xstream
+    #axon.serializer.events=xstream
+    #axon.serializer.messages=xstream
 
     # JPA Settings
     spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
@@ -51,9 +58,7 @@ data:
 
     spring.jpa.open-in-view=false
     spring.jpa.defer-datasource-initialization=true
-    spring.jpa.hibernate.ddl-auto=create-drop
-
-    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL57Dialect
+    spring.jpa.hibernate.ddl-auto=update
     spring.jpa.properties.hibernate.dialect.storage_engine=innodb
     spring.jpa.properties.hibernate.format_sql=true
 
@@ -71,9 +76,11 @@ data:
 
     # Log Settings
     spring.output.ansi.enabled=always
-    logging.level.kr.co.directdeal.sale.catalogservice=DEBUG
-    logging.level.org.hibernate.SQL=DEBUG
-    logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+    logging.level.kr.co.directdeal.sale.catalogservice=IFNO
+    logging.level.org.hibernate.SQL=INFO
+    logging.level.org.hibernate.type.descriptor.sql.BasicBinder=INFO
+    logging.level.org.axonframework.kafka=INFO
+    logging.level.org.apache.kafka=INFO
 
     # Actuator Settings
     management.endpoints.enabled-by-default=false

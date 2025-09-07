@@ -23,8 +23,8 @@ services=(
   "transaction-history-service default"
   "chatting-service default"
   "gateway default"
-  "kibana kube-system"
-  "jenkins jenkins"
+#   "kibana kube-system"
+#   "jenkins jenkins"
 )
 
 # Function to check if the pod is Running
@@ -89,18 +89,19 @@ while true; do
 done
 
 echo "Applying Port Forwarding..."
-sh -c "kubectl port-forward service/gateway 8084:8084 1>>/dev/null &"
-sh -c "kubectl port-forward service/kibana 5601:5601 -n kube-system 1>>/dev/null &"
-sh -c "kubectl port-forward service/jenkins 7080:7080 -n jenkins 1>>/dev/null &"
+#sh -c "kubectl port-forward service/gateway 8084:8084 1>>/dev/null &"
+sh -c "kubectl port-forward service/nginx 9000:9000 1>>/dev/null &"
+#sh -c "kubectl port-forward service/kibana 5601:5601 -n kube-system 1>>/dev/null &"
+#sh -c "kubectl port-forward service/jenkins 7080:7080 -n jenkins 1>>/dev/null &"
 
-echo "Starting HTTP-Server for Front-End..."
-rt=$(npm)
-if [ $? -eq 127 ]; then
-    echo "Installing NPM(Node Package Manager)..."
-    sh -c "cd direct-deal-ui && npm install --save-dev"
-fi
+# echo "Starting HTTP-Server for Front-End..."
+# rt=$(npm)
+# if [ $? -eq 127 ]; then
+#     echo "Installing NPM(Node Package Manager)..."
+#     sh -c "cd direct-deal-ui && npm install --save-dev"
+# fi
 
-NODE_OPTIONS=--openssl-legacy-provider sh -c "cd direct-deal-ui && npm run serve"
+# NODE_OPTIONS=--openssl-legacy-provider sh -c "cd direct-deal-ui && npm run serve"
 
 
 # echo "Closing Port Forwarding..."

@@ -1,0 +1,37 @@
+resources:
+  - ../../base
+
+images:
+  - name: direct-deal-account-service
+    newName: localhost:5000/direct-deal-account-service
+    newTag: latest
+
+  - name: direct-deal-chatting-service
+    newName: localhost:5000/direct-deal-chatting-service
+    newTag: latest
+
+  - name: direct-deal-gateway
+    newName: localhost:5000/direct-deal-gateway
+    newTag: latest
+
+  - name: direct-deal-sale-service
+    newName: localhost:5000/direct-deal-sale-service
+    newTag: latest
+
+  - name: direct-deal-sale-catalog-service-webflux
+    newName: localhost:5000/direct-deal-sale-catalog-service-webflux
+    newTag: latest
+
+  - name: direct-deal-transaction-history-service
+    newName: localhost:5000/direct-deal-transaction-history-service
+    newTag: latest
+
+  - name: direct-deal-mysql
+    newName: localhost:5000/direct-deal-mysql
+    newTag: latest
+    
+  - name: direct-deal-nginx
+    newName: localhost:5000/direct-deal-nginx
+    newTag: latest
+
+

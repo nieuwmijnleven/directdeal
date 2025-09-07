@@ -1,0 +1,253 @@
+steps:
+# 1. Execute Gradle build
+- name: 'alpine/java:17.0.9-jdk'
+  id: 'build-gradle'
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - |
+      #./gradlew clean build
+      #./gradlew clean build -p direct-deal-gateway
+      ./gradlew clean build --parallel -Dorg.gradle.jvmargs="-Xmx2g"
+      ./gradlew clean build -p direct-deal-gateway -Dorg.gradle.jvmargs="-Xmx2g"
+
+# 2. Docker image build and tag (each service in multiple steps)
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-build-account-service'
+  args:
+    [
+      'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-account-service:$REVISION_ID', './direct-deal-account-service'
+    ]
+  waitFor:
+    - build-gradle
+
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-build-sale-service'
+  args:
+    [
+      'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-sale-service:$REVISION_ID', './direct-deal-sale-service'
+    ]
+  waitFor:
+    - build-gradle
+  
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-build-sale-catalog-service-webflux'
+  args:
+    [
+      'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-sale-catalog-service-webflux:$REVISION_ID', './direct-deal-sale-catalog-service-webflux'
+    ]
+  waitFor:
+    - build-gradle
+  
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-build-transaction-history-service'
+  args:
+    [
+      'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-transaction-history-service:$REVISION_ID', './direct-deal-transaction-history-service'
+    ]
+  waitFor:
+    - build-gradle
+  
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-build-chatting-service'
+  args:
+    [
+      'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-chatting-service:$REVISION_ID', './direct-deal-chatting-service'
+    ]
+  waitFor:
+    - build-gradle
+  
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-build-gateway'
+  args:
+    [
+      'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-gateway:$REVISION_ID', './direct-deal-gateway'
+    ]
+  waitFor:
+    - build-gradle
+  
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-build-mysql'
+  args:
+    [
+      'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-mysql:$REVISION_ID', './mysql'
+    ]
+  waitFor:
+    - build-gradle
+  
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-build-nginx'
+  args:
+    [
+      'build', '-t', 'gcr.io/$PROJECT_ID/direct-deal-nginx:$REVISION_ID', './direct-deal-ui'
+    ]
+  waitFor:
+    - build-gradle
+  
+# 3. Push images to the registry
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-push-account-service'
+  args:
+    [
+      'push', 'gcr.io/$PROJECT_ID/direct-deal-account-service:$REVISION_ID'
+    ]
+  waitFor:
+    - docker-build-account-service
+
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-push-sale-service'
+  args:
+    [
+      'push', 'gcr.io/$PROJECT_ID/direct-deal-sale-service:$REVISION_ID'
+    ]
+  waitFor:
+    - docker-build-sale-service
+
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-push-sale-catalog-service-webflux'
+  args:
+    [
+      'push', 'gcr.io/$PROJECT_ID/direct-deal-sale-catalog-service-webflux:$REVISION_ID'
+    ]
+  waitFor:
+    - docker-build-sale-catalog-service-webflux
+
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-push-transaction-history-service'
+  args:
+    [
+      'push', 'gcr.io/$PROJECT_ID/direct-deal-transaction-history-service:$REVISION_ID'
+    ]
+  waitFor:
+    - docker-build-transaction-history-service
+
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-push-chatting-service'
+  args:
+    [
+      'push', 'gcr.io/$PROJECT_ID/direct-deal-chatting-service:$REVISION_ID'
+    ]
+  waitFor:
+    - docker-build-chatting-service
+  
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-push-gateway'
+  args:
+    [
+      'push', 'gcr.io/$PROJECT_ID/direct-deal-gateway:$REVISION_ID'
+    ]
+  waitFor:
+    - docker-build-gateway
+
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-push-mysql'
+  args:
+    [
+      'push', 'gcr.io/$PROJECT_ID/direct-deal-mysql:$REVISION_ID'
+    ]
+  waitFor:
+    - docker-build-mysql
+
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'docker-push-nginx'
+  args:
+    [
+      'push', 'gcr.io/$PROJECT_ID/direct-deal-nginx:$REVISION_ID'
+    ]
+  waitFor:
+    - docker-build-nginx
+
+# 4. Deploy to Kubernetes cluster by applying manifests
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: 'gke-get-credentials'
+  args:
+    [
+      'container', 'clusters', 'get-credentials',
+      '$_GKE_CLUSTER',      
+      '--zone', '$_DEPLOY_REGION',
+      '--project', '$PROJECT_ID'
+    ]
+  waitFor: ['-']
+
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   entrypoint: 'bash'
+#   args:
+#     - '-c'
+#     - |
+#       apt-get update && apt-get install -y gettext-base
+#       envsubst < ./deployment/kubernetes/direct-deal-account-service.yml | kubectl apply -f -
+#   env:
+#      - 'CLOUDSDK_COMPUTE_ZONE=$_DEPLOY_REGION'      
+#      - 'CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER' 
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: 'apply-configmaps'
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      for file in ./deployment/kubernetes/configmap/*.yml; do
+        echo "Applying $file"
+        kubectl apply -f $file
+      done
+  env:
+    - 'CLOUDSDK_COMPUTE_ZONE=$_DEPLOY_REGION'      
+    - 'CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER' 
+  waitFor:
+    - docker-push-account-service
+    - docker-push-chatting-service
+    - docker-push-gateway
+    - docker-push-transaction-history-service
+    - docker-push-sale-catalog-service-webflux
+    - docker-push-sale-service
+    - docker-push-mysql
+    - docker-push-nginx
+    
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   entrypoint: 'bash'
+#   args:
+#     - '-c'
+#     - |
+#       if ! kubectl get deployment $deploy -n default > /dev/null 2>&1; then
+#       apt-get update && apt-get install -y gettext-base
+#       for file in ./deployment/kubernetes/*.yml; do
+#         echo "Applying $file"
+#         envsubst < $file | kubectl apply -f -
+#       done
+#   env:
+#     - 'CLOUDSDK_COMPUTE_ZONE=$_DEPLOY_REGION'      
+#     - 'CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER' 
+#     - 'PROJECT_ID=$PROJECT_ID'
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      set -e
+      echo "Applying deployment for all services"
+      apt-get update && apt-get install -y gettext-base
+      kubectl kustomize ./deployment/kubernetes/overlays/gcp | envsubst | kubectl apply -n default -f -
+      kubectl apply -f ./deployment/kubernetes/mongo-service.yml
+      kubectl apply -f ./deployment/kubernetes/zookeeper-service.yml
+      kubectl apply -f ./deployment/kubernetes/kafka-service.yml
+  env:
+    - 'CLOUDSDK_COMPUTE_ZONE=$_DEPLOY_REGION'      
+    - 'CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER' 
+    - 'PROJECT_ID=$PROJECT_ID'
+    - 'REVISION_ID=$REVISION_ID'
+  waitFor:
+    - docker-push-account-service
+    - docker-push-chatting-service
+    - docker-push-gateway
+    - docker-push-transaction-history-service
+    - docker-push-sale-catalog-service-webflux
+    - docker-push-sale-service
+    - docker-push-mysql
+    - docker-push-nginx
+    - apply-configmaps
+
+timeout: '1200s'  # Maximum build timeout set to 20 minutes
+
+options:
+  logging: CLOUD_LOGGING_ONLY
