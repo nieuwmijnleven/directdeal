@@ -1,6 +1,12 @@
 resources:
   - ../../base
 
+patches:
+  - path: patch-nginx-service.yaml
+    target:
+      kind: Service
+      name: nginx
+
 images:
   - name: direct-deal-account-service
     newName: gcr.io/${PROJECT_ID}/direct-deal-account-service
