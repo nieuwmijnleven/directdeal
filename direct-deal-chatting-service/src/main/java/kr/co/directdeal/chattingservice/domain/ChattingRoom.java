@@ -66,7 +66,7 @@ public class ChattingRoom {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "CHATTING_ROOM_ID")
-    private List<ChattingMessage> messages = new ArrayList<>();
+    private List<ChattingMessage> messages;
 
     @CreatedDate
     @Column(name = "CHATTING_ROOM_CREATED_DATE", nullable = false, updatable = false)

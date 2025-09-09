@@ -2,12 +2,10 @@ package kr.co.directdeal.sale.catalogservice.webflux.config;
 
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoClients;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
-import org.axonframework.extensions.mongo.DefaultMongoTemplate;
 
 @Configuration
 public class MongoConfig {

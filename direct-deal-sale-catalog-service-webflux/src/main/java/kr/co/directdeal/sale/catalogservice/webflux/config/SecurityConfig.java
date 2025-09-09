@@ -1,7 +1,7 @@
 package kr.co.directdeal.sale.catalogservice.webflux.config;
 
-import java.nio.charset.StandardCharsets;
-
+import kr.co.directdeal.sale.catalogservice.webflux.security.SecurityContextRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -12,11 +12,10 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.server.ServerWebExchange;
-
-import kr.co.directdeal.sale.catalogservice.webflux.security.SecurityContextRepository;
-import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.nio.charset.StandardCharsets;
 
 @EnableWebFluxSecurity
 @RequiredArgsConstructor
@@ -28,33 +27,33 @@ public class SecurityConfig {
     @Bean
     SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity http) {
         return http
-                .cors().disable()
-                .csrf().disable()
-
                 .securityContextRepository(securityContextRepository)
-                .exceptionHandling()
-                    .authenticationEntryPoint((serverWebExchange, exception) -> Mono.fromRunnable(() -> {
-                        sendErrorResponse(serverWebExchange, exception, HttpStatus.UNAUTHORIZED);
-                    })).accessDeniedHandler((serverWebExchange, exception) -> Mono.fromRunnable(() -> {
-                        sendErrorResponse(serverWebExchange, exception, HttpStatus.FORBIDDEN);
-                    }))
-                    
-                .and()
-                .authorizeExchange()
-                    .pathMatchers("/actuator/health").permitAll()
-                    .pathMatchers(HttpMethod.OPTIONS).permitAll()
-                    .anyExchange().authenticated()
 
-                .and()
+                .csrf(csrfSpec -> csrfSpec.disable())
+                .cors(corsSpec -> corsSpec.disable())
+
+                .exceptionHandling(exceptionHandlingSpec -> exceptionHandlingSpec
+                        .authenticationEntryPoint((exchange, ex) ->
+                                Mono.fromRunnable(() -> sendErrorResponse(exchange, ex, HttpStatus.UNAUTHORIZED)))
+                        .accessDeniedHandler((exchange, ex) ->
+                                Mono.fromRunnable(() -> sendErrorResponse(exchange, ex, HttpStatus.FORBIDDEN)))
+                )
+
+                .authorizeExchange(exchangeSpec -> exchangeSpec
+                        .pathMatchers("/actuator/health").permitAll()
+                        .pathMatchers(HttpMethod.OPTIONS).permitAll()
+                        .anyExchange().authenticated()
+                )
+
                 .build();
     }
 
-    private void sendErrorResponse(ServerWebExchange serverWebExchange, Exception exception, HttpStatus status) {
-        serverWebExchange.getResponse().setStatusCode(status);
-        serverWebExchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
+    private void sendErrorResponse(ServerWebExchange exchange, Exception exception, HttpStatus status) {
+        exchange.getResponse().setStatusCode(status);
+        exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
         String payload = "{\"error\":\"Authentication Failed\", \"message\":\"" + exception.getMessage() + "\"}";
         byte[] bytes = payload.getBytes(StandardCharsets.UTF_8);
-        DataBuffer buffer = serverWebExchange.getResponse().bufferFactory().wrap(bytes);
-        serverWebExchange.getResponse().writeWith(Flux.just(buffer)).subscribe();
+        DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
+        exchange.getResponse().writeWith(Flux.just(buffer)).subscribe();
     }
 }

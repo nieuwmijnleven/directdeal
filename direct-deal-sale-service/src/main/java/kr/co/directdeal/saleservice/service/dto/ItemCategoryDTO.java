@@ -18,5 +18,5 @@ public class ItemCategoryDTO {
     private Long id;
     private String name;
     private ItemCategoryDTO parent;
-    private List<ItemCategoryDTO> child = new ArrayList<>();
+    private List<ItemCategoryDTO> child;
 }

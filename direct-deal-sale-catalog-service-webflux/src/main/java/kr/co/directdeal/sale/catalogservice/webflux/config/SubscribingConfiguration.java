@@ -1,39 +1,21 @@
 package kr.co.directdeal.sale.catalogservice.webflux.config;
 
 
-import org.axonframework.serialization.Serializer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.beans.factory.annotation.Qualifier;
-import com.thoughtworks.xstream.XStream;
-import org.axonframework.serialization.xml.XStreamSerializer;
-
 import org.axonframework.config.Configurer;
 import org.axonframework.config.EventProcessingConfigurer;
-import org.apache.kafka.clients.consumer.Consumer;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.axonframework.common.AxonConfigurationException;
-import org.axonframework.common.Registration;
-import org.axonframework.common.stream.BlockingStream;
-import org.axonframework.eventhandling.TrackedEventMessage;
-import org.axonframework.eventhandling.TrackingToken;
 import org.axonframework.eventhandling.EventMessage;
 import org.axonframework.extensions.kafka.KafkaProperties;
 import org.axonframework.extensions.kafka.configuration.KafkaMessageSourceConfigurer;
-import org.axonframework.extensions.kafka.eventhandling.DefaultKafkaMessageConverter;
 import org.axonframework.extensions.kafka.eventhandling.KafkaMessageConverter;
 import org.axonframework.extensions.kafka.eventhandling.consumer.ConsumerFactory;
-import org.axonframework.extensions.kafka.eventhandling.consumer.ConsumerSeekUtil;
-import org.axonframework.extensions.kafka.eventhandling.consumer.DefaultConsumerFactory;
 import org.axonframework.extensions.kafka.eventhandling.consumer.Fetcher;
-import org.axonframework.messaging.StreamableMessageSource;
 import org.axonframework.extensions.kafka.eventhandling.consumer.subscribable.SubscribableKafkaMessageSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.Collections;
-import java.util.function.Supplier;
 
 @Configuration
 @ConditionalOnProperty(
