@@ -64,9 +64,10 @@ public class ChattingRoom {
     @Column(name = "CHATTING_ROOM_CUMSTOMER_ID", length = 50, nullable = false)
     private String customerId;
 
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "CHATTING_ROOM_ID")
-    private List<ChattingMessage> messages;
+    private List<ChattingMessage> messages = new ArrayList<>();
 
     @CreatedDate
     @Column(name = "CHATTING_ROOM_CREATED_DATE", nullable = false, updatable = false)
