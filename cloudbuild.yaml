@@ -227,6 +227,7 @@ steps:
       set -e
       echo "Applying deployment for all services"
       apt-get update && apt-get install -y gettext-base
+      kubectl apply -f ./deployment/kubernetes/spring-cloud-kubernetes-config.yml
       kubectl kustomize ./deployment/kubernetes/overlays/gcp | envsubst | kubectl apply -n default -f -
       kubectl apply -f ./deployment/kubernetes/mongo-service.yml
       kubectl apply -f ./deployment/kubernetes/zookeeper-service.yml
