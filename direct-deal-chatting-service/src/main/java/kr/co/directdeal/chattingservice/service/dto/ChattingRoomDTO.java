@@ -1,15 +1,15 @@
 package kr.co.directdeal.chattingservice.service.dto;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode
@@ -23,6 +23,7 @@ public class ChattingRoomDTO {
     private String itemId;
     private String sellerId;
     private String customerId;
-    private List<ChattingMessageDTO> messages;
+    @Builder.Default
+    private List<ChattingMessageDTO> messages = new ArrayList<>();
     private Instant createdDate;
 }

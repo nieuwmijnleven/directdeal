@@ -51,8 +51,9 @@ public class ItemCategory {
     @JoinColumn(name = "PARENT_CATEGORY_ID", nullable = true)
     private ItemCategory parent;
 
+    @Builder.Default
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemCategory> child;
+    private List<ItemCategory> child = new ArrayList();
 
     public void addChildItemCategory(ItemCategory itemCategory) {
         this.child.add(itemCategory);

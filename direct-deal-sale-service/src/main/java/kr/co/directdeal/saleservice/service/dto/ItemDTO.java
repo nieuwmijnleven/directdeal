@@ -44,8 +44,9 @@ public class ItemDTO {
     @NotNull
     @Size(min = 1, max = 1024)
     private String text;
-    
-    private List<String> images;
+
+    @Builder.Default
+    private List<String> images = new ArrayList();
     
     private SaleItemStatus status;
     

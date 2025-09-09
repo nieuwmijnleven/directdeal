@@ -17,5 +17,6 @@ import lombok.NoArgsConstructor;
 public class ItemImageDTO {
     private String checkId;
     private String checkURL;
-    private List<String> images;
+    @Builder.Default
+    private List<String> images = new ArrayList();
 }
