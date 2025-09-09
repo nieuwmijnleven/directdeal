@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  type: LoadBalancer
+  loadBalancerIP: ${STATIC_IP}
+  selector:
+    app: nginx
+  ports:
+  - name: nginxport
+    port: 9000
+    targetPort: 9000
+
