@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.directdeal.common.security.util.SecurityUtils;
 import kr.co.directdeal.saleservice.adapter.inbound.result.ItemRegistrationResult;
-import kr.co.directdeal.saleservice.service.ItemService;
-import kr.co.directdeal.saleservice.service.dto.ItemDTO;
+import kr.co.directdeal.saleservice.application.service.ItemService;
+import kr.co.directdeal.saleservice.application.service.dto.ItemDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

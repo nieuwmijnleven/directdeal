@@ -32,9 +32,9 @@ import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
 import kr.co.directdeal.common.security.config.props.JWTProperties;
 import kr.co.directdeal.saleservice.async.AsyncImageSaveRunner;
 import kr.co.directdeal.saleservice.exception.ItemImageException;
-import kr.co.directdeal.saleservice.service.ItemImageService;
-import kr.co.directdeal.saleservice.service.mapper.ImageUploadStatusMapper;
-import kr.co.directdeal.saleservice.service.repository.ImageUploadStatusRepository;
+import kr.co.directdeal.saleservice.application.service.ItemImageService;
+import kr.co.directdeal.saleservice.application.service.mapper.ImageUploadStatusMapper;
+import kr.co.directdeal.saleservice.port.outbound.ImageUploadStatusRepository;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {ItemImageController.class},

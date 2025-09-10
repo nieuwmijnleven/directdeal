@@ -28,8 +28,8 @@ import kr.co.directdeal.common.security.auth.jwt.JwtAccessDeniedHandler;
 import kr.co.directdeal.common.security.auth.jwt.JwtAuthenticationEntryPoint;
 import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
 import kr.co.directdeal.common.security.config.props.JWTProperties;
-import kr.co.directdeal.saleservice.service.ItemService;
-import kr.co.directdeal.saleservice.service.dto.ItemDTO;
+import kr.co.directdeal.saleservice.application.service.ItemService;
+import kr.co.directdeal.saleservice.application.service.dto.ItemDTO;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {ItemController.class},

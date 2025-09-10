@@ -35,10 +35,10 @@ import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
 import kr.co.directdeal.common.security.config.props.JWTProperties;
 import kr.co.directdeal.common.security.util.SecurityUtils;
 import kr.co.directdeal.transactionhistoryservice.exception.TransactionHistoryException;
-import kr.co.directdeal.transactionhistoryservice.service.TransactionHistoryService;
-import kr.co.directdeal.transactionhistoryservice.service.dto.TransactionHistoryDTO;
-import kr.co.directdeal.transactionhistoryservice.service.mapper.TransactionHistoryMapper;
-import kr.co.directdeal.transactionhistoryservice.service.repository.TransactionHistoryRepository;
+import kr.co.directdeal.transactionhistoryservice.application.service.TransactionHistoryService;
+import kr.co.directdeal.transactionhistoryservice.application.service.dto.TransactionHistoryDTO;
+import kr.co.directdeal.transactionhistoryservice.application.service.mapper.TransactionHistoryMapper;
+import kr.co.directdeal.transactionhistoryservice.port.outbound.TransactionHistoryRepository;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {TransactionHistoryController.class},

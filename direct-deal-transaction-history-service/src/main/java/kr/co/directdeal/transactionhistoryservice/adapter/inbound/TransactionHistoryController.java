@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.directdeal.common.security.util.SecurityUtils;
-import kr.co.directdeal.transactionhistoryservice.service.TransactionHistoryService;
-import kr.co.directdeal.transactionhistoryservice.service.dto.TransactionHistoryDTO;
+import kr.co.directdeal.transactionhistoryservice.application.service.TransactionHistoryService;
+import kr.co.directdeal.transactionhistoryservice.application.service.dto.TransactionHistoryDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

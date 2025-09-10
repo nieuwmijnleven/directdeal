@@ -28,10 +28,10 @@ import kr.co.directdeal.common.security.config.props.JWTProperties;
 import kr.co.directdeal.sale.catalogservice.webflux.config.WebConfig;
 import kr.co.directdeal.sale.catalogservice.webflux.config.prop.LiftUpProperties;
 import kr.co.directdeal.sale.catalogservice.webflux.exception.SaleListException;
-import kr.co.directdeal.sale.catalogservice.webflux.service.SaleListService;
-import kr.co.directdeal.sale.catalogservice.webflux.service.dto.SaleListDTO;
-import kr.co.directdeal.sale.catalogservice.webflux.service.mapper.SaleListMapper;
-import kr.co.directdeal.sale.catalogservice.webflux.service.repository.SaleListRepository;
+import kr.co.directdeal.sale.catalogservice.webflux.application.service.SaleListService;
+import kr.co.directdeal.sale.catalogservice.webflux.application.service.dto.SaleListDTO;
+import kr.co.directdeal.sale.catalogservice.webflux.application.service.mapper.SaleListMapper;
+import kr.co.directdeal.sale.catalogservice.webflux.port.outbound.SaleListRepository;
 import reactor.core.publisher.Flux;
 import org.springframework.test.context.ActiveProfiles;
 

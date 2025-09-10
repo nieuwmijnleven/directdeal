@@ -24,10 +24,10 @@ import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
 import kr.co.directdeal.common.security.config.props.JWTProperties;
 import kr.co.directdeal.sale.catalogservice.webflux.config.WebConfig;
 import kr.co.directdeal.sale.catalogservice.webflux.exception.SaleItemException;
-import kr.co.directdeal.sale.catalogservice.webflux.service.SaleItemService;
-import kr.co.directdeal.sale.catalogservice.webflux.service.dto.SaleItemDTO;
-import kr.co.directdeal.sale.catalogservice.webflux.service.mapper.SaleItemMapper;
-import kr.co.directdeal.sale.catalogservice.webflux.service.repository.SaleItemRepository;
+import kr.co.directdeal.sale.catalogservice.webflux.application.service.SaleItemService;
+import kr.co.directdeal.sale.catalogservice.webflux.application.service.dto.SaleItemDTO;
+import kr.co.directdeal.sale.catalogservice.webflux.application.service.mapper.SaleItemMapper;
+import kr.co.directdeal.sale.catalogservice.webflux.port.outbound.SaleItemRepository;
 import reactor.core.publisher.Mono;
 import org.springframework.test.context.ActiveProfiles;
 

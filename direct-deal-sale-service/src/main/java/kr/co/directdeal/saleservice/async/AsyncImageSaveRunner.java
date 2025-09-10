@@ -5,20 +5,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-import java.io.File;
-
 import java.time.Instant;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import kr.co.directdeal.saleservice.domain.ImageUploadStatus;
-import kr.co.directdeal.saleservice.service.ItemImageService;
-import kr.co.directdeal.saleservice.service.repository.ImageUploadStatusRepository;
+import kr.co.directdeal.saleservice.domain.object.ImageUploadStatus;
+import kr.co.directdeal.saleservice.application.service.ItemImageService;
+import kr.co.directdeal.saleservice.port.outbound.ImageUploadStatusRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

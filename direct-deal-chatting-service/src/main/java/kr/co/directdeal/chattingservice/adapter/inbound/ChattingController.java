@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.co.directdeal.chattingservice.service.ChattingService;
-import kr.co.directdeal.chattingservice.service.dto.ChattingMessageDTO;
-import kr.co.directdeal.chattingservice.service.dto.ChattingRoomDTO;
+import kr.co.directdeal.chattingservice.application.service.ChattingService;
+import kr.co.directdeal.chattingservice.application.service.dto.ChattingMessageDTO;
+import kr.co.directdeal.chattingservice.application.service.dto.ChattingRoomDTO;
 import kr.co.directdeal.common.security.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

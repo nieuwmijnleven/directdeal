@@ -33,10 +33,10 @@ import kr.co.directdeal.common.security.auth.jwt.JwtAuthenticationEntryPoint;
 import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
 import kr.co.directdeal.common.security.config.props.JWTProperties;
 import kr.co.directdeal.saleservice.exception.ItemCategoryException;
-import kr.co.directdeal.saleservice.service.ItemCategoryService;
-import kr.co.directdeal.saleservice.service.dto.ItemCategoryDTO;
-import kr.co.directdeal.saleservice.service.mapper.ItemCategoryMapper;
-import kr.co.directdeal.saleservice.service.repository.ItemCategoryRepository;
+import kr.co.directdeal.saleservice.application.service.ItemCategoryService;
+import kr.co.directdeal.saleservice.application.service.dto.ItemCategoryDTO;
+import kr.co.directdeal.saleservice.application.service.mapper.ItemCategoryMapper;
+import kr.co.directdeal.saleservice.port.outbound.ItemCategoryRepository;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {ItemCategoryController.class},

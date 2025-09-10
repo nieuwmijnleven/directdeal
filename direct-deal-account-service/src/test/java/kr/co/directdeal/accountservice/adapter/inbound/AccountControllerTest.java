@@ -28,9 +28,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import kr.co.directdeal.accountservice.exception.AccountException;
-import kr.co.directdeal.accountservice.service.AccountService;
-import kr.co.directdeal.accountservice.service.dto.AccountDTO;
-import kr.co.directdeal.accountservice.service.dto.PasswordDTO;
+import kr.co.directdeal.accountservice.port.inbound.AccountUseCase;
+import kr.co.directdeal.accountservice.application.service.dto.AccountDTO;
+import kr.co.directdeal.accountservice.application.service.dto.PasswordDTO;
 import kr.co.directdeal.common.security.auth.jwt.JwtAccessDeniedHandler;
 import kr.co.directdeal.common.security.auth.jwt.JwtAuthenticationEntryPoint;
 import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
@@ -49,7 +49,7 @@ public class AccountControllerTest {
     private MockMvc mvc;
 
     @MockBean
-    private AccountService accountService;
+    private AccountUseCase accountUseCase;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -58,7 +58,7 @@ public class AccountControllerTest {
     @WithMockUser(username = "account@directdeal.co.kr")
     public void CreateAccount_UniqueEmail_Created() throws Exception {
         //given
-        given(accountService.createAccount(any(AccountDTO.class)))
+        given(accountUseCase.createAccount(any(AccountDTO.class)))
             .willReturn(any(AccountDTO.class));
         
         AccountDTO accountDTO = AccountDTO.builder()
@@ -88,7 +88,7 @@ public class AccountControllerTest {
                     .messageKey("account.exception.insert.email.message")
                     .messageArgs(new String[]{incorrectEmail})
                     .build())
-            .given(accountService).createAccount(any(AccountDTO.class));
+            .given(accountUseCase).createAccount(any(AccountDTO.class));
         
         AccountDTO accountDTO = AccountDTO.builder()
                                     .email(incorrectEmail)
@@ -124,7 +124,7 @@ public class AccountControllerTest {
                                     .name("account")
                                     .build();
         
-        given(accountService.updateAccount(accountDTO))
+        given(accountUseCase.updateAccount(accountDTO))
             .willReturn(mock(AccountDTO.class));
 
         String payload = objectMapper.writeValueAsString(accountDTO);
@@ -148,7 +148,7 @@ public class AccountControllerTest {
                     .messageKey("account.exception.update.id.message")
                     .messageArgs(new String[]{incorrectEmail})
                     .build())
-            .given(accountService).updateAccount(any(AccountDTO.class));
+            .given(accountUseCase).updateAccount(any(AccountDTO.class));
 
         AccountDTO accountDTO = AccountDTO.builder()
                                     .id(1L)
@@ -183,7 +183,7 @@ public class AccountControllerTest {
                                     .activated(true)
                                     .build();
 
-        given(accountService.getAccount(loginEmail))
+        given(accountUseCase.getAccount(loginEmail))
             .willReturn(resultDTO);
         
         //when and then
@@ -208,7 +208,7 @@ public class AccountControllerTest {
                     .messageKey("account.exception.get.message")
                     .messageArgs(new String[]{incorrectEmail})
                     .build())
-            .given(accountService).getAccount(loginEmail);
+            .given(accountUseCase).getAccount(loginEmail);
         
         //when and then
         this.mvc.perform(get("/account")
@@ -243,7 +243,7 @@ public class AccountControllerTest {
                     .messageKey("account.exception.delete.message")
                     .messageArgs(new String[]{incorrectEmail})
                     .build())
-            .given(accountService).deleteAccount(loginEmail);
+            .given(accountUseCase).deleteAccount(loginEmail);
         
         //when and then
         this.mvc.perform(delete("/account")
@@ -289,7 +289,7 @@ public class AccountControllerTest {
                     .messageKey("account.exception.changepassword.passwordmismatch.message")
                     .messageArgs(new String[]{loginEmail})
                     .build())
-            .given(accountService).changePassword(loginEmail, passwordDTO);
+            .given(accountUseCase).changePassword(loginEmail, passwordDTO);
 
         String payload = objectMapper.writeValueAsString(passwordDTO);
         

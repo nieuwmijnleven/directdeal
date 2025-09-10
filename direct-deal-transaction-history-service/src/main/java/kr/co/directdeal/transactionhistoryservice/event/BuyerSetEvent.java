@@ -2,7 +2,7 @@ package kr.co.directdeal.transactionhistoryservice.event;
 
 import org.springframework.context.ApplicationEvent;
 
-import kr.co.directdeal.transactionhistoryservice.service.dto.TransactionHistoryDTO;
+import kr.co.directdeal.transactionhistoryservice.application.service.dto.TransactionHistoryDTO;
 import lombok.ToString;
 
 @ToString

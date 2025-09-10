@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.co.directdeal.sale.catalogservice.webflux.service.SaleItemService;
-import kr.co.directdeal.sale.catalogservice.webflux.service.dto.SaleItemDTO;
+import kr.co.directdeal.sale.catalogservice.webflux.application.service.SaleItemService;
+import kr.co.directdeal.sale.catalogservice.webflux.application.service.dto.SaleItemDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
