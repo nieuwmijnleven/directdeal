@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.co.directdeal.saleservice.service.ItemCategoryService;
-import kr.co.directdeal.saleservice.service.dto.ItemCategoryDTO;
+import kr.co.directdeal.saleservice.application.service.ItemCategoryService;
+import kr.co.directdeal.saleservice.application.service.dto.ItemCategoryDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

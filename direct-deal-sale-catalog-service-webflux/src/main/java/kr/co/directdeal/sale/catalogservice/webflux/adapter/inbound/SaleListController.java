@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.directdeal.sale.catalogservice.webflux.adapter.inbound.response.LiftUpResponse;
 import kr.co.directdeal.sale.catalogservice.webflux.config.prop.LiftUpProperties;
-import kr.co.directdeal.sale.catalogservice.webflux.service.SaleListService;
-import kr.co.directdeal.sale.catalogservice.webflux.service.dto.SaleListDTO;
+import kr.co.directdeal.sale.catalogservice.webflux.application.service.SaleListService;
+import kr.co.directdeal.sale.catalogservice.webflux.application.service.dto.SaleListDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;

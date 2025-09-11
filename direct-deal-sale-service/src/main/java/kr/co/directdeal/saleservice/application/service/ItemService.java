@@ -1,0 +1,96 @@
+package kr.co.directdeal.saleservice.application.service;
+
+import java.time.Instant;
+
+import kr.co.directdeal.saleservice.port.inbound.ItemUseCase;
+import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import kr.co.directdeal.common.sale.command.ItemDeleteCommand;
+import kr.co.directdeal.common.sale.command.ItemRegisterCommand;
+import kr.co.directdeal.common.sale.command.ItemSaleCompleteCommand;
+import kr.co.directdeal.common.sale.command.ItemSaleStartCommand;
+import kr.co.directdeal.common.sale.command.ItemSaleStopCommand;
+import kr.co.directdeal.common.sale.command.ItemUpdateCommand;
+import kr.co.directdeal.common.sale.constant.SaleItemStatus;
+import kr.co.directdeal.common.security.util.SecurityUtils;
+import kr.co.directdeal.saleservice.application.service.dto.ItemDTO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RequiredArgsConstructor
+@Service
+public class ItemService implements ItemUseCase {
+
+    private final CommandGateway commandGateway;
+
+    @Override
+    public void register(ItemDTO itemDTO) {
+        log.debug("calll {}.register(), id = {}", this.getClass().getSimpleName(), itemDTO.getId());
+        
+        commandGateway.send(ItemRegisterCommand.builder()
+                                //.id(UUID.randomUUID().toString())
+                                .id(itemDTO.getId())
+                                .ownerId(SecurityUtils.getCurrentUserLogin())
+                                .title(itemDTO.getTitle())
+                                .category(itemDTO.getCategory())
+                                .targetPrice(itemDTO.getTargetPrice())
+                                .discountable(itemDTO.isDiscountable())
+                                .text(itemDTO.getText())
+                                .images(itemDTO.getImages())
+                                .status(SaleItemStatus.SALE)
+                                .createdDate(Instant.now())
+                                .build());
+    }
+
+    @Override
+    public void update(ItemDTO itemDTO) {
+        log.debug("calll {}.update(), id = {}", this.getClass().getSimpleName(), itemDTO.getId());
+        commandGateway.send(ItemUpdateCommand.builder()
+                                .id(itemDTO.getId())
+                                .ownerId(SecurityUtils.getCurrentUserLogin())
+                                .title(itemDTO.getTitle())
+                                .category(itemDTO.getCategory())
+                                .targetPrice(itemDTO.getTargetPrice())
+                                .discountable(itemDTO.isDiscountable())
+                                .text(itemDTO.getText())
+                                .images(itemDTO.getImages())
+                                .status(itemDTO.getStatus())
+                                .lastModifiedDate(Instant.now())
+                                .build());
+    }
+
+    @Override
+    public void delete(@PathVariable("id") String id) {
+        log.debug("calll {}.delete({})", this.getClass().getSimpleName(), id);
+        commandGateway.send(ItemDeleteCommand.builder()
+                                .id(id)
+                                .build());
+    }
+
+    @Override
+    public void sale(String id) {
+        log.debug("calll {}.sale(), id = {}", this.getClass().getSimpleName(), id);
+        commandGateway.send(ItemSaleStartCommand.builder()
+                                .id(id)
+                                .build());
+    }
+
+    @Override
+    public void pause(String id) {
+        log.debug("calll {}.pause(), id = {}", this.getClass().getSimpleName(), id);
+        commandGateway.send(ItemSaleStopCommand.builder()
+                                .id(id)
+                                .build());
+    }
+
+    @Override
+    public void complete(String id) {
+        log.debug("calll {}.complete(), id = {}", this.getClass().getSimpleName(), id);
+        commandGateway.send(ItemSaleCompleteCommand.builder()
+                                .id(id)
+                                .build());
+    }
+}

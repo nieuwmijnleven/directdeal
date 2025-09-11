@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.directdeal.common.security.util.SecurityUtils;
-import kr.co.directdeal.transactionhistoryservice.service.BuyHistoryService;
-import kr.co.directdeal.transactionhistoryservice.service.dto.BuyHistoryDTO;
+import kr.co.directdeal.transactionhistoryservice.application.service.BuyHistoryService;
+import kr.co.directdeal.transactionhistoryservice.application.service.dto.BuyHistoryDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

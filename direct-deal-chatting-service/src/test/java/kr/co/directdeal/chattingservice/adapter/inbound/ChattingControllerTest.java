@@ -30,12 +30,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import kr.co.directdeal.chattingservice.exception.ChattingException;
-import kr.co.directdeal.chattingservice.service.ChattingService;
-import kr.co.directdeal.chattingservice.service.dto.ChattingMessageDTO;
-import kr.co.directdeal.chattingservice.service.dto.ChattingRoomDTO;
-import kr.co.directdeal.chattingservice.service.mapper.ChattingMessageMapper;
-import kr.co.directdeal.chattingservice.service.mapper.ChattingRoomMapper;
-import kr.co.directdeal.chattingservice.service.repository.ChattingRepository;
+import kr.co.directdeal.chattingservice.application.service.ChattingService;
+import kr.co.directdeal.chattingservice.application.service.dto.ChattingMessageDTO;
+import kr.co.directdeal.chattingservice.application.service.dto.ChattingRoomDTO;
+import kr.co.directdeal.chattingservice.application.service.mapper.ChattingMessageMapper;
+import kr.co.directdeal.chattingservice.application.service.mapper.ChattingRoomMapper;
+import kr.co.directdeal.chattingservice.port.outbound.ChattingRepository;
 import kr.co.directdeal.common.security.auth.jwt.JwtAccessDeniedHandler;
 import kr.co.directdeal.common.security.auth.jwt.JwtAuthenticationEntryPoint;
 import kr.co.directdeal.common.security.auth.jwt.TokenProvider;

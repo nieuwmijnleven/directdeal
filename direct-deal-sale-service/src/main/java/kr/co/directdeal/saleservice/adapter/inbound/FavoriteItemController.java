@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.directdeal.common.security.util.SecurityUtils;
-import kr.co.directdeal.saleservice.service.FavoriteItemService;
-import kr.co.directdeal.saleservice.service.dto.FavoriteItemDTO;
+import kr.co.directdeal.saleservice.application.service.FavoriteItemService;
+import kr.co.directdeal.saleservice.application.service.dto.FavoriteItemDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

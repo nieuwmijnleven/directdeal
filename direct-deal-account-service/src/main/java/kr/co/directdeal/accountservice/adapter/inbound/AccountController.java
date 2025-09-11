@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.co.directdeal.accountservice.service.AccountService;
-import kr.co.directdeal.accountservice.service.dto.AccountDTO;
-import kr.co.directdeal.accountservice.service.dto.PasswordDTO;
+import kr.co.directdeal.accountservice.port.inbound.AccountUseCase;
+import kr.co.directdeal.accountservice.application.service.dto.AccountDTO;
+import kr.co.directdeal.accountservice.application.service.dto.PasswordDTO;
 import kr.co.directdeal.common.security.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/account")
 public class AccountController {
 	
-	private final AccountService accountService;
+	private final AccountUseCase accountUseCase;
 	
 	@RequestMapping(method = RequestMethod.OPTIONS)
 	public ResponseEntity<?> options() {
@@ -42,27 +42,27 @@ public class AccountController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public void createAccount(@Valid @RequestBody AccountDTO accountDTO) {
-		accountService.createAccount(accountDTO);
+		accountUseCase.createAccount(accountDTO);
 	}
 	
 	@PutMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public void updateAccount(@Valid @RequestBody AccountDTO accountDTO) {
 		accountDTO.setEmail(SecurityUtils.getCurrentUserLogin());
-		accountService.updateAccount(accountDTO);
+		accountUseCase.updateAccount(accountDTO);
 	}
 	
 	@GetMapping
 	public AccountDTO getAccount() {
 		String loginEmail = SecurityUtils.getCurrentUserLogin();
-		return accountService.getAccount(loginEmail);
+		return accountUseCase.getAccount(loginEmail);
 	}
 	
 	@DeleteMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteAccount() {
 		String loginEmail = SecurityUtils.getCurrentUserLogin();
-		accountService.deleteAccount(loginEmail);
+		accountUseCase.deleteAccount(loginEmail);
 	}
 
 	@PutMapping("/change-password")
@@ -70,6 +70,6 @@ public class AccountController {
 	public void changePassword(@Valid @RequestBody PasswordDTO passwordDTO) {	
 		String loginEmail = SecurityUtils.getCurrentUserLogin();
 		log.debug("loginEmail => " + loginEmail);
-		accountService.changePassword(loginEmail, passwordDTO);
+		accountUseCase.changePassword(loginEmail, passwordDTO);
 	}
 }

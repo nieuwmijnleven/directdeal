@@ -1,0 +1,34 @@
+package kr.co.directdeal.accountservice.application.service.mapper;
+
+import org.springframework.stereotype.Component;
+
+import kr.co.directdeal.accountservice.domain.object.Account;
+import kr.co.directdeal.accountservice.application.service.dto.AccountDTO;
+
+@Component
+public class AccountMapper implements Mapper<Account, AccountDTO> {
+
+	@Override
+	public Account toEntity(AccountDTO dto) {
+		return Account.builder()
+					.id(dto.getId())
+					.email(dto.getEmail())
+					//.password(dto.getPassword())
+					.name(dto.getName())
+					//.activated(dto.isActivated())
+					.build();
+	}
+
+	@Override
+	public AccountDTO toDTO(Account entity) {
+		return AccountDTO.builder()
+					.id(entity.getId())
+					.email(entity.getEmail())
+					.password(entity.getPassword())
+					.name(entity.getName())
+					.createdDate(entity.getCreatedDate())
+					.lastModifiedDate(entity.getLastModifiedDate())
+					.activated(entity.isActivated())
+					.build();
+	}
+}

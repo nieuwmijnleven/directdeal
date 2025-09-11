@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.co.directdeal.common.security.auth.jwt.JwtFilter;
 import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
 import kr.co.directdeal.common.security.config.props.JWTProperties;
-import kr.co.directdeal.accountservice.service.dto.LoginDTO;
-import kr.co.directdeal.accountservice.service.dto.TokenDTO;
+import kr.co.directdeal.accountservice.application.service.dto.LoginDTO;
+import kr.co.directdeal.accountservice.application.service.dto.TokenDTO;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

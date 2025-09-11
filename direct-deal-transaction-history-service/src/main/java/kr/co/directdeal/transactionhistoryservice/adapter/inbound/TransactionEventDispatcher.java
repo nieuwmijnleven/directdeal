@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 
 import kr.co.directdeal.common.sale.event.ItemSaleCompletedEvent;
 import kr.co.directdeal.transactionhistoryservice.event.BuyerSetEvent;
-import kr.co.directdeal.transactionhistoryservice.service.BuyHistoryService;
-import kr.co.directdeal.transactionhistoryservice.service.TransactionHistoryService;
-import kr.co.directdeal.transactionhistoryservice.service.dto.BuyHistoryDTO;
-import kr.co.directdeal.transactionhistoryservice.service.dto.TransactionHistoryDTO;
+import kr.co.directdeal.transactionhistoryservice.application.service.BuyHistoryService;
+import kr.co.directdeal.transactionhistoryservice.application.service.TransactionHistoryService;
+import kr.co.directdeal.transactionhistoryservice.application.service.dto.BuyHistoryDTO;
+import kr.co.directdeal.transactionhistoryservice.application.service.dto.TransactionHistoryDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

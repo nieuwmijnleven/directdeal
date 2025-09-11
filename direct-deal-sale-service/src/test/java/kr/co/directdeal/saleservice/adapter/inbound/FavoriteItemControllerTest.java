@@ -33,11 +33,11 @@ import kr.co.directdeal.common.security.auth.jwt.JwtAccessDeniedHandler;
 import kr.co.directdeal.common.security.auth.jwt.JwtAuthenticationEntryPoint;
 import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
 import kr.co.directdeal.common.security.config.props.JWTProperties;
-import kr.co.directdeal.saleservice.domain.FavoriteItem;
-import kr.co.directdeal.saleservice.service.FavoriteItemService;
-import kr.co.directdeal.saleservice.service.dto.FavoriteItemDTO;
-import kr.co.directdeal.saleservice.service.mapper.FavoriteItemMapper;
-import kr.co.directdeal.saleservice.service.repository.FavoriteItemRepository;
+import kr.co.directdeal.saleservice.domain.object.FavoriteItem;
+import kr.co.directdeal.saleservice.application.service.FavoriteItemService;
+import kr.co.directdeal.saleservice.application.service.dto.FavoriteItemDTO;
+import kr.co.directdeal.saleservice.application.service.mapper.FavoriteItemMapper;
+import kr.co.directdeal.saleservice.port.outbound.FavoriteItemRepository;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {FavoriteItemController.class},

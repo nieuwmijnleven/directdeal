@@ -27,11 +27,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import kr.co.directdeal.accountservice.domain.account.Account;
-import kr.co.directdeal.accountservice.domain.account.Authority;
-import kr.co.directdeal.accountservice.service.AccountDetailService;
-import kr.co.directdeal.accountservice.service.dto.LoginDTO;
-import kr.co.directdeal.accountservice.service.repository.AccountRepository;
+import kr.co.directdeal.accountservice.domain.object.Account;
+import kr.co.directdeal.accountservice.domain.object.Authority;
+import kr.co.directdeal.accountservice.application.service.AccountDetailService;
+import kr.co.directdeal.accountservice.application.service.dto.LoginDTO;
+import kr.co.directdeal.accountservice.port.outbound.AccountRepository;
 import kr.co.directdeal.common.security.auth.jwt.JwtAccessDeniedHandler;
 import kr.co.directdeal.common.security.auth.jwt.JwtAuthenticationEntryPoint;
 import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
