@@ -15,40 +15,55 @@ import org.springframework.web.filter.GenericFilterBean;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Filter that checks the JWT token.
+ * Extracts the JWT token from the HTTP request header, validates it,
+ * and stores the authentication information in the SecurityContext.
+ *
+ * @author Cheol Jeon
+ */
 @Slf4j
 public class JwtFilter extends GenericFilterBean {
 
-   public static final String AUTHORIZATION_HEADER = "Authorization";
+    public static final String AUTHORIZATION_HEADER = "Authorization";
 
-   private TokenProvider tokenProvider;
+    private final TokenProvider tokenProvider;
 
-   public JwtFilter(TokenProvider tokenProvider) {
-      this.tokenProvider = tokenProvider;
-   }
+    public JwtFilter(TokenProvider tokenProvider) {
+        this.tokenProvider = tokenProvider;
+    }
 
-   @Override
-   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-      throws IOException, ServletException {
-      HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-      String accessToken = resolveToken(httpServletRequest);
-      String requestURI = httpServletRequest.getRequestURI();
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
 
-      if (StringUtils.hasText(accessToken) && tokenProvider.validateToken(accessToken)) {
-         Authentication authentication = tokenProvider.getAuthentication(accessToken);
-         SecurityContextHolder.getContext().setAuthentication(authentication);
-         log.debug("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
-      } else {
-         log.debug("유효한 JWT 토큰이 없습니다, uri: {}", requestURI);
-      }
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        String accessToken = resolveToken(httpServletRequest);
+        String requestURI = httpServletRequest.getRequestURI();
 
-      filterChain.doFilter(servletRequest, servletResponse);
-   }
+        if (StringUtils.hasText(accessToken) && tokenProvider.validateToken(accessToken)) {
+            Authentication authentication = tokenProvider.getAuthentication(accessToken);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            log.debug("Stored authentication info '{}' in Security Context, uri: {}", authentication.getName(), requestURI);
+        } else {
+            log.debug("No valid JWT token found, uri: {}", requestURI);
+        }
 
-   private String resolveToken(HttpServletRequest request) {
-      String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-      if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-         return bearerToken.substring(7);
-      }
-      return null;
-   }
+        filterChain.doFilter(servletRequest, servletResponse);
+    }
+
+    /**
+     * Extracts the JWT token from the "Authorization" HTTP header,
+     * removing the "Bearer " prefix if present.
+     *
+     * @param request HttpServletRequest
+     * @return JWT token string or null if not present
+     */
+    private String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
 }

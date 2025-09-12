@@ -1,6 +1,5 @@
 package kr.co.directdeal.sale.catalogservice.webflux.config;
 
-
 import org.axonframework.config.Configurer;
 import org.axonframework.config.EventProcessingConfigurer;
 import org.axonframework.eventhandling.EventMessage;
@@ -17,6 +16,24 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Collections;
 
+/**
+ * Configuration class for setting up Axon Framework's subscribing Kafka event processor.
+ * <p>
+ * This configuration is activated only when the property
+ * {@code axon.kafka.consumer.event-processor-mode=subscribing} is set.
+ * It sets up a {@link SubscribableKafkaMessageSource} to enable Kafka consuming in a subscribing mode.
+ * </p>
+ *
+ * <p>Beans configured include:</p>
+ * <ul>
+ *     <li>{@link KafkaMessageSourceConfigurer} to manage lifecycle of Kafka message sources.</li>
+ *     <li>{@link SubscribableKafkaMessageSource} with specific topic, groupId, and necessary components.</li>
+ * </ul>
+ *
+ * <p>The subscribing event processor is registered with the event processing configuration under the name "saleItem".</p>
+ *
+ * @author Cheol Jeon
+ */
 @Configuration
 @ConditionalOnProperty(
         value = "axon.kafka.consumer.event-processor-mode",
@@ -25,8 +42,9 @@ import java.util.Collections;
 public class SubscribingConfiguration {
 
     /**
-     * To start a SubscribableKafkaMessageSource at the right point in time, 
-     * we should add those sources to a KafkaMessageSourceConfigurer.
+     * Creates a KafkaMessageSourceConfigurer to manage subscribing Kafka message sources lifecycle.
+     *
+     * @return the KafkaMessageSourceConfigurer bean
      */
     @Bean
     public KafkaMessageSourceConfigurer kafkaMessageSourceConfigurer() {
@@ -34,8 +52,11 @@ public class SubscribingConfiguration {
     }
 
     /**
-     * The KafkaMessageSourceConfigurer should be added to Axon's Configurer 
-     * to ensure it will be called upon start up.
+     * Registers the KafkaMessageSourceConfigurer with Axon's Configurer to ensure
+     * it is called during Axon's lifecycle.
+     *
+     * @param configurer the Axon Configurer
+     * @param kafkaMessageSourceConfigurer the KafkaMessageSourceConfigurer bean
      */
     @Autowired
     public void registerKafkaMessageSourceConfigurer(
@@ -46,13 +67,18 @@ public class SubscribingConfiguration {
     }
 
     /**
-     * The autoconfiguration currently does not create a SubscribableKafkaMessageSource bean 
-     * because the user is inclined to provide the group-id in all scenarios. 
-     * Doing so provides users the option to create several 
-     * SubscribingEventProcessor beans belonging to the same group, thus giving Kafka the opportunity to balance the load.
+     * Creates and configures a SubscribableKafkaMessageSource with the given parameters.
+     * The source listens to the topic defined in KafkaProperties, uses the consumer group "saleItem",
+     * and uses the provided consumer factory, fetcher, and message converter.
      *
-     * Additionally, this subscribable source should be added to the KafkaMessageSourceConfigurer 
-     * to ensure it will be started and stopped within the configuration lifecycle.
+     * The source is also registered with the KafkaMessageSourceConfigurer to manage lifecycle.
+     *
+     * @param kafkaProperties kafka related properties
+     * @param consumerFactory consumer factory for creating Kafka consumers
+     * @param fetcher fetcher for Kafka messages
+     * @param messageConverter converter for Kafka message payloads
+     * @param kafkaMessageSourceConfigurer configurer managing Kafka message sources
+     * @return the configured SubscribableKafkaMessageSource
      */
     @Bean(name="subscribableKafkaMessageSource")
     public SubscribableKafkaMessageSource<String, byte[]> subscribableKafkaMessageSource(
@@ -71,12 +97,19 @@ public class SubscribingConfiguration {
                         .messageConverter(messageConverter)
                         .build();
 
-        // ✅ Supplier 사용
+        // Register source with the configurer for lifecycle management
         kafkaMessageSourceConfigurer.configureSubscribableSource(configure -> source);
 
         return source;
     }
 
+    /**
+     * Registers the SubscribableKafkaMessageSource as a subscribing event processor
+     * named "saleItem" with the Axon EventProcessingConfigurer.
+     *
+     * @param eventProcessingConfigurer the Axon event processing configurer
+     * @param subscribableKafkaMessageSource the Kafka message source to register
+     */
     @Autowired
     public void configureSubscribableKafkaSource(
             EventProcessingConfigurer eventProcessingConfigurer,

@@ -28,31 +28,30 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            // .cors().disable() // 필요 시 CORS Bean 따로 등록
-            .csrf(csrf -> csrf.disable())
-            .formLogin(form -> form.disable())
-            .headers(headers -> headers.frameOptions(frame -> frame.disable()))
-
-            .exceptionHandling(ex -> ex
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler)
-            )
-
-            // 세션을 사용하지 않기 때문에 STATELESS로 설정
-            .sessionManagement(session -> 
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
-
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-				.requestMatchers(HttpMethod.GET, "/image/**").permitAll()
-                .requestMatchers("/actuator/health").permitAll()
-                .anyRequest().authenticated()
-            )
-
-            // JWT Security Config 적용
-            // .apply(new JwtSecurityConfig(tokenProvider));
-			.with(new JwtSecurityConfig(tokenProvider), Customizer.withDefaults());
+                // Disable CSRF as JWT is used for security
+                .csrf(csrf -> csrf.disable())
+                // Disable form login since JWT is used
+                .formLogin(form -> form.disable())
+                // Allow frames for H2 console or similar if needed (disable frame options)
+                .headers(headers -> headers.frameOptions(frame -> frame.disable()))
+                // Exception handling with custom entry point and access denied handler
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                        .accessDeniedHandler(jwtAccessDeniedHandler)
+                )
+                // Stateless session management for JWT
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                // Authorization rules
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/image/**").permitAll()
+                        .requestMatchers("/actuator/health").permitAll()
+                        .anyRequest().authenticated()
+                )
+                // Apply your custom JWT Security Config
+                .with(new JwtSecurityConfig(tokenProvider), Customizer.withDefaults());
 
         return http.build();
     }

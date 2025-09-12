@@ -42,6 +42,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.axonframework.extensions.mongo:axon-mongo'
 
+    implementation 'io.swagger.core.v3:swagger-annotations'
+
 	compileOnly 'io.jsonwebtoken:jjwt-api'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson'
