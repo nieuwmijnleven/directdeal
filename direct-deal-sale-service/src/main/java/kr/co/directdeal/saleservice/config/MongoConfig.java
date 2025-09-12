@@ -9,27 +9,37 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MongoConfig {
 
-    @Value("${spring.data.mongodb.host}")  
+    @Value("${spring.data.mongodb.host}")
     private String host;
 
-    @Value("${spring.data.mongodb.port}")  
+    @Value("${spring.data.mongodb.port}")
     private String port;
-    
-    @Value("${spring.data.mongodb.username}")  
+
+    @Value("${spring.data.mongodb.username}")
     private String username;
-    
-    @Value("${spring.data.mongodb.password}") 
+
+    @Value("${spring.data.mongodb.password}")
     private String password;
 
     @Value("${spring.data.mongodb.authentication-database}")
     private String authenticationDatabase;
-    
+
     @Value("${spring.data.mongodb.database}")
     private String database;
-	
+
+    /**
+     * Creates a MongoClient bean with authentication and connection details from properties.
+     *
+     * @return a configured MongoClient instance.
+     */
     @Bean
-	public MongoClient mongoClients() { 
-        String connectionString = String.format("mongodb://%s:%s@%s:%s/?authSource=%s", username, password, host, port, authenticationDatabase);
+    public MongoClient mongoClient() {
+        // Build the connection string with authentication details
+        String connectionString = String.format(
+                "mongodb://%s:%s@%s:%s/?authSource=%s",
+                username, password, host, port, authenticationDatabase
+        );
+
         return MongoClients.create(connectionString);
-	}
+    }
 }

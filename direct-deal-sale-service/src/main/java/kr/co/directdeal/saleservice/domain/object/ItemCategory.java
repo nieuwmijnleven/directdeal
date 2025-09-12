@@ -25,12 +25,20 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Entity representing an item category, which can have a hierarchical
+ * structure with parent and child categories.
+ *
+ * This entity supports parent-child relationships allowing for nested
+ * categories.
+ *
+ * @author Cheol Jeon
+ */
 @Entity
-@Table(name = "ITEM_CATEGORY", 
+@Table(name = "ITEM_CATEGORY",
         indexes = {
-            @Index(columnList = "PARENT_CATEGORY_ID")
+                @Index(columnList = "PARENT_CATEGORY_ID")
         })
-// @Table(name = "ITEM_CATEGORY")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,23 +46,41 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class ItemCategory {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    /**
+     * Unique identifier of the item category.
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ITEM_CATEGORY_ID")
     private Long id;
 
+    /**
+     * Name of the item category.
+     */
     @NotNull
     @Size(min = 1, max = 128)
     @Column(name = "ITEM_CATEGORY_NAME", length = 128, nullable = false)
     private String name;
 
+    /**
+     * Parent category of this category, if any.
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_CATEGORY_ID", nullable = true)
     private ItemCategory parent;
 
+    /**
+     * List of child categories under this category.
+     */
     @Builder.Default
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemCategory> child = new ArrayList();
+    private List<ItemCategory> child = new ArrayList<>();
 
+    /**
+     * Adds a child category to this category and sets this category as its parent.
+     *
+     * @param itemCategory the child category to add
+     */
     public void addChildItemCategory(ItemCategory itemCategory) {
         this.child.add(itemCategory);
         itemCategory.setParent(this);

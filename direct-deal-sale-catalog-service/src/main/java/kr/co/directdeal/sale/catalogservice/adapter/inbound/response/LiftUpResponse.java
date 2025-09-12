@@ -4,6 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * Response object for the LiftUp operation.
+ *
+ * @author Cheol Jeon
+ */
 @Data
 @AllArgsConstructor
 @Builder

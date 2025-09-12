@@ -9,6 +9,14 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Data Transfer Object for Buy History.
+ *
+ * <p>This DTO represents the purchase history details of a buyer,
+ * including item information, seller, and completion timestamp.</p>
+ *
+ * @author Cheol Jeon
+ */
 @Data
 @EqualsAndHashCode
 @AllArgsConstructor
@@ -16,13 +24,31 @@ import lombok.ToString;
 @Builder
 @ToString
 public class BuyHistoryDTO {
+
+    /** Unique identifier for the buy history record */
     private Long id;
+
+    /** Identifier of the buyer */
     private String buyerId;
+
+    /** Identifier of the item purchased */
     private String itemId;
+
+    /** Title of the purchased item */
     private String title;
+
+    /** Category of the purchased item */
     private String category;
+
+    /** Purchase price of the item */
     private long targetPrice;
+
+    /** Main image URL or filename of the purchased item */
     private String mainImage;
+
+    /** Identifier of the seller */
     private String sellerId;
-    private Instant completionTime; 
+
+    /** Timestamp when the purchase was completed */
+    private Instant completionTime;
 }

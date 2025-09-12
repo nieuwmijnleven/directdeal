@@ -3,18 +3,61 @@ package kr.co.directdeal.accountservice.port.inbound;
 import kr.co.directdeal.accountservice.application.service.dto.AccountDTO;
 import kr.co.directdeal.accountservice.application.service.dto.PasswordDTO;
 
+/**
+ * Interface defining account-related use cases.
+ *
+ * <p>This interface provides methods for creating, updating,
+ * retrieving, deleting accounts, and changing passwords.</p>
+ *
+ * <p>Author: Cheol Jeon</p>
+ */
 public interface AccountUseCase {
-	
-	public AccountDTO createAccount(AccountDTO accountDTO);
-	
-	public AccountDTO updateAccount(AccountDTO accountDTO);
 
-	public AccountDTO updateAccountById(AccountDTO accountDTO);
-	
-	public AccountDTO getAccount(String email);
-	
-	public void deleteAccount(String email);
+    /**
+     * Creates a new account.
+     *
+     * @param accountDTO the account data transfer object containing account info
+     * @return the created account as AccountDTO
+     */
+    public AccountDTO createAccount(AccountDTO accountDTO);
 
-	public void changePassword(String email, PasswordDTO passwordDTO);
+    /**
+     * Updates an existing account based on email.
+     *
+     * @param accountDTO the account data transfer object containing updated info
+     * @return the updated account as AccountDTO
+     */
+    public AccountDTO updateAccount(AccountDTO accountDTO);
+
+    /**
+     * Updates an existing account based on account ID.
+     *
+     * @param accountDTO the account data transfer object containing updated info
+     * @return the updated account as AccountDTO
+     */
+    public AccountDTO updateAccountById(AccountDTO accountDTO);
+
+    /**
+     * Retrieves an account by email.
+     *
+     * @param email the email of the account to retrieve
+     * @return the retrieved account as AccountDTO
+     */
+    public AccountDTO getAccount(String email);
+
+    /**
+     * Deletes an account by email.
+     *
+     * @param email the email of the account to delete
+     */
+    public void deleteAccount(String email);
+
+    /**
+     * Changes the password of the account identified by email.
+     *
+     * @param email the email of the account
+     * @param passwordDTO the password data transfer object containing old and new passwords
+     */
+    public void changePassword(String email, PasswordDTO passwordDTO);
 
 }

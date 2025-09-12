@@ -62,6 +62,8 @@ dependencies {
         implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.4'
         implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.4'
 
+        implementation 'io.swagger.core.v3:swagger-annotations:2.2.25'
+
         implementation 'commons-io:commons-io:2.9.0'
         implementation 'commons-fileupload:commons-fileupload:1.4'
 

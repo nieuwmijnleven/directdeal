@@ -19,6 +19,21 @@ import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Security configuration class for the application.
+ *
+ * <p>Configures HTTP security settings including:
+ * <ul>
+ *   <li>Disabling CSRF and form login</li>
+ *   <li>Custom JWT based authentication and authorization</li>
+ *   <li>Stateless session management</li>
+ *   <li>Authorization rules for endpoints</li>
+ *   <li>JWT security filter integration</li>
+ * </ul>
+ * </p>
+ *
+ * <p>Author: Cheol Jeon</p>
+ */
 @RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
@@ -29,40 +44,53 @@ public class SecurityConfiguration {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
+    /**
+     * Configures the security filter chain.
+     *
+     * @param http the HttpSecurity to modify
+     * @return the configured SecurityFilterChain
+     * @throws Exception if an error occurs during configuration
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            // .cors().disable() // 필요 시 CORS Bean 따로 등록
-            .csrf(csrf -> csrf.disable())
-            .formLogin(form -> form.disable())
-            .headers(headers -> headers.frameOptions(frame -> frame.disable()))
+                // .cors().disable() // Enable CORS if needed via separate bean configuration
+                .csrf(csrf -> csrf.disable())
+                .formLogin(form -> form.disable())
+                .headers(headers -> headers.frameOptions(frame -> frame.disable()))
 
-            .exceptionHandling(ex -> ex
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler)
-            )
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                        .accessDeniedHandler(jwtAccessDeniedHandler)
+                )
 
-            // 세션을 사용하지 않기 때문에 STATELESS로 설정
-            .sessionManagement(session -> 
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
+                // Disable session management, making it stateless (no sessions)
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
 
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/").permitAll()
-                .requestMatchers("/auth/login").permitAll()
-                .requestMatchers(HttpMethod.POST, "/account").permitAll()
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers("/actuator/health").permitAll()
-                .anyRequest().authenticated()
-            )
+                // Define authorization rules
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/account").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/actuator/health").permitAll()
+                        .anyRequest().authenticated()
+                )
 
-            // JWT Security Config 적용
-            // .apply(new JwtSecurityConfig(tokenProvider));
-			.with(new JwtSecurityConfig(tokenProvider), Customizer.withDefaults());
+                // Apply JWT security configuration
+                // .apply(new JwtSecurityConfig(tokenProvider));
+                .with(new JwtSecurityConfig(tokenProvider), Customizer.withDefaults());
 
         return http.build();
     }
 
+    /**
+     * Provides a PasswordEncoder bean that uses BCrypt hashing algorithm.
+     *
+     * @return PasswordEncoder instance
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

@@ -17,6 +17,15 @@ import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Security configuration for the reactive web application.
+ * <p>
+ * Configures security context repository, disables CSRF and CORS, customizes exception handling,
+ * and sets authorization rules for various endpoints.
+ * </p>
+ *
+ * @author Cheol Jeon
+ */
 @EnableWebFluxSecurity
 @RequiredArgsConstructor
 @Configuration
@@ -24,6 +33,12 @@ public class SecurityConfig {
 
     private final SecurityContextRepository securityContextRepository;
 
+    /**
+     * Configures the security web filter chain.
+     *
+     * @param http the ServerHttpSecurity to configure
+     * @return the configured SecurityWebFilterChain
+     */
     @Bean
     SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity http) {
         return http
@@ -48,6 +63,13 @@ public class SecurityConfig {
                 .build();
     }
 
+    /**
+     * Sends a JSON error response with the given HTTP status and exception message.
+     *
+     * @param exchange  the ServerWebExchange to write the response to
+     * @param exception the exception that caused the error
+     * @param status    the HTTP status to set in the response
+     */
     private void sendErrorResponse(ServerWebExchange exchange, Exception exception, HttpStatus status) {
         exchange.getResponse().setStatusCode(status);
         exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);

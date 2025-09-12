@@ -15,6 +15,23 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.Getter;
 
+/**
+ * Base class for entities which will hold auditing information.
+ *
+ * <p>This class is annotated as a JPA mapped superclass and uses
+ * Spring Data JPA auditing annotations to automatically populate
+ * the created and last modified user and timestamps.</p>
+ *
+ * <p>Fields included are:</p>
+ * <ul>
+ *   <li>createdBy - the user who created the entity</li>
+ *   <li>createdDate - the timestamp when the entity was created</li>
+ *   <li>lastModifiedBy - the user who last modified the entity</li>
+ *   <li>lastModifiedDate - the timestamp when the entity was last modified</li>
+ * </ul>
+ *
+ * <p>Author: Cheol Jeon</p>
+ */
 @MappedSuperclass
 @Getter
 @EntityListeners(AuditingEntityListener.class)

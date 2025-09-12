@@ -20,10 +20,18 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Entity representing a user's favorite item.
+ *
+ * This entity maps to the FAVORITE_ITEM table and stores information
+ * about the items favorited by users.
+ *
+ * @author Cheol Jeon
+ */
 @Entity
-@Table(name = "FAVORITE_ITEM", 
+@Table(name = "FAVORITE_ITEM",
         indexes = {
-            @Index(unique = true, columnList = "USER_ID, ITEM_ID")
+                @Index(unique = true, columnList = "USER_ID, ITEM_ID")
         })
 @Data
 @NoArgsConstructor
@@ -32,19 +40,32 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class FavoriteItem {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    /**
+     * Unique identifier for the favorite item record.
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "FAVORITE_ITEM_ID")
     private Long id;
 
+    /**
+     * Identifier of the user who favorited the item.
+     */
     @NotNull
-    @Column(name = "USER_ID", length = 64, unique = true)
+    @Column(name = "USER_ID", length = 64, nullable = false)
     private String userId;
 
+    /**
+     * Identifier of the item favorited by the user.
+     */
     @NotNull
     @Column(name = "ITEM_ID", length = 36, nullable = false)
     private String itemId;
 
+    /**
+     * Timestamp when the favorite record was created.
+     */
     @CreatedDate
     @Column(name = "CREATED_DATE")
-    private Instant createdDate; 
+    private Instant createdDate;
 }

@@ -15,6 +15,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Entity class representing an Authority.
+ *
+ * <p>This entity defines the roles or authorities assigned to accounts, such as ADMIN or USER.</p>
+ *
+ * <p>Two static constants are provided for common roles: ADMIN and USER.</p>
+ *
+ * <p>Author: Cheol Jeon</p>
+ */
 @Entity
 @Table(name = "AUTHORITY")
 @NoArgsConstructor
@@ -25,13 +34,22 @@ import lombok.ToString;
 @ToString
 public class Authority {
 
-	public static final Authority ADMIN = new Authority(AuthorityConstants.ADMIN);
+    /**
+     * Predefined ADMIN authority constant.
+     */
+    public static final Authority ADMIN = new Authority(AuthorityConstants.ADMIN);
 
-	public static final Authority USER = new Authority(AuthorityConstants.USER);
+    /**
+     * Predefined USER authority constant.
+     */
+    public static final Authority USER = new Authority(AuthorityConstants.USER);
 
-	@NotNull
-	@Size(min = 1, max = 30)
-	@Id	
-	@Column(name = "AUTHORITY_NAME", length = 30)
-	private String authorityName;
+    /**
+     * Name of the authority (role).
+     */
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Id
+    @Column(name = "AUTHORITY_NAME", length = 30)
+    private String authorityName;
 }

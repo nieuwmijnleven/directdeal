@@ -28,8 +28,7 @@ dependencies {
 	// implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-all'
 	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-config'
 
-	// implementation 'io.springfox:springfox-swagger-ui'
-	// implementation 'io.springfox:springfox-boot-starter'
+    implementation 'io.swagger.core.v3:swagger-annotations'
 
 	implementation 'io.jsonwebtoken:jjwt-api'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl'

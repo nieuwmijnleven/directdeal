@@ -30,7 +30,9 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-config'
 	runtimeOnly 'mysql:mysql-connector-java'
 
-	compileOnly 'org.projectlombok:lombok'
+    implementation 'io.swagger.core.v3:swagger-annotations'
+
+    compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
 	testImplementation 'org.mockito:mockito-inline'
