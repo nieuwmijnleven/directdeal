@@ -1,4 +1,8 @@
 # DirectDeal
+>**Let op:** Voor uitgebreide documentatie en details over het project kunt u terecht op de nieuwe [directdeal-docs repository](https://github.com/nieuwmijnleven/directdeal-docs). Deze repository bevat alle officiële documentatie, architectuurbeschrijvingen en ontwikkelrichtlijnen van het DirectDeal-project.
+
+DirectDeal is een online direct-handelsplatform voor iedereen. Daar kunnen mensen niet alleen vrij hun spullen verhandelen, maar ook producten kopen die door anderen worden verkocht.  
+
 DirectDeal is een online direct-handelsplatform voor iedereen. Daar kunnen mensen niet alleen vrij hun spullen verhandelen, maar ook producten kopen die door anderen worden verkocht.  
 
 # Het Doel
@@ -6,24 +10,28 @@ DirectDeal is mijn vrijetijdsproject dat zich in een gedecentraliseerde omgeving
 De reden waarom ik dit project ben begonnen, is om mijn gebrek aan ervaring met gedecentraliseerde omgevingen te compenseren. Dankzij dit project heb ik met succes een enterprise Java-omgeving geïmplementeerd binnen een MSA-structuur. Daarom geloof ik dat ik goed voorbereid ben om aan projecten in een gedecentraliseerde omgeving te werken.
 
 # Ontwikkel-Omgeving
-* Operating System: Linux (Debian/Ubuntu), Windows (WSL)
-* JAVA: 12 
-* Mysql: 5.7 
-* Mongo DB : 4.0.25 
-* Kafka: wurstmeister/kafka:2.12-2.4.0 
-* Redis: 6.2.4 
-* Spring boot: 2.5.0 
-* Spring webflux: 5.3.7 
-* Spring cloud gateway: 3.0.4 
-* Spring cloud kubernetes: 2.0.4 
-* Gradle: 7.4 
-* Axon framework: 4.5 
-* Kubernetes/minikube : v1.30.1 
-* Hibernate : 5.4.31 
-* Vue.js:2.6.14 
-* Vuetify:2.5.4
+> **Opmerking:** Door een recente migratie zijn de gebruikte libraries en tools geüpdatet naar nieuwere versies. Hieronder staan de oude versies doorgestreept, met de nieuwe versies ernaast vermeld.
+
+> **Meer details:** de actuele versies van alle tools en bibliotheken zijn te vinden in de sectie [5. Ontwikkelomgeving](https://github.com/nieuwmijnleven/directdeal-docs/blob/master/Nederlands/5.%20Ontwikkelomgeving.md) van de directdeal-docs.
+
+* Operating System: Linux (Debian/Ubuntu), Windows (WSL)  
+* JAVA: ~~12~~ **17**  
+* Mysql: ~~5.7~~ **5.7.41**  
+* Spring boot: ~~2.5.0~~ **3.2.12**  
+* Spring webflux: ~~5.3.7~~ **3.2.12**  
+* Spring cloud gateway: ~~3.0.4~~ **4.2.1**
+* Spring cloud kubernetes: ~~2.0.4~~ **3.2.0 (Spring Cloud Kubernetes Client Config)**  
+* Gradle: ~~7.4~~ **7.6.4**  
+* Axon framework: ~~4.5~~ **4.9.4**    
+* Hibernate : ~~5.4.31~~ **6.4.10**
+* Mongo DB : 4.0.25  
+* Kafka: wurstmeister/kafka:2.12-2.4.0  
+* Vue.js: 2.6.14  
+* Vuetify: 2.5.4  
 
 # Uitvoeringsstappen
+> **Opmerking:** Een meer gedetailleerde uitleg over de uitvoeringsstappen — zowel voor de lokale omgeving als voor de Google Cloud Platform (GCP)-omgeving — is te vinden in [6. Uitvoeringsmethode](https://github.com/nieuwmijnleven/directdeal-docs/blob/master/Nederlands/6.%20Uitvoeringsmethode.md) van de directdeal-docs.
+
 ## 1. De GitHub-opslagplaats van het DirectDeal-project klonen
 ```
 $> git clone https://github.com/nieuwmijnleven/directdeal.git
@@ -47,6 +55,8 @@ $> kubectl get pods
 [http://localhost:8084](http://localhost:8084)
 
 # Systeemarchitectuur
+> **Meer informatie:** Raadpleeg hoofdstuk 8, 9 en 10 van de [directdeal-docs](https://github.com/nieuwmijnleven/directdeal-docs) voor meer details over de systeemarchitectuur, Domain-Driven Design (DDD) en de opbouw van microservices.
+
 ## 1. De structuur van het gehele systeem
 Het systeem bestaat uit zes microservices: direct-deal-account-service, direct-deal-chatting-service, direct-deal-gateway-service, direct-deal-sale-service en direct-deal-sale-catalog-service. Elke microservice vervult een specifieke rol binnen het systeem. Zo is direct-deal-account-service verantwoordelijk voor het beheer van gebruikersaccounts en het in- en uitloggen, terwijl direct-deal-sale-service functionaliteiten biedt voor het registreren, wijzigen en verwijderen van producten door gebruikers.
 Opvallend is dat voor direct-deal-sale-service en direct-deal-sale-catalog-service het Event Sourcing- en CQRS-patroon (Command Query Responsibility Segregation) wordt toegepast. Hierdoor wordt de lock-contentie aan de leeszijde (direct-deal-sale-catalog-service) verminderd en is het niet nodig om transacties te gebruiken. Dit stelt het systeem in staat om gebruikers een snellere reactietijd bij het lezen van gegevens te bieden.
