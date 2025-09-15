@@ -27,7 +27,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
      * @param email the email to search for
      * @return an Optional containing the found Account, or empty if not found
      */
-    public Optional<Account> findByEmail(String email);
+    Optional<Account> findByEmail(String email);
 
     /**
      * Finds an Account by email and fetches associated authorities eagerly.
@@ -36,5 +36,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
      * @return an Optional containing the found Account with authorities loaded, or empty if not found
      */
     @EntityGraph(attributePaths = "authorities")
-    public Optional<Account> findOneWithAuthoritiesByEmail(String email);
+    Optional<Account> findOneWithAuthoritiesByEmail(String email);
 }

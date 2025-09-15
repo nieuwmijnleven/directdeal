@@ -28,8 +28,7 @@ public class SecurityUtils {
         }
 
         Optional<String> principal = Optional.empty();
-        if (authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
+        if (authentication.getPrincipal() instanceof UserDetails springSecurityUser) {
             principal = Optional.ofNullable(springSecurityUser.getUsername());
         } else if (authentication.getPrincipal() instanceof String) {
             principal = Optional.ofNullable((String) authentication.getPrincipal());
