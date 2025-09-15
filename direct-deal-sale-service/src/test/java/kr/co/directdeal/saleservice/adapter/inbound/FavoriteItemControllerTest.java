@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -68,6 +69,7 @@ public class FavoriteItemControllerTest {
 
         //when and then
         this.mvc.perform(post("/favorite")
+                    .with(csrf())
                     .content(payload)
                     .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON))
@@ -124,7 +126,7 @@ public class FavoriteItemControllerTest {
             .willReturn(Optional.of(favoriteItem));
 
         //when and then
-        this.mvc.perform(delete("/favorite/" + favoriteItemDTO.getItemId()))
+        this.mvc.perform(delete("/favorite/" + favoriteItemDTO.getItemId()).with(csrf()))
                     .andDo(print())
                     .andExpect(status().isNoContent());
 
@@ -145,7 +147,7 @@ public class FavoriteItemControllerTest {
             .willReturn(Optional.empty());
 
         //when and then
-        this.mvc.perform(delete("/favorite/" + favoriteItemDTO.getItemId()))
+        this.mvc.perform(delete("/favorite/" + favoriteItemDTO.getItemId()).with(csrf()))
                     .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.error", is("Favorite Item Service Error")))

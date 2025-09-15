@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -117,6 +118,7 @@ public class ItemCategoryControllerTest {
 
         //when and then
         this.mvc.perform(post("/category")
+                    .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .content(payload))
                     .andDo(print())
@@ -144,6 +146,7 @@ public class ItemCategoryControllerTest {
 
         //when and then
         this.mvc.perform(post("/category")
+                    .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .content(payload))
                     .andDo(print())
@@ -173,6 +176,7 @@ public class ItemCategoryControllerTest {
 
         //when and then
         this.mvc.perform(put("/category")
+                    .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .content(payload))
                     .andDo(print())
@@ -197,7 +201,7 @@ public class ItemCategoryControllerTest {
         String payload = objectMapper.writeValueAsString(dto);
 
         //when and then
-        this.mvc.perform(put("/category")
+        this.mvc.perform(put("/category")             .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .content(payload))
                     .andDo(print())
@@ -221,7 +225,7 @@ public class ItemCategoryControllerTest {
             .given(itemCategoryService).delete(dto);
 
         //when and then
-        this.mvc.perform(delete("/category/" + dto.getId()))
+        this.mvc.perform(delete("/category/" + dto.getId()).with(csrf()))
                     .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.error", is("Item Category Service Error")))
@@ -239,7 +243,7 @@ public class ItemCategoryControllerTest {
                                         .build();
 
         //when and then
-        this.mvc.perform(delete("/category/" + dto.getId()))
+        this.mvc.perform(delete("/category/" + dto.getId()).with(csrf()))
                     .andDo(print())
                     .andExpect(status().isNoContent());
 

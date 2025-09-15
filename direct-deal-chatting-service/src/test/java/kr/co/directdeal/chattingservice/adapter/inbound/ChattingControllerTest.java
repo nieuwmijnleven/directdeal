@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -331,6 +332,7 @@ public class ChattingControllerTest {
 
         //when and then
         this.mvc.perform(post("/chatting")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(srcJSON))
                 .andDo(print())
@@ -354,6 +356,7 @@ public class ChattingControllerTest {
 
         //when and then
         this.mvc.perform(post("/chatting")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(srcJSON))
                 .andDo(print())
@@ -389,6 +392,7 @@ public class ChattingControllerTest {
 
         //when and then
         this.mvc.perform(post("/chatting")
+                    .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .content(srcJSON))
                     .andDo(print())
@@ -420,6 +424,7 @@ public class ChattingControllerTest {
         
         //when and then
         this.mvc.perform(put("/chatting")
+                    .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .content(srcJSON))
                     .andDo(print())
@@ -443,6 +448,7 @@ public class ChattingControllerTest {
         
         //when and then
         this.mvc.perform(put("/chatting")
+                    .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .content(srcJSON))
                     .andDo(print())
@@ -460,6 +466,7 @@ public class ChattingControllerTest {
 
         //when and then
         this.mvc.perform(put("/chatting")
+                    .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .content(srcJSON))
                     .andDo(print())

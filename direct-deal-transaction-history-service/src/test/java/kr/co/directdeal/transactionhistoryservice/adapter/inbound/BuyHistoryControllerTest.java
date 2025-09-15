@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -100,7 +101,7 @@ public class BuyHistoryControllerTest {
             .given(buyHistoryService).delete(any(BuyHistoryDTO.class));
 
         //when and then
-        this.mvc.perform(delete("/buy-history/" + id))
+        this.mvc.perform(delete("/buy-history/" + id).with(csrf()))
                     .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.error", is("Buy History Service Error")))
@@ -114,7 +115,7 @@ public class BuyHistoryControllerTest {
         Long id = 1L;
 
         //when and then
-        this.mvc.perform(delete("/buy-history/" + id))
+        this.mvc.perform(delete("/buy-history/" + id).with(csrf()))
                     .andDo(print())
                     .andExpect(status().isNoContent());
         

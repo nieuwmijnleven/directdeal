@@ -72,9 +72,9 @@ dependencies {
 	    testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
     
         runtimeOnly 'mysql:mysql-connector-java:8.0.25'
-        testImplementation 'org.mockito:mockito-inline:3.9.0'
+        testImplementation 'org.mockito:mockito-core:5.19.0'
     }
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.12'
-	testImplementation 'org.springframework.security:spring-security-test:5.5.0'
+	testImplementation 'org.springframework.security:spring-security-test:6.1.2'
 }

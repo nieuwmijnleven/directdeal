@@ -2,6 +2,7 @@ package kr.co.directdeal.saleservice.adapter.inbound;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -64,6 +65,7 @@ public class ItemControllerTest {
 
         //when and then
         this.mvc.perform(post("/item")
+                    .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .content(payload))
                     .andDo(print())
@@ -90,6 +92,7 @@ public class ItemControllerTest {
 
         //when and then
         this.mvc.perform(put("/item")
+                    .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .content(payload))
                     .andDo(print())
@@ -107,7 +110,7 @@ public class ItemControllerTest {
                             .build();
 
         //when and then
-        this.mvc.perform(delete("/item/" + dto.getId()))
+        this.mvc.perform(delete("/item/" + dto.getId()).with(csrf()))
                     .andDo(print())
                     .andExpect(status().isNoContent());
 
@@ -123,7 +126,7 @@ public class ItemControllerTest {
                             .build();
 
         //when and then
-        this.mvc.perform(put("/item/" + dto.getId() + "/sale"))
+        this.mvc.perform(put("/item/" + dto.getId() + "/sale").with(csrf()))
                     .andDo(print())
                     .andExpect(status().isCreated());
 
@@ -139,7 +142,7 @@ public class ItemControllerTest {
                             .build();
 
         //when and then
-        this.mvc.perform(put("/item/" + dto.getId() + "/pause"))
+        this.mvc.perform(put("/item/" + dto.getId() + "/pause").with(csrf()))
                     .andDo(print())
                     .andExpect(status().isCreated());
 
@@ -155,7 +158,7 @@ public class ItemControllerTest {
                             .build();
 
         //when and then
-        this.mvc.perform(put("/item/" + dto.getId() + "/complete"))
+        this.mvc.perform(put("/item/" + dto.getId() + "/complete").with(csrf()))
                     .andDo(print())
                     .andExpect(status().isCreated());
 

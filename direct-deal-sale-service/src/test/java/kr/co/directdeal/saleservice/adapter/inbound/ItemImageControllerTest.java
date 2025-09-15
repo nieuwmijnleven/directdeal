@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -65,11 +66,11 @@ public class ItemImageControllerTest {
     public void SaveImages_NoUploadFiles_ThrowMissingServletRequestPartException() throws Exception {
         //given
         //when and then
-        this.mvc.perform(multipart("/image"))
+        this.mvc.perform(multipart("/image").with(csrf()))
                     .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.error", is("File Upload Error")))
-                    .andExpect(jsonPath("$.message", is("Required request part 'files' is not present")));
+                    .andExpect(jsonPath("$.message", is("Required part 'files' is not present.")));
     }
 
     @Test
@@ -85,7 +86,7 @@ public class ItemImageControllerTest {
             );
 
         //when and then
-        this.mvc.perform(multipart("/image").file(file))
+        this.mvc.perform(multipart("/image").file(file).with(csrf()))
                     .andDo(print())
                     .andExpect(status().isCreated());
     }

@@ -1,20 +1,15 @@
 package kr.co.directdeal.accountservice.adapter.inbound;
 
-import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willThrow;
-import static org.mockito.Mockito.mock;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import kr.co.directdeal.accountservice.application.service.dto.AccountDTO;
+import kr.co.directdeal.accountservice.application.service.dto.PasswordDTO;
+import kr.co.directdeal.accountservice.exception.AccountException;
+import kr.co.directdeal.accountservice.port.inbound.AccountUseCase;
+import kr.co.directdeal.common.security.auth.jwt.JwtAccessDeniedHandler;
+import kr.co.directdeal.common.security.auth.jwt.JwtAuthenticationEntryPoint;
+import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
+import kr.co.directdeal.common.security.config.props.JWTProperties;
+import kr.co.directdeal.common.security.util.SecurityUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +22,19 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import kr.co.directdeal.accountservice.exception.AccountException;
-import kr.co.directdeal.accountservice.port.inbound.AccountUseCase;
-import kr.co.directdeal.accountservice.application.service.dto.AccountDTO;
-import kr.co.directdeal.accountservice.application.service.dto.PasswordDTO;
-import kr.co.directdeal.common.security.auth.jwt.JwtAccessDeniedHandler;
-import kr.co.directdeal.common.security.auth.jwt.JwtAuthenticationEntryPoint;
-import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
-import kr.co.directdeal.common.security.config.props.JWTProperties;
-import kr.co.directdeal.common.security.util.SecurityUtils;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willThrow;
+import static org.mockito.Mockito.mock;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {AccountController.class}, 
@@ -59,11 +58,10 @@ public class AccountControllerTest {
     public void CreateAccount_UniqueEmail_Created() throws Exception {
         //given
         given(accountUseCase.createAccount(any(AccountDTO.class)))
-            .willReturn(any(AccountDTO.class));
+                .willReturn(mock(AccountDTO.class));
         
         AccountDTO accountDTO = AccountDTO.builder()
                                     .email("account@directdeal.co.kr")
-                                    .password("1q2w3e")
                                     .name("account")
                                     .build();
 
@@ -71,6 +69,7 @@ public class AccountControllerTest {
 
         //when and then
         this.mvc.perform(post("/account")
+                    .with(csrf())
                     .content(payload)
                     .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON))
@@ -101,6 +100,7 @@ public class AccountControllerTest {
 
         //when and then
         this.mvc.perform(post("/account")
+                    .with(csrf())
                     .content(payload)
                     .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON))
@@ -131,6 +131,7 @@ public class AccountControllerTest {
         
         //when and then
         this.mvc.perform(put("/account")
+            .with(csrf())
             .content(payload)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
@@ -161,6 +162,7 @@ public class AccountControllerTest {
         
         //when and then
         this.mvc.perform(put("/account")
+            .with(csrf())
             .content(payload)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
@@ -227,6 +229,7 @@ public class AccountControllerTest {
         
         //when and then
         this.mvc.perform(delete("/account")
+            .with(csrf())
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
@@ -247,6 +250,7 @@ public class AccountControllerTest {
         
         //when and then
         this.mvc.perform(delete("/account")
+            .with(csrf())
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
@@ -268,6 +272,7 @@ public class AccountControllerTest {
           
         //when and then
         this.mvc.perform(put("/account/change-password")
+            .with(csrf())
             .content(payload)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
@@ -295,6 +300,7 @@ public class AccountControllerTest {
         
         //when and then
         this.mvc.perform(put("/account/change-password")
+            .with(csrf())
             .content(payload)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
