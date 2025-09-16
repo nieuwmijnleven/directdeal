@@ -3,6 +3,7 @@ package kr.co.directdeal.accountservice.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,6 +19,10 @@ import kr.co.directdeal.common.security.auth.jwt.JwtSecurityConfig;
 import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
 
 /**
  * Security configuration class for the application.
@@ -44,6 +49,14 @@ public class SecurityConfiguration {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
+    @Primary
+    @Bean
+    public CsrfTokenRepository csrfTokenRepository() {
+        CookieCsrfTokenRepository tokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
+        tokenRepository.setCookiePath("/");
+        return tokenRepository;
+    }
+
     /**
      * Configures the security filter chain.
      *
@@ -52,10 +65,19 @@ public class SecurityConfiguration {
      * @throws Exception if an error occurs during configuration
      */
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, CsrfTokenRepository csrfTokenRepository) throws Exception {
         http
                 // .cors().disable() // Enable CORS if needed via separate bean configuration
-                .csrf(csrf -> csrf.disable())
+                //.csrf(csrf -> csrf.disable())
+                .csrf(csrf -> {
+                    csrf.csrfTokenRepository(csrfTokenRepository)
+                            .requireCsrfProtectionMatcher(
+                                    new OrRequestMatcher(
+                                    //AntPathRequestMatcher.antMatcher("/auth/csrf"),
+                                    //AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/auth/refresh")
+                                    AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/auth/proxy")
+                            ));
+                })
                 .formLogin(form -> form.disable())
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
 
@@ -75,6 +97,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/account").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/auth/refresh").permitAll()
+                        .requestMatchers("/auth/csrf").permitAll()
                         .requestMatchers("/actuator/health").permitAll()
                         .anyRequest().authenticated()
                 )

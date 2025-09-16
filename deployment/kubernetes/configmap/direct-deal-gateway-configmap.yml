@@ -74,7 +74,7 @@ data:
             - id: auth-service
               uri: http://account-service:8080/
               predicates:
-              - Path=/api/v1/auth/login
+              - Path=/api/v1/auth/**
               filters:
               - RewritePath=/api/v1(?<segment>/?.*), $\{segment} 
             - id: sale-service-item

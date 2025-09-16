@@ -73,7 +73,7 @@ public class AccountControllerTest {
                     .content(payload)
                     .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON))
-                    //.andDo(print())
+                    .andDo(print())
                     .andExpect(status().isCreated());                   
     }
     

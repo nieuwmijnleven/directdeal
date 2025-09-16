@@ -1,0 +1,126 @@
+  server:
+    port: 8084
+
+  logging:
+    level:
+      root: "DEBUG"
+
+  management:
+    endpoints:
+      enabled-by-default: false
+    endpoint:
+      health:
+        enabled: true
+
+#  spring:
+#    profiles:
+#      active: dev,kubernetes
+  spring:
+    application:
+      name: direct-deal-gateway-service
+
+    main:
+      web-application-type: "REACTIVE"
+
+    webflux:
+      static-path-pattern: "/**"
+
+    resources:
+      static-locations:
+        - "classpath:/static/"
+
+    cloud:
+      gateway:
+        globalcors:
+          add-to-simple-url-handler-mapping: true
+          corsConfigurations:
+            '[/**]':
+              allowedOriginPatterns:
+                - "*"
+                # - "https://*.ngrok-free.app"
+              #allowedOrigins:
+              #  - "https://8080-cs-00199ee9-8e40-4db5-8ac0-b4c460d98bad.cs-europe-west4-bhnf.cloudshell.dev"
+              allowedHeaders: "*"
+              allowedMethods: "*"
+              allowCredentials: true
+              # allowedHeaders:
+              #   - x-requested-with
+              #   - authorization
+              #   - content-type
+              #   - credential
+              #   - X-AUTH-TOKEN
+              #   - X-CSRF-TOKEN
+              # allowedMethods:
+              #   - POST
+              #   - GET
+              #   - PUT
+              #   - OPTIONS
+              #   - DELETE
+        routes:
+          - id: account-service
+            uri: http://account-service:8080/
+            predicates:
+              - Path=/api/v1/account/**
+            filters:
+              - RewritePath=/api/v1(?<segment>/?.*), $\{segment}
+          - id: auth-service
+            uri: http://account-service:8080/
+            predicates:
+              - Path=/api/v1/auth/**
+            filters:
+              - RewritePath=/api/v1(?<segment>/?.*), $\{segment}
+          - id: sale-service-item
+            uri: http://sale-service:8081/
+            predicates:
+              - Path=/api/v1/item/**
+            filters:
+              - RewritePath=/api/v1(?<segment>/?.*), $\{segment}
+          - id: sale-service-favorite
+            uri: http://sale-service:8081/
+            predicates:
+              - Path=/api/v1/favorite/**
+            filters:
+              - RewritePath=/api/v1(?<segment>/?.*), $\{segment}
+          - id: sale-service-category
+            uri: http://sale-service:8081/
+            predicates:
+              - Path=/api/v1/category/**
+            filters:
+              - RewritePath=/api/v1(?<segment>/?.*), $\{segment}
+          - id: sale-service-image
+            uri: http://sale-service:8081/
+            predicates:
+              - Path=/api/v1/image/**
+            filters:
+              - RewritePath=/api/v1(?<segment>/?.*), $\{segment}
+          - id: sale-catalog-service-saleitem
+            uri: http://sale-catalog-service:8082/
+            predicates:
+              - Path=/api/v1/saleitem/**
+            filters:
+              - RewritePath=/api/v1(?<segment>/?.*), $\{segment}
+          - id: sale-catalog-service-salelist
+            uri: http://sale-catalog-service:8082/
+            predicates:
+              - Path=/api/v1/salelist/**
+            filters:
+              - RewritePath=/api/v1(?<segment>/?.*), $\{segment}
+          - id: transaction-history-service-transaction-history
+            uri: http://transaction-history-service:8083/
+            predicates:
+              - Path=/api/v1/transaction-history/**
+            filters:
+              - RewritePath=/api/v1(?<segment>/?.*), $\{segment}
+          - id: transaction-history-service-buy-history
+            uri: http://transaction-history-service:8083/
+            predicates:
+              - Path=/api/v1/buy-history/**
+            filters:
+              - RewritePath=/api/v1(?<segment>/?.*), $\{segment}
+          - id: chatting-service
+            uri: http://chatting-service:8085/
+            predicates:
+              - Path=/api/v1/chatting/**
+            filters:
+              - RewritePath=/api/v1(?<segment>/?.*), $\{segment}
+
