@@ -93,7 +93,7 @@ public class ItemImageService implements ItemImageUseCase {
         for (MultipartFile file : files) {
             String originalFilename = file.getOriginalFilename();
             String ext = originalFilename.substring(originalFilename.lastIndexOf('.') + 1);
-            String filename = UUID.randomUUID() + "." + ext;
+            String filename = UUID.randomUUID().toString() + "." + ext;
 
             try {
                 images.put(filename, file.getBytes());

@@ -19,7 +19,7 @@ public interface AccountUseCase {
      * @param accountDTO the account data transfer object containing account info
      * @return the created account as AccountDTO
      */
-    AccountDTO createAccount(AccountDTO accountDTO);
+    public AccountDTO createAccount(AccountDTO accountDTO);
 
     /**
      * Updates an existing account based on email.
@@ -27,7 +27,7 @@ public interface AccountUseCase {
      * @param accountDTO the account data transfer object containing updated info
      * @return the updated account as AccountDTO
      */
-    AccountDTO updateAccount(AccountDTO accountDTO);
+    public AccountDTO updateAccount(AccountDTO accountDTO);
 
     /**
      * Updates an existing account based on account ID.
@@ -35,7 +35,7 @@ public interface AccountUseCase {
      * @param accountDTO the account data transfer object containing updated info
      * @return the updated account as AccountDTO
      */
-    AccountDTO updateAccountById(AccountDTO accountDTO);
+    public AccountDTO updateAccountById(AccountDTO accountDTO);
 
     /**
      * Retrieves an account by email.
@@ -43,14 +43,14 @@ public interface AccountUseCase {
      * @param email the email of the account to retrieve
      * @return the retrieved account as AccountDTO
      */
-    AccountDTO getAccount(String email);
+    public AccountDTO getAccount(String email);
 
     /**
      * Deletes an account by email.
      *
      * @param email the email of the account to delete
      */
-    void deleteAccount(String email);
+    public void deleteAccount(String email);
 
     /**
      * Changes the password of the account identified by email.
@@ -58,6 +58,6 @@ public interface AccountUseCase {
      * @param email the email of the account
      * @param passwordDTO the password data transfer object containing old and new passwords
      */
-    void changePassword(String email, PasswordDTO passwordDTO);
+    public void changePassword(String email, PasswordDTO passwordDTO);
 
 }

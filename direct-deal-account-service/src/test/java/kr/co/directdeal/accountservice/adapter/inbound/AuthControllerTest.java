@@ -1,6 +1,7 @@
 package kr.co.directdeal.accountservice.adapter.inbound;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.Cookie;
 import kr.co.directdeal.accountservice.application.service.AccountDetailService;
 import kr.co.directdeal.accountservice.application.service.dto.LoginDTO;
 import kr.co.directdeal.accountservice.domain.object.Account;
@@ -20,11 +21,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseCookie;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -37,6 +48,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -63,6 +75,12 @@ public class AuthControllerTest {
     @Autowired
     private JWTProperties jwtProperties;
 
+    @Autowired
+    private TokenProvider tokenProvider;
+
+    @Autowired
+    private AuthenticationManagerBuilder authenticationManagerBuilder;
+
     @Test
     public void Login_InvalidEmail_ThrowAccountException() throws Exception {
         //given
@@ -78,7 +96,7 @@ public class AuthControllerTest {
 
         //when and then
         this.mvc.perform(post("/auth/login")
-                    .with(csrf())
+                    //.with(csrf())
                     .content(payload)
                     .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON))
@@ -114,7 +132,7 @@ public class AuthControllerTest {
 
         //when and then
         this.mvc.perform(post("/auth/login")
-                    .with(csrf())
+                    //.with(csrf())
                     .content(payload)
                     .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON))
@@ -150,17 +168,125 @@ public class AuthControllerTest {
 
         //when and then
         this.mvc.perform(post("/auth/login")
-                    .with(csrf())
+                    //.with(csrf())
                     .content(payload)
                     .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(header().string("Authorization", matchesPattern("^Bearer [a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?$")))
+                    .andExpect(header().string("Set-Cookie", matchesPattern("^refreshToken=[a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?; Secure;\\sHttpOnly;\\sSameSite=Strict$")))
                     .andExpect(jsonPath("$.type", is("Bearer")))
                     .andExpect(jsonPath("$.accessToken", matchesPattern("^[a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?$")))
                     .andExpect(jsonPath("$.refreshToken", matchesPattern("^[a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?$")))
                     .andExpect(jsonPath("$.expireTime", is((int)jwtProperties.getAccessTokenValidityInSeconds())));
+
+        verify(accountRepository).findOneWithAuthoritiesByEmail(loginDTO.getEmail());
+    }
+
+    @Test
+    public void Refresh_InvalidCookie_ReturnNotAcceptable() throws Exception {
+        //given
+        LoginDTO loginDTO = LoginDTO.builder()
+                .email("account@directdeal.co.kr")
+                .password("1q2w3e")
+                .build();
+
+        Account accountByEmail = Account.builder()
+                .id(1L)
+                .email("account@directdeal.co.kr")
+                .password("$2a$10$9arZnwNlbgpxMHdLv82ZXuOLID5ODJR0BhciQ1wxvds2ei1hzG8he")
+                .name("account")
+                .authorities(Collections.singleton(Authority.USER))
+                .activated(true)
+                .build();
+
+        given(accountRepository.findOneWithAuthoritiesByEmail(loginDTO.getEmail()))
+                .willReturn(Optional.of(accountByEmail));
+
+        // Create authentication token using provided email and password
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
+
+        // Perform authentication
+        Authentication authentication = authenticationManagerBuilder
+                .getObject()
+                .authenticate(authenticationToken);
+
+        // Set authenticated user in the security context
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // Generate JWT tokens
+        String accessToken = tokenProvider.createAccessToken(authentication);
+        String refreshToken = tokenProvider.createRefreshToken(authentication);
+
+        //when and then
+        this.mvc.perform(post("/auth/refresh")
+                        //.with(csrf())
+                        .cookie(new Cookie("refreshToken", refreshToken)))
+                .andDo(print())
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void Csrf_NoCondition_ReturnCsrfToken() throws Exception {
+        //given
+
+        //when and then
+        this.mvc.perform(get("/auth/csrf"))
+                .andDo(print())
+                .andExpect(status().isForbidden())
+                .andExpect(header().string("Set-Cookie", matchesPattern("^XSRF-TOKEN=(?:[a-zA-Z0-9\\-_]*?);\sPath=/auth")));
+    }
+
+    @Test
+    public void Refresh_ValidCookie_ReturnJWT() throws Exception {
+        //given
+        LoginDTO loginDTO = LoginDTO.builder()
+                .email("account@directdeal.co.kr")
+                .password("1q2w3e")
+                .build();
+
+        Account accountByEmail = Account.builder()
+                .id(1L)
+                .email("account@directdeal.co.kr")
+                .password("$2a$10$9arZnwNlbgpxMHdLv82ZXuOLID5ODJR0BhciQ1wxvds2ei1hzG8he")
+                .name("account")
+                .authorities(Collections.singleton(Authority.USER))
+                .activated(true)
+                .build();
+
+        given(accountRepository.findOneWithAuthoritiesByEmail(loginDTO.getEmail()))
+                .willReturn(Optional.of(accountByEmail));
+
+        // Create authentication token using provided email and password
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
+
+        // Perform authentication
+        Authentication authentication = authenticationManagerBuilder
+                .getObject()
+                .authenticate(authenticationToken);
+
+        // Set authenticated user in the security context
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // Generate JWT tokens
+        String accessToken = tokenProvider.createAccessToken(authentication);
+        String refreshToken = tokenProvider.createRefreshToken(authentication);
+
+        //when and then
+        this.mvc.perform(post("/auth/refresh")
+                        .with(csrf())
+                        .cookie(new Cookie("refreshToken", refreshToken)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(header().string("Authorization", matchesPattern("^Bearer [a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?$")))
+                .andExpect(header().string("Set-Cookie", matchesPattern("^refreshToken=[a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?; Secure;\\sHttpOnly;\\sSameSite=Strict$")))
+                .andExpect(jsonPath("$.type", is("Bearer")))
+                .andExpect(jsonPath("$.accessToken", matchesPattern("^[a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?$")))
+                .andExpect(jsonPath("$.refreshToken", matchesPattern("^[a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?$")))
+                .andExpect(jsonPath("$.expireTime", is((int)jwtProperties.getAccessTokenValidityInSeconds())));
 
         verify(accountRepository).findOneWithAuthoritiesByEmail(loginDTO.getEmail());
     }
@@ -187,13 +313,22 @@ public class AuthControllerTest {
 
         @Bean
         public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-            http
-                    .authorizeHttpRequests(authz -> authz
-                            .requestMatchers("/auth/login").permitAll()  // 로그인은 인증 없이 허용
-                            .anyRequest().authenticated()
-                    );
-                    //.csrf(csrf -> csrf.disable()); // 테스트용으로 CSRF 비활성화
+            http.authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/auth/refresh").permitAll()
+                        .requestMatchers("/auth/csrf").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .csrf(csrf -> {
+                        CookieCsrfTokenRepository tokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
+                        tokenRepository.setCookiePath("/auth");
 
+                        csrf.csrfTokenRepository(tokenRepository)
+                            .requireCsrfProtectionMatcher(new OrRequestMatcher(
+                                    AntPathRequestMatcher.antMatcher("/auth/csrf"),
+                                    AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/auth/refresh")
+                            ));
+                });
             return http.build();
         }
     }

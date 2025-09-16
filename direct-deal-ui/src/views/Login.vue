@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     signUp() {
-      this.$router.push('/SignUp')
+      this.$router.push('/signup')
     },
     validate() {
       this.$refs.form.validate();

@@ -16,7 +16,7 @@ public interface Mapper<Entity, DTO> {
      * @param dto the DTO to convert
      * @return the converted Entity
      */
-    Entity toEntity(DTO dto);
+    public Entity toEntity(DTO dto);
 
     /**
      * Converts an Entity to a DTO.
@@ -24,5 +24,5 @@ public interface Mapper<Entity, DTO> {
      * @param entity the entity to convert
      * @return the converted DTO
      */
-    DTO toDTO(Entity entity);
+    public DTO toDTO(Entity entity);
 }

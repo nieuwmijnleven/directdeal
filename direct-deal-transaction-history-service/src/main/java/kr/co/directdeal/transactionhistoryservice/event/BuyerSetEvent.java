@@ -14,7 +14,7 @@ import lombok.ToString;
 @ToString
 public class BuyerSetEvent extends ApplicationEvent {
 
-    private final TransactionHistoryDTO transactionHistoryDTO;
+    private TransactionHistoryDTO transactionHistoryDTO;
 
     /**
      * Constructor to create a BuyerSetEvent.

@@ -1,14 +1,22 @@
 package kr.co.directdeal.accountservice.adapter.inbound;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,6 +48,8 @@ public class AuthController {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     private final JWTProperties jwtProperties;
+
+    private final CsrfTokenRepository csrfTokenRepository;
 
     /**
      * Authenticates a user using email and password credentials and returns JWT tokens.
@@ -81,6 +91,14 @@ public class AuthController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + accessToken);
 
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
+                                            .httpOnly(true)
+                                            .secure(true)
+                                            .sameSite("Strict")
+                                            .path("/")
+                                            .build();
+        httpHeaders.add("Set-Cookie", cookie.toString());
+
         // Create response body with token information
         TokenDTO tokenDTO = TokenDTO.builder()
                 .type("Bearer")
@@ -92,4 +110,86 @@ public class AuthController {
         // Return response with token in headers and body
         return new ResponseEntity<>(tokenDTO, httpHeaders, HttpStatus.OK);
     }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refresh(HttpServletRequest request,
+            @Parameter(description = "refreshToken", required = true)
+            @CookieValue(                                     value = "refreshToken", required = false) String refreshToken) {
+
+        String cookieToken = getCookieValue(request, "XSRF-TOKEN");
+
+        String headerToken = request.getHeader("X-XSRF-TOKEN");
+
+        if (cookieToken == null || headerToken == null || !cookieToken.equals(headerToken)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("CSRF token validation failed");
+        }
+
+        if (refreshToken == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Refresh token is missing");
+        }
+
+        if (!tokenProvider.validateToken(refreshToken))
+            return new ResponseEntity<>(null, null, HttpStatus.NOT_ACCEPTABLE);
+
+        //retrieve database to find refresh_token
+
+        //make authentication
+        Authentication authentication = tokenProvider.getAuthentication(refreshToken);
+
+        //retrieve database to find user
+
+        // Set authenticated user in the security context
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // Generate JWT tokens
+        String newAccessToken = tokenProvider.createAccessToken(authentication);
+        String newRefreshToken = tokenProvider.createRefreshToken(authentication);
+
+        // Prepare response headers
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + newAccessToken);
+
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", newRefreshToken)
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("Strict")
+                .build();
+        httpHeaders.add("Set-Cookie", cookie.toString());
+
+        // Create response body with token information
+        TokenDTO tokenDTO = TokenDTO.builder()
+                .type("Bearer")
+                .accessToken(newAccessToken)
+                .refreshToken(newRefreshToken)
+                .expireTime(jwtProperties.getAccessTokenValidityInSeconds())
+                .build();
+
+        // Return response with token in headers and body
+        return new ResponseEntity<>(tokenDTO, httpHeaders, HttpStatus.OK);
+    }
+
+    @GetMapping("/csrf")
+    public CsrfToken getCsrfToken(HttpServletRequest request, HttpServletResponse response) {
+        // 실제 요청에서 토큰 가져오기
+        CsrfToken token = csrfTokenRepository.loadToken(request);
+
+        // 없으면 새로 생성 + 저장
+        if (token == null) {
+            token = csrfTokenRepository.generateToken(request);
+            csrfTokenRepository.saveToken(token, request, response);
+        }
+
+        return token;
+    }
+
+    private String getCookieValue(HttpServletRequest request, String name) {
+        if (request.getCookies() == null) return null;
+        for (Cookie cookie : request.getCookies()) {
+            if (cookie.getName().equals(name)) {
+                return cookie.getValue();
+            }
+        }
+        return null;
+    }
+
 }

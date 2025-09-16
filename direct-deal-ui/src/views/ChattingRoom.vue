@@ -62,7 +62,7 @@ export default {
         } 
       } catch(error) {
         if (error.response) {
-          alert(error.response.data.error);
+          //alert(error.response.data.error);
           console.log(error.response.data.message);
           if (error.response.status == 401) {
             this.$router.push('/login')
@@ -93,7 +93,7 @@ export default {
         } 
       } catch(error) {
         if (error.response) {
-          alert(error.response.data.error);
+          //alert(error.response.data.error);
           console.log(error.response.data.message);
           if (error.response.status == 401) {
             this.$router.push('/login')
@@ -121,7 +121,7 @@ export default {
         } 
       } catch(error) {
         if (error.response) {
-          alert(error.response.data.error);
+          //alert(error.response.data.error);
           console.log(error.response.data.message);
           if (error.response.status == 401) {
             this.$router.push('/login')
