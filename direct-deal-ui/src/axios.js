@@ -3,6 +3,22 @@ import axios from 'axios';
 import store from './store';
 import router from './router';
 
+function isAccessTokenExpired(token) {
+  if (!token) return true; // If no authorization header is provided, treat as expired
+
+  try {
+    // JWT consists of three parts: header.payload.signature
+    const base64Payload = token.split('.')[1]; // Get the payload part (middle section)
+    const decodedPayload = JSON.parse(atob(base64Payload)); // Decode from Base64 and parse JSON
+
+    const now = Math.floor(Date.now() / 1000); // Get current time in seconds
+    return decodedPayload.exp < now; // Return true if token is expired
+  } catch (e) {
+    console.error('Token parsing error:', e);
+    return true; // If parsing fails, treat as expired
+  }
+}
+
 const api = axios.create({
   // baseURL is commented out to allow relative URL requests
   // baseURL: 'https://directdeal.nl',
@@ -11,15 +27,14 @@ const api = axios.create({
   // Cookies are automatically sent with same-origin requests
   // For cross-origin requests where cookies (like refreshToken) are needed,
   // you must set withCredentials: true explicitly
-  // withCredentials: true
+    withCredentials: true
 });
-
 
 // 요청 인터셉터 - accessToken이 있다면 헤더에 추가
 api.interceptors.request.use(
   config => {
-    const token = store.state.authorization;
-    if (token) {
+    const token = store.state.accessToken;
+    if (token && !isAccessTokenExpired(token)) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
@@ -65,14 +80,29 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const res = await axios.post(
-          '/auth/refresh',
+        const csrfRes = await axios.get('/api/v1/auth/csrf', { withCredentials: true });
+        const csrfHeaderName = csrfRes.data.headerName;
+        const csrfToken = csrfRes.data.token;
+        if (!csrfToken) {
+            // Throw error if CSRF token is missing in response body.
+            throw new Error('CSRF token does not exist in response.');
+        }
+        console.debug('CSRF HeaderName: ', csrfHeaderName);
+        console.debug('CSRF token: ', csrfToken);
+
+        const refreshRes = await axios.post(
+          '/api/v1/auth/refresh',
           {},
-          {}
+          {
+            withCredentials: true,
+            headers: {
+              [csrfHeaderName]: csrfToken,
+            },
+          }
         );
 
-        const newToken = res.data.accessToken;
-        store.commit('setAuthorization', newToken);
+        const newToken = refreshRes.data.accessToken;
+        store.commit('setAccessToken', newToken);
         onRefreshed(newToken);
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return api(originalRequest);

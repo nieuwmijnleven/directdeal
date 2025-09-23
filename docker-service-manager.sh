@@ -15,7 +15,7 @@ base_services=(
   "zookeeper"
   "kafka"
   "mongo"
-  # "mysql"
+  "mysql"
 )
 
 app_services=(
@@ -66,25 +66,12 @@ remove_container() {
 
 # 전체 서비스 시작
 start_services() {
-  log "Check if ${NETWORK} network is or not..."
+  log "Check if ${NETWORK} network exists..."
   if ! docker network ls --format '{{.Name}}' | grep -q "^${NETWORK}$"; then
+    log "Create ${NETWORK} network."
     if ! docker network create directdeal; then
       error_exit "Failed to create directdeal network."
     fi
-  fi
-
-  log "Starting MySQL container..."
-
-  if docker ps --format '{{.Names}}' | grep -q "^${MYSQL_CONTAINER}$"; then
-    stop_service "${MYSQL_CONTAINER}"
-  fi
-
-  if docker ps -a --format '{{.Names}}' | grep -q "^${MYSQL_CONTAINER}$"; then
-    remove_container "${MYSQL_CONTAINER}"
-  fi
-
-  if ! docker run -e MYSQL_ROOT_PASSWORD="${MYSQL_ROOT_PASSWORD}" --name "${MYSQL_CONTAINER}" -d --network "${NETWORK}" "${MYSQL_IMAGE}"; then
-    error_exit "Failed to run MySQL container."
   fi
 
   log "Starting base services..."
@@ -95,7 +82,8 @@ start_services() {
     fi
 
     if ! docker start "${service}"; then
-      if ! ${svc_create_cmd[$service]}; then
+      log "Create ${service} container."
+      if ! eval ${svc_create_cmd["${service}"]}; then
         error_exit "Failed to start ${service} container."
       fi
     fi
@@ -130,7 +118,8 @@ start_services() {
     fi
 
     if ! docker start "${service}"; then
-      if ! ${svc_create_cmd[$service]}; then
+      log "Create ${service} container."
+      if ! eval ${svc_create_cmd["${service}"]}; then
         error_exit "Failed to start ${service} container."
       fi
     fi
@@ -197,40 +186,9 @@ start_service() {
     error_exit "Usage: $0 start-service <container-name>"
   fi
 
-  log "Starting container: $container"
-  if [ "${container}" = "account-service" ]; then
-    if docker ps --format '{{.Names}}' | grep -q "^${MYSQL_CONTAINER}$"; then
-      stop_service "${MYSQL_CONTAINER}"
-    fi
-
-    if docker ps -a --format '{{.Names}}' | grep -q "^${MYSQL_CONTAINER}$"; then
-      remove_container "${MYSQL_CONTAINER}"
-    fi
-
-    if ! docker run -e MYSQL_ROOT_PASSWORD="${MYSQL_ROOT_PASSWORD}" --name "${MYSQL_CONTAINER}" -d --network "${NETWORK}" "${MYSQL_IMAGE}"; then
-      error_exit "Failed to run MySQL container."
-    fi
-
-    log "Waiting for mysql services to become available..."
-    if ! docker run -it --rm --network "${NETWORK}" busybox /bin/sh -c '
-      while true; do
-        nc -z -w 1 mysql 3306
-
-        if [ $? -eq 0 ]; then
-          echo "✅ mysql is ready."
-          break
-        fi
-
-        echo "⏳ DB is not yet reachable; sleeping 9s before retry..."
-        sleep 9
-      done
-    '; then
-      error_exit "mysql readiness check failed."
-    fi
-  fi
-
-  if ! docker start "$container"; then
-    if ! "${svc_create_cmd[$container]}"; then
+  if ! docker start "$container" > /dev/null 2>&1; then
+    log "Create ${service} container."
+    if ! eval ${svc_create_cmd["${container}"]}; then
       error_exit "Failed to start container: $container"
     fi
   fi

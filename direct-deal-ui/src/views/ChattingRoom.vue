@@ -28,7 +28,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+//import axios from 'axios'
+import api from '../axios'
 
 export default {
   data: () => ({
@@ -44,7 +45,7 @@ export default {
   methods: {
     async send() {
       try {     
-        let response = await axios({
+        await api({
           method: 'PUT',
           url: '/api/v1/chatting',
           headers: {
@@ -57,52 +58,28 @@ export default {
           }
         })
 
-        if (response.status == 201) {
-          this.fetchNewMessages()
-        } 
+        this.fetchNewMessages()
       } catch(error) {
-        if (error.response) {
-          //alert(error.response.data.error);
-          console.log(error.response.data.message);
-          if (error.response.status == 401) {
-            this.$router.push('/login')
-          }
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
+        console.log("Error", error);
       }
 
       this.message = null
     },
     async fetchNewMessages() {
       try {     
-        let response = await axios({
+        let response = await api({
           method: 'GET',
           url: '/api/v1/chatting/' + this.chattingRoom.id + '/fetch-from/' + this.chattingRoom.messages.length
         })
 
-        if (response.status == 200) {
-          const count = response.data.length;
-          if (!!count && count > 0) {
+        const count = response.data.length;
+        if (count && count > 0) {
             this.chattingRoom.messages = this.chattingRoom.messages.concat(response.data)
             console.log(this.chattingRoom.messages)
             this.$vuetify.goTo(document.body.scrollHeight)
-          }
-        } 
-      } catch(error) {
-        if (error.response) {
-          //alert(error.response.data.error);
-          console.log(error.response.data.message);
-          if (error.response.status == 401) {
-            this.$router.push('/login')
-          }
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
         }
+      } catch(error) {
+        console.log("Error", error);
       }
     },
     async fetchChattingRoom() {
@@ -110,34 +87,22 @@ export default {
       console.log('chattingRoom => ' + JSON.stringify(this.chattingRoom))
      
       try {     
-        let response = await axios({
+        let response = await api({
           method: 'GET',
           url: '/api/v1/chatting/' + this.chattingRoom.id
         })
 
-        if (response.status == 200) {
-          this.chattingRoom = response.data
-          console.log(this.chattingRoom)
-        } 
+        this.chattingRoom = response.data
+        console.log(this.chattingRoom)
       } catch(error) {
-        if (error.response) {
-          //alert(error.response.data.error);
-          console.log(error.response.data.message);
-          if (error.response.status == 401) {
-            this.$router.push('/login')
-          }
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
+        console.log("Error", error)
       }
     },
   },
   mounted() {
     this.$store.commit("setShowBottomNavigation", true)
     this.$store.commit("setSelectedBottomNavigationItem", 'chat')
-    axios.defaults.headers.common['Authorization'] = this.$store.state.authorization
+    //axios.defaults.headers.common['Authorization'] = this.$store.state.authorization
     this.fetchChattingRoom()
     this.timerId = setInterval(() => this.fetchNewMessages(), 1000)
   },

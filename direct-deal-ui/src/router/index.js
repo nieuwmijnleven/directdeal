@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from '../store';
-import axios from 'axios';
+//import store from '../store';
+//import axios from 'axios';
 
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
@@ -63,7 +63,7 @@ const router = new VueRouter({
   routes
 })
 
-function isAccessTokenExpired(authorization) {
+/*function isAccessTokenExpired(authorization) {
   if (!authorization) return true; // If no authorization header is provided, treat as expired
 
   try {
@@ -79,10 +79,10 @@ function isAccessTokenExpired(authorization) {
     console.error('Token parsing error:', e);
     return true; // If parsing fails, treat as expired
   }
-}
+}*/
 
 
-router.beforeEach(async (to, from, next) => {
+/*router.beforeEach(async (to, from, next) => {
   // Define pages that do not require authentication
   const publicPages = ['/login', '/signup'];
   // Determine if the target route requires authentication
@@ -138,6 +138,6 @@ router.beforeEach(async (to, from, next) => {
     // If authentication is not required or token exists, proceed normally
     next();
   }
-});
+});*/
 
 export default router

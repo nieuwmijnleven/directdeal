@@ -34,7 +34,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+//import axios from 'axios'
+import api from '../axios'
 
 export default {
   data: () => ({
@@ -45,31 +46,15 @@ export default {
     async fetchSaleList() {
       this.isLoaded = false
       try {     
-        let response = await axios({
+        let response = await api({
           method: 'GET',
-          //url: 'http://localhost:8084/api/v1/salelist?page=0&size=10&sort=createdDate,desc', 
           url: '/api/v1/salelist?page=0&size=10&sort=createdDate,desc', 
         })
 
-        if (response.status == 200) {
-          this.items = response.data
-          this.isLoaded = true
-        } else {
-          alert("An incorrect response code is returned: " + response.status);
-        }
-       
+        this.items = response.data
+        this.isLoaded = true
       } catch(error) {
-        if (error.response) {
-          //alert(error.response.data.error);
-          console.log(error.response.data.message);
-          if (error.response.status == 401) {
-            this.$router.push('/login')
-          }
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
+        console.warn("Error: ", error)
       }
     },
     selectItem(itemId) {
@@ -80,7 +65,7 @@ export default {
   mounted() {
     this.$store.commit("setShowBottomNavigation", true)
     this.$store.commit("setSelectedBottomNavigationItem", 'home')
-    axios.defaults.headers.common['Authorization'] = this.$store.state.authorization
+    //axios.defaults.headers.common['Authorization'] = this.$store.state.authorization
     this.fetchSaleList()
   },
 };

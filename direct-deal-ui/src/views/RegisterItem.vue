@@ -92,7 +92,8 @@
 </template>
 
 <script>
-import axios from "axios";
+//import axios from "axios";
+import api from "../axios"
 
 export default {
   data: () => ({
@@ -159,15 +160,15 @@ export default {
       }
 
       try {
-        let response = await axios.post(
+        let response = await api.post(
           "/api/v1/image",
           formData
         );
-        if (response.status == 201) {
-          this.uploadedImages = response.data.images;
-          console.log(this.uploadedImages);
 
-          response = await axios({
+        this.uploadedImages = response.data.images;
+        console.log("uploadedImages => ", this.uploadedImages);
+
+        response = await api({
             method: "POST",
             url: "/api/v1/item",
             data: {
@@ -181,43 +182,24 @@ export default {
             headers: {
               "Content-Type": "application/json",
             },
-          });
+        });
 
-          if (response.status == 201) {
-            const newItemId = response.data.itemId;
-
-            for (let i = 0; i < 10; ++i) {
-              try {
-                response = await axios({
-                  method: "GET",
-                  url: "/api/v1/saleitem/" + newItemId,
-                });
-
-                if (response.status == 200) {
-                  this.$router.push("/");
-                  break;
-                }
-              } catch (error) {
-                console.log(error);
-              }
-
-              this.sleep(1000);
-            }
-          } else {
-            alert("An incorrect response code is returned: " + response.status);
+        const newItemId = response.data.itemId;
+        for (let i = 0; i < 10; ++i) {
+          try {
+            response = await api({
+              method: "GET",
+              url: "/api/v1/saleitem/" + newItemId,
+            });
+            this.$router.push("/");
+            break;
+          } catch (error) {
+            console.warn("Error", error);
           }
-        } else {
-          alert("An incorrect response code is returned: " + response.status);
+          this.sleep(1000);
         }
       } catch (error) {
-        if (error.response) {
-          alert(error.response.data.error);
-          console.log(error.response.data.message);
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
+        console.warn("Error", error);
       }
 
       this.dialog = false
@@ -230,8 +212,7 @@ export default {
   mounted() {
     this.$store.commit("setShowBottomNavigation", true);
     this.$store.commit("setSelectedBottomNavigationItem", "register-item");
-    axios.defaults.headers.common["Authorization"] =
-      this.$store.state.authorization;
+    //axios.defaults.headers.common["Authorization"] = this.$store.state.authorization;
   },
 };
 </script>
