@@ -40,7 +40,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+//import axios from 'axios'
+import api from '../axios'
 
 export default {
   data: () => ({
@@ -73,7 +74,7 @@ export default {
     validate() {
       this.$refs.form.validate();
     },
-    submit() {
+    async submit() {
       this.validate()
 
       const data = {
@@ -85,29 +86,18 @@ export default {
         'Content-Type': 'application/json'
       }
 
-      axios.post('/api/v1/auth/login', data, header)
-        .then(response => {
-          if (response.status == 200) {
-            const authorization = "Bearer " + response.data.accessToken;
-            this.$store.commit("setAuthorization", authorization)
-            axios.defaults.headers.common['Authorization'] = authorization
-            this.$router.push("/register-item")
-          } else {
-            alert("An incorrect response code is returned")
-          }
-        })
-        .catch(error => {
-          if (error.response) {
+      try {
+        const response = await api.post('/api/v1/auth/login', data, header)
+        const token = response.data.accessToken;
+        this.$store.commit("setAccessToken", token)
+        this.$router.push("/register-item")
+      } catch(error) {
+        if (error.response) {
             alert(error.response.data.error)
             console.log(error.response.data.message)
-            // console.log(error.response.status)
-            // console.log(error.response.headers)
-          } else if (error.request) {
-            console.log(error.request)
-          } else {
-            console.log('Error', error.message)
-          }
-        })
+        }
+        console.warn("Error: ", error);
+      }
     }
   },
   mounted() {

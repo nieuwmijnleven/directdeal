@@ -32,7 +32,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+//import axios from 'axios'
+import api from '../axios'
 
 export default {
   data: () => ({
@@ -53,30 +54,15 @@ export default {
     async fetchChattingRoomList() {
       this.isLoaded = false
       try {     
-        let response = await axios({
+        let response = await api({
           method: 'GET',
           url: '/api/v1/chatting/list', 
         })
 
-        if (response.status == 200) {
-          this.chattingRoomList = response.data
-          this.isLoaded = true
-        } else {
-          alert("An incorrect response code is returned: " + response.status);
-        }
-       
+        this.chattingRoomList = response.data
+        this.isLoaded = true
       } catch(error) {
-        if (error.response) {
-          //alert(error.response.data.error);
-          console.log(error.response.data.message);
-          if (error.response.status == 401) {
-            this.$router.push('/login')
-          }
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
+        console.warn("Error", error.message)
       }
     },
     selectChattingRoom(chattingRoomId) {
@@ -88,7 +74,7 @@ export default {
   mounted() {
     this.$store.commit("setShowBottomNavigation", true)
     this.$store.commit("setSelectedBottomNavigationItem", 'chat')
-    axios.defaults.headers.common['Authorization'] = this.$store.state.authorization
+    //axios.defaults.headers.common['Authorization'] = this.$store.state.authorization
     this.fetchChattingRoomList()
   },
 };

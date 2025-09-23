@@ -45,7 +45,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+//import axios from 'axios'
+import api from '../axios'
 
 export default {
   data: () => ({
@@ -55,29 +56,15 @@ export default {
   methods: {
     async fetchSaleItem() {
       try {     
-        let response = await axios({
+        const response = await api({
           method: 'GET',
           url: '/api/v1/saleitem/' + this.$store.state.routerParams['/item-detail'].id, 
         })
 
-        if (response.status == 200) {
-          this.item = response.data
-          this.isLoaded = true 
-          console.log(this.item)
-          console.log(response.data)
-        } 
+        this.item = response.data
+        this.isLoaded = true
       } catch(error) {
-        if (error.response) {
-          //alert(error.response.data.error);
-          console.log(error.response.data.message);
-          if (error.response.status == 401) {
-            this.$router.push('/login')
-          }
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
+        console.log("Error", error.message);
       }
     },
     async startDeal(item) {
@@ -87,7 +74,7 @@ export default {
       }
 
       try {     
-        let response = await axios({
+        const response = await api({
           method: 'POST',
           url: '/api/v1/chatting',
           headers: {
@@ -101,59 +88,35 @@ export default {
           }
         })
 
-        if (response.status == 201) {
-          this.$store.commit('setRouterParams', {path: '/chatting-room', value: response.data})
-          this.$router.push('/chatting-room')
-        } 
+        this.$store.commit('setRouterParams', {path: '/chatting-room', value: response.data})
+        this.$router.push('/chatting-room')
       } catch(error) {
-        if (error.response) {
-          if (error.response.status == 401) {
-            this.$router.push('/login')
-          } else if (error.response.status == 409) {
+        if (error.response.status == 409) {
             //alert("The chatting room has been already created.")
             await this.enterChattingRoom(item)
-          } else {
-            alert(error.response.data.error);
-            console.log(error.response.data.message);
-          }
-        } else if (error.request) {
-          console.log(error.request);
         } else {
-          console.log("Error", error.message);
+          console.log("Error", error);
         }
       }
     },
     async enterChattingRoom(item) {
       try {     
-        let response = await axios({
+        const response = await api({
           method: 'GET',
           url: '/api/v1/chatting/' + item.id + '/' + item.ownerId + '/' + this.$store.state.userId
         })
 
-        if (response.status == 200) {
-          this.$store.commit('setRouterParams', {path: '/chatting-room', value: response.data})
-          this.$router.push('/chatting-room')
-        } 
+        this.$store.commit('setRouterParams', {path: '/chatting-room', value: response.data})
+        this.$router.push('/chatting-room')
       } catch(error) {
-        if (error.response) {
-          if (error.response.status == 401) {
-            this.$router.push('/login')
-          } else {
-            alert(error.response.data.error);
-            console.log(error.response.data.message);
-          }
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
+        console.log("Error", error.message);
       }
     },
   },
   mounted() {
     this.$store.commit("setShowBottomNavigation", true)
     this.$store.commit("setSelectedBottomNavigationItem", 'home')
-    axios.defaults.headers.common['Authorization'] = this.$store.state.authorization
+    //axios.defaults.headers.common['Authorization'] = this.$store.state.authorization
     this.fetchSaleItem()
   },
 };

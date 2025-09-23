@@ -45,7 +45,8 @@
 </template>
 
 <script>
-import axios from "axios";
+//import axios from "axios";
+import api from "../axios"
 
 export default {
   data: () => ({
@@ -76,7 +77,7 @@ export default {
     validate() {
       this.$refs.form.validate();
     },
-    submit() {
+    async submit() {
       this.validate();
 
       const data = {
@@ -89,28 +90,12 @@ export default {
         "Content-Type": "application/json",
       };
 
-      axios
-        .post("/api/v1/account", data, header)
-        .then((response) => {
-          // console.log(response)
-          if (response.status == 201) {
-            this.$router.push("/login");
-          } else {
-            alert("An incorrect response code is returned");
-          }
-        })
-        .catch((error) => {
-          if (error.response) {
-            alert(error.response.data.error);
-            console.log(error.response.data.message);
-            // console.log(error.response.status)
-            // console.log(error.response.headers)
-          } else if (error.request) {
-            console.log(error.request);
-          } else {
-            console.log("Error", error.message);
-          }
-        });
+      try {
+        await api.post("/api/v1/account", data, header)
+        this.$router.push("/login")
+      } catch(error) {
+        console.log("Error", error.message);
+      }
     },
   },
   mounted() {

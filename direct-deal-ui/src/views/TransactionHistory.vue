@@ -137,7 +137,8 @@
 </template>
 
 <script>
-import axios from "axios";
+//import axios from "axios";
+import api from "../axios"
 
 export default {
   data: () => ({
@@ -155,151 +156,81 @@ export default {
     async fetchSellerItems() {
       this.isLoaded = false;
       try {
-        let response = await axios({
+        const response = await api({
           method: "GET",
           url: "/api/v1/saleitem/seller-items",
         });
 
-        if (response.status == 200) {
-          this.isLoaded = true;
-          this.items = response.data;
-        } else {
-          alert("An incorrect response code is returned: " + response.status);
-        }
+        this.isLoaded = true;
+        this.items = response.data;
       } catch (error) {
-        if (error.response) {
-          alert(error.response.data.error);
-          console.log(error.response.data.message);
-          if (error.response.status == 401) {
-            this.$router.push("/login");
-          }
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
+        console.log("Error", error);
       }
     },
     /* lift up */
     async liftup(item) {
       try {
-        let response = await axios({
+        const response = await api({
           method: "PUT",
           url: "/api/v1/salelist/" + item.id + "/lift-up",
         });
 
-        if (response.status == 200) {
-          const liftUpResponse = response.data;
-          if (liftUpResponse.result == "SUCCESS") {
+        const liftUpResponse = response.data;
+        if (liftUpResponse.result == "SUCCESS") {
             this.$router.push('/')
-          } else if (liftUpResponse.result == "FAILURE") {
+        } else if (liftUpResponse.result == "FAILURE") {
             const canLiftUpDate = new Date(item.createdDate)
             canLiftUpDate.setDate(canLiftUpDate.getDate() + liftUpResponse.intervalDays)
-            alert("Lift-Up will be possible at " + canLiftUpDate.toLocaleString());
-          } else {
-            alert("An incorrect response : " + liftUpResponse.result);
-          }
+            alert("Lift-Up will be possible at " + canLiftUpDate.toLocaleString())
         } else {
-          alert("An incorrect response code is returned: " + response.status);
+            throw new Error("An incorrect response : " + liftUpResponse.result)
         }
       } catch (error) {
-        if (error.response) {
-          alert(error.response.data.error);
-          console.log(error.response.data.message);
-          if (error.response.status == 401) {
-            this.$router.push("/login");
-          }
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
+        console.log("Error", error.message);
       }
     },
     /* complete */
     async complete(item) {
       try {
-        let response = await axios({
+        await api({
           method: "PUT",
           url: "/api/v1/item/" + item.id + "/complete",
         });
 
-        if (response.status == 201) {
-          this.tabs = 'tabs-completed'
-          this.fetchCompletedItems();
-        } else {
-          alert("An incorrect response code is returned: " + response.status);
-        }
+        this.tabs = 'tabs-completed'
+        this.fetchCompletedItems();
       } catch (error) {
-        if (error.response) {
-          alert(error.response.data.error);
-          console.log(error.response.data.message);
-          if (error.response.status == 401) {
-            this.$router.push("/login");
-          }
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
+        console.log("Error", error);
       }
     },
     /* transaction-history */
     async fetchCompletedItems() {
       this.isLoaded = false;
       try {
-        let response = await axios({
+        const response = await api({
           method: "GET",
           url: "/api/v1/transaction-history",
         });
 
-        if (response.status == 200) {
-          this.completedItems = response.data;
-          this.isLoaded = true;
-        } else {
-          alert("An incorrect response code is returned: " + response.status);
-        }
+        this.completedItems = response.data;
+        this.isLoaded = true;
       } catch (error) {
-        if (error.response) {
-          alert(error.response.data.error);
-          console.log(error.response.data.message);
-          if (error.response.status == 401) {
-            this.$router.push("/login");
-          }
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
+        console.log("Error", error);
       }
     },
     /* buy-history */
     async fetchBuyItems() {
       this.isLoaded = false;
       try {
-        let response = await axios({
+        const response = await api({
           method: "GET",
           url: "/api/v1/buy-history",
         });
 
-        if (response.status == 200) {
-          this.buyItems = response.data;
-          this.isLoaded = true;
-        } else {
-          alert("An incorrect response code is returned: " + response.status);
-        }
+        this.buyItems = response.data;
+        this.isLoaded = true;
       } catch (error) {
-        if (error.response) {
-          alert(error.response.data.error);
-          console.log(error.response.data.message);
-          if (error.response.status == 401) {
-            this.$router.push("/login");
-          }
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
+        console.log("Error", error);
       }
     },
     /* customers */
@@ -307,35 +238,21 @@ export default {
       this.selectedCompletedItem = item;
       this.isLoaded = false;
       try {
-        let response = await axios({
+        const response = await api({
           method: "GET",
           url: "/api/v1/chatting/" + item.itemId + "/customer-list",
         });
 
-        if (response.status == 200) {
-          this.customers = response.data;
-          this.isLoaded = true;
-          this.dialog = true;
-        } else {
-          alert("An incorrect response code is returned: " + response.status);
-        }
+        this.customers = response.data;
+        this.isLoaded = true;
+        this.dialog = true;
       } catch (error) {
-        if (error.response) {
-          alert(error.response.data.error);
-          console.log(error.response.data.message);
-          if (error.response.status == 401) {
-            this.$router.push("/login");
-          }
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
+        console.log("Error", error);
       }
     },
     async setBuyer(customerId) {
       try {
-        let response = await axios({
+        const response = await api({
           method: "PUT",
           url: "/api/v1/transaction-history/setbuyer",
           data: {
@@ -344,23 +261,9 @@ export default {
           }
         });
 
-        if (response.status == 200) {
-          this.customers = response.data;
-        } else {
-          alert("An incorrect response code is returned: " + response.status);
-        }
+        this.customers = response.data;
       } catch (error) {
-        if (error.response) {
-          alert(error.response.data.message);
-          console.log(error.response.data.message);
-          if (error.response.status == 401) {
-            this.$router.push("/login");
-          }
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
+        console.log("Error", error);
       }
 
       this.dialog = false;
@@ -376,7 +279,7 @@ export default {
   mounted() {
     this.$store.commit("setShowBottomNavigation", true);
     this.$store.commit("setSelectedBottomNavigationItem", "transaction");
-    axios.defaults.headers.common["Authorization"] = this.$store.state.authorization;
+    //axios.defaults.headers.common["Authorization"] = this.$store.state.authorization;
     this.fetchSellerItems();
   },
 };

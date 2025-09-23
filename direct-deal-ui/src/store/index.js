@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     userId:'',
-    authorization: '',
+    accessToken:'',
+    //authorization: '',
     showBottomNavigation: true,
     selectedBottomNavigationItem: 'home',
     routerParams: {},
@@ -17,9 +18,12 @@ export default new Vuex.Store({
     setUserId(state, id) {
       state.userId = id
     },
-    setAuthorization(state, auth) {
-      state.authorization = auth
+    setAccessToken(state, token) {
+      state.accessToken = token
     },
+//    setAuthorization(state, auth) {
+//      state.authorization = auth
+//    },
     setShowBottomNavigation(state, visible) {
       state.showBottomNavigation = visible
     },
@@ -36,9 +40,12 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    getAuthorization(state) {
-      return state.authorization
+    getAccessToken(state) {
+      return state.accessToken
     },
+//    getAuthorization(state) {
+//      return state.authorization
+//    },
     getShowBottomNavigation(state) {
       return state.showBottomNavigation
     },
