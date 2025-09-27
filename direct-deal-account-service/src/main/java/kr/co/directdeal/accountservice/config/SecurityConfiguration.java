@@ -72,11 +72,8 @@ public class SecurityConfiguration {
                 .csrf(csrf -> {
                     csrf.csrfTokenRepository(csrfTokenRepository)
                             .requireCsrfProtectionMatcher(
-                                    new OrRequestMatcher(
-                                    //AntPathRequestMatcher.antMatcher("/auth/csrf"),
-                                    //AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/auth/refresh")
-                                    AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/auth/proxy")
-                            ));
+                                    AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/auth/refresh")
+                            );
                 })
                 .formLogin(form -> form.disable())
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))

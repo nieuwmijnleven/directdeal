@@ -19,6 +19,58 @@ function isAccessTokenExpired(token) {
   }
 }
 
+// Base64 URL-safe 인코딩 함수
+function base64UrlEncode(arrayBuffer) {
+  const base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+  return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+// XOR 연산 함수 (Uint8Array 두 개를 받아 XOR 결과 반환)
+function xorBytes(a, b) {
+  if (a.length !== b.length) {
+    throw new Error('두 배열 길이가 같아야 합니다');
+  }
+  const result = new Uint8Array(a.length);
+  for (let i = 0; i < a.length; i++) {
+    result[i] = a[i] ^ b[i];
+  }
+  return result;
+}
+
+// 쿠키에서 CSRF 토큰 읽기
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+  return null;
+}
+
+function createEncryptedCsrfToken() {
+  // 쿠키에서 원본 CSRF 토큰 읽기
+  const tokenStr = getCookie('XSRF-TOKEN');
+  console.warn('XSRF-TOKEN: ', tokenStr);
+  if (!tokenStr) {
+    throw new Error('There is no CSRF token in the cookie.');
+  }
+
+  // UTF-8 인코딩 (문자열 → 바이트 배열)
+  const tokenBytes = new TextEncoder().encode(tokenStr);
+
+  // 같은 길이의 랜덤 바이트 생성
+  const randomBytes = crypto.getRandomValues(new Uint8Array(tokenBytes.length));
+
+  // randomBytes XOR tokenBytes
+  const xoredBytes = xorBytes(randomBytes, tokenBytes);
+
+  // randomBytes + xoredBytes 합치기
+  const combined = new Uint8Array(randomBytes.length + xoredBytes.length);
+  combined.set(randomBytes, 0);
+  combined.set(xoredBytes, randomBytes.length);
+
+  // Base64 URL-safe 인코딩
+  return base64UrlEncode(combined.buffer);
+}
+
 const api = axios.create({
   // baseURL is commented out to allow relative URL requests
   // baseURL: 'https://directdeal.nl',
@@ -36,6 +88,13 @@ api.interceptors.request.use(
     const token = store.state.accessToken;
     if (token && !isAccessTokenExpired(token)) {
       config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    //console.warn("config.headers: ", config.headers);
+
+    if (config.headers['X-XSRF-TOKEN']) {
+        config.headers['X-XSRF-TOKEN'] = createEncryptedCsrfToken(config.headers['X-XSRF-TOKEN']);
+        console.warn('config.headers[\'X-XSRF-TOKEN\']', config.headers['X-XSRF-TOKEN']);
     }
     return config;
   },
@@ -80,26 +139,41 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const csrfRes = await axios.get('/api/v1/auth/csrf', { withCredentials: true });
-        const csrfHeaderName = csrfRes.data.headerName;
-        const csrfToken = csrfRes.data.token;
-        if (!csrfToken) {
-            // Throw error if CSRF token is missing in response body.
-            throw new Error('CSRF token does not exist in response.');
-        }
-        console.debug('CSRF HeaderName: ', csrfHeaderName);
-        console.debug('CSRF token: ', csrfToken);
+        await axios.get('/api/v1/auth/csrf', { withCredentials: true });
+//        const csrfHeaderName = csrfRes.data.headerName;
+//        const csrfToken = csrfRes.data.token;
+//        if (!csrfToken) {
+//            // Throw error if CSRF token is missing in response body.
+//            throw new Error('CSRF token does not exist in response.');
+//        }
+//        console.debug('CSRF HeaderName: ', csrfHeaderName);
+//        console.debug('CSRF token: ', csrfToken);
+
+        const encryptedCsrfToken = createEncryptedCsrfToken();
+        console.warn('encryptedCsrfToken: ', encryptedCsrfToken);
+
+        const interceptor = axios.interceptors.request.use(
+          config => {
+            config.xsrfCookieName = '';     // 쿠키 이름 비활성화
+            config.xsrfHeaderName = '';     // 헤더 이름 비활성화
+            config.headers['X-XSRF-TOKEN'] = encryptedCsrfToken;
+            return config;
+          },
+          error => Promise.reject(error)
+        );
 
         const refreshRes = await axios.post(
           '/api/v1/auth/refresh',
           {},
           {
             withCredentials: true,
-            headers: {
-              [csrfHeaderName]: csrfToken,
-            },
+            /*headers: {
+              'X-XSRF-TOKEN': encryptedCsrfToken,
+            },*/
           }
         );
+
+        axios.interceptors.request.eject(interceptor);
 
         const newToken = refreshRes.data.accessToken;
         store.commit('setAccessToken', newToken);

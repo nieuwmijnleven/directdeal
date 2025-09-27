@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.Cookie;
 import kr.co.directdeal.accountservice.application.service.AccountDetailService;
 import kr.co.directdeal.accountservice.application.service.dto.LoginDTO;
+import kr.co.directdeal.accountservice.config.TestSecurityConfig;
 import kr.co.directdeal.accountservice.domain.object.Account;
 import kr.co.directdeal.accountservice.domain.object.Authority;
 import kr.co.directdeal.accountservice.port.outbound.AccountRepository;
@@ -34,15 +35,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.lang.reflect.Method;
+import java.security.SecureRandom;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.matchesPattern;
@@ -63,7 +69,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     includeFilters = @Filter(type = FilterType.ASSIGNABLE_TYPE, 
         classes = {TokenProvider.class, JWTProperties.class, AccountDetailService.class,
                     JwtAuthenticationEntryPoint.class, JwtAccessDeniedHandler.class}))
-@Import(AuthControllerTest.TestSecurityConfig.class)
+@Import(TestSecurityConfig.class)
 public class AuthControllerTest {
     
     @Autowired
@@ -83,6 +89,9 @@ public class AuthControllerTest {
 
     @Autowired
     private AuthenticationManagerBuilder authenticationManagerBuilder;
+
+    @Autowired
+    CsrfTokenRepository csrfTokenRepository;
 
     @Test
     public void Login_InvalidEmail_ThrowAccountException() throws Exception {
@@ -243,7 +252,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void Refresh_WithCsrfTokenAndValidRefreshToken_ReturnJWT() throws Exception {
+    public void Refresh_WithValidCsrfTokenAndValidRefreshToken_ReturnJWT() throws Exception {
         //given
         LoginDTO loginDTO = LoginDTO.builder()
                 .email("account@directdeal.co.kr")
@@ -278,37 +287,53 @@ public class AuthControllerTest {
         String accessToken = tokenProvider.createAccessToken(authentication);
         String refreshToken = tokenProvider.createRefreshToken(authentication);
 
+        // Generate CSRF token
+        CsrfToken csrfToken = csrfTokenRepository.generateToken(null);
+
+        // Generate Xored CSRF Token
+        Method createXoredCsrfTokenMethod = XorCsrfTokenRequestAttributeHandler.class.getDeclaredMethod("createXoredCsrfToken", SecureRandom.class, String.class);
+        createXoredCsrfTokenMethod.setAccessible(true);
+        Object xoredCsrfToken = createXoredCsrfTokenMethod.invoke(null, new SecureRandom(), csrfToken.getToken());
+
         //when and then
         this.mvc.perform(post("/auth/refresh")
-                        .header("X-XSRF-TOKEN", "9f0c08f0-7d34-403e-8dd4-9ee74a98d178")
+                        .header("X-XSRF-TOKEN", xoredCsrfToken)
                         //.with(csrf())
-                        .cookie(new Cookie("refreshToken", refreshToken), new Cookie("XSRF-TOKEN", "9f0c08f0-7d34-403e-8dd4-9ee74a98d178")))
+                        .cookie(new Cookie("refreshToken", refreshToken), new Cookie("XSRF-TOKEN", csrfToken.getToken())))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(header().string("Authorization", matchesPattern("^Bearer [a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?$")))
                 .andExpect(header().string("Set-Cookie", matchesPattern("^refreshToken=[a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?; Secure;\\sHttpOnly;\\sSameSite=Strict$")))
                 .andExpect(jsonPath("$.type", is("Bearer")))
                 .andExpect(jsonPath("$.accessToken", matchesPattern("^[a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?$")))
-                .andExpect(jsonPath("$.refreshToken", matchesPattern("^[a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?$")))
+                //.andExpect(jsonPath("$.refreshToken", matchesPattern("^[a-zA-Z0-9\\-_]+?\\.[a-zA-Z0-9\\-_]+?\\.([a-zA-Z0-9\\-_]+)?$")))
                 .andExpect(jsonPath("$.expireTime", is((int)jwtProperties.getAccessTokenValidityInSeconds())));
 
         verify(accountRepository).findOneWithAuthoritiesByEmail(loginDTO.getEmail());
     }
 
     @Test
-    public void Refresh_WithCsrfTokenAndInvalidRefreshToken_ReturnNotAcceptable() throws Exception {
+    public void Refresh_WithValidCsrfTokenAndInvalidRefreshToken_ReturnNotAcceptable() throws Exception {
         //given
         String invalidRefreshToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTc1ODM5ODIzOH0.NH7UXHXdZGhNE9KQ0AKpcw00BZGUqGaDKUlzD6AvD_j4tS3bv_JS6uSUSBBfq53t3Iu73kxRhZGJNixRsocFVw";
 
+        // Generate CSRF token
+        CsrfToken csrfToken = csrfTokenRepository.generateToken(null);
+
+        // Generate Xored CSRF Token
+        Method createXoredCsrfTokenMethod = XorCsrfTokenRequestAttributeHandler.class.getDeclaredMethod("createXoredCsrfToken", SecureRandom.class, String.class);
+        createXoredCsrfTokenMethod.setAccessible(true);
+        Object xoredCsrfToken = createXoredCsrfTokenMethod.invoke(null, new SecureRandom(), csrfToken.getToken());
+
         //when and then
         this.mvc.perform(post("/auth/refresh")
-                        .header("X-XSRF-TOKEN", "9f0c08f0-7d34-403e-8dd4-9ee74a98d178")
-                        .cookie(new Cookie("refreshToken", invalidRefreshToken), new Cookie("XSRF-TOKEN", "9f0c08f0-7d34-403e-8dd4-9ee74a98d178")))
+                        .header("X-XSRF-TOKEN", xoredCsrfToken)
+                        .cookie(new Cookie("refreshToken", invalidRefreshToken), new Cookie("XSRF-TOKEN", csrfToken.getToken())))
                 .andDo(print())
                 .andExpect(status().isNotAcceptable());
     }
 
-    @TestConfiguration
+    /*@TestConfiguration
     static class TestSecurityConfig {
 
         @Bean
@@ -347,13 +372,10 @@ public class AuthControllerTest {
                 .csrf(csrf -> {
                     csrf.csrfTokenRepository(csrfTokenRepository)
                             .requireCsrfProtectionMatcher(
-                                    new OrRequestMatcher(
-                                            //AntPathRequestMatcher.antMatcher("/auth/csrf"),
-                                            //AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/auth/refresh")
-                                            AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/auth/proxy")
-                                    ));
+                                    AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/auth/refresh")
+                             );
                 });
             return http.build();
         }
-    }
+    }*/
 }

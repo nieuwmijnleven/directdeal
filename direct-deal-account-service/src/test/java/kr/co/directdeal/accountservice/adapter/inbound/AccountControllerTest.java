@@ -3,6 +3,7 @@ package kr.co.directdeal.accountservice.adapter.inbound;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.co.directdeal.accountservice.application.service.dto.AccountDTO;
 import kr.co.directdeal.accountservice.application.service.dto.PasswordDTO;
+import kr.co.directdeal.accountservice.config.TestSecurityConfig;
 import kr.co.directdeal.accountservice.exception.AccountException;
 import kr.co.directdeal.accountservice.port.inbound.AccountUseCase;
 import kr.co.directdeal.common.security.auth.jwt.JwtAccessDeniedHandler;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -42,6 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         classes = {TokenProvider.class, JWTProperties.class, 
                    JwtAuthenticationEntryPoint.class, JwtAccessDeniedHandler.class}),
         properties = {"spring.cloud.kubernetes.config.enabled=false", "spring.cloud.kubernetes.discovery.enabled=false"})
+@Import(TestSecurityConfig.class)
 public class AccountControllerTest {
 
     @Autowired
@@ -69,7 +72,7 @@ public class AccountControllerTest {
 
         //when and then
         this.mvc.perform(post("/account")
-                    .with(csrf())
+                    //.with(csrf())
                     .content(payload)
                     .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON))
@@ -100,7 +103,7 @@ public class AccountControllerTest {
 
         //when and then
         this.mvc.perform(post("/account")
-                    .with(csrf())
+                    //.with(csrf())
                     .content(payload)
                     .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON))
@@ -131,7 +134,7 @@ public class AccountControllerTest {
         
         //when and then
         this.mvc.perform(put("/account")
-            .with(csrf())
+            //.with(csrf())
             .content(payload)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
@@ -162,7 +165,7 @@ public class AccountControllerTest {
         
         //when and then
         this.mvc.perform(put("/account")
-            .with(csrf())
+            //.with(csrf())
             .content(payload)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
@@ -229,7 +232,7 @@ public class AccountControllerTest {
         
         //when and then
         this.mvc.perform(delete("/account")
-            .with(csrf())
+            //.with(csrf())
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
@@ -250,7 +253,7 @@ public class AccountControllerTest {
         
         //when and then
         this.mvc.perform(delete("/account")
-            .with(csrf())
+            //.with(csrf())
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
@@ -272,7 +275,7 @@ public class AccountControllerTest {
           
         //when and then
         this.mvc.perform(put("/account/change-password")
-            .with(csrf())
+            //.with(csrf())
             .content(payload)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
@@ -300,7 +303,7 @@ public class AccountControllerTest {
         
         //when and then
         this.mvc.perform(put("/account/change-password")
-            .with(csrf())
+            //.with(csrf())
             .content(payload)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))

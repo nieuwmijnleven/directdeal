@@ -117,25 +117,14 @@ public class AuthController {
     @PostMapping("/refresh")
     public ResponseEntity<?> refresh(
             @Parameter(description = "refreshToken", required = false)
-            @CookieValue(value = "refreshToken", required = false) String refreshToken,
-            @Parameter(description = "XSRF-TOKEN", required = false)
-            @CookieValue(value = "XSRF-TOKEN", required = false) String csrfCookieToken,
-            @Parameter(description = "X-XSRF-TOKEN", required = false)
-            @RequestHeader(value = "X-XSRF-TOKEN", required = false) String csrfHeaderToken,
-            @Parameter(description = "_csrf", required = false)
-            @RequestParam(value = "_csrf", required = false) String csrfParamToken)  {
-
-        String csrfRequestToken = csrfHeaderToken != null ? csrfHeaderToken : csrfParamToken;
-        if (csrfCookieToken == null || csrfRequestToken == null || !csrfCookieToken.equals(csrfRequestToken)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("CSRF token validation failed");
-        }
+            @CookieValue(value = "refreshToken", required = false) String refreshToken)  {
 
         if (refreshToken == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Refresh token is missing");
         }
 
         if (!tokenProvider.validateToken(refreshToken))
-            return new ResponseEntity<>(null, null, HttpStatus.NOT_ACCEPTABLE);
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
 
         //retrieve database to find refresh_token
 
@@ -166,7 +155,7 @@ public class AuthController {
         TokenDTO tokenDTO = TokenDTO.builder()
                 .type("Bearer")
                 .accessToken(newAccessToken)
-                .refreshToken(newRefreshToken)
+                //.refreshToken(newRefreshToken)
                 .expireTime(jwtProperties.getAccessTokenValidityInSeconds())
                 .build();
 
@@ -175,9 +164,9 @@ public class AuthController {
     }
 
     @GetMapping("/csrf")
-    public CsrfToken getCsrfToken(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> getCsrfToken(HttpServletRequest request, HttpServletResponse response) {
         CsrfToken token = csrfTokenRepository.generateToken(request);
         csrfTokenRepository.saveToken(token, request, response);
-        return token;
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

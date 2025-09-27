@@ -7,6 +7,9 @@ DirectDeal is een online direct-handelsplatform voor iedereen. Daar kunnen mense
 
 # Het Doel
 DirectDeal is mijn vrijetijdsproject dat zich in een gedecentraliseerde omgeving, met name binnen een microservices-architectuur (MSA), richt op het ontwerpen en implementeren van een enterprise Java-omgeving. In dit project heb ik gebruikgemaakt van populaire en veelbelovende technologieën, ontwerp­patronen en tools, zoals onder andere Spring Boot, Spring WebFlux, Event Sourcing (Axon Framework), het CQRS-patroon, Kafka, Redis, NoSQL (MongoDB), REST API, Docker, Kubernetes, Java 12, JPA (Hibernate) en Gradle.
+
+Daarnaast heb ik het Domain-Driven Design (DDD) concept als uitgangspunt genomen om de complexe businesslogica goed te modelleren en structureren. Door het systeem op te delen in duidelijke bounded contexts, zoals verkoop, catalogus, chat en accountbeheer, kon ik voor elke microservice een eigen domeinmodel ontwikkelen met consistente terminologie en regels. Dit maakte het eenvoudiger om de businessregels nauwkeurig te implementeren en de services onafhankelijk te houden, wat perfect past bij de microservices-architectuur.
+
 De reden waarom ik dit project ben begonnen, is om mijn gebrek aan ervaring met gedecentraliseerde omgevingen te compenseren. Dankzij dit project heb ik met succes een enterprise Java-omgeving geïmplementeerd binnen een MSA-structuur. Daarom geloof ik dat ik goed voorbereid ben om aan projecten in een gedecentraliseerde omgeving te werken.
 
 # Ontwikkel-Omgeving
