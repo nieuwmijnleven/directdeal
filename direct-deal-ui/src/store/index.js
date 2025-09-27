@@ -34,9 +34,11 @@ export default new Vuex.Store({
       console.log("setRouterParams " + entry.path + "," + entry.value)
       state.routerParams[entry.path] = entry.value
     },
-    setReadMessageCountMap(state, entry) {
-      console.log("setReadMessageCountMap " + entry.id + "," + entry.count)
-      state.readMessageCountMap[entry.id] = entry.count
+    setReadMessageCountMap(state, chatInfo) {
+      console.log("setReadMessageCountMap " + chatInfo.id + "," + chatInfo.count)
+      const {roomId, readMessageCount} = chatInfo;
+      if (!state.readMessageCountMap[state.userId]) state.readMessageCountMap[state.userId] = {}
+      state.readMessageCountMap[state.userId][roomId] = readMessageCount
     }
   },
   getters: {
@@ -50,7 +52,7 @@ export default new Vuex.Store({
       return state.showBottomNavigation
     },
     getReadMessageCountMap(state, chattingRoomId) {
-      return state.readMessageCountMap[chattingRoomId]
+      return state.readMessageCountMap[state.userId][chattingRoomId]
     }
   },
   actions: {

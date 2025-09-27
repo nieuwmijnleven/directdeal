@@ -58,7 +58,7 @@ export default {
           }
         })
 
-        this.fetchNewMessages()
+        //this.fetchNewMessages()
       } catch(error) {
         console.log("Error", error);
       }

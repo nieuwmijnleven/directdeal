@@ -7,7 +7,6 @@
             <v-card-text>
               <v-text-field
                 v-model="name"
-                :counter="30"
                 :rules="nameRules"
                 label="Name"
                 required
@@ -22,7 +21,6 @@
 
               <v-text-field
                 v-model="password"
-                :counter="6"
                 :rules="passwordRules"
                 label="Password"
                 type="password"
@@ -94,7 +92,8 @@ export default {
         await api.post("/api/v1/account", data, header)
         this.$router.push("/login")
       } catch(error) {
-        console.log("Error", error.message);
+        console.log("Error", error.response.data.message);
+        alert(error.response.data.message);
       }
     },
   },

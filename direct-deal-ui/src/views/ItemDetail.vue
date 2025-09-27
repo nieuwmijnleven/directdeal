@@ -3,9 +3,9 @@
     <v-card flat class="mx-auto">
       <v-list two-line class="my-0 py-0">
           <v-list-item>
-            <v-carousel hide-delimiter-background>
+            <v-carousel hide-delimiter-background height="280">
               <v-carousel-item v-for="(image, index) in item.images" :key="index">
-                <v-img :src="'/api/v1/image/' + image"></v-img>
+                <v-img :src="'/api/v1/image/' + image" height="280"></v-img>
               </v-carousel-item>
             </v-carousel>
           </v-list-item>

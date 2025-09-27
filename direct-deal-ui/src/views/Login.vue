@@ -13,7 +13,6 @@
 
           <v-text-field
             v-model="password"
-            :counter="6"
             :rules="passwordRules"
             label="Password"
             type="password"
