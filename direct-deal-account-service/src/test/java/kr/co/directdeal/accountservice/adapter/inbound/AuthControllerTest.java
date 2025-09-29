@@ -8,6 +8,7 @@ import kr.co.directdeal.accountservice.config.TestSecurityConfig;
 import kr.co.directdeal.accountservice.domain.object.Account;
 import kr.co.directdeal.accountservice.domain.object.Authority;
 import kr.co.directdeal.accountservice.port.outbound.AccountRepository;
+import kr.co.directdeal.accountservice.util.XorCsrfTokenGenerator;
 import kr.co.directdeal.common.security.auth.jwt.JwtAccessDeniedHandler;
 import kr.co.directdeal.common.security.auth.jwt.JwtAuthenticationEntryPoint;
 import kr.co.directdeal.common.security.auth.jwt.TokenProvider;
@@ -16,47 +17,28 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Primary;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
-import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.OrRequestMatcher;
-import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.lang.reflect.Method;
-import java.security.SecureRandom;
 import java.util.Collections;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.mock;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -287,17 +269,14 @@ public class AuthControllerTest {
         String accessToken = tokenProvider.createAccessToken(authentication);
         String refreshToken = tokenProvider.createRefreshToken(authentication);
 
-        // Generate CSRF token
-        CsrfToken csrfToken = csrfTokenRepository.generateToken(null);
-
         // Generate Xored CSRF Token
-        Method createXoredCsrfTokenMethod = XorCsrfTokenRequestAttributeHandler.class.getDeclaredMethod("createXoredCsrfToken", SecureRandom.class, String.class);
-        createXoredCsrfTokenMethod.setAccessible(true);
-        Object xoredCsrfToken = createXoredCsrfTokenMethod.invoke(null, new SecureRandom(), csrfToken.getToken());
+        XorCsrfTokenGenerator xorCsrfTokenGenerator = XorCsrfTokenGenerator.generate();
+        CsrfToken xoredCsrfToken = xorCsrfTokenGenerator.getXoredCsrfToken();
+        CsrfToken csrfToken = xorCsrfTokenGenerator.getCsrfToken();
 
         //when and then
         this.mvc.perform(post("/auth/refresh")
-                        .header("X-XSRF-TOKEN", xoredCsrfToken)
+                        .header("X-XSRF-TOKEN", xoredCsrfToken.getToken())
                         //.with(csrf())
                         .cookie(new Cookie("refreshToken", refreshToken), new Cookie("XSRF-TOKEN", csrfToken.getToken())))
                 .andDo(print())
@@ -317,65 +296,16 @@ public class AuthControllerTest {
         //given
         String invalidRefreshToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2NvdW50QGRpcmVjdGRlYWwuY28ua3IiLCJhdXRob3JpdGllcyI6IlJPTEVfVVNFUiIsImV4cCI6MTc1ODM5ODIzOH0.NH7UXHXdZGhNE9KQ0AKpcw00BZGUqGaDKUlzD6AvD_j4tS3bv_JS6uSUSBBfq53t3Iu73kxRhZGJNixRsocFVw";
 
-        // Generate CSRF token
-        CsrfToken csrfToken = csrfTokenRepository.generateToken(null);
-
         // Generate Xored CSRF Token
-        Method createXoredCsrfTokenMethod = XorCsrfTokenRequestAttributeHandler.class.getDeclaredMethod("createXoredCsrfToken", SecureRandom.class, String.class);
-        createXoredCsrfTokenMethod.setAccessible(true);
-        Object xoredCsrfToken = createXoredCsrfTokenMethod.invoke(null, new SecureRandom(), csrfToken.getToken());
+        XorCsrfTokenGenerator xorCsrfTokenGenerator = XorCsrfTokenGenerator.generate();
+        CsrfToken xoredCsrfToken = xorCsrfTokenGenerator.getXoredCsrfToken();
+        CsrfToken csrfToken = xorCsrfTokenGenerator.getCsrfToken();
 
         //when and then
         this.mvc.perform(post("/auth/refresh")
-                        .header("X-XSRF-TOKEN", xoredCsrfToken)
+                        .header("X-XSRF-TOKEN", xoredCsrfToken.getToken())
                         .cookie(new Cookie("refreshToken", invalidRefreshToken), new Cookie("XSRF-TOKEN", csrfToken.getToken())))
                 .andDo(print())
                 .andExpect(status().isNotAcceptable());
     }
-
-    /*@TestConfiguration
-    static class TestSecurityConfig {
-
-        @Bean
-        public PasswordEncoder passwordEncoder() {
-            return new BCryptPasswordEncoder();
-        }
-
-        @Bean
-        public JWTProperties jwtProperties() {
-            JWTProperties props = new JWTProperties();
-            props.setSecret("RxpcmVjdC1kZWFsL2RpcmVjdC1kZWFsLWFjY291bnQtc2VydmljZS9kaXJlY3QdjfksjdkfjkejktZGVhbC9kaXJlY3QtZGVhbC1hY2NvdW50LXNlcnZpY2UvZGlyZWN0LWRlYWwvZGlyZWN0LWRlYWwtYWNjb3VudC1zZXJ2aWNlL2RpcmVjdC1kZWFsL2RpcmVjdC1kZWFsLWFjY291bnQtc2VydmljZQo=");
-            return props;
-        }
-
-        @Bean
-        public TokenProvider tokenProvider(JWTProperties jwtProperties) {
-            return new TokenProvider(jwtProperties);
-        }
-
-        @Primary
-        @Bean
-        public CsrfTokenRepository csrfTokenRepository() {
-            CookieCsrfTokenRepository tokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
-            tokenRepository.setCookiePath("/");
-            return tokenRepository;
-        }
-
-        @Bean
-        public SecurityFilterChain filterChain(HttpSecurity http, CsrfTokenRepository csrfTokenRepository) throws Exception {
-            http.authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/auth/login").permitAll()
-                        .requestMatchers("/auth/refresh").permitAll()
-                        .requestMatchers("/auth/csrf").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .csrf(csrf -> {
-                    csrf.csrfTokenRepository(csrfTokenRepository)
-                            .requireCsrfProtectionMatcher(
-                                    AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/auth/refresh")
-                             );
-                });
-            return http.build();
-        }
-    }*/
 }
