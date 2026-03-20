@@ -1,21 +1,21 @@
 # DirectDeal
->**Let op:** Voor uitgebreide documentatie en details over het project kunt u terecht op de nieuwe [directdeal-docs repository](https://github.com/nieuwmijnleven/directdeal-docs). Deze repository bevat alle officiële documentatie, architectuurbeschrijvingen en ontwikkelrichtlijnen van het DirectDeal-project.
+>**Note:** For extensive documentation and details about the project, please visit the new [directdeal-docs repository](https://github.com/nieuwmijnleven/directdeal-docs). This repository contains all official documentation, architecture descriptions, and development guidelines for the DirectDeal project.
 
-DirectDeal is een online direct-handelsplatform voor iedereen. Daar kunnen mensen niet alleen vrij hun spullen verhandelen, maar ook producten kopen die door anderen worden verkocht.  
+DirectDeal is an online direct-trading platform for everyone. People can not only freely trade their own items, but also purchase products sold by others.
 
-DirectDeal is een online direct-handelsplatform voor iedereen. Daar kunnen mensen niet alleen vrij hun spullen verhandelen, maar ook producten kopen die door anderen worden verkocht.  
+DirectDeal is an online direct-trading platform for everyone. People can not only freely trade their own items, but also purchase products sold by others.
 
-# Het Doel
-DirectDeal is mijn vrijetijdsproject dat zich in een gedecentraliseerde omgeving, met name binnen een microservices-architectuur (MSA), richt op het ontwerpen en implementeren van een enterprise Java-omgeving. In dit project heb ik gebruikgemaakt van populaire en veelbelovende technologieën, ontwerp­patronen en tools, zoals onder andere Spring Boot, Spring WebFlux, Event Sourcing (Axon Framework), het CQRS-patroon, Kafka, Redis, NoSQL (MongoDB), REST API, Docker, Kubernetes, Java 12, JPA (Hibernate) en Gradle.
+# The Goal
+DirectDeal is my hobby project focused on designing and implementing an enterprise Java environment in a decentralized setting, specifically within a microservices architecture (MSA). In this project I made use of popular and promising technologies, design patterns, and tools, including Spring Boot, Spring WebFlux, Event Sourcing (Axon Framework), the CQRS pattern, Kafka, Redis, NoSQL (MongoDB), REST API, Docker, Kubernetes, Java 12, JPA (Hibernate), and Gradle.
 
-Daarnaast heb ik het Domain-Driven Design (DDD) concept als uitgangspunt genomen om de complexe businesslogica goed te modelleren en structureren. Door het systeem op te delen in duidelijke bounded contexts, zoals verkoop, catalogus, chat en accountbeheer, kon ik voor elke microservice een eigen domeinmodel ontwikkelen met consistente terminologie en regels. Dit maakte het eenvoudiger om de businessregels nauwkeurig te implementeren en de services onafhankelijk te houden, wat perfect past bij de microservices-architectuur.
+In addition, I used Domain-Driven Design (DDD) as a foundation to properly model and structure complex business logic. By dividing the system into clear bounded contexts — such as sales, catalog, chat, and account management — I was able to develop a dedicated domain model for each microservice with consistent terminology and rules. This made it easier to implement business rules accurately and keep services independent, which fits perfectly with the microservices architecture.
 
-De reden waarom ik dit project ben begonnen, is om mijn gebrek aan ervaring met gedecentraliseerde omgevingen te compenseren. Dankzij dit project heb ik met succes een enterprise Java-omgeving geïmplementeerd binnen een MSA-structuur. Daarom geloof ik dat ik goed voorbereid ben om aan projecten in een gedecentraliseerde omgeving te werken.
+The reason I started this project was to compensate for my lack of experience with decentralized environments. Thanks to this project, I successfully implemented an enterprise Java environment within an MSA structure. I therefore believe I am well-prepared to work on projects in a decentralized environment.
 
-# Ontwikkel-Omgeving
-> **Opmerking:** Door een recente migratie zijn de gebruikte libraries en tools geüpdatet naar nieuwere versies. Hieronder staan de oude versies doorgestreept, met de nieuwe versies ernaast vermeld.
+# Development Environment
+> **Note:** Due to a recent migration, the libraries and tools used have been updated to newer versions. The old versions are shown with strikethrough below, with the new versions listed alongside them.
 
-> **Meer details:** de actuele versies van alle tools en bibliotheken zijn te vinden in de sectie [5. Ontwikkelomgeving](https://github.com/nieuwmijnleven/directdeal-docs/blob/master/Nederlands/5.%20Ontwikkelomgeving.md) van de directdeal-docs.
+> **More details:** The current versions of all tools and libraries can be found in section [5. Development Environment](https://github.com/nieuwmijnleven/directdeal-docs/blob/master/Nederlands/5.%20Ontwikkelomgeving.md) of the directdeal-docs.
 
 * Operating System: Linux (Debian/Ubuntu), Windows (WSL)  
 * JAVA: ~~12~~ **17**  
@@ -32,86 +32,87 @@ De reden waarom ik dit project ben begonnen, is om mijn gebrek aan ervaring met 
 * Vue.js: 2.6.14  
 * Vuetify: 2.5.4  
 
-# Uitvoeringsstappen
-> **Opmerking:** Een meer gedetailleerde uitleg over de uitvoeringsstappen — zowel voor de lokale omgeving als voor de Google Cloud Platform (GCP)-omgeving — is te vinden in [6. Uitvoeringsmethode](https://github.com/nieuwmijnleven/directdeal-docs/blob/master/Nederlands/6.%20Uitvoeringsmethode.md) van de directdeal-docs.
+# Execution Steps
+> **Note:** A more detailed explanation of the execution steps — both for the local environment and for the Google Cloud Platform (GCP) environment — can be found in [6. Execution Method](https://github.com/nieuwmijnleven/directdeal-docs/blob/master/Nederlands/6.%20Uitvoeringsmethode.md) of the directdeal-docs.
 
-## 1. De GitHub-opslagplaats van het DirectDeal-project klonen
+## 1. Clone the DirectDeal Project GitHub Repository
 ```
 $> git clone https://github.com/nieuwmijnleven/directdeal.git
 $> cd ./directdeal
 ```
-## 2. Minikube Installeren
-Volg de instructies om Minikube op Ubuntu te installeren.
+## 2. Install Minikube
+Follow the instructions to install Minikube on Ubuntu.
 [How to Install Minikube on Ubuntu](https://phoenixnap.com/kb/install-minikube-on-ubuntu#:~:text=Step%201%3A%20Update%20System%20and%20Install%20Required%20Packages%0ABefore,apt-get%20install%20curl%0Asudo%20apt-get%20install%20apt-transport-https%0AIn%20the%20)
 
-## 3. Alle MSA-services bouwen en starten
+## 3. Build and Start All MSA Services
 ```
 $> ./start-direct-deal-service.sh
 ```
-Let op: dit proces kan langer dan vijf minuten duren.
-U kunt de status van alle containers bekijken met het commando: 
+Note: this process may take longer than five minutes.
+You can check the status of all containers with the command:
 ```
 $> kubectl get pods
 ```
 
-## 4. De DirectDeal-website openen
+## 4. Open the DirectDeal Website
 [http://localhost:8084](http://localhost:8084)
 
-# Systeemarchitectuur
-> **Meer informatie:** Raadpleeg hoofdstuk 8, 9 en 10 van de [directdeal-docs](https://github.com/nieuwmijnleven/directdeal-docs) voor meer details over de systeemarchitectuur, Domain-Driven Design (DDD) en de opbouw van microservices.
+# System Architecture
+> **More information:** Refer to chapters 8, 9, and 10 of the [directdeal-docs](https://github.com/nieuwmijnleven/directdeal-docs) for more details on the system architecture, Domain-Driven Design (DDD), and the structure of the microservices.
 
-## 1. De structuur van het gehele systeem
-Het systeem bestaat uit zes microservices: direct-deal-account-service, direct-deal-chatting-service, direct-deal-gateway-service, direct-deal-sale-service en direct-deal-sale-catalog-service. Elke microservice vervult een specifieke rol binnen het systeem. Zo is direct-deal-account-service verantwoordelijk voor het beheer van gebruikersaccounts en het in- en uitloggen, terwijl direct-deal-sale-service functionaliteiten biedt voor het registreren, wijzigen en verwijderen van producten door gebruikers.
-Opvallend is dat voor direct-deal-sale-service en direct-deal-sale-catalog-service het Event Sourcing- en CQRS-patroon (Command Query Responsibility Segregation) wordt toegepast. Hierdoor wordt de lock-contentie aan de leeszijde (direct-deal-sale-catalog-service) verminderd en is het niet nodig om transacties te gebruiken. Dit stelt het systeem in staat om gebruikers een snellere reactietijd bij het lezen van gegevens te bieden.
+## 1. Overall System Structure
+The system consists of six microservices: direct-deal-account-service, direct-deal-chatting-service, direct-deal-gateway-service, direct-deal-sale-service, and direct-deal-sale-catalog-service. Each microservice fulfills a specific role within the system. For example, direct-deal-account-service is responsible for managing user accounts and handling login and logout, while direct-deal-sale-service provides functionality for users to register, modify, and delete products.
+
+Notably, the Event Sourcing and CQRS (Command Query Responsibility Segregation) patterns are applied to direct-deal-sale-service and direct-deal-sale-catalog-service. This reduces lock contention on the read side (direct-deal-sale-catalog-service) and eliminates the need to use transactions. This enables the system to offer users faster response times when reading data.
 ![image](https://github.com/nieuwmijnleven/directdeal/assets/56591823/8a180293-c45e-4bf8-aab4-447fa0b3a8ad)
 
 ## 2. Microservices
 ### 1. direct-deal-account-service
-* De microservice is verantwoordelijk voor het beheer van gebruikersaccounts en het in- en uitloggen
-* Bij het inloggen genereert de service een JWT (JSON Web Token) en stuurt deze naar de gebruiker
-* Door het JWT in de authorization-header van de HTTP-aanvraag mee te sturen, krijgen gebruikers toegang tot alle microservices binnen het systeem 
-  
+* This microservice is responsible for managing user accounts and handling login and logout
+* Upon login, the service generates a JWT (JSON Web Token) and sends it to the user
+* By including the JWT in the authorization header of HTTP requests, users gain access to all microservices within the system
+
 ### 2. direct-deal-chatting-service
-* Deze microservice biedt chatfunctionaliteit tussen verkopers en kopers
+* This microservice provides chat functionality between sellers and buyers
 
 ### 3. direct-deal-gateway-service
-* Deze microservice fungeert als API Gateway binnen de MSA-omgeving en vormt het centrale toegangspunt voor externe aanvragen richting de achterliggende microservices
+* This microservice acts as the API Gateway within the MSA environment and serves as the central entry point for external requests directed at the backend microservices
 
 ### 4. direct-deal-sale-service
-* Deze microservice faciliteert functies voor het registreren, aanpassen en verwijderen van producten door gebruikers
-* Zowel het Eventsourcing- als CQRS-patroon (Command Query Responsibility Segregation) worden toegepast op deze service
-* De service is verantwoordelijk voor het Command-gedeelte van het CQRS-patroon
-* Daarnaast beheert deze service de EventStore ten behoeve van Eventsourcing
+* This microservice facilitates functions for registering, modifying, and deleting products by users
+* Both the Event Sourcing and CQRS (Command Query Responsibility Segregation) patterns are applied to this service
+* The service is responsible for the Command side of the CQRS pattern
+* In addition, this service manages the EventStore for Event Sourcing purposes
 
 ### 5. direct-deal-sale-catalog-service
-* Deze microservice voorziet gebruikers van een overzicht van beschikbare producten
-* Voor deze service gelden eveneens Eventsourcing en het CQRS-patroon
-* De service implementeert het Query-gedeelte van CQRS
-* Daarnaast leest deze service uit de EventStore als onderdeel van Eventsourcing
+* This microservice provides users with an overview of available products
+* Event Sourcing and the CQRS pattern also apply to this service
+* The service implements the Query side of CQRS
+* In addition, this service reads from the EventStore as part of Event Sourcing
 
 ### 6. direct-deal-transaction-history-service
-* Deze microservice toont gebruikers een overzicht van afgeronde transacties
+* This microservice shows users an overview of completed transactions
 
-## 3. Technologieën, Ontwerp Patronen en Tools
-### 1. EventSourcing
-Event Sourcing is een benadering waarbij elke wijziging in de status van een domeinobject wordt vastgelegd als een afzonderlijk evenement. In tegenstelling tot de traditionele manier van persistente opslag — waarbij enkel de actuele status van een entiteit wordt bewaard — bewaart Event Sourcing een serie van statuswijzigingen (evenementen) in een event store. De actuele toestand van een entiteit wordt samengesteld door al deze evenementen achtereenvolgens toe te passen ('replayen').
+## 3. Technologies, Design Patterns, and Tools
+### 1. Event Sourcing
+Event Sourcing is an approach in which every change to the state of a domain object is recorded as a separate event. Unlike the traditional method of persistent storage — where only the current state of an entity is saved — Event Sourcing stores a series of state changes (events) in an event store. The current state of an entity is reconstructed by replaying all these events in sequence.
 
-Elke statuswijziging resulteert in een nieuw evenement, dat als een op zichzelf staande operatie wordt opgeslagen; dit maakt het proces intrinsiek atomair. De event store fungeert niet alleen als database voor evenementen, maar vaak ook als message broker. Hierdoor kunnen andere services zich abonneren op relevante evenementen via een aangeboden API. Elk opgeslagen evenement wordt vervolgens doorgestuurd naar alle geïnteresseerde abonnees, wat van de event store de ruggengraat maakt van een event-driven microservice-architectuur.
+Each state change results in a new event, which is stored as a self-contained operation; this makes the process inherently atomic. The event store serves not only as a database for events, but often also as a message broker. This allows other services to subscribe to relevant events via an exposed API. Each stored event is then forwarded to all interested subscribers, making the event store the backbone of an event-driven microservice architecture.
 
-In deze architectuur worden bewerkingen als volgt afgehandeld: bij een wijzigingsverzoek worden eerst de relevante evenementen uit de event store opgehaald om de actuele status van de entiteit te reconstrueren. Daarna wordt de entiteit bijgewerkt en een nieuw evenement toegevoegd.  
+In this architecture, operations are handled as follows: when a modification request comes in, the relevant events are first retrieved from the event store to reconstruct the current state of the entity. The entity is then updated and a new event is appended.
 
-### 2. CQRS(Command Query Responsibility Segregation) Patroon
-CQRS staat voor Command Query Responsibility Segregation, een patroon waarbij lees- en schrijfbewerkingen strikt worden gescheiden. In plaats van complexe join-queries toe te passen op één centrale database, wordt er binnen CQRS een aparte view-database ingericht voor alleen-lezen doeleinden.
+### 2. CQRS (Command Query Responsibility Segregation) Pattern
+CQRS stands for Command Query Responsibility Segregation, a pattern in which read and write operations are strictly separated. Instead of applying complex join queries to a single central database, CQRS sets up a separate view database for read-only purposes.
 
-Deze aanpak vermindert lock-contentie bij het uitvoeren van join-bewerkingen en maakt het mogelijk om transacties te vermijden voor leesoperaties. Synchronisatie tussen de alleen-lezen en de alleen-schrijven databases vindt plaats in chronologische volgorde van gebeurtenissen, doorgaans via een berichtensysteem zoals Kafka of RabbitMQ. Dit voorkomt samenvoegingsconflicten op domeinniveau in de schrijfdatabank.
+This approach reduces lock contention when performing join operations and makes it possible to avoid transactions for read operations. Synchronization between the read-only and write-only databases takes place in chronological order of events, typically via a messaging system such as Kafka or RabbitMQ. This prevents merge conflicts at the domain level in the write database.
 
-Door CQRS te implementeren kunnen prestaties, schaalbaarheid en beveiliging van het systeem significant worden verbeterd.
+By implementing CQRS, the performance, scalability, and security of the system can be significantly improved.
 
 <p align="center">
   <img src = "https://github.com/nieuwmijnleven/directdeal/assets/56591823/c2aace41-7e20-4e9d-9285-ed9f6c745c42" width=670/>
 </p>
 
-# Schermafbeeldingen
+# Screenshots
 <p align="center">
   <kbd>
     <img src = "https://github.com/nieuwmijnleven/directdeal/assets/56591823/ac292c21-5ff8-415f-9363-89568ae71de9" width=200/>    
@@ -124,7 +125,7 @@ Door CQRS te implementeren kunnen prestaties, schaalbaarheid en beveiliging van 
   </kbd>
 </p>
 
-# Auteur
+# Author
 
-* **Jeon, Cheol** 
+* **Jeon, Cheol**
 
